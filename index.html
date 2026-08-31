@@ -414,8 +414,14 @@
   .ex-sol pre{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;
     padding:11px 12px;font-size:.74rem;line-height:1.5;overflow-x:auto;color:#eef0f6;
     white-space:pre;margin:0 0 12px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
-  .ex-needs-table{font-size:.78rem;color:#5cc0d6;background:rgba(92,192,214,.08);
-    border:1px solid rgba(92,192,214,.22);border-radius:8px;padding:9px 11px;margin:0 0 13px;line-height:1.45;}
+  .ex-needs-table{font-size:.79rem;color:#d6e9ee;background:rgba(92,192,214,.09);
+    border:1px solid rgba(92,192,214,.24);border-radius:9px;padding:10px 12px;margin:0 0 13px;line-height:1.5;}
+  .ex-needs-table b{color:#7fd4e6;font-weight:700;}
+  .ex-reveal-row{display:flex;gap:8px;margin-bottom:14px;}
+  .ex-reveal-row .ex-reveal{flex:1;margin-bottom:0;}
+  .ex-reveal-sol{background:#2a5b8a;color:#e8f2ff;}
+  .ex-reveal-sol:active{background:#22496e;}
+  .ex-solblock{margin-bottom:14px;}
   .ex-self{display:flex;gap:8px;margin-bottom:14px;}
   .ex-self button{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 4px;
     font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit;
@@ -13001,8 +13007,33 @@ const SEC_MARKS = {brief:2, short:5, long:10};
 const SEC_NAME  = {brief:'Section A · 2 marks', short:'Section B · 5 marks', long:'Section C · 10 marks'};
 
 function examKey(){ return `exam_s${currentSemester}_${currentSubjectKey}_u${currentUnitIdx}`; }
-function loadExamState(){ try{ return JSON.parse(localStorage.getItem(examKey())) || {}; }catch(e){ return {}; } }
-function saveExamState(st){ localStorage.setItem(examKey(), JSON.stringify(st)); }
+/* In-memory cache + debounced write. Reading/parsing localStorage (and writing
+   it) on every keystroke stalled the main thread on phones and iOS Safari would
+   drop focus from the answer box after one letter. Now the state object lives in
+   memory; the write is debounced and flushed on page hide. */
+let _examCache = { key: null, st: null };
+let _examSaveT = null;
+function loadExamState(){
+  const k = examKey();
+  if(_examCache.key !== k){
+    let st; try{ st = JSON.parse(localStorage.getItem(k)) || {}; }catch(e){ st = {}; }
+    _examCache = { key: k, st: st };
+  }
+  return _examCache.st;
+}
+function saveExamState(st){
+  const k = examKey();
+  _examCache = { key: k, st: st };
+  clearTimeout(_examSaveT);
+  _examSaveT = setTimeout(() => { try{ localStorage.setItem(k, JSON.stringify(st)); }catch(e){} }, 350);
+}
+function flushExamState(){
+  if(!_examCache.key) return;
+  clearTimeout(_examSaveT);
+  try{ localStorage.setItem(_examCache.key, JSON.stringify(_examCache.st)); }catch(e){}
+}
+window.addEventListener('pagehide', flushExamState);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') flushExamState(); });
 
 function openExam(){
   if(!hasExam(currentSubjectKey, currentUnitIdx)) return;
@@ -13033,11 +13064,16 @@ function renderExamTabs(){
   tabs.style.display = examState.mock ? 'none' : 'flex';
 }
 
-function examModelHTML(obj, heading){
-  let h = '<h4>' + (heading || 'What the examiner is looking for') + '</h4><ol>'
+function examPtsHTML(obj, heading){
+  return '<h4>' + (heading || 'What the examiner is looking for') + '</h4><ol>'
     + obj.pts.map(x => '<li>' + x + '</li>').join('') + '</ol>';
-  if(obj.sol) h += '<h4 class="ex-sol-h">Worked solution</h4><div class="ex-sol">' + obj.sol + '</div>';
-  return h;
+}
+function examSolHTML(obj){
+  return obj.sol ? ('<h4 class="ex-sol-h">Worked solution</h4><div class="ex-sol">' + obj.sol + '</div>') : '';
+}
+/* Mock-paper review shows both together in one block. */
+function examModelHTML(obj, heading){
+  return examPtsHTML(obj, heading) + examSolHTML(obj);
 }
 
 function renderExamQ(){
@@ -13069,29 +13105,23 @@ function renderExamQ(){
 
   if(q.sol){
     const nt = document.createElement('div'); nt.className = 'ex-needs-table';
-    nt.textContent = '▦ This answer needs a ruled table / statement format. Sketch the layout on paper first, then reveal to check against the worked solution.';
+    nt.innerHTML = '<b>▦ This answer is a ruled statement / ledger, not paragraphs.</b> '
+      + 'Work it on paper. Tap <b>&ldquo;Worked solution&rdquo;</b> below to see the exact format and figures to copy, '
+      + 'and <b>&ldquo;Marking points&rdquo;</b> for the examiner&rsquo;s checklist.';
     body.appendChild(nt);
   }
 
   const ta = document.createElement('textarea');
   ta.className = 'ex-ta';
-  ta.placeholder = 'Write your answer here, then reveal the marking points and compare.';
+  ta.placeholder = q.sol ? 'Rough working / notes (write the full statement on paper).'
+                         : 'Write your answer here, then reveal the marking points and compare.';
   ta.value = saved.ans || '';
-  ta.oninput = () => { const s2 = loadExamState(); s2[id] = {...(s2[id]||{}), ans: ta.value}; saveExamState(s2); };
+  ta.oninput = () => { const s2 = loadExamState(); s2[id] = Object.assign(s2[id] || {}, { ans: ta.value }); saveExamState(s2); };
   body.appendChild(ta);
 
   const hint = document.createElement('div'); hint.className = 'ex-hint';
   hint.textContent = 'Saved automatically. Aim for roughly one solid point per mark.';
   body.appendChild(hint);
-
-  const rev = document.createElement('button'); rev.className = 'ex-reveal';
-  rev.textContent = '📋 Show the marking points';
-  body.appendChild(rev);
-
-  const model = document.createElement('div'); model.className = 'ex-model';
-  model.innerHTML = examModelHTML(q);
-  body.appendChild(model);
-  rev.onclick = () => { model.classList.add('on'); rev.style.display = 'none'; self.style.display = 'flex'; };
 
   const self = document.createElement('div'); self.className = 'ex-self';
   self.style.display = 'none';
@@ -13099,12 +13129,41 @@ function renderExamQ(){
     const b = document.createElement('button');
     b.className = k + (saved.mark === k ? ' sel' : '');
     b.textContent = label;
-    b.onclick = () => { const s2 = loadExamState(); s2[id] = {...(s2[id]||{}), mark:k}; saveExamState(s2);
+    b.onclick = () => { const s2 = loadExamState(); s2[id] = Object.assign(s2[id] || {}, { mark: k }); saveExamState(s2);
                         renderExamQ(); updateExamMeta(currentSubjectKey, currentUnitIdx); };
     self.appendChild(b);
   });
+
+  const revealRow = document.createElement('div'); revealRow.className = 'ex-reveal-row';
+  const model = document.createElement('div'); model.className = 'ex-model';
+  model.innerHTML = examPtsHTML(q);
+  const showSelf = () => { self.style.display = 'flex'; };
+
+  if(q.sol){
+    const sol = document.createElement('div'); sol.className = 'ex-model ex-solblock';
+    sol.innerHTML = examSolHTML(q);
+    const bSol = document.createElement('button'); bSol.className = 'ex-reveal ex-reveal-sol';
+    bSol.textContent = '▦ Worked solution';
+    bSol.onclick = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
+    const bPts = document.createElement('button'); bPts.className = 'ex-reveal';
+    bPts.textContent = '📋 Marking points';
+    bPts.onclick = () => { model.classList.add('on'); bPts.style.display = 'none'; showSelf(); };
+    revealRow.appendChild(bSol); revealRow.appendChild(bPts);
+    body.appendChild(revealRow);
+    body.appendChild(sol);
+    body.appendChild(model);
+    if(saved.mark){ sol.classList.add('on'); model.classList.add('on'); bSol.style.display='none'; bPts.style.display='none'; showSelf(); }
+  } else {
+    const rev = document.createElement('button'); rev.className = 'ex-reveal';
+    rev.textContent = '📋 Show the marking points';
+    rev.onclick = () => { model.classList.add('on'); rev.style.display = 'none'; showSelf(); };
+    revealRow.appendChild(rev);
+    body.appendChild(revealRow);
+    body.appendChild(model);
+    if(saved.mark){ model.classList.add('on'); rev.style.display='none'; showSelf(); }
+  }
+
   body.appendChild(self);
-  if(saved.mark){ model.classList.add('on'); rev.style.display='none'; self.style.display='flex'; }
 
   const nav = document.createElement('div'); nav.className = 'ex-nav';
   const prev = document.createElement('button'); prev.textContent = '‹ Previous';
