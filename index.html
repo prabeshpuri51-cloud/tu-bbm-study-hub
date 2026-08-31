@@ -403,6 +403,19 @@
     color:var(--accent);}
   .ex-model ol{margin:0;padding-left:19px;}
   .ex-model li{font-size:.87rem;line-height:1.55;color:#e8e6ef;margin-bottom:8px;}
+  .ex-model h4.ex-sol-h{margin:18px 0 9px;color:#5cc0d6;}
+  .ex-sol{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .ex-sol p{font-size:.84rem;color:#cfd0dc;line-height:1.5;margin:0 0 10px;}
+  .ex-sol table{border-collapse:collapse;width:100%;font-size:.8rem;min-width:320px;margin:0 0 12px;}
+  .ex-sol th,.ex-sol td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  .ex-sol th{background:rgba(255,255,255,.07);color:#fff;font-weight:700;}
+  .ex-sol td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .ex-sol tr.tot td{font-weight:700;color:#fff;border-top:2px solid rgba(255,255,255,.35);}
+  .ex-sol pre{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;
+    padding:11px 12px;font-size:.74rem;line-height:1.5;overflow-x:auto;color:#eef0f6;
+    white-space:pre;margin:0 0 12px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
+  .ex-needs-table{font-size:.78rem;color:#5cc0d6;background:rgba(92,192,214,.08);
+    border:1px solid rgba(92,192,214,.22);border-radius:8px;padding:9px 11px;margin:0 0 13px;line-height:1.45;}
   .ex-self{display:flex;gap:8px;margin-bottom:14px;}
   .ex-self button{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 4px;
     font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit;
@@ -12087,6 +12100,447 @@ window.SUBJECT_EXAM["facc"].cases = [
 
 </script>
 <script>
+/* ACC 201 — worked-solution tables for the computational written-exam items.
+   Loaded AFTER data-acc.js. Attaches a `.sol` HTML string (rendered in exam mode
+   under "Worked solution") to every exam item / Section-D sub-question whose
+   answer is a ruled table, ledger account or statement.
+   Matched by a distinctive substring of the question text so it survives a
+   re-ordering of the banks. Every figure here is the same one verified in the
+   unit notes. */
+(function () {
+  var E = window.SUBJECT_EXAM && window.SUBJECT_EXAM.facc;
+  if (!E) return;
+
+  var SOL = {
+
+  /* ---------- UNIT 3 ---------- */
+
+  "commenced business with bank balance Rs 2,50,000":
+    '<p>Each row shows the change; the two sides stay equal.</p>'
+  + '<table><thead><tr><th>Transaction</th><th class="n">Assets</th><th class="n">= Liab.</th><th class="n">+ Capital</th></tr></thead><tbody>'
+  + '<tr><td>(a) Capital by cheque</td><td class="n">Bank +2,50,000</td><td class="n">&mdash;</td><td class="n">+2,50,000</td></tr>'
+  + '<tr><td>(b) Goods on credit</td><td class="n">Stock +80,000</td><td class="n">Cred. +80,000</td><td class="n">&mdash;</td></tr>'
+  + '<tr><td>(c) Sold cost 40,000 for 48,000</td><td class="n">Bank +48,000<br>Stock &minus;40,000</td><td class="n">&mdash;</td><td class="n">+8,000 (profit)</td></tr>'
+  + '<tr><td>(d) Paid 36,000, got 4,000 discount</td><td class="n">Bank &minus;36,000</td><td class="n">Cred. &minus;40,000</td><td class="n">+4,000 (disc. rec.)</td></tr>'
+  + '<tr class="tot"><td>Totals</td><td class="n">3,02,000</td><td class="n">40,000</td><td class="n">2,62,000</td></tr>'
+  + '</tbody></table>'
+  + '<p>Bank 2,62,000 + Stock 40,000 = <b>3,02,000</b> &nbsp;=&nbsp; Creditors 40,000 + Capital 2,62,000 = <b>3,02,000</b>. &check;</p>',
+
+  "Pass journal entries for the following: (i) started business with cash Rs 1,00,000":
+    '<pre>Date  Particulars                          Dr (Rs)     Cr (Rs)\n'
+  + '(i)   Cash A/c                    Dr    1,00,000\n'
+  + '        To Capital A/c                            1,00,000\n\n'
+  + '(ii)  Accounts Receivable A/c     Dr    2,00,000\n'
+  + '        To Sales A/c                              2,00,000\n\n'
+  + '(iii) Purchases A/c               Dr    1,50,000\n'
+  + '        To Cash A/c                               1,00,000\n'
+  + '        To Accounts Payable A/c                     50,000\n\n'
+  + '(iv)  Cash A/c                    Dr    1,95,000\n'
+  + '      Discount Allowed A/c        Dr        5,000\n'
+  + '        To Accounts Receivable A/c                2,00,000\n\n'
+  + '(v)   Accounts Payable A/c        Dr       50,000   (10% discount on 50,000)\n'
+  + '        To Cash A/c                                 45,000\n'
+  + '        To Discount Received A/c                     5,000</pre>'
+  + '<p>Each entry needs a one-line narration. Check: every entry has equal Dr and Cr totals.</p>',
+
+  "Record the following in a Sales Book":
+    '<table><thead><tr><th>Date</th><th>Particulars (customer &amp; goods)</th><th class="n">Details</th><th class="n">Amount</th></tr></thead><tbody>'
+  + '<tr><td>Chaitra 5</td><td>XYZ Stationery &mdash; 25 Maths @ 200; 20 English @ 300<br>less 10% trade discount</td><td class="n">11,000<br>(1,100)</td><td class="n">9,900</td></tr>'
+  + '<tr><td>Chaitra 10</td><td>Everest Pustak Bhandar &mdash; 20 Nepali @ 500; 40 Marketing @ 250<br>less 15% trade discount</td><td class="n">20,000<br>(3,000)</td><td class="n">17,000</td></tr>'
+  + '<tr class="tot"><td colspan="3">Total of Sales Book &rarr; Cr Sales A/c</td><td class="n">26,900</td></tr>'
+  + '</tbody></table>'
+  + '<p>Each customer is debited with the net amount; the total Rs 26,900 is credited to Sales A/c. Trade discount is never posted to a separate account.</p>',
+
+  "Trade debtors Rs 64,000; Bad debts Rs 8,000; Provision for doubtful debts Rs 10,000":
+    '<p>Write off the new bad debt: debtors 64,000 &minus; 4,000 = <b>60,000</b>; total bad debts = 8,000 + 4,000 = 12,000; required provision = 5% &times; 60,000 = <b>3,000</b>.</p>'
+  + '<pre>Dr                Provision for Doubtful Debts Account                Cr\n'
+  + 'To Bad Debts A/c        12,000   |  By Balance b/d                10,000\n'
+  + 'To Balance c/d           3,000   |  By Profit &amp; Loss A/c (bal.)     5,000\n'
+  + '                        -------   |                                -------\n'
+  + '                        15,000   |                                15,000\n'
+  + '                                 |  By Balance b/d (next yr)        3,000</pre>'
+  + '<p>Rs 5,000 is charged to the P&amp;L; Rs 3,000 is deducted from Trade Debtors on the balance sheet (net 57,000).</p>',
+
+  "The following errors are found before the trial balance was prepared":
+    '<pre>(a) Salary A/c              Dr   25,000\n'
+  + '      To Motiram A/c                     25,000\n'
+  + '    (Salary wrongly debited to Motiram - now corrected)\n\n'
+  + '(b) Computer / Equipment A/c   Dr   75,000\n'
+  + '      To Purchases A/c                   75,000\n'
+  + '    (Error of principle - capital item taken as revenue)\n\n'
+  + '(c) Purchases A/c          Dr   90,000\n'
+  + '    Sales A/c              Dr   90,000\n'
+  + '      To Hemanta A/c                    1,80,000\n'
+  + '    (Credit purchase wrongly put through the Sales book)</pre>',
+
+  "Prepare a triple-column cash book from the following Falgun transactions":
+    '<pre>Dr                            CASH BOOK (Falgun)                            Cr\nDate Particulars   Disc  Cash    Bank | Date Particulars  Disc  Cash    Bank\n1   To Balance b/d        70,000  90,000| 5  By Purchases        30,000\n10  To Sales             20,000        |15  By ABC Ltd    5,000        45,000\n25  To XYZ Ltd    2,000          28,000|28  By Drawings         20,000\n                                       |30  By Rent            10,000\n                                       |30  By Salary          30,000\n                                       |    By Balance c/d      -0-    73,000\n              -----  ------  ------     |         -----  ------  ------\n              2,000  90,000 118,000     |         5,000  90,000 118,000\n    To Balance b/d      -0-   73,000</pre>'
+  + '<p>Cash balance nil; bank balance Rs 73,000. Post the discount totals: <b>Dr Discount Allowed A/c 2,000</b>; <b>Cr Discount Received A/c 5,000</b> (the discount columns are memoranda).</p>',
+
+  /* ---------- UNIT 4 ---------- */
+
+  "On 31 December 2023 the bank statement of a company showed a balance of Rs 2,30,000":
+    '<table><thead><tr><th>Adjusted Cash Book</th><th class="n">Add</th><th class="n">Less</th></tr></thead><tbody>'
+  + '<tr><td>Balance per cash book</td><td class="n">2,31,400</td><td class="n"></td></tr>'
+  + '<tr><td>Account receivable collected by bank</td><td class="n">32,000</td><td class="n"></td></tr>'
+  + '<tr><td>Receipt understated (4,200 &minus; 2,400)</td><td class="n">1,800</td><td class="n"></td></tr>'
+  + '<tr><td>Bank collection charge</td><td class="n"></td><td class="n">200</td></tr>'
+  + '<tr><td>Dishonoured (NSF) cheque</td><td class="n"></td><td class="n">25,000</td></tr>'
+  + '<tr class="tot"><td>Adjusted cash book balance</td><td class="n" colspan="2">2,40,000</td></tr>'
+  + '</tbody></table>'
+  + '<table><thead><tr><th>Bank Reconciliation Statement (31 Dec 2023)</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Balance per adjusted cash book</td><td class="n">2,40,000</td></tr>'
+  + '<tr><td>Add: cheque issued, not yet presented</td><td class="n">40,000</td></tr>'
+  + '<tr><td>Less: deposit sent, not yet credited</td><td class="n">(50,000)</td></tr>'
+  + '<tr class="tot"><td>Balance per bank statement</td><td class="n">2,30,000</td></tr>'
+  + '</tbody></table>',
+
+  "prepare a bank reconciliation statement as at 31 Ashad starting with the cash book balance of Rs 85,000":
+    '<table><thead><tr><th>Bank Reconciliation Statement (31 Ashad)</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Balance as per cash book (Dr)</td><td class="n">85,000</td></tr>'
+  + '<tr><td>Add: cheques issued, not presented</td><td class="n">22,000</td></tr>'
+  + '<tr><td>Add: interest allowed by bank</td><td class="n">1,200</td></tr>'
+  + '<tr><td>Less: cheques deposited, not credited</td><td class="n">(15,000)</td></tr>'
+  + '<tr><td>Less: bank charges</td><td class="n">(500)</td></tr>'
+  + '<tr><td>Less: cheque entered in cash book but not banked</td><td class="n">(6,000)</td></tr>'
+  + '<tr class="tot"><td>Balance as per bank statement</td><td class="n">86,700</td></tr>'
+  + '</tbody></table>'
+  + '<p>85,000 + 23,200 &minus; 21,500 = <b>Rs 86,700</b>. (Adjusted cash book route: 85,000 + 1,200 &minus; 500 &minus; 6,000 = 79,700, then + 22,000 &minus; 15,000 = 86,700.)</p>',
+
+  "Himalaya Traders' cash book (bank column) showed a debit balance of Rs 1,58,000":
+    '<table><thead><tr><th>Adjusted Cash Book</th><th class="n">Add</th><th class="n">Less</th></tr></thead><tbody>'
+  + '<tr><td>Opening balance (Dr)</td><td class="n">1,58,000</td><td class="n"></td></tr>'
+  + '<tr><td>Bill collected by bank</td><td class="n">20,000</td><td class="n"></td></tr>'
+  + '<tr><td>Customer&rsquo;s direct deposit</td><td class="n">18,000</td><td class="n"></td></tr>'
+  + '<tr><td>Collection charge</td><td class="n"></td><td class="n">300</td></tr>'
+  + '<tr><td>Bank charges</td><td class="n"></td><td class="n">700</td></tr>'
+  + '<tr><td>Dishonoured cheque</td><td class="n"></td><td class="n">12,000</td></tr>'
+  + '<tr><td>Payment understated (5,400 &minus; 4,500)</td><td class="n"></td><td class="n">900</td></tr>'
+  + '<tr class="tot"><td>Adjusted cash book balance</td><td class="n" colspan="2">1,82,100</td></tr>'
+  + '</tbody></table>'
+  + '<table><thead><tr><th>Bank Reconciliation Statement</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Balance per adjusted cash book</td><td class="n">1,82,100</td></tr>'
+  + '<tr><td>Add: cheques issued, not presented</td><td class="n">46,000</td></tr>'
+  + '<tr><td>Less: cheques deposited, not credited</td><td class="n">(33,000)</td></tr>'
+  + '<tr class="tot"><td>Balance per bank statement</td><td class="n">1,95,100</td></tr>'
+  + '</tbody></table>',
+
+  /* ---------- UNIT 5 ---------- */
+
+  "Equipment costs Rs 8,00,000, residual value Rs 80,000, useful life 6 years":
+    '<p>Annual depreciation = (8,00,000 &minus; 80,000) &divide; 6 = <b>Rs 1,20,000</b>.</p>'
+  + '<table><thead><tr><th>Year</th><th class="n">Depreciation</th><th class="n">Accum. dep.</th><th class="n">Carrying amount</th></tr></thead><tbody>'
+  + '<tr><td>1</td><td class="n">1,20,000</td><td class="n">1,20,000</td><td class="n">6,80,000</td></tr>'
+  + '<tr><td>2</td><td class="n">1,20,000</td><td class="n">2,40,000</td><td class="n">5,60,000</td></tr>'
+  + '</tbody></table><p>Carrying amount after 2 years = <b>Rs 5,60,000</b>.</p>',
+
+  "A machine costing Rs 5,00,000 is depreciated at 20% per annum on the diminishing balance":
+    '<table><thead><tr><th>Year</th><th class="n">Opening CA</th><th class="n">Dep. @ 20%</th><th class="n">Closing CA</th></tr></thead><tbody>'
+  + '<tr><td>1</td><td class="n">5,00,000</td><td class="n">1,00,000</td><td class="n">4,00,000</td></tr>'
+  + '<tr><td>2</td><td class="n">4,00,000</td><td class="n">80,000</td><td class="n">3,20,000</td></tr>'
+  + '<tr><td>3</td><td class="n">3,20,000</td><td class="n">64,000</td><td class="n">2,56,000</td></tr>'
+  + '</tbody></table><p>The rate is applied to the reducing carrying amount, so the charge falls each year.</p>',
+
+  "A firm bought Machine A for Rs 2,50,000 on 1 Baisakh 2076":
+    '<p>SLM at 12% of original cost: A = 30,000/yr, B = 18,000/yr, C = 24,000/yr (pro-rated for months held).</p>'
+  + '<pre>Dr                        MACHINERY ACCOUNT                        Cr\n'
+  + '2076 To Bank (A)     2,50,000 | 2076 By Depreciation        30,000\n'
+  + '                              |      By Balance c/d        2,20,000\n'
+  + '     -------------------------|-------------------------------------\n'
+  + '2077 To Balance b/d  2,20,000 | 2077 By Depreciation        39,000  (A 30,000 + B 9,000)\n'
+  + '     To Bank (B)     1,50,000 |      By Balance c/d        3,31,000  (A 1,90,000 + B 1,41,000)\n'
+  + '     -------------------------|-------------------------------------\n'
+  + '2078 To Balance b/d  3,31,000 | 2078 By Depreciation        45,000  (A 15,000 + B 18,000 + C 12,000)\n'
+  + '     To Bank (C)     2,00,000 |      By Bank - sale of A   1,65,000\n'
+  + '                              |      By P&amp;L - loss on A       10,000  (CA 1,75,000 - proceeds 1,65,000)\n'
+  + '                              |      By Balance c/d        3,11,000  (B 1,23,000 + C 1,88,000)\n'
+  + '                     -------- |                            --------\n'
+  + '                     5,31,000 |                            5,31,000</pre>',
+
+  "A machine was purchased on 1 January 2021 for Rs 10,00,000 plus Rs 60,000 for carriage":
+    '<p>Capitalised cost = 10,00,000 + 60,000 + 40,000 = <b>Rs 11,00,000</b>; residual Rs 1,00,000.</p>'
+  + '<table><thead><tr><th>Yr</th><th class="n">SLM dep.</th><th class="n">SLM &mdash; CA</th><th class="n">DB 40% dep.</th><th class="n">DB &mdash; CA</th></tr></thead><tbody>'
+  + '<tr><td>1</td><td class="n">2,00,000</td><td class="n">9,00,000</td><td class="n">4,40,000</td><td class="n">6,60,000</td></tr>'
+  + '<tr><td>2</td><td class="n">2,00,000</td><td class="n">7,00,000</td><td class="n">2,64,000</td><td class="n">3,96,000</td></tr>'
+  + '<tr><td>3</td><td class="n">2,00,000</td><td class="n">5,00,000</td><td class="n">1,58,400</td><td class="n">2,37,600</td></tr>'
+  + '<tr><td>4</td><td class="n">2,00,000</td><td class="n">3,00,000</td><td class="n">95,040</td><td class="n">1,42,560</td></tr>'
+  + '<tr><td>5</td><td class="n">2,00,000</td><td class="n">1,00,000</td><td class="n">42,560*</td><td class="n">1,00,000</td></tr>'
+  + '<tr class="tot"><td>Total</td><td class="n">10,00,000</td><td class="n"></td><td class="n">10,00,000</td><td class="n"></td></tr>'
+  + '</tbody></table>'
+  + '<p>*Year&nbsp;5 DB charge restricted (full 40% = 57,024 would fall below the Rs 1,00,000 residual). Both methods write off the same Rs 10,00,000 &mdash; DB just front-loads it.</p>',
+
+  "A plant was bought on 1 January 2020 for Rs 6,00,000 plus Rs 40,000 installation":
+    '<p>Cost = 6,00,000 + 40,000 = 6,40,000. Annual dep = (6,40,000 &minus; 40,000) &divide; 8 = <b>Rs 75,000</b>.</p>'
+  + '<table><thead><tr><th>Item</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Depreciation 2020, 2021, 2022 (3 &times; 75,000)</td><td class="n">2,25,000</td></tr>'
+  + '<tr><td>Depreciation 2023 (1 Jan &ndash; 1 Jul, &frac12; yr)</td><td class="n">37,500</td></tr>'
+  + '<tr class="tot"><td>Accumulated depreciation at sale</td><td class="n">2,62,500</td></tr>'
+  + '<tr><td>Carrying amount = 6,40,000 &minus; 2,62,500</td><td class="n">3,77,500</td></tr>'
+  + '<tr><td>Sale proceeds</td><td class="n">3,10,000</td></tr>'
+  + '<tr class="tot"><td>Loss on sale</td><td class="n">67,500</td></tr>'
+  + '</tbody></table>'
+  + '<pre>Cash A/c                    Dr   3,10,000\nAccumulated Depreciation A/c Dr   2,62,500\nLoss on Disposal A/c        Dr      67,500\n  To Plant A/c                             6,40,000</pre>',
+
+  /* ---------- UNIT 6 ---------- */
+
+  "prepare the statement of other comprehensive income as per NFRS: gain on sale of investment Rs 40,000":
+    '<table><thead><tr><th>Statement of Other Comprehensive Income</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Profit for the year (from the statement of profit or loss)</td><td class="n">X</td></tr>'
+  + '<tr><td><i>Other comprehensive income:</i></td><td class="n"></td></tr>'
+  + '<tr><td>Items that will NOT be reclassified to P&amp;L &mdash;</td><td class="n"></td></tr>'
+  + '<tr><td>&nbsp;&nbsp;Loss on revaluation of loose tools</td><td class="n">(20,000)</td></tr>'
+  + '<tr><td>&nbsp;&nbsp;Actuarial loss on defined-benefit pension schemes</td><td class="n">(50,000)</td></tr>'
+  + '<tr><td>Items that MAY be reclassified to P&amp;L &mdash;</td><td class="n"></td></tr>'
+  + '<tr><td>&nbsp;&nbsp;Gain on cash flow hedges</td><td class="n">80,000</td></tr>'
+  + '<tr class="tot"><td>Other comprehensive income for the year</td><td class="n">10,000</td></tr>'
+  + '<tr class="tot"><td>Total comprehensive income</td><td class="n">X + 10,000</td></tr>'
+  + '</tbody></table>'
+  + '<p>&#9888; The <b>gain on sale of investment Rs 40,000</b> is a realised gain &mdash; normally in profit or loss, so it is <b>excluded</b> here (it is already inside &ldquo;profit for the year&rdquo;). If your marking scheme treats all four as OCI, OCI = 40,000 &minus; 20,000 + 80,000 &minus; 50,000 = <b>Rs 50,000</b>. State your assumption.</p>',
+
+  "Prepare the operating activities section of a cash flow statement (indirect method) from: net profit Rs 1,50,000":
+    '<table><thead><tr><th>Cash flows from operating activities</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Net profit</td><td class="n">1,50,000</td></tr>'
+  + '<tr><td>Add: depreciation (non-cash)</td><td class="n">40,000</td></tr>'
+  + '<tr><td>Less: gain on sale of equipment (non-cash)</td><td class="n">(12,000)</td></tr>'
+  + '<tr><td>Less: increase in trade receivables</td><td class="n">(25,000)</td></tr>'
+  + '<tr><td>Add: decrease in inventory</td><td class="n">18,000</td></tr>'
+  + '<tr><td>Add: increase in trade payables</td><td class="n">14,000</td></tr>'
+  + '<tr><td>Less: decrease in accrued expenses</td><td class="n">(6,000)</td></tr>'
+  + '<tr class="tot"><td>Net cash from operating activities</td><td class="n">1,79,000</td></tr>'
+  + '</tbody></table>',
+
+  "the summarised balance sheets of Sagarmatha Trading Ltd":
+    '<table><thead><tr><th>Statement of Cash Flows (indirect) &mdash; year ended 31 Ashad 2081</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td><i>Operating activities</i></td><td class="n"></td></tr>'
+  + '<tr><td>Net profit</td><td class="n">72,000</td></tr>'
+  + '<tr><td>Add: depreciation</td><td class="n">30,000</td></tr>'
+  + '<tr><td>Less: increase in receivables</td><td class="n">(15,000)</td></tr>'
+  + '<tr><td>Add: decrease in inventory</td><td class="n">10,000</td></tr>'
+  + '<tr><td>Less: increase in prepaid expenses</td><td class="n">(3,000)</td></tr>'
+  + '<tr><td>Add: increase in payables</td><td class="n">10,000</td></tr>'
+  + '<tr><td>Less: decrease in accrued expenses</td><td class="n">(2,000)</td></tr>'
+  + '<tr><td>Add: increase in tax payable</td><td class="n">6,000</td></tr>'
+  + '<tr class="tot"><td>Net cash from operating activities</td><td class="n">1,08,000</td></tr>'
+  + '<tr><td><i>Investing activities</i> &mdash; purchase of equipment</td><td class="n">(1,00,000)</td></tr>'
+  + '<tr><td><i>Financing activities</i> &mdash; loan 40,000 + shares 50,000 &minus; dividends 20,000</td><td class="n">70,000</td></tr>'
+  + '<tr class="tot"><td>Net increase in cash (1,08,000 &minus; 1,00,000 + 70,000)</td><td class="n">78,000</td></tr>'
+  + '<tr><td>Cash at start</td><td class="n">40,000</td></tr>'
+  + '<tr class="tot"><td>Cash at end</td><td class="n">1,18,000</td></tr>'
+  + '</tbody></table>'
+  + '<p>Check: closing assets 1,18,000 + 75,000 + 80,000 + 8,000 + 3,70,000 = 6,51,000 = equity + liabilities 55,000 + 6,000 + 18,000 + 1,40,000 + 3,50,000 + 82,000. &check;</p>',
+
+  "Prepare a statement of changes in equity for the year ended 31 Ashad 2081 from: opening share capital Rs 5,00,000":
+    '<table><thead><tr><th>Statement of Changes in Equity</th><th class="n">Share cap.</th><th class="n">Retained earn.</th><th class="n">Reval. surplus</th><th class="n">Gen. reserve</th><th class="n">Total</th></tr></thead><tbody>'
+  + '<tr><td>Opening balance</td><td class="n">5,00,000</td><td class="n">1,20,000</td><td class="n">40,000</td><td class="n">&mdash;</td><td class="n">6,60,000</td></tr>'
+  + '<tr><td>Profit for the year</td><td class="n">&mdash;</td><td class="n">90,000</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">90,000</td></tr>'
+  + '<tr><td>Other comprehensive income (revaluation gain)</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">25,000</td><td class="n">&mdash;</td><td class="n">25,000</td></tr>'
+  + '<tr><td>Issue of shares</td><td class="n">1,00,000</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">1,00,000</td></tr>'
+  + '<tr><td>Dividends declared</td><td class="n">&mdash;</td><td class="n">(30,000)</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">(30,000)</td></tr>'
+  + '<tr><td>Transfer to general reserve</td><td class="n">&mdash;</td><td class="n">(20,000)</td><td class="n">&mdash;</td><td class="n">20,000</td><td class="n">&mdash;</td></tr>'
+  + '<tr class="tot"><td>Closing balance</td><td class="n">6,00,000</td><td class="n">1,60,000</td><td class="n">65,000</td><td class="n">20,000</td><td class="n">8,45,000</td></tr>'
+  + '</tbody></table>'
+  + '<p>The Rs 8,45,000 total carries to the equity section of the statement of financial position.</p>',
+
+  /* ---------- UNIT 7 ---------- */
+
+  "prepare a value added statement showing net profit after tax: Sales revenue Rs 800,000":
+    '<table><thead><tr><th>A. Value added generated</th><th class="n">Rs</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Sales revenue</td><td class="n"></td><td class="n">8,00,000</td></tr>'
+  + '<tr><td>Less bought-in materials &amp; services:</td><td class="n"></td><td class="n"></td></tr>'
+  + '<tr><td>&nbsp;&nbsp;Materials 2,20,000 + supplies 40,000 + fuel 12,000</td><td class="n">2,72,000</td><td class="n"></td></tr>'
+  + '<tr><td>&nbsp;&nbsp;Manufacturing OH 48,000 + admin &amp; selling OH 1,20,000</td><td class="n">1,68,000</td><td class="n">(4,40,000)</td></tr>'
+  + '<tr><td>Value added by operations</td><td class="n"></td><td class="n">3,60,000</td></tr>'
+  + '<tr><td>Add: income from investment</td><td class="n"></td><td class="n">25,000</td></tr>'
+  + '<tr class="tot"><td>Total value added</td><td class="n"></td><td class="n">3,85,000</td></tr>'
+  + '</tbody></table>'
+  + '<table><thead><tr><th>B. Value added applied</th><th class="n">Rs</th><th class="n">%</th></tr></thead><tbody>'
+  + '<tr><td>To employees &mdash; salary and wages</td><td class="n">50,000</td><td class="n">13.0</td></tr>'
+  + '<tr><td>To providers of capital &mdash; interest 10,000 + dividend 40,000</td><td class="n">50,000</td><td class="n">13.0</td></tr>'
+  + '<tr><td>To government &mdash; income tax</td><td class="n">60,000</td><td class="n">15.6</td></tr>'
+  + '<tr><td>Retained &mdash; depreciation 15,000 + retained profit 2,10,000</td><td class="n">2,25,000</td><td class="n">58.4</td></tr>'
+  + '<tr class="tot"><td>Total value added applied</td><td class="n">3,85,000</td><td class="n">100</td></tr>'
+  + '</tbody></table>'
+  + '<p>Net profit after tax = dividend 40,000 + retained profit 2,10,000 = <b>Rs 2,50,000</b>.</p>',
+
+  "A company has sales of Rs 12,00,000, bought-in materials and services of Rs 7,00,000":
+    '<table><thead><tr><th>Value Added Statement</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Sales 12,00,000 &minus; bought-in 7,00,000</td><td class="n">5,00,000</td></tr>'
+  + '<tr><td>Add: other income</td><td class="n">50,000</td></tr>'
+  + '<tr class="tot"><td>Total value added</td><td class="n">5,50,000</td></tr>'
+  + '<tr><td>Applied &mdash; employees (wages)</td><td class="n">1,80,000</td></tr>'
+  + '<tr><td>Applied &mdash; interest</td><td class="n">40,000</td></tr>'
+  + '<tr><td>Applied &mdash; dividend</td><td class="n">60,000</td></tr>'
+  + '<tr><td>Applied &mdash; tax</td><td class="n">90,000</td></tr>'
+  + '<tr><td>Applied &mdash; depreciation 30,000 + retained profit 1,50,000</td><td class="n">1,80,000</td></tr>'
+  + '<tr class="tot"><td>Total applied</td><td class="n">5,50,000</td></tr>'
+  + '</tbody></table>'
+  + '<p>Value added per employee = 5,50,000 &divide; 20 = <b>Rs 27,500</b>. Net profit after tax = 60,000 + 1,50,000 = <b>Rs 2,10,000</b>.</p>',
+
+  /* ---------- UNIT 8 ---------- */
+
+  "The following comparative balance sheet is provided (Rs): Property, plant and equipment 200,000":
+    '<table><thead><tr><th>Item</th><th class="n">2077</th><th class="n">2078</th><th class="n">Change</th><th class="n">%</th></tr></thead><tbody>'
+  + '<tr><td>Property, plant and equipment</td><td class="n">2,00,000</td><td class="n">2,80,000</td><td class="n">+80,000</td><td class="n">+40.0</td></tr>'
+  + '<tr><td>Inventories</td><td class="n">50,000</td><td class="n">60,000</td><td class="n">+10,000</td><td class="n">+20.0</td></tr>'
+  + '<tr><td>Trade &amp; other receivables</td><td class="n">80,000</td><td class="n">40,000</td><td class="n">(40,000)</td><td class="n">&minus;50.0</td></tr>'
+  + '<tr><td>Cash &amp; cash equivalent</td><td class="n">70,000</td><td class="n">91,000</td><td class="n">+21,000</td><td class="n">+30.0</td></tr>'
+  + '<tr class="tot"><td>Total assets</td><td class="n">4,00,000</td><td class="n">4,71,000</td><td class="n">+71,000</td><td class="n">+17.75</td></tr>'
+  + '<tr><td>Equity share</td><td class="n">2,50,000</td><td class="n">2,90,000</td><td class="n">+40,000</td><td class="n">+16.0</td></tr>'
+  + '<tr><td>Reserves</td><td class="n">20,000</td><td class="n">30,000</td><td class="n">+10,000</td><td class="n">+50.0</td></tr>'
+  + '<tr><td>Long-term debt</td><td class="n">1,00,000</td><td class="n">1,12,000</td><td class="n">+12,000</td><td class="n">+12.0</td></tr>'
+  + '<tr><td>Trade &amp; other payables</td><td class="n">30,000</td><td class="n">39,000</td><td class="n">+9,000</td><td class="n">+30.0</td></tr>'
+  + '<tr class="tot"><td>Total equity &amp; liabilities</td><td class="n">4,00,000</td><td class="n">4,71,000</td><td class="n">+71,000</td><td class="n">+17.75</td></tr>'
+  + '</tbody></table>'
+  + '<p>% change = (2078 &minus; 2077) &divide; 2077 &times; 100. Growth ~18%, mostly in PPE (+40%), funded by equity (+16%) and reserves (+50%); receivables halved.</p>',
+
+  "compute the liquidity ratios for 2023 and comment: current assets Rs 4,50,000":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th></tr></thead><tbody>'
+  + '<tr><td>Current ratio</td><td class="n">4,50,000 &divide; 2,00,000</td><td class="n">2.25 : 1</td></tr>'
+  + '<tr><td>Quick ratio</td><td class="n">(4,50,000 &minus; 1,60,000) &divide; 2,00,000</td><td class="n">1.45 : 1</td></tr>'
+  + '<tr><td>Working capital</td><td class="n">4,50,000 &minus; 2,00,000</td><td class="n">Rs 2,50,000</td></tr>'
+  + '</tbody></table>'
+  + '<p>Both ratios are above the rules of thumb (2:1 and 1:1) &mdash; short-term liquidity is comfortable.</p>',
+
+  "compute the capital-structure ratios for 2023: long-term debt Rs 2,00,000":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th></tr></thead><tbody>'
+  + '<tr><td>Debt-equity ratio</td><td class="n">2,00,000 &divide; 8,00,000</td><td class="n">0.25 : 1</td></tr>'
+  + '<tr><td>Debt to total capital</td><td class="n">2,00,000 &divide; (2,00,000 + 8,00,000)</td><td class="n">20%</td></tr>'
+  + '<tr><td>Interest coverage</td><td class="n">EBIT 2,30,000 &divide; interest 30,000</td><td class="n">7.67 times</td></tr>'
+  + '</tbody></table>'
+  + '<p>Low gearing (20% of permanent capital is debt) and interest covered 7.67&times; &mdash; low financial risk.</p>',
+
+  "Statement of P&L of Rara Company for the year ended 31 December 2023 (Rs): Sales 15,00,000":
+    '<table><thead><tr><th>#</th><th>Ratio (2023)</th><th class="n">Working</th><th class="n">Result</th></tr></thead><tbody>'
+  + '<tr><td>a</td><td>Current ratio</td><td class="n">4,50,000 &divide; 2,00,000</td><td class="n">2.25 : 1</td></tr>'
+  + '<tr><td>b</td><td>Quick ratio</td><td class="n">2,90,000 &divide; 2,00,000</td><td class="n">1.45 : 1</td></tr>'
+  + '<tr><td>c</td><td>Debt to total capital</td><td class="n">2,00,000 &divide; 10,00,000</td><td class="n">20%</td></tr>'
+  + '<tr><td>d</td><td>Interest coverage</td><td class="n">2,30,000 &divide; 30,000</td><td class="n">7.67&times;</td></tr>'
+  + '<tr><td>e</td><td>Inventory turnover</td><td class="n">11,20,000 &divide; 1,40,000</td><td class="n">8&times;</td></tr>'
+  + '<tr><td>f</td><td>Total assets turnover</td><td class="n">15,00,000 &divide; 10,70,000</td><td class="n">1.40&times;</td></tr>'
+  + '<tr><td>g</td><td>Net profit margin</td><td class="n">2,00,000 &divide; 15,00,000</td><td class="n">13.33%</td></tr>'
+  + '<tr><td>h</td><td>Return on equity</td><td class="n">2,00,000 &divide; 7,00,000</td><td class="n">28.57%</td></tr>'
+  + '<tr><td>i</td><td>Return on total assets</td><td class="n">2,00,000 &divide; 10,70,000</td><td class="n">18.69%</td></tr>'
+  + '<tr><td>j</td><td>Return on capital employed</td><td class="n">2,30,000 &divide; 10,00,000</td><td class="n">23%</td></tr>'
+  + '</tbody></table>'
+  + '<p>Averages: inventory (1,20,000+1,60,000)/2 = 1,40,000; total assets (9,40,000+12,00,000)/2 = 10,70,000; equity (6,00,000+8,00,000)/2 = 7,00,000. Capital employed = 12,00,000 &minus; 2,00,000 = 10,00,000. <b>Every ratio beats its benchmark</b> &mdash; but note receivables jumped 30,000&rarr;1,10,000, and the high ROE partly reflects the tax holiday.</p>',
+
+  /* ---------- SECTION-D CASES ---------- */
+
+  "Pass the journal entries for all six adjustments.":
+    '<pre>(i)  Closing Stock A/c (SoFP)   Dr  1,10,000\n       To Trading / COGS                     1,10,000\n\n'
+  + '(ii) Depreciation A/c           Dr    42,000\n       To Accum. Dep - Furniture             12,000   (10% x 1,20,000)\n       To Accum. Dep - Machinery             30,000   (15% x 2,00,000)\n\n'
+  + '(iii) Salaries A/c              Dr     6,000\n       To Outstanding Salaries                6,000\n\n'
+  + '(iv) Prepaid Insurance A/c      Dr     8,000\n       To Insurance A/c                       8,000\n\n'
+  + '(v)  Interest Expense A/c       Dr    12,000            (12% x 1,00,000)\n       To Outstanding Interest              12,000\n\n'
+  + '(vi) Profit &amp; Loss A/c          Dr     1,000\n       To Provision for Doubtful Debts        1,000   (5% x 80,000 = 4,000; had 3,000)</pre>',
+
+  "Prepare the Statement of Profit or Loss for the year ended 31 Ashad 2081.":
+    '<table><thead><tr><th>Statement of Profit or Loss</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td>Sales</td><td class="n">7,20,000</td></tr>'
+  + '<tr><td>Cost of goods sold (90,000 + 4,20,000 + 6,000 &minus; 1,10,000)</td><td class="n">(4,06,000)</td></tr>'
+  + '<tr class="tot"><td>Gross profit</td><td class="n">3,14,000</td></tr>'
+  + '<tr><td>Add: discount received 4,000 + commission received 17,000</td><td class="n">21,000</td></tr>'
+  + '<tr><td>Less operating expenses: rent 36,000; salaries 90,000; wages 30,000; insurance 16,000; bad debts + provision 5,000; depreciation 42,000</td><td class="n">(2,19,000)</td></tr>'
+  + '<tr class="tot"><td>Operating profit</td><td class="n">1,16,000</td></tr>'
+  + '<tr><td>Less: loan interest</td><td class="n">(12,000)</td></tr>'
+  + '<tr class="tot"><td>Net profit</td><td class="n">1,04,000</td></tr>'
+  + '</tbody></table>',
+
+  "Prepare the classified Statement of Financial Position as at 31 Ashad 2081.":
+    '<table><thead><tr><th>Statement of Financial Position (31 Ashad 2081)</th><th class="n">Rs</th></tr></thead><tbody>'
+  + '<tr><td><i>Non-current assets</i></td><td class="n"></td></tr>'
+  + '<tr><td>Machinery (2,00,000 &minus; 30,000)</td><td class="n">1,70,000</td></tr>'
+  + '<tr><td>Furniture (1,20,000 &minus; 12,000)</td><td class="n">1,08,000</td></tr>'
+  + '<tr><td><i>Current assets</i></td><td class="n"></td></tr>'
+  + '<tr><td>Closing stock</td><td class="n">1,10,000</td></tr>'
+  + '<tr><td>Trade debtors (80,000 &minus; 4,000 provision)</td><td class="n">76,000</td></tr>'
+  + '<tr><td>Prepaid insurance</td><td class="n">8,000</td></tr>'
+  + '<tr><td>Bank 60,000 + cash 25,000</td><td class="n">85,000</td></tr>'
+  + '<tr class="tot"><td>Total assets</td><td class="n">5,57,000</td></tr>'
+  + '<tr><td>Capital 3,00,000 + net profit 1,04,000 &minus; drawings 30,000</td><td class="n">3,74,000</td></tr>'
+  + '<tr><td>Non-current: 12% bank loan</td><td class="n">1,00,000</td></tr>'
+  + '<tr><td>Current: creditors 65,000 + o/s salaries 6,000 + o/s interest 12,000</td><td class="n">83,000</td></tr>'
+  + '<tr class="tot"><td>Total equity &amp; liabilities</td><td class="n">5,57,000</td></tr>'
+  + '</tbody></table>',
+
+  "Compute the current ratio, the debt-equity ratio (using long-term debt) and the gross profit ratio, and comment briefly":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th></tr></thead><tbody>'
+  + '<tr><td>Current ratio</td><td class="n">2,79,000 &divide; 83,000</td><td class="n">3.36 : 1</td></tr>'
+  + '<tr><td>Debt-equity (long-term debt)</td><td class="n">1,00,000 &divide; 3,74,000</td><td class="n">0.27 : 1</td></tr>'
+  + '<tr><td>Gross profit ratio</td><td class="n">3,14,000 &divide; 7,20,000</td><td class="n">43.6%</td></tr>'
+  + '</tbody></table>'
+  + '<p>Very liquid (3.36, above 2:1 &mdash; possibly idle bank balance), low gearing (0.27), healthy gross margin.</p>',
+
+  "Compute the net cash flow from operating activities using the indirect method.":
+    '<table><thead><tr><th>Operating activities (indirect)</th><th class="n">Rs (’000)</th></tr></thead><tbody>'
+  + '<tr><td>Net profit</td><td class="n">66</td></tr>'
+  + '<tr><td>Add: depreciation</td><td class="n">24</td></tr>'
+  + '<tr><td>Less: increase in receivables (50&rarr;65)</td><td class="n">(15)</td></tr>'
+  + '<tr><td>Add: decrease in inventory (70&rarr;55)</td><td class="n">15</td></tr>'
+  + '<tr><td>Add: increase in payables (40&rarr;55)</td><td class="n">15</td></tr>'
+  + '<tr><td>Add: increase in tax payable (10&rarr;14)</td><td class="n">4</td></tr>'
+  + '<tr class="tot"><td>Net cash from operating activities</td><td class="n">109</td></tr>'
+  + '</tbody></table>',
+
+  "Prepare the statement of cash flows and reconcile the opening and closing cash balance.":
+    '<table><thead><tr><th>Statement of Cash Flows (Rs ’000)</th><th class="n"></th></tr></thead><tbody>'
+  + '<tr><td>Net cash from operating activities</td><td class="n">109</td></tr>'
+  + '<tr><td>Net cash used in investing (purchase of equipment: 310 &minus; 250 + 24 = 84)</td><td class="n">(84)</td></tr>'
+  + '<tr><td>Net cash from financing (loan 30 + shares 40 &minus; dividends 30)</td><td class="n">40</td></tr>'
+  + '<tr class="tot"><td>Net increase in cash</td><td class="n">65</td></tr>'
+  + '<tr><td>Cash at start</td><td class="n">30</td></tr>'
+  + '<tr class="tot"><td>Cash at end</td><td class="n">95</td></tr>'
+  + '</tbody></table>'
+  + '<p>Check: closing assets 95 + 65 + 55 + 310 = 525 = 55 + 14 + 120 + 240 + 96. Retained earnings 60 + 66 &minus; 30 = 96. &check;</p>',
+
+  "Compute the current ratio and the quick ratio for 2023 and comment on liquidity":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th><th class="n">Benchmark</th></tr></thead><tbody>'
+  + '<tr><td>Current ratio</td><td class="n">4,50,000 &divide; 2,00,000</td><td class="n">2.25 : 1</td><td class="n">2:1 &check;</td></tr>'
+  + '<tr><td>Quick ratio</td><td class="n">(4,50,000 &minus; 1,60,000) &divide; 2,00,000</td><td class="n">1.45 : 1</td><td class="n">1:1 &check;</td></tr>'
+  + '</tbody></table>',
+
+  "Compute the debt to total capital ratio and the interest coverage ratio for 2023":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th><th class="n">Benchmark</th></tr></thead><tbody>'
+  + '<tr><td>Debt to total capital</td><td class="n">2,00,000 &divide; (2,00,000 + 8,00,000)</td><td class="n">20%</td><td class="n">&lt;40% &check;</td></tr>'
+  + '<tr><td>Interest coverage</td><td class="n">2,30,000 &divide; 30,000</td><td class="n">7.67&times;</td><td class="n">&gt;1 &check;</td></tr>'
+  + '</tbody></table>',
+
+  "Compute the inventory turnover ratio and the total assets turnover ratio for 2023":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th><th class="n">Benchmark</th></tr></thead><tbody>'
+  + '<tr><td>Inventory turnover</td><td class="n">11,20,000 &divide; avg 1,40,000</td><td class="n">8 times</td><td class="n">&ge;8&times; &check;</td></tr>'
+  + '<tr><td>Total assets turnover</td><td class="n">15,00,000 &divide; avg 10,70,000</td><td class="n">1.40 times</td><td class="n">&gt;1&times; &check;</td></tr>'
+  + '</tbody></table>'
+  + '<p>Watch: receivables rose 30,000 &rarr; 1,10,000 &mdash; investigate collection.</p>',
+
+  "Compute the net profit margin, return on equity, return on total assets and return on capital employed for 2023":
+    '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th><th class="n">Benchmark</th></tr></thead><tbody>'
+  + '<tr><td>Net profit margin</td><td class="n">2,00,000 &divide; 15,00,000</td><td class="n">13.33%</td><td class="n">&ge;12% &check;</td></tr>'
+  + '<tr><td>Return on equity</td><td class="n">2,00,000 &divide; avg 7,00,000</td><td class="n">28.57%</td><td class="n">&ge;7% &check;</td></tr>'
+  + '<tr><td>Return on total assets</td><td class="n">2,00,000 &divide; avg 10,70,000</td><td class="n">18.69%</td><td class="n">&ge;5% &check;</td></tr>'
+  + '<tr><td>Return on capital employed</td><td class="n">2,30,000 &divide; 10,00,000</td><td class="n">23%</td><td class="n">&ge;5% &check;</td></tr>'
+  + '</tbody></table>'
+  + '<p>All benchmarks met. The high ROE partly reflects the tax holiday &mdash; return ratios will fall once normal tax applies.</p>'
+
+  };
+
+  var keys = Object.keys(SOL);
+  function apply(it){
+    if(!it || !it.q) return;
+    for(var i=0;i<keys.length;i++){ if(it.q.indexOf(keys[i]) !== -1){ it.sol = SOL[keys[i]]; return; } }
+  }
+  var missed = keys.slice();
+  function mark(it){ if(!it||!it.q) return; for(var i=0;i<keys.length;i++){ if(it.q.indexOf(keys[i])!==-1){ var x=missed.indexOf(keys[i]); if(x>-1) missed.splice(x,1); } } }
+
+  Object.keys(E.units).forEach(function(u){
+    ['brief','short','long'].forEach(function(t){ (E.units[u][t]||[]).forEach(function(it){ apply(it); mark(it); }); });
+  });
+  (E.cases||[]).forEach(function(c){ (c.qs||[]).forEach(function(q){ apply(q); mark(q); }); });
+
+  if(missed.length && window.console) console.warn('[acc solutions] unmatched keys:', missed);
+})();
+
+</script>
+<script>
 /* ============ ICONOGRAPHY ============
    Small inline SVGs per subject, used as card decoration, banner watermark,
    and unit-tile pattern tint — no external images, so everything still
@@ -12579,6 +13033,13 @@ function renderExamTabs(){
   tabs.style.display = examState.mock ? 'none' : 'flex';
 }
 
+function examModelHTML(obj, heading){
+  let h = '<h4>' + (heading || 'What the examiner is looking for') + '</h4><ol>'
+    + obj.pts.map(x => '<li>' + x + '</li>').join('') + '</ol>';
+  if(obj.sol) h += '<h4 class="ex-sol-h">Worked solution</h4><div class="ex-sol">' + obj.sol + '</div>';
+  return h;
+}
+
 function renderExamQ(){
   const bank = examBank();
   const list = bank[examState.sec] || [];
@@ -12606,6 +13067,12 @@ function renderExamQ(){
     body.appendChild(d);
   }
 
+  if(q.sol){
+    const nt = document.createElement('div'); nt.className = 'ex-needs-table';
+    nt.textContent = '▦ This answer needs a ruled table / statement format. Sketch the layout on paper first, then reveal to check against the worked solution.';
+    body.appendChild(nt);
+  }
+
   const ta = document.createElement('textarea');
   ta.className = 'ex-ta';
   ta.placeholder = 'Write your answer here, then reveal the marking points and compare.';
@@ -12622,8 +13089,7 @@ function renderExamQ(){
   body.appendChild(rev);
 
   const model = document.createElement('div'); model.className = 'ex-model';
-  model.innerHTML = '<h4>What the examiner is looking for</h4><ol>'
-    + q.pts.map(x => `<li>${x}</li>`).join('') + '</ol>';
+  model.innerHTML = examModelHTML(q);
   body.appendChild(model);
   rev.onclick = () => { model.classList.add('on'); rev.style.display = 'none'; self.style.display = 'flex'; };
 
@@ -12700,7 +13166,7 @@ function renderMockPaper(){
       let ex = d.querySelector('.ex-model');
       if(ex){ ex.classList.toggle('on'); return; }
       ex = document.createElement('div'); ex.className = 'ex-model on';
-      ex.innerHTML = '<h4>Marking points</h4><ol>' + obj.pts.map(x=>`<li>${x}</li>`).join('') + '</ol>';
+      ex.innerHTML = examModelHTML(obj, 'Marking points');
       d.appendChild(ex);
     };
     body.appendChild(d);
