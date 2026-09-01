@@ -1,5 +1,5 @@
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
 <title>TU BBM Study Hub</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
@@ -361,7 +361,9 @@
   /* ---- Written exam mode ---- */
   .ud-btn.exam{background:#4a3570;color:#efe6ff;}
   .ud-btn.exam:active{background:#3c2a5c;}
-  #view-exam{position:fixed;inset:0;background:var(--bg);z-index:2400;flex-direction:column;padding:0;}
+  /* height:100dvh (not just inset:0) so the panel shrinks when the phone keyboard
+     opens — keeps the answer box in the visible area instead of behind the keyboard. */
+  #view-exam{position:fixed;inset:0;height:100vh;height:100dvh;background:var(--bg);z-index:2400;flex-direction:column;padding:0;}
   #view-exam.active{display:flex;}
   .ex-bar{display:flex;align-items:center;gap:9px;padding:12px 14px;background:var(--bg2);
     border-bottom:1px solid var(--line);flex-shrink:0;padding-top:calc(12px + env(safe-area-inset-top,0px));}
@@ -376,7 +378,10 @@
     padding:6px 12px;border-radius:20px;font-size:.75rem;font-weight:700;white-space:nowrap;
     cursor:pointer;font-family:inherit;}
   .ex-tab.on{background:var(--accent);color:#1a1608;border-color:var(--accent);}
-  .ex-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px 100px;}
+  /* No -webkit-overflow-scrolling:touch here — on iOS its momentum layer blurs a
+     <textarea> inside the scroller after ~1 keystroke (the reported bug). Modern
+     iOS scrolls smoothly without it. */
+  .ex-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:16px 14px 100px;}
   .ex-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
   .ex-marks{font-size:.68rem;font-weight:700;letter-spacing:.06em;background:var(--accent);
     color:#1a1608;padding:3px 9px;border-radius:20px;}
@@ -388,9 +393,11 @@
   .ex-dia{font-size:.78rem;color:#e0a03f;background:rgba(224,160,63,.08);
     border-left:2px solid rgba(224,160,63,.5);padding:9px 11px;border-radius:0 8px 8px 0;
     margin-bottom:14px;line-height:1.4;}
-  .ex-ta{width:100%;min-height:150px;background:var(--card);border:1px solid var(--line);
-    border-radius:12px;padding:12px;color:#e8e6ef;font-size:.92rem;line-height:1.55;
-    font-family:inherit;resize:vertical;}
+  /* resize:none — the drag-handle is a focus hazard on iOS and the box is tall
+     enough. Long answers scroll inside the box itself. */
+  .ex-ta{width:100%;min-height:180px;max-height:46vh;overflow-y:auto;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;padding:12px;color:#e8e6ef;font-size:.92rem;
+    line-height:1.55;font-family:inherit;resize:none;}
   .ex-ta:focus{outline:none;border-color:var(--accent);}
   .ex-hint{font-size:.72rem;color:var(--ink-dim);margin:7px 2px 12px;}
   .ex-reveal{width:100%;background:#2f6b4f;color:#eafff2;border:none;border-radius:12px;
@@ -13113,10 +13120,24 @@ function renderExamQ(){
 
   const ta = document.createElement('textarea');
   ta.className = 'ex-ta';
+  ta.rows = 6;
+  ta.setAttribute('autocapitalize', 'sentences');
+  ta.setAttribute('autocorrect', 'on');
+  ta.setAttribute('spellcheck', 'true');
   ta.placeholder = q.sol ? 'Rough working / notes (write the full statement on paper).'
                          : 'Write your answer here, then reveal the marking points and compare.';
   ta.value = saved.ans || '';
-  ta.oninput = () => { const s2 = loadExamState(); s2[id] = Object.assign(s2[id] || {}, { ans: ta.value }); saveExamState(s2); };
+  /* Save into the in-memory cache only while typing (the cache IS the source of
+     truth for renderExamQ); the debounced localStorage write happens on a pause,
+     on blur, and on page hide. Nothing heavy runs per keystroke. */
+  ta.addEventListener('input', () => {
+    const st = loadExamState();
+    st[id] = Object.assign(st[id] || {}, { ans: ta.value });
+    _examCache = { key: examKey(), st: st };
+    clearTimeout(_examSaveT);
+    _examSaveT = setTimeout(flushExamState, 800);
+  });
+  ta.addEventListener('blur', flushExamState);
   body.appendChild(ta);
 
   const hint = document.createElement('div'); hint.className = 'ex-hint';
