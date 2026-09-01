@@ -365,6 +365,9 @@
      opens — keeps the answer box in the visible area instead of behind the keyboard. */
   #view-exam{position:fixed;inset:0;height:100vh;height:100dvh;background:var(--bg);z-index:2400;flex-direction:column;padding:0;}
   #view-exam.active{display:flex;}
+  /* The floating notes pencil would sit on top of the dock's Next button here,
+     and the answer box already IS the writing surface in exam mode. */
+  #view-exam.active ~ #fab-pencil{display:none;}
   .ex-bar{display:flex;align-items:center;gap:9px;padding:12px 14px;background:var(--bg2);
     border-bottom:1px solid var(--line);flex-shrink:0;padding-top:calc(12px + env(safe-area-inset-top,0px));}
   .ex-bar-title{flex:1;min-width:0;font-size:.88rem;font-weight:700;overflow:hidden;
@@ -378,10 +381,15 @@
     padding:6px 12px;border-radius:20px;font-size:.75rem;font-weight:700;white-space:nowrap;
     cursor:pointer;font-family:inherit;}
   .ex-tab.on{background:var(--accent);color:#1a1608;border-color:var(--accent);}
-  /* No -webkit-overflow-scrolling:touch here — on iOS its momentum layer blurs a
-     <textarea> inside the scroller after ~1 keystroke (the reported bug). Modern
-     iOS scrolls smoothly without it. */
-  .ex-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:16px 14px 100px;}
+  /* The answer box is NOT in here — it's in .ex-dock below, a direct child of the
+     fixed panel. A <textarea> inside this scroll container was the iOS focus-loss
+     bug: when the keyboard opened, Safari scrolled the inner container to reveal
+     the field and that scroll blurred it, reverting the text to a checkpoint.
+     .ex-body now only holds read-only content (question, worked solution, marking
+     points, self-check), so scrolling it while typing is impossible. */
+  .ex-body{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:16px 14px 22px;}
+  .ex-dock{flex-shrink:0;background:var(--bg2);border-top:1px solid var(--line);
+    padding:9px 12px calc(9px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;}
   .ex-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
   .ex-marks{font-size:.68rem;font-weight:700;letter-spacing:.06em;background:var(--accent);
     color:#1a1608;padding:3px 9px;border-radius:20px;}
@@ -393,13 +401,14 @@
   .ex-dia{font-size:.78rem;color:#e0a03f;background:rgba(224,160,63,.08);
     border-left:2px solid rgba(224,160,63,.5);padding:9px 11px;border-radius:0 8px 8px 0;
     margin-bottom:14px;line-height:1.4;}
-  /* resize:none — the drag-handle is a focus hazard on iOS and the box is tall
-     enough. Long answers scroll inside the box itself. */
-  .ex-ta{width:100%;min-height:180px;max-height:46vh;overflow-y:auto;background:var(--card);
-    border:1px solid var(--line);border-radius:12px;padding:12px;color:#e8e6ef;font-size:.92rem;
-    line-height:1.55;font-family:inherit;resize:none;}
+  /* Docked answer box. resize:none (drag handle is an iOS focus hazard); it scrolls
+     inside itself for long answers. Kept short because it lives in the dock, not
+     the scroll area. */
+  .ex-ta{width:100%;min-height:84px;max-height:32vh;overflow-y:auto;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;padding:11px;color:#e8e6ef;font-size:.92rem;
+    line-height:1.5;font-family:inherit;resize:none;}
   .ex-ta:focus{outline:none;border-color:var(--accent);}
-  .ex-hint{font-size:.72rem;color:var(--ink-dim);margin:7px 2px 12px;}
+  .ex-hint{font-size:.7rem;color:var(--ink-dim);margin:0 2px;}
   .ex-reveal{width:100%;background:#2f6b4f;color:#eafff2;border:none;border-radius:12px;
     padding:13px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:14px;}
   .ex-reveal:active{background:#265741;}
@@ -817,6 +826,7 @@
   </div>
   <div class="ex-tabs" id="ex-tabs"></div>
   <div class="ex-body" id="ex-body"></div>
+  <div class="ex-dock" id="ex-dock"></div>
 </div>
 
 <div id="fab-pencil">✎</div>
@@ -13039,8 +13049,21 @@ function flushExamState(){
   clearTimeout(_examSaveT);
   try{ localStorage.setItem(_examCache.key, JSON.stringify(_examCache.st)); }catch(e){}
 }
-window.addEventListener('pagehide', flushExamState);
-document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') flushExamState(); });
+/* The live answer box. There is deliberately NO `input` handler on it (that was
+   the focus-loss bug on iOS). We copy its text into state on every action that
+   leaves the question — nav, tab switch, self-mark, close, app-switch — and
+   renderExamQ() calls this as its first line so every re-render path is covered. */
+let _examTA = null, _examTAId = null;
+function syncExamTA(){
+  if(_examTA && _examTA.isConnected && _examTAId != null){
+    const st = _examCache.st || {};
+    st[_examTAId] = Object.assign(st[_examTAId] || {}, { ans: _examTA.value });
+    _examCache = { key: examKey(), st: st };
+  }
+  flushExamState();
+}
+window.addEventListener('pagehide', syncExamTA);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') syncExamTA(); });
 
 function openExam(){
   if(!hasExam(currentSubjectKey, currentUnitIdx)) return;
@@ -13052,6 +13075,8 @@ function openExam(){
   renderExamTabs(); renderExamQ();
 }
 function closeExam(){
+  syncExamTA();
+  _examTA = null; _examTAId = null;
   document.body.classList.remove('notes-open');
   document.getElementById('view-exam').classList.remove('active');
 }
@@ -13084,10 +13109,12 @@ function examModelHTML(obj, heading){
 }
 
 function renderExamQ(){
+  syncExamTA();   // capture whatever is in the (old) answer box before we replace it
   const bank = examBank();
   const list = bank[examState.sec] || [];
   const body = document.getElementById('ex-body');
-  if(!list.length){ body.innerHTML = '<p class="ex-hint">No questions in this section yet.</p>'; return; }
+  const dock = document.getElementById('ex-dock');
+  if(!list.length){ body.innerHTML = '<p class="ex-hint">No questions in this section yet.</p>'; dock.innerHTML = ''; _examTA = null; _examTAId = null; return; }
   if(examState.i >= list.length) examState.i = 0;
   const q = list[examState.i];
   const st = loadExamState();
@@ -13095,6 +13122,7 @@ function renderExamQ(){
   const saved = st[id] || {};
 
   body.innerHTML = '';
+  dock.innerHTML = '';
   const meta = document.createElement('div'); meta.className = 'ex-meta';
   meta.innerHTML = `<span class="ex-marks">${SEC_MARKS[examState.sec]} MARKS</span>`
     + (q.real ? `<span class="ex-real">ASKED IN ${q.real}</span>` : '')
@@ -13142,32 +13170,6 @@ function renderExamQ(){
     if(saved.mark){ sol.classList.add('on'); model.classList.add('on'); bSol.style.display='none'; bPts.style.display='none'; }
   }
 
-  const ta = document.createElement('textarea');
-  ta.className = 'ex-ta';
-  ta.rows = 6;
-  ta.setAttribute('autocapitalize', 'sentences');
-  ta.setAttribute('autocorrect', 'on');
-  ta.setAttribute('spellcheck', 'true');
-  ta.placeholder = q.sol ? 'Rough working / notes (write the full statement on paper).'
-                         : 'Write your answer here, then reveal the marking points and compare.';
-  ta.value = saved.ans || '';
-  /* Save into the in-memory cache only while typing (the cache IS the source of
-     truth for renderExamQ); the debounced localStorage write happens on a pause,
-     on blur, and on page hide. Nothing heavy runs per keystroke. */
-  ta.addEventListener('input', () => {
-    const st = loadExamState();
-    st[id] = Object.assign(st[id] || {}, { ans: ta.value });
-    _examCache = { key: examKey(), st: st };
-    clearTimeout(_examSaveT);
-    _examSaveT = setTimeout(flushExamState, 800);
-  });
-  ta.addEventListener('blur', flushExamState);
-  body.appendChild(ta);
-
-  const hint = document.createElement('div'); hint.className = 'ex-hint';
-  hint.textContent = 'Saved automatically. Aim for roughly one solid point per mark.';
-  body.appendChild(hint);
-
   self = document.createElement('div'); self.className = 'ex-self';
   self.style.display = saved.mark ? 'flex' : 'none';
   [['got','✓ Got it'],['part','~ Partly'],['miss','✗ Missed']].forEach(([k,label]) => {
@@ -13191,6 +13193,27 @@ function renderExamQ(){
 
   body.appendChild(self);
 
+  /* ---- docked answer box (never inside .ex-body's scroller) ---- */
+  const ta = document.createElement('textarea');
+  ta.className = 'ex-ta';
+  ta.rows = 3;
+  ta.setAttribute('autocapitalize', 'sentences');
+  ta.setAttribute('autocorrect', 'on');
+  ta.setAttribute('spellcheck', 'true');
+  ta.placeholder = q.sol ? 'Rough working / notes (write the full statement on paper).'
+                         : 'Write your answer here, then reveal the marking points and compare.';
+  ta.value = saved.ans || '';
+  /* NO input handler — that was the iOS focus-loss bug. Text is captured into
+     state by syncExamTA() on blur and on every question-change / close / hide. */
+  _examTA = ta; _examTAId = id;
+  ta.addEventListener('blur', syncExamTA);
+  dock.appendChild(ta);
+
+  const hint = document.createElement('div'); hint.className = 'ex-hint';
+  hint.textContent = q.sol ? 'Auto-saved. Write the full statement on paper; use this for rough working.'
+                           : 'Auto-saved. Aim for roughly one solid point per mark.';
+  dock.appendChild(hint);
+
   const nav = document.createElement('div'); nav.className = 'ex-nav';
   const prev = document.createElement('button'); prev.textContent = '‹ Previous';
   prev.disabled = examState.i === 0;
@@ -13199,7 +13222,7 @@ function renderExamQ(){
   next.disabled = examState.i >= list.length - 1;
   next.onclick = () => { examState.i++; renderExamQ(); document.getElementById('ex-body').scrollTop = 0; };
   nav.appendChild(prev); nav.appendChild(next);
-  body.appendChild(nav);
+  dock.appendChild(nav);
   body.scrollTop = 0;
 }
 
@@ -13231,10 +13254,13 @@ function toggleMockPaper(){
   renderExamTabs(); renderMockPaper();
 }
 function renderMockPaper(){
+  syncExamTA();
+  _examTA = null; _examTAId = null;
   const m = examState.mock;
   const body = document.getElementById('ex-body');
   const subj = SEMESTERS[currentSemester].subjects[currentSubjectKey];
   body.innerHTML = '';
+  document.getElementById('ex-dock').innerHTML = '';
 
   const head = document.createElement('div'); head.className = 'mk-head';
   head.innerHTML = `<b>${subj.title} — Model Question</b>
