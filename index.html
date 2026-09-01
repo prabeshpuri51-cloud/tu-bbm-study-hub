@@ -13110,12 +13110,36 @@ function renderExamQ(){
     body.appendChild(d);
   }
 
+  /* Reveal UI is built up-front so a .sol question can show its buttons ABOVE the
+     answer box — otherwise they sit below a tall textarea and get missed. */
+  const revealRow = document.createElement('div'); revealRow.className = 'ex-reveal-row';
+  const model = document.createElement('div'); model.className = 'ex-model';
+  model.innerHTML = examPtsHTML(q);
+  let self = null;
+  const showSelf = () => { if(self) self.style.display = 'flex'; };
+
   if(q.sol){
     const nt = document.createElement('div'); nt.className = 'ex-needs-table';
     nt.innerHTML = '<b>▦ This answer is a ruled statement / ledger, not paragraphs.</b> '
-      + 'Work it on paper. Tap <b>&ldquo;Worked solution&rdquo;</b> below to see the exact format and figures to copy, '
+      + 'Work it on paper, then tap <b>&ldquo;Worked solution&rdquo;</b> for the exact format and figures '
       + 'and <b>&ldquo;Marking points&rdquo;</b> for the examiner&rsquo;s checklist.';
     body.appendChild(nt);
+
+    const sol = document.createElement('div'); sol.className = 'ex-model ex-solblock';
+    sol.innerHTML = examSolHTML(q);
+    const bSol = document.createElement('button'); bSol.className = 'ex-reveal ex-reveal-sol';
+    bSol.textContent = '▦ Worked solution';
+    const openSol = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
+    bSol.onclick = openSol;
+    nt.style.cursor = 'pointer'; nt.onclick = openSol;   // tapping the blue box also opens it
+    const bPts = document.createElement('button'); bPts.className = 'ex-reveal';
+    bPts.textContent = '📋 Marking points';
+    bPts.onclick = () => { model.classList.add('on'); bPts.style.display = 'none'; showSelf(); };
+    revealRow.appendChild(bSol); revealRow.appendChild(bPts);
+    body.appendChild(revealRow);
+    body.appendChild(sol);
+    body.appendChild(model);
+    if(saved.mark){ sol.classList.add('on'); model.classList.add('on'); bSol.style.display='none'; bPts.style.display='none'; }
   }
 
   const ta = document.createElement('textarea');
@@ -13144,8 +13168,8 @@ function renderExamQ(){
   hint.textContent = 'Saved automatically. Aim for roughly one solid point per mark.';
   body.appendChild(hint);
 
-  const self = document.createElement('div'); self.className = 'ex-self';
-  self.style.display = 'none';
+  self = document.createElement('div'); self.className = 'ex-self';
+  self.style.display = saved.mark ? 'flex' : 'none';
   [['got','✓ Got it'],['part','~ Partly'],['miss','✗ Missed']].forEach(([k,label]) => {
     const b = document.createElement('button');
     b.className = k + (saved.mark === k ? ' sel' : '');
@@ -13155,33 +13179,14 @@ function renderExamQ(){
     self.appendChild(b);
   });
 
-  const revealRow = document.createElement('div'); revealRow.className = 'ex-reveal-row';
-  const model = document.createElement('div'); model.className = 'ex-model';
-  model.innerHTML = examPtsHTML(q);
-  const showSelf = () => { self.style.display = 'flex'; };
-
-  if(q.sol){
-    const sol = document.createElement('div'); sol.className = 'ex-model ex-solblock';
-    sol.innerHTML = examSolHTML(q);
-    const bSol = document.createElement('button'); bSol.className = 'ex-reveal ex-reveal-sol';
-    bSol.textContent = '▦ Worked solution';
-    bSol.onclick = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
-    const bPts = document.createElement('button'); bPts.className = 'ex-reveal';
-    bPts.textContent = '📋 Marking points';
-    bPts.onclick = () => { model.classList.add('on'); bPts.style.display = 'none'; showSelf(); };
-    revealRow.appendChild(bSol); revealRow.appendChild(bPts);
-    body.appendChild(revealRow);
-    body.appendChild(sol);
-    body.appendChild(model);
-    if(saved.mark){ sol.classList.add('on'); model.classList.add('on'); bSol.style.display='none'; bPts.style.display='none'; showSelf(); }
-  } else {
+  if(!q.sol){
     const rev = document.createElement('button'); rev.className = 'ex-reveal';
     rev.textContent = '📋 Show the marking points';
     rev.onclick = () => { model.classList.add('on'); rev.style.display = 'none'; showSelf(); };
     revealRow.appendChild(rev);
     body.appendChild(revealRow);
     body.appendChild(model);
-    if(saved.mark){ model.classList.add('on'); rev.style.display='none'; showSelf(); }
+    if(saved.mark){ model.classList.add('on'); rev.style.display='none'; }
   }
 
   body.appendChild(self);
