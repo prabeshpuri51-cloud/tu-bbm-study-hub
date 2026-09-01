@@ -13070,14 +13070,19 @@ function openExam(){
   const u = SEMESTERS[currentSemester].subjects[currentSubjectKey].units[currentUnitIdx];
   document.getElementById('ex-title').textContent = u.title.replace(/^Unit \d+:\s*/,'');
   examState = {sec:'brief', i:0, mock:null};
-  document.body.classList.add('notes-open');   // reuse: lifts the pencil FAB
+  /* Do NOT add body.notes-open here. It gates the global `selectionchange`
+     handler for the notes-highlight pill, and that handler fires on every
+     caret move while typing in the exam <textarea> — then ntHidePill() calls
+     window.getSelection().removeAllRanges(), which on iOS Safari drops the
+     textarea's caret and discards the keystroke. THIS was the answer-box
+     typing bug. The pencil FAB is hidden in exam mode via CSS, so nothing
+     here needs notes-open. */
   document.getElementById('view-exam').classList.add('active');
   renderExamTabs(); renderExamQ();
 }
 function closeExam(){
   syncExamTA();
   _examTA = null; _examTAId = null;
-  document.body.classList.remove('notes-open');
   document.getElementById('view-exam').classList.remove('active');
 }
 function renderExamTabs(){
@@ -13437,6 +13442,10 @@ function ntWireHighlightRemoval(){
   });
   document.addEventListener('selectionchange', () => {
     if(!document.body.classList.contains('notes-open')) return;
+    // Never let the highlight pill react to a caret move inside an editable
+    // field — its ntHidePill()/removeAllRanges() disrupts typing on iOS.
+    const ae = document.activeElement;
+    if(ae && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT' || ae.isContentEditable)) return;
     clearTimeout(window.__ntSelT);
     window.__ntSelT = setTimeout(ntShowPill, 180);
   });
