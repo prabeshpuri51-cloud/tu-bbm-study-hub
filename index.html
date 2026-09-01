@@ -437,6 +437,10 @@
   .ex-reveal-row .ex-reveal{flex:1;margin-bottom:0;}
   .ex-reveal-sol{background:#2a5b8a;color:#e8f2ff;}
   .ex-reveal-sol:active{background:#22496e;}
+  .ex-reveal-blank{background:var(--accent);color:#1a1608;}
+  .ex-reveal-blank:active{filter:brightness(.9);}
+  /* Blank-table skeleton: empty numeric cells still need to show as boxes. */
+  .ex-sol td:empty::after{content:"\00a0";}
   .ex-solblock{margin-bottom:14px;}
   .ex-self{display:flex;gap:8px;margin-bottom:14px;}
   .ex-self button{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 4px;
@@ -13108,6 +13112,21 @@ function examPtsHTML(obj, heading){
 function examSolHTML(obj){
   return obj.sol ? ('<h4 class="ex-sol-h">Worked solution</h4><div class="ex-sol">' + obj.sol + '</div>') : '';
 }
+/* An empty version of the worked solution's ruled format: same headings and row
+   labels, every figure removed — a skeleton to copy onto paper and fill in. */
+function blankSolHTML(sol){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = sol;
+  wrap.querySelectorAll('p').forEach(p => p.remove());          // explanations reveal the answer
+  wrap.querySelectorAll('table td.n').forEach(td => {
+    td.removeAttribute('colspan'); td.innerHTML = '&nbsp;';
+  });
+  wrap.querySelectorAll('pre').forEach(pre => {                  // journals / ledgers / cash books
+    pre.textContent = pre.textContent.replace(/\d[\d,]*/g, m => '_'.repeat(Math.max(3, m.length)));
+  });
+  return '<h4 class="ex-sol-h">Blank table &mdash; copy this onto paper and fill it in</h4>'
+    + '<div class="ex-sol">' + wrap.innerHTML + '</div>';
+}
 /* Mock-paper review shows both together in one block. */
 function examModelHTML(obj, heading){
   return examPtsHTML(obj, heading) + examSolHTML(obj);
@@ -13154,25 +13173,36 @@ function renderExamQ(){
   if(q.sol){
     const nt = document.createElement('div'); nt.className = 'ex-needs-table';
     nt.innerHTML = '<b>▦ This answer is a ruled statement / ledger, not paragraphs.</b> '
-      + 'Work it on paper, then tap <b>&ldquo;Worked solution&rdquo;</b> for the exact format and figures '
-      + 'and <b>&ldquo;Marking points&rdquo;</b> for the examiner&rsquo;s checklist.';
+      + 'Tap <b>&ldquo;Blank table&rdquo;</b> for the empty format to copy onto paper and fill in, '
+      + 'then <b>&ldquo;Worked solution&rdquo;</b> to check your figures and <b>&ldquo;Marking points&rdquo;</b> for the examiner&rsquo;s checklist.';
     body.appendChild(nt);
 
+    const blank = document.createElement('div'); blank.className = 'ex-model ex-solblock';
+    blank.innerHTML = blankSolHTML(q.sol);
     const sol = document.createElement('div'); sol.className = 'ex-model ex-solblock';
     sol.innerHTML = examSolHTML(q);
+
+    const bBlank = document.createElement('button'); bBlank.className = 'ex-reveal ex-reveal-blank';
+    bBlank.textContent = '▦ Blank table to fill in';
+    const openBlank = () => { blank.classList.add('on'); bBlank.style.display = 'none'; };
+    bBlank.onclick = openBlank;
+    nt.style.cursor = 'pointer'; nt.onclick = openBlank;   // tapping the blue box shows the blank table
+
     const bSol = document.createElement('button'); bSol.className = 'ex-reveal ex-reveal-sol';
     bSol.textContent = '▦ Worked solution';
-    const openSol = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
-    bSol.onclick = openSol;
-    nt.style.cursor = 'pointer'; nt.onclick = openSol;   // tapping the blue box also opens it
+    bSol.onclick = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
     const bPts = document.createElement('button'); bPts.className = 'ex-reveal';
     bPts.textContent = '📋 Marking points';
     bPts.onclick = () => { model.classList.add('on'); bPts.style.display = 'none'; showSelf(); };
+
+    body.appendChild(bBlank);
+    body.appendChild(blank);
     revealRow.appendChild(bSol); revealRow.appendChild(bPts);
     body.appendChild(revealRow);
     body.appendChild(sol);
     body.appendChild(model);
-    if(saved.mark){ sol.classList.add('on'); model.classList.add('on'); bSol.style.display='none'; bPts.style.display='none'; }
+    if(saved.mark){ blank.classList.add('on'); sol.classList.add('on'); model.classList.add('on');
+                    bBlank.style.display='none'; bSol.style.display='none'; bPts.style.display='none'; }
   }
 
   self = document.createElement('div'); self.className = 'ex-self';
