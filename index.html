@@ -437,10 +437,6 @@
   .ex-reveal-row .ex-reveal{flex:1;margin-bottom:0;}
   .ex-reveal-sol{background:#2a5b8a;color:#e8f2ff;}
   .ex-reveal-sol:active{background:#22496e;}
-  .ex-reveal-blank{background:var(--accent);color:#1a1608;}
-  .ex-reveal-blank:active{filter:brightness(.9);}
-  /* Blank-table skeleton: empty numeric cells still need to show as boxes. */
-  .ex-sol td:empty::after{content:"\00a0";}
   .ex-solblock{margin-bottom:14px;}
   .ex-self{display:flex;gap:8px;margin-bottom:14px;}
   .ex-self button{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 4px;
@@ -11345,9 +11341,9 @@ window.SUBJECT_QUIZ["facc"]["5"] = [
   {q:"Under the indirect method, an INCREASE in accounts payable during the year is:",
    o:["added to net income","subtracted from net income","shown in investing","ignored"], a:0, w:2,
    why:"An increase in payables means an expense was recorded but not yet paid in cash, so cash was conserved — it is added. A decrease in payables is subtracted."},
-  {q:"Net income Rs 80,000; depreciation Rs 260,000; loss on sale of machinery Rs 10,000; accounts receivable decreased Rs 75,000; inventory increased Rs 450,000; accounts payable increased Rs 90,000; income taxes payable increased Rs 15,000. Net cash from operating activities is:",
+  {q:"Net income Rs 80,000; depreciation Rs 260,000; loss on sale of machinery Rs 10,000; accounts receivable decreased Rs 75,000; inventory increased Rs 460,000; accounts payable increased Rs 90,000; income taxes payable increased Rs 15,000. Net cash from operating activities is:",
    o:["Rs 80,000","Rs 70,000","Rs 1,60,000","Rs (10,000)"], a:1, w:3,
-   why:"80,000 + 260,000 + 10,000 + 75,000 − 450,000 + 90,000 + 15,000 = Rs 70,000."},
+   why:"Add back non-cash items and adjust for working-capital changes: 80,000 + 260,000 (depreciation) + 10,000 (loss) + 75,000 (receivables fell) − 460,000 (inventory rose) + 90,000 (payables rose) + 15,000 (tax payable rose) = Rs 70,000."},
 
   /* ---- cash flow: direct method ---- */
   {q:"Under the DIRECT method, the operating activities section shows:",
@@ -11376,10 +11372,10 @@ window.SUBJECT_QUIZ["facc"]["5"] = [
 window.SUBJECT_EXAM["facc"].units["5"] = {
 
   brief: [
-    {q:"Define current assets with an example.", real:"2023",
+    {q:"How are current assets defined and presented in an NFRS statement of financial position?",
      pts:["Current assets = resources the entity expects to convert to cash, sell or consume within twelve months of the reporting date or within its normal operating cycle, whichever is longer",
           "Examples: cash and cash equivalents; trade receivables; inventory; prepaid expenses; short-term investments",
-          "They are shown before non-current assets on an NFRS statement of financial position, normally in decreasing order of liquidity"]},
+          "They are shown before non-current assets on an NFRS statement of financial position, normally in decreasing order of liquidity (cash last, or first, consistently)"]},
     {q:"From the following, prepare the statement of other comprehensive income as per NFRS: gain on sale of investment Rs 40,000; loss on revaluation of loose tools Rs 20,000; gain on cash flow hedges Rs 80,000; actuarial loss on pension schemes Rs 50,000.", real:"2023",
      pts:["Start with 'Profit for the year' (brought from the statement of profit or loss)",
           "Items that will NOT be reclassified to profit or loss: loss on revaluation of loose tools (20,000); actuarial loss on defined-benefit pension schemes (50,000)",
@@ -12032,12 +12028,13 @@ window.SUBJECT_EXAM["facc"].cases = [
         "(vi) required provision = 5% × 80,000 = 4,000; existing 3,000 → Dr P&L (increase in provision) 1,000; Cr Provision for Doubtful Debts 1,000"
       ]},
       { q: "Prepare the Statement of Profit or Loss for the year ended 31 Ashad 2081.", m: 5, pts: [
-        "Cost of goods sold = opening stock 90,000 + purchases 4,20,000 + carriage inward 6,000 − closing stock 1,10,000 = Rs 4,06,000",
-        "Gross profit = sales 7,20,000 − 4,06,000 = Rs 3,14,000",
+        "Cost of goods sold = opening stock 90,000 + purchases 4,20,000 + carriage inward 6,000 + wages 30,000 − closing stock 1,10,000 = Rs 4,36,000 (unqualified 'wages' is a direct cost → trading section)",
+        "Gross profit = sales 7,20,000 − 4,36,000 = Rs 2,84,000",
         "Add other income: discount received 4,000 + commission received 17,000 = 21,000",
-        "Less operating expenses: rent 36,000; salaries (84,000 + 6,000) 90,000; wages 30,000; insurance (24,000 − 8,000) 16,000; bad debts 4,000 + increase in provision 1,000 = 5,000; depreciation 42,000 → total 2,19,000",
-        "Operating profit = 3,14,000 + 21,000 − 2,19,000 = Rs 1,16,000",
-        "Less finance cost: loan interest 12,000 → Net profit = Rs 1,04,000"
+        "Less operating expenses: rent 36,000; salaries (84,000 + 6,000) 90,000; insurance (24,000 − 8,000) 16,000; bad debts 4,000 + increase in provision 1,000 = 5,000; depreciation 42,000 → total 1,89,000",
+        "Operating profit = 2,84,000 + 21,000 − 1,89,000 = Rs 1,16,000",
+        "Less finance cost: loan interest 12,000 → Net profit = Rs 1,04,000",
+        "(If 'wages' are taken as an operating expense instead, cost of goods sold = 4,06,000, gross profit = 3,14,000 and operating expenses = 2,19,000 — operating profit and net profit are unchanged)"
       ]},
       { q: "Prepare the classified Statement of Financial Position as at 31 Ashad 2081.", m: 5, pts: [
         "Non-current assets: Machinery 2,00,000 − 30,000 = 1,70,000; Furniture 1,20,000 − 12,000 = 1,08,000 → Rs 2,78,000",
@@ -12051,8 +12048,8 @@ window.SUBJECT_EXAM["facc"].cases = [
       { q: "Compute the current ratio, the debt-equity ratio (using long-term debt) and the gross profit ratio, and comment briefly on the firm's position.", m: 5, pts: [
         "Current ratio = current assets 2,79,000 ÷ current liabilities 83,000 = 3.36 : 1",
         "Debt-equity ratio = long-term debt 1,00,000 ÷ equity 3,74,000 = 0.27 : 1",
-        "Gross profit ratio = gross profit 3,14,000 ÷ sales 7,20,000 = 43.6%",
-        "Comment: liquidity is very strong (3.36 is well above the 2:1 rule of thumb — the firm may be holding more current assets, e.g. bank balance, than it needs); gearing is low (only Rs 0.27 of long-term debt per Rs 1 of equity), so financial risk is modest; the gross margin of 43.6% is healthy for a trading business",
+        "Gross profit ratio = gross profit 2,84,000 ÷ sales 7,20,000 = 39.4% (43.6% if wages are treated as an operating expense — state the basis)",
+        "Comment: liquidity is very strong (3.36 is well above the 2:1 rule of thumb — the firm may be holding more current assets, e.g. bank balance, than it needs); gearing is low (only Rs 0.27 of long-term debt per Rs 1 of equity), so financial risk is modest; a gross margin near 40% is healthy for a trading business",
         "(If total liabilities are used for the debt-equity ratio: (1,00,000 + 83,000) ÷ 3,74,000 = 0.49 : 1 — state the basis)"
       ]}
     ]
@@ -12464,14 +12461,15 @@ window.SUBJECT_EXAM["facc"].cases = [
   "Prepare the Statement of Profit or Loss for the year ended 31 Ashad 2081.":
     '<table><thead><tr><th>Statement of Profit or Loss</th><th class="n">Rs</th></tr></thead><tbody>'
   + '<tr><td>Sales</td><td class="n">7,20,000</td></tr>'
-  + '<tr><td>Cost of goods sold (90,000 + 4,20,000 + 6,000 &minus; 1,10,000)</td><td class="n">(4,06,000)</td></tr>'
-  + '<tr class="tot"><td>Gross profit</td><td class="n">3,14,000</td></tr>'
+  + '<tr><td>Cost of goods sold (90,000 + 4,20,000 + 6,000 + wages 30,000 &minus; 1,10,000)</td><td class="n">(4,36,000)</td></tr>'
+  + '<tr class="tot"><td>Gross profit</td><td class="n">2,84,000</td></tr>'
   + '<tr><td>Add: discount received 4,000 + commission received 17,000</td><td class="n">21,000</td></tr>'
-  + '<tr><td>Less operating expenses: rent 36,000; salaries 90,000; wages 30,000; insurance 16,000; bad debts + provision 5,000; depreciation 42,000</td><td class="n">(2,19,000)</td></tr>'
+  + '<tr><td>Less operating expenses: rent 36,000; salaries 90,000; insurance 16,000; bad debts + provision 5,000; depreciation 42,000</td><td class="n">(1,89,000)</td></tr>'
   + '<tr class="tot"><td>Operating profit</td><td class="n">1,16,000</td></tr>'
   + '<tr><td>Less: loan interest</td><td class="n">(12,000)</td></tr>'
   + '<tr class="tot"><td>Net profit</td><td class="n">1,04,000</td></tr>'
-  + '</tbody></table>',
+  + '</tbody></table>'
+  + '<p>Unqualified &ldquo;wages&rdquo; is a direct cost (trading section). If instead treated as an operating expense: cost of goods sold 4,06,000, gross profit 3,14,000, operating expenses 2,19,000 &mdash; operating profit and net profit are unchanged.</p>',
 
   "Prepare the classified Statement of Financial Position as at 31 Ashad 2081.":
     '<table><thead><tr><th>Statement of Financial Position (31 Ashad 2081)</th><th class="n">Rs</th></tr></thead><tbody>'
@@ -12494,9 +12492,9 @@ window.SUBJECT_EXAM["facc"].cases = [
     '<table><thead><tr><th>Ratio</th><th class="n">Working</th><th class="n">Result</th></tr></thead><tbody>'
   + '<tr><td>Current ratio</td><td class="n">2,79,000 &divide; 83,000</td><td class="n">3.36 : 1</td></tr>'
   + '<tr><td>Debt-equity (long-term debt)</td><td class="n">1,00,000 &divide; 3,74,000</td><td class="n">0.27 : 1</td></tr>'
-  + '<tr><td>Gross profit ratio</td><td class="n">3,14,000 &divide; 7,20,000</td><td class="n">43.6%</td></tr>'
+  + '<tr><td>Gross profit ratio</td><td class="n">2,84,000 &divide; 7,20,000</td><td class="n">39.4%</td></tr>'
   + '</tbody></table>'
-  + '<p>Very liquid (3.36, above 2:1 &mdash; possibly idle bank balance), low gearing (0.27), healthy gross margin.</p>',
+  + '<p>Very liquid (3.36, above 2:1 &mdash; possibly idle bank balance), low gearing (0.27), healthy gross margin. GP ratio is 43.6% if wages are treated as an operating expense rather than a direct cost &mdash; state the basis.</p>',
 
   "Compute the net cash flow from operating activities using the indirect method.":
     '<table><thead><tr><th>Operating activities (indirect)</th><th class="n">Rs (’000)</th></tr></thead><tbody>'
@@ -13112,21 +13110,6 @@ function examPtsHTML(obj, heading){
 function examSolHTML(obj){
   return obj.sol ? ('<h4 class="ex-sol-h">Worked solution</h4><div class="ex-sol">' + obj.sol + '</div>') : '';
 }
-/* An empty version of the worked solution's ruled format: same headings and row
-   labels, every figure removed — a skeleton to copy onto paper and fill in. */
-function blankSolHTML(sol){
-  const wrap = document.createElement('div');
-  wrap.innerHTML = sol;
-  wrap.querySelectorAll('p').forEach(p => p.remove());          // explanations reveal the answer
-  wrap.querySelectorAll('table td.n').forEach(td => {
-    td.removeAttribute('colspan'); td.innerHTML = '&nbsp;';
-  });
-  wrap.querySelectorAll('pre').forEach(pre => {                  // journals / ledgers / cash books
-    pre.textContent = pre.textContent.replace(/\d[\d,]*/g, m => '_'.repeat(Math.max(3, m.length)));
-  });
-  return '<h4 class="ex-sol-h">Blank table &mdash; copy this onto paper and fill it in</h4>'
-    + '<div class="ex-sol">' + wrap.innerHTML + '</div>';
-}
 /* Mock-paper review shows both together in one block. */
 function examModelHTML(obj, heading){
   return examPtsHTML(obj, heading) + examSolHTML(obj);
@@ -13173,36 +13156,25 @@ function renderExamQ(){
   if(q.sol){
     const nt = document.createElement('div'); nt.className = 'ex-needs-table';
     nt.innerHTML = '<b>▦ This answer is a ruled statement / ledger, not paragraphs.</b> '
-      + 'Tap <b>&ldquo;Blank table&rdquo;</b> for the empty format to copy onto paper and fill in, '
-      + 'then <b>&ldquo;Worked solution&rdquo;</b> to check your figures and <b>&ldquo;Marking points&rdquo;</b> for the examiner&rsquo;s checklist.';
+      + 'Work it on paper, then tap <b>&ldquo;Worked solution&rdquo;</b> for the exact format and figures '
+      + 'and <b>&ldquo;Marking points&rdquo;</b> for the examiner&rsquo;s checklist.';
     body.appendChild(nt);
 
-    const blank = document.createElement('div'); blank.className = 'ex-model ex-solblock';
-    blank.innerHTML = blankSolHTML(q.sol);
     const sol = document.createElement('div'); sol.className = 'ex-model ex-solblock';
     sol.innerHTML = examSolHTML(q);
-
-    const bBlank = document.createElement('button'); bBlank.className = 'ex-reveal ex-reveal-blank';
-    bBlank.textContent = '▦ Blank table to fill in';
-    const openBlank = () => { blank.classList.add('on'); bBlank.style.display = 'none'; };
-    bBlank.onclick = openBlank;
-    nt.style.cursor = 'pointer'; nt.onclick = openBlank;   // tapping the blue box shows the blank table
-
     const bSol = document.createElement('button'); bSol.className = 'ex-reveal ex-reveal-sol';
     bSol.textContent = '▦ Worked solution';
-    bSol.onclick = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
+    const openSol = () => { sol.classList.add('on'); bSol.style.display = 'none'; showSelf(); };
+    bSol.onclick = openSol;
+    nt.style.cursor = 'pointer'; nt.onclick = openSol;   // tapping the blue box also opens it
     const bPts = document.createElement('button'); bPts.className = 'ex-reveal';
     bPts.textContent = '📋 Marking points';
     bPts.onclick = () => { model.classList.add('on'); bPts.style.display = 'none'; showSelf(); };
-
-    body.appendChild(bBlank);
-    body.appendChild(blank);
     revealRow.appendChild(bSol); revealRow.appendChild(bPts);
     body.appendChild(revealRow);
     body.appendChild(sol);
     body.appendChild(model);
-    if(saved.mark){ blank.classList.add('on'); sol.classList.add('on'); model.classList.add('on');
-                    bBlank.style.display='none'; bSol.style.display='none'; bPts.style.display='none'; }
+    if(saved.mark){ sol.classList.add('on'); model.classList.add('on'); bSol.style.display='none'; bPts.style.display='none'; }
   }
 
   self = document.createElement('div'); self.className = 'ex-self';
