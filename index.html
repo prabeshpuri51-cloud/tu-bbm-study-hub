@@ -12598,11 +12598,14 @@ window.SUBJECT_DATA_S2["bmath2"] = {
   units: [
     {title:"Unit 1: Linear Inequalities and Linear Programming",
       primaryBook:"Applied Mathematics for Business, Economics & the Social Sciences (Budnick), Ch 10–11",
-      primaryWeak:"NOT YET BUILT. Budnick Ch 10 (graphical LP) + Ch 11 (simplex, duality) is the primary; Rosser Ch 5A and Bradley also cover it.",
-      pages:"Budnick Ch 10–11 · book p.420–514", startPage:440, endPage:534, lh:6,
+      primaryWeak:"Graphical LP (inequalities, feasible region, corner-point + isoprofit): Budnick Ch 10 (book p.420–441). Simplex method (slack/surplus/artificial variables, tableau, Big-M) and duality: Budnick Ch 11 (book p.462–514). Also in Rosser Ch 5A and Bradley.",
+      pages:"Budnick Ch 10–11 · book p.420–514", startPage:448, endPage:542, lh:6,
       desc:"Linear inequalities in two variables; formulation of an LP problem; solving by the graphical method and the simplex method (two variables); duality and standard minimisation problems.",
-      subtopics:"Inequalities, LP formulation, graphical method, simplex (2-var), duality",
-      notBuilt:true, refs:[]},
+      subtopics:"Inequalities, LP formulation, graphical method, simplex (2-var), duality, shadow prices",
+      primaryMatch:"budnick|applied mathematics for business",
+      refs:[
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 5A (Appendix: linear programming), book p.148–167", note:"Constrained maximisation and minimisation, graphical LP, a brief simplex outline; complements Budnick's fuller simplex treatment.", match:"rosser|basic mathematics for economists|annas arch", start:162}
+      ]},
 
     {title:"Unit 2: Linear Algebra and Applications",
       primaryBook:"Applied Mathematics for Business, Economics & the Social Sciences (Budnick), Ch 9 + Ch 3.2–3.3",
@@ -12651,11 +12654,306 @@ window.SUBJECT_DATA_S2["bmath2"] = {
 };
 
 /* ---------------------------------------------------------------------------
-   UNIT 2 — WRITTEN NOTES  (source of truth: book/mth202/MTH202-unit2-notes.md)
-   Matrices are written in bracket–row notation:  [a  b ; c  d]  means the 2×2
-   matrix with first row (a, b) and second row (c, d).  |A| is the determinant.
+   WRITTEN NOTES  (source of truth: book/mth202/MTH202-unitN-notes.md)
+   Matrices (Unit 2) are written in bracket–row notation: [a b ; c d] = the 2×2
+   matrix with first row (a, b), second row (c, d). |A| is the determinant.
 --------------------------------------------------------------------------- */
 window.SUBJECT_NOTES["bmath2"] = window.SUBJECT_NOTES["bmath2"] || {};
+
+/* ===== UNIT 1 — Linear Inequalities and Linear Programming ===== */
+window.SUBJECT_NOTES["bmath2"]["0"] = `<p><strong>Syllabus scope (6 lecture hours):</strong> Linear inequalities in two variables; introduction to and formulation of the linear programming problem; methods of solving LP problems — the graphical method and the simplex method (two variables); duality and standard minimisation LP problems.</p>
+<hr>
+
+<h2>1.1 Linear Inequalities in Two Variables</h2>
+<p>A <strong>linear inequality in two variables</strong> has the form ax + by ≤ c (or ≥, &lt;, &gt;). Its solution set is a <strong>half-plane</strong> — everything on one side of the boundary line ax + by = c. The line itself is <em>included</em> for ≤ / ≥ (drawn solid) and <em>excluded</em> for &lt; / &gt; (drawn dashed).</p>
+<p><strong>Two ways to find which side:</strong></p>
+<ol>
+<li><strong>Test-point method.</strong> Draw the boundary line ax + by = c. Pick any point <em>not on the line</em> — the origin (0, 0) is easiest whenever the line does not pass through it. Substitute into the inequality: if it is satisfied, shade that side; if not, shade the other side.</li>
+<li><strong>Slope-intercept method.</strong> Rearrange to "y ≤ (…)x + (…)" or "y ≥ (…)x + (…)". "y ≤ …" is the region <strong>below</strong> the line; "y ≥ …" is the region <strong>above</strong> it.</li>
+</ol>
+<p><strong>Worked example.</strong> Graph 2x + 3y ≤ 12. The boundary line 2x + 3y = 12 has intercepts (6, 0) and (0, 4). Test (0, 0): 2(0) + 3(0) = 0 ≤ 12 — true, so shade the side containing the origin.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u1-ineq">
+  <h3>Graphing a linear inequality</h3>
+  <p class="dgm-sub">The solution is a half-plane — pick a test point to find which side</p>
+  <svg viewBox="0 0 360 260" role="img" aria-label="The line 2x plus 3y equals 12 with the half-plane containing the origin shaded as the solution to 2x plus 3y less than or equal to 12">
+    <line class="ax" x1="45" y1="230" x2="345" y2="230"/>
+    <line class="ax" x1="45" y1="230" x2="45" y2="20"/>
+    <text class="t" x="336" y="247">x</text><text class="t" x="32" y="24">y</text><text class="ts" x="33" y="244">O</text>
+    <polygon class="fd" points="45,230 225,230 45,125"/>
+    <line class="ck" x1="45" y1="125" x2="225" y2="230"/>
+    <text class="tc" x="150" y="120">2x + 3y = 12</text>
+    <circle class="dot" cx="45" cy="230" r="3.4"/>
+    <text class="ts" x="230" y="222">(6, 0)</text>
+    <text class="ts" x="8" y="128">(0, 4)</text>
+    <text class="tb" x="78" y="205">2x + 3y ≤ 12</text>
+    <text class="tm" x="180" y="252" text-anchor="middle">test (0, 0): 0 ≤ 12 ✓ → shade this side</text>
+  </svg>
+  <figcaption>
+    <p>Draw the boundary line from its two intercepts. Substitute a test point that is off the line — the origin if possible. Here (0, 0) satisfies the inequality, so the half-plane on the origin's side (shaded) is the solution set. A "&lt;" or "&gt;" would use a dashed boundary line.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both axis intercepts of the boundary line; the test point and its check; the shaded half-plane; solid vs dashed line for ≤/≥ vs &lt;/&gt;.</div>
+  </figcaption>
+</figure></div>
+<p><strong>A system of linear inequalities</strong> is solved by shading each inequality's half-plane and taking the region common to all of them (the <strong>intersection</strong>). In linear programming this common region is the <strong>feasible region</strong> (§1.4).</p>
+
+<h2>1.2 The Linear Programming Problem</h2>
+<p><strong>Linear programming (LP)</strong> is a technique for <strong>optimising</strong> (maximising or minimising) a linear <strong>objective function</strong> subject to a set of linear <strong>constraints</strong>. It is called <em>linear</em> because the objective and every constraint are linear — no x², xy, √x, etc.</p>
+<p>Every LP model has three parts:</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Part</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><strong>Decision variables</strong> (x₁, x₂, …)</td><td>the quantities the decision-maker controls — e.g. units of each product to make</td></tr>
+<tr><td><strong>Objective function</strong> z = c₁x₁ + c₂x₂ + …</td><td>the goal, a linear function to be <strong>maximised</strong> (profit, revenue, contribution) or <strong>minimised</strong> (cost)</td></tr>
+<tr><td><strong>Constraints</strong></td><td><strong>Structural constraints</strong> — resource limits or requirements (labour, material, demand), written ≤, ≥ or =. <strong>Non-negativity constraints</strong> x₁ ≥ 0, x₂ ≥ 0, … — one per decision variable (you cannot make a negative number of units).</td></tr>
+</tbody></table></div>
+<p><strong>Assumptions of LP:</strong></p>
+<ul>
+<li><strong>Linearity / proportionality</strong> — doubling an activity doubles its use of every resource and its contribution to z.</li>
+<li><strong>Additivity</strong> — the total is the sum of the parts (no interaction terms).</li>
+<li><strong>Divisibility</strong> — fractional values of the decision variables are allowed (if not, it becomes <em>integer</em> programming).</li>
+<li><strong>Certainty</strong> — all coefficients (c, a, b) are known constants.</li>
+</ul>
+
+<h2>1.3 Formulating a Linear Programming Problem</h2>
+<p><strong>Worked example (product mix).</strong> A firm makes products A and B in two departments. Department 1 has 120 labour-hours/week, Department 2 has 260. Product A needs 3 h in Dept 1 and 4 h in Dept 2; product B needs 2 h in Dept 1 and 6 h in Dept 2. Contribution is Rs 5/unit for A and Rs 6/unit for B.</p>
+<p>Let x₁ = units of A, x₂ = units of B per week.</p>
+<blockquote>
+<p><strong>Maximise</strong> z = 5x₁ + 6x₂<br>
+<strong>subject to</strong> 3x₁ + 2x₂ ≤ 120 (Dept 1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4x₁ + 6x₂ ≤ 260 (Dept 2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x₁, x₂ ≥ 0</p>
+</blockquote>
+<p><strong>Diet-mix / minimisation example.</strong> To meet minimum daily requirements of two vitamins at least cost, using two foods: let x₁, x₂ = ounces of each food. <strong>Minimise</strong> z = c₁x₁ + c₂x₂ <strong>subject to</strong> (vitamin content) x₁ + (…)x₂ ≥ (requirement) for each vitamin, and x₁, x₂ ≥ 0. A minimisation with all <strong>≥</strong> constraints is the <em>standard minimisation</em> form (§1.6).</p>
+
+<h2>1.4 Graphical Method (Two Variables)</h2>
+<p>When an LP has <strong>only two decision variables</strong> it can be solved on a graph.</p>
+<p><strong>Step 1 — draw the region of feasible solutions.</strong> Graph each constraint as a line, shade its half-plane, and take the region common to all constraints <em>and</em> the first quadrant (x₁, x₂ ≥ 0). This region is a <strong>convex polygon</strong> (or an unbounded convex region). Every point in it is a <em>candidate</em> solution.</p>
+<p><strong>Step 2 — find the optimum.</strong> Two equivalent methods:</p>
+<h3>Corner-point method</h3>
+<p>A fundamental theorem of LP: <strong>the optimum always occurs at a corner (vertex / extreme point) of the feasible region.</strong></p>
+<ol>
+<li>Find the coordinates of every corner point — solve the pair of constraint lines meeting there simultaneously, or read an intercept.</li>
+<li>Evaluate z = c₁x₁ + c₂x₂ at each corner.</li>
+<li>The <strong>largest</strong> z is the maximum; the <strong>smallest</strong> z is the minimum.</li>
+</ol>
+<h3>Isoprofit (iso-cost) line method</h3>
+<p>The objective z = c₁x₁ + c₂x₂ is a family of parallel lines, one per value of z (<strong>isoprofit lines</strong>). Higher z ⇒ the line is further from the origin. Slide a ruler parallel to the objective line outward (for a max) until it last touches the feasible region — that last-touched corner is optimal. For a minimum, slide it <em>toward</em> the origin.</p>
+<p><strong>Worked example.</strong> Maximise z = 5x₁ + 6x₂ subject to 3x₁ + 2x₂ ≤ 120, 4x₁ + 6x₂ ≤ 260, x₁, x₂ ≥ 0.</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Corner (x₁, x₂)</th><th>how found</th><th>z = 5x₁ + 6x₂</th></tr></thead>
+<tbody>
+<tr><td>(0, 0)</td><td>origin</td><td>0</td></tr>
+<tr><td>(40, 0)</td><td>x₁-intercept of the Dept 1 line</td><td>200</td></tr>
+<tr><td>(0, 43⅓)</td><td>x₂-intercept of the Dept 2 line</td><td>260</td></tr>
+<tr><td><strong>(20, 30)</strong></td><td>Dept 1 ∩ Dept 2: 3x₁ + 2x₂ = 120 and 4x₁ + 6x₂ = 260 → 9x₁ + 6x₂ = 360, subtract → 5x₁ = 100</td><td><strong>280 ← maximum</strong></td></tr>
+</tbody></table></div>
+<p><strong>Optimal: x₁ = 20 units of A, x₂ = 30 units of B, maximum contribution z = Rs 280.</strong></p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u1-feasible">
+  <h3>Region of feasible solutions and the corner-point method</h3>
+  <p class="dgm-sub">The optimum is always at a corner; isoprofit lines slide outward to it</p>
+  <svg viewBox="0 0 360 270" role="img" aria-label="Feasible region bounded by two constraint lines and the axes, with corner points labelled and dashed isoprofit lines; the optimum is at the corner where the two constraints intersect">
+    <line class="ax" x1="45" y1="245" x2="350" y2="245"/>
+    <line class="ax" x1="45" y1="245" x2="45" y2="18"/>
+    <text class="t" x="340" y="262">x₁</text><text class="t" x="28" y="22">x₂</text>
+    <polygon class="fn" points="45,245 216,245 131,144 45,98"/>
+    <line class="ck" x1="45" y1="42" x2="216" y2="245"/>
+    <line class="cc" x1="45" y1="98" x2="324" y2="245"/>
+    <text class="tc" x="66" y="52">Dept 1: 3x₁+2x₂=120</text>
+    <text class="tc" x="215" y="212">Dept 2: 4x₁+6x₂=260</text>
+    <circle class="dot" cx="45" cy="245" r="3.2"/><text class="ts" x="50" y="260">(0,0)</text>
+    <circle class="dot" cx="216" cy="245" r="3.2"/><text class="ts" x="196" y="260">(40,0)</text>
+    <circle class="dot" cx="45" cy="98" r="3.2"/><text class="ts" x="4" y="94">(0, 43⅓)</text>
+    <circle class="dot" cx="131" cy="144" r="4"/><text class="tm" x="137" y="140">(20, 30)  z* = 280</text>
+    <line class="gd" x1="165" y1="245" x2="45" y2="166"/>
+    <line class="gd" x1="216" y1="245" x2="45" y2="132"/>
+    <line class="gd" x1="285" y1="245" x2="45" y2="87"/>
+    <text class="ts" x="352" y="150" text-anchor="end">isoprofit lines</text>
+    <text class="ts" x="352" y="163" text-anchor="end">z increasing ⟶</text>
+  </svg>
+  <figcaption>
+    <p>The feasible region is the shaded polygon common to both ≤ constraints and the first quadrant. Its corners are (0,0), (40,0), (0,43⅓) and the intersection (20,30). Evaluating z at each corner, or sliding the isoprofit line outward until it last touches the region, both give the optimum at (20, 30) with z = 280.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both constraint lines with equations; the shaded feasible region; every corner point with coordinates; the optimal corner and its z value; at least one isoprofit line showing the direction of increasing z.</div>
+  </figcaption>
+</figure></div>
+<h3>Special cases (recognise them on the graph)</h3>
+<ul>
+<li><strong>Alternative (multiple) optimal solutions</strong> — the objective line is <em>parallel</em> to a binding constraint edge: every point on that edge is optimal (same z). The corner-point method shows a <strong>tie</strong> for the best z.</li>
+<li><strong>No feasible solution</strong> — the constraints have no common region (e.g. x₁ + x₂ ≤ 5 and x₁ + x₂ ≥ 20). The feasible region is empty.</li>
+<li><strong>Unbounded solution</strong> — the feasible region extends to infinity in the direction the objective improves, so z can grow without limit (needs ≥ constraints / an open region and a maximisation objective).</li>
+<li><strong>Redundant constraint</strong> — a constraint that does not touch the feasible region; removing it does not change the problem.</li>
+</ul>
+<h3>Worked example — the real 2023 Model Question (Section C, Q21)</h3>
+<p>A factory produces two products <strong>P</strong> and <strong>Q</strong>, each processed on machines <strong>X</strong> and <strong>Y</strong>. Weekly hours available: machine X = 20, machine Y = 35. Time per unit — X: 1 for P, 2 for Q; Y: 1 for P, 5 for Q. Profit: Rs 10 for P, Rs 30 for Q.</p>
+<blockquote><p><strong>Maximise</strong> Z = 10P + 30Q <strong>subject to</strong> P + 2Q ≤ 20 (machine X), P + 5Q ≤ 35 (machine Y), P, Q ≥ 0</p></blockquote>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Corner (P, Q)</th><th>Z = 10P + 30Q</th></tr></thead>
+<tbody>
+<tr><td>(0, 0)</td><td>0</td></tr>
+<tr><td>(20, 0)</td><td>200</td></tr>
+<tr><td>(0, 7)</td><td>210</td></tr>
+<tr><td><strong>(10, 5)</strong> — X ∩ Y: P + 2Q = 20, P + 5Q = 35 → 3Q = 15 → Q = 5, P = 10</td><td><strong>250 ← maximum</strong></td></tr>
+</tbody></table></div>
+<p><strong>(a) Optimal output: P = 10 units, Q = 5 units. (b) Maximum profit = Rs 250.</strong></p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u1-q21">
+  <h3>Model Question 2023 Q21 — graphical solution</h3>
+  <p class="dgm-sub">Maximise 10P + 30Q subject to the two machine-hour limits</p>
+  <svg viewBox="0 0 360 270" role="img" aria-label="Feasible region for P plus 2Q at most 20 and P plus 5Q at most 35 with corner points 0-0, 20-0, 10-5 and 0-7; the maximum profit 250 is at 10-5">
+    <line class="ax" x1="45" y1="245" x2="350" y2="245"/>
+    <line class="ax" x1="45" y1="245" x2="45" y2="18"/>
+    <text class="t" x="340" y="262">P</text><text class="t" x="30" y="22">Q</text>
+    <polygon class="fn" points="45,245 285,245 165,133 45,88"/>
+    <line class="ck" x1="45" y1="20" x2="285" y2="245"/>
+    <line class="cc" x1="45" y1="88" x2="345" y2="200"/>
+    <text class="tc" x="58" y="55">X: P + 2Q = 20</text>
+    <text class="tc" x="215" y="180">Y: P + 5Q = 35</text>
+    <circle class="dot" cx="45" cy="245" r="3.2"/><text class="ts" x="50" y="260">(0,0) Z=0</text>
+    <circle class="dot" cx="285" cy="245" r="3.2"/><text class="ts" x="252" y="260">(20,0) Z=200</text>
+    <circle class="dot" cx="45" cy="88" r="3.2"/><text class="ts" x="4" y="82">(0,7) Z=210</text>
+    <circle class="dot" cx="165" cy="133" r="4"/><text class="tm" x="172" y="128">(10, 5)  Z* = 250</text>
+  </svg>
+  <figcaption>
+    <p>Both constraints are "≤", so the feasible region is the shaded polygon bounded by them and the axes. The two machine lines cross at (10, 5). Evaluating Z at the four corners, the maximum Rs 250 occurs at P = 10, Q = 5.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both machine lines with equations; the feasible region; all four corners with coordinates and Z values; the optimal corner (10, 5) and Z = 250.</div>
+  </figcaption>
+</figure></div>
+
+<h2>1.5 The Simplex Method</h2>
+<p>The graphical method only works for <strong>two</strong> variables. The <strong>simplex method</strong> is an algebraic, iterative procedure for any number of variables. It starts at one corner of the feasible region and hops from corner to corner, improving z at each step, until no further improvement is possible.</p>
+<h3>Requirements — put the LP in standard form</h3>
+<ol>
+<li><strong>All constraints must be equations.</strong>
+<ul>
+<li><strong>≤</strong> constraint → add a non-negative <strong>slack variable</strong> S (the unused resource): 3x₁ + 2x₂ ≤ 120 becomes 3x₁ + 2x₂ + S₁ = 120.</li>
+<li><strong>≥</strong> constraint → subtract a <strong>surplus variable</strong> E and add an <strong>artificial variable</strong> A: 2x₁ + x₂ ≥ 10 becomes 2x₁ + x₂ − E₁ + A₁ = 10.</li>
+<li><strong>=</strong> constraint → add an <strong>artificial variable</strong> A only.</li>
+</ul></li>
+<li><strong>The right-hand side of every constraint must be non-negative</strong> — multiply through by −1 if not (which flips a ≤ to ≥).</li>
+<li><strong>All variables ≥ 0</strong> — including slack, surplus and artificial variables.</li>
+</ol>
+<p>Slack and surplus variables get objective coefficient <strong>0</strong>. Artificial variables get <strong>−M</strong> (a very large number) in a maximisation, or <strong>+M</strong> in a minimisation — the <strong>Big-M method</strong> — to force them out of the final solution.</p>
+<h3>The simplex tableau and the three rules (maximisation, all ≤ constraints)</h3>
+<p>Set up a table: one row per constraint (basic variable = its slack), plus row (0) = the objective written z − c₁x₁ − c₂x₂ − … = 0. The initial basic feasible solution has every decision variable = 0 and each slack = its RHS.</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Rule</th><th>Maximisation</th></tr></thead>
+<tbody>
+<tr><td><strong>1 — Optimality</strong></td><td>The current solution is optimal when <strong>every row-(0) coefficient is ≥ 0</strong>.</td></tr>
+<tr><td><strong>2 — Entering variable</strong></td><td>The non-basic variable with the <strong>most negative</strong> row-(0) coefficient enters; its column is the <strong>key (pivot) column</strong>.</td></tr>
+<tr><td><strong>3 — Leaving variable</strong></td><td>Compute bᵢ ÷ (key-column entry) for every row with a <strong>positive</strong> key-column entry. The <strong>smallest</strong> ratio identifies the leaving basic variable; its row is the <strong>key (pivot) row</strong>; the intersection is the <strong>pivot element</strong>.</td></tr>
+</tbody></table></div>
+<p>Then use row operations (Gauss–Jordan) to make the pivot element 1 and the rest of the key column 0. Repeat from Rule 1. <em>(Minimisation: Rule 1A — optimal when every row-(0) coefficient is ≤ 0; Rule 2A — the most positive coefficient enters. Rule 3 is unchanged.)</em></p>
+<h3>Full worked example — the 2023 Model Question Q21 by simplex</h3>
+<p>Maximise Z = 10P + 30Q subject to P + 2Q ≤ 20, P + 5Q ≤ 35, P, Q ≥ 0. Standard form: P + 2Q + S₁ = 20; P + 5Q + S₂ = 35.</p>
+<p><strong>Tableau 0</strong></p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Basic</th><th>P</th><th>Q</th><th>S₁</th><th>S₂</th><th>b</th><th>ratio bᵢ ÷ Q</th></tr></thead>
+<tbody>
+<tr><td>z (row 0)</td><td>−10</td><td><strong>−30</strong></td><td>0</td><td>0</td><td>0</td><td>—</td></tr>
+<tr><td>S₁</td><td>1</td><td>2</td><td>1</td><td>0</td><td>20</td><td>20 ÷ 2 = 10</td></tr>
+<tr><td>S₂</td><td>1</td><td><strong>5</strong></td><td>0</td><td>1</td><td>35</td><td>35 ÷ 5 = <strong>7 ← min</strong></td></tr>
+</tbody></table></div>
+<p>Most negative row-0 entry is −30 → <strong>Q enters</strong>. Min ratio 7 → <strong>S₂ leaves</strong>. Pivot = 5. New Q-row = old S₂-row ÷ 5 = (0.2, 1, 0, 0.2 | 7); then row 0 → row 0 + 30·(Q-row); S₁-row → S₁-row − 2·(Q-row).</p>
+<p><strong>Tableau 1</strong></p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Basic</th><th>P</th><th>Q</th><th>S₁</th><th>S₂</th><th>b</th><th>ratio bᵢ ÷ P</th></tr></thead>
+<tbody>
+<tr><td>z</td><td><strong>−4</strong></td><td>0</td><td>0</td><td>6</td><td>210</td><td>—</td></tr>
+<tr><td>S₁</td><td><strong>0.6</strong></td><td>0</td><td>1</td><td>−0.4</td><td>6</td><td>6 ÷ 0.6 = <strong>10 ← min</strong></td></tr>
+<tr><td>Q</td><td>0.2</td><td>1</td><td>0</td><td>0.2</td><td>7</td><td>7 ÷ 0.2 = 35</td></tr>
+</tbody></table></div>
+<p>Row-0 still has −4 → <strong>P enters</strong>. Min ratio 10 → <strong>S₁ leaves</strong>. Pivot = 0.6. New P-row = S₁-row ÷ 0.6 = (1, 0, 5/3, −2/3 | 10); then row 0 → row 0 + 4·(P-row); Q-row → Q-row − 0.2·(P-row).</p>
+<p><strong>Tableau 2</strong></p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Basic</th><th>P</th><th>Q</th><th>S₁</th><th>S₂</th><th>b</th></tr></thead>
+<tbody>
+<tr><td>z</td><td>0</td><td>0</td><td>20/3</td><td>10/3</td><td><strong>250</strong></td></tr>
+<tr><td>P</td><td>1</td><td>0</td><td>5/3</td><td>−2/3</td><td>10</td></tr>
+<tr><td>Q</td><td>0</td><td>1</td><td>−1/3</td><td>1/3</td><td>5</td></tr>
+</tbody></table></div>
+<p>All row-0 coefficients ≥ 0 → <strong>optimal</strong>. <strong>P = 10, Q = 5, Z = Rs 250</strong> — the same answer the graph gave. The row-0 entries under S₁ and S₂ (20/3 and 10/3) are the <strong>shadow prices</strong> (§1.6).</p>
+<h3>Special phenomena in the simplex tableau</h3>
+<ul>
+<li><strong>Alternative optimal solutions</strong> — the optimal tableau has a <strong>0</strong> in row (0) for a <em>non-basic</em> variable.</li>
+<li><strong>No feasible solution</strong> — an <strong>artificial variable stays in the basis at a positive value</strong> in the optimal tableau.</li>
+<li><strong>Unbounded solution</strong> — the chosen key column has <strong>no positive entry</strong>, so the entering variable can grow forever.</li>
+<li><strong>Degeneracy</strong> — a tie for the minimum ratio in Rule 3; one basic variable becomes 0.</li>
+</ul>
+
+<h2>1.6 Duality and Standard Minimisation</h2>
+<p>Every LP (the <strong>primal</strong>) has a partner LP called its <strong>dual</strong>. Solving one gives the solution to the other.</p>
+<h3>Forming the dual (primal = a maximisation with all ≤ constraints)</h3>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Primal (max)</th><th>Dual (min)</th></tr></thead>
+<tbody>
+<tr><td>maximise</td><td>minimise</td></tr>
+<tr><td>n decision variables</td><td>n constraints</td></tr>
+<tr><td>m constraints (≤)</td><td>m dual variables (≥ 0)</td></tr>
+<tr><td>objective coefficients c₁ … cₙ</td><td>RHS constants of the dual constraints</td></tr>
+<tr><td>RHS constants b₁ … bₘ</td><td>objective coefficients of the dual</td></tr>
+<tr><td>coefficient matrix A</td><td>its <strong>transpose</strong> Aᵀ</td></tr>
+<tr><td>≤ constraint</td><td>≥ dual constraint</td></tr>
+</tbody></table></div>
+<h3>Worked example — the dual of the model paper Q21</h3>
+<p><strong>Primal:</strong> max Z = 10P + 30Q s.t. P + 2Q ≤ 20, P + 5Q ≤ 35, P, Q ≥ 0.</p>
+<blockquote><p><strong>Dual</strong> (with y₁, y₂ ≥ 0, one per primal constraint): <strong>Minimise</strong> W = 20y₁ + 35y₂ <strong>subject to</strong> y₁ + y₂ ≥ 10 (from the P column), 2y₁ + 5y₂ ≥ 30 (from the Q column), y₁, y₂ ≥ 0.</p></blockquote>
+<p><strong>Dual solution:</strong> y₁ = 20/3, y₂ = 10/3 (read off as the primal optimal tableau's row-(0) slack coefficients). W = 20(20/3) + 35(10/3) = 400/3 + 350/3 = 750/3 = <strong>250</strong>.</p>
+<h3>Primal–dual property (weak &amp; strong duality)</h3>
+<blockquote><p>If both the primal and the dual have feasible solutions, they both have optimal solutions and <strong>their optimal objective values are equal</strong> (here, 250 = 250). If one is unbounded, the other is infeasible.</p></blockquote>
+<p>You can read each problem's optimal decision-variable values from the <em>other</em> problem's optimal simplex tableau (the row-(0) coefficients of the slack / surplus variables).</p>
+<h3>Why the dual matters — shadow prices and standard minimisation</h3>
+<ul>
+<li>Each <strong>dual variable yᵢ is the shadow price</strong> of primal constraint <em>i</em> — the extra profit from one more unit of that resource. Here y₁ = Rs 6.67 per extra machine-X hour, y₂ = Rs 3.33 per extra machine-Y hour.</li>
+<li>A <strong>standard minimisation</strong> LP (minimise, all <strong>≥</strong> constraints, non-negative variables) has a dual that is a <strong>standard maximisation</strong> (maximise, all <strong>≤</strong>). The dual's initial tableau needs only slack variables — no artificial variables, no Big-M — so it is easier to solve. The usual route: <strong>form the dual → solve the dual by simplex → read the primal answer off the dual's optimal tableau.</strong></li>
+</ul>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u1-simplexflow">
+  <h3>The simplex procedure</h3>
+  <p class="dgm-sub">Set up · check · pivot · repeat until optimal</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:540px" viewBox="0 0 540 210" role="img" aria-label="Flowchart: standard form, then initial tableau, then optimality check; if optimal stop, otherwise choose entering variable, choose leaving variable, pivot, and loop back to the optimality check">
+    <defs><marker id="ahm2sx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F5FA8"/></marker></defs>
+    <rect x="12" y="20" width="120" height="40" rx="6" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="ts" x="72" y="37" text-anchor="middle">Standard form</text>
+    <text class="ts" x="72" y="50" text-anchor="middle">(slack/surplus/artificial)</text>
+    <rect x="160" y="20" width="110" height="40" rx="6" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="ts" x="215" y="43" text-anchor="middle">Initial tableau</text>
+    <rect x="300" y="18" width="120" height="44" rx="6" class="ck" style="fill:rgba(240,180,60,.14)"/>
+    <text class="tb" x="360" y="35" text-anchor="middle" style="font-size:10px">Rule 1: optimal?</text>
+    <text class="ts" x="360" y="49" text-anchor="middle">all row-0 ≥ 0 ?</text>
+    <rect x="450" y="20" width="78" height="40" rx="6" class="ck" style="fill:rgba(70,160,90,.16)"/>
+    <text class="tb" x="489" y="43" text-anchor="middle" style="font-size:10px">STOP ✓</text>
+    <rect x="300" y="130" width="120" height="40" rx="6" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="360" y="147" text-anchor="middle">Rule 2: entering var</text>
+    <text class="ts" x="360" y="160" text-anchor="middle">(most negative row-0)</text>
+    <rect x="150" y="130" width="120" height="40" rx="6" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="210" y="147" text-anchor="middle">Rule 3: leaving var</text>
+    <text class="ts" x="210" y="160" text-anchor="middle">(min bᵢ ÷ key-col)</text>
+    <rect x="20" y="130" width="100" height="40" rx="6" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="70" y="147" text-anchor="middle">Pivot</text>
+    <text class="ts" x="70" y="160" text-anchor="middle">(Gauss–Jordan)</text>
+    <path d="M 132 40 L 158 40" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <path d="M 270 40 L 298 40" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <path d="M 420 40 L 448 40" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <text class="ts" x="437" y="34" text-anchor="middle">yes</text>
+    <path d="M 360 62 L 360 128" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <text class="ts" x="372" y="98" text-anchor="middle">no</text>
+    <path d="M 300 150 L 272 150" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <path d="M 150 150 L 122 150" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <path d="M 70 128 C 70 90, 180 80, 300 55" class="cd thin" fill="none" marker-end="url(#ahm2sx)"/>
+    <text class="ts" x="150" y="95" text-anchor="middle">new tableau → re-check</text>
+  </svg></div>
+  <figcaption>
+    <p>Put the LP in standard form, build the initial tableau (slacks basic), then loop: if every row-0 coefficient is ≥ 0 stop — otherwise bring in the most-negative variable (Rule 2), send out the minimum-ratio variable (Rule 3), pivot, and re-check. Minimisation swaps "≥ 0 / most negative" for "≤ 0 / most positive".</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The standard-form step and which supplemental variable each constraint type gets; Rules 1, 2, 3 in order; that pivoting is Gauss–Jordan row reduction; the loop back to the optimality check.</div>
+  </figcaption>
+</figure></div>
+
+<hr>
+<h2>Exam checklist</h2>
+<p><strong>Definitions to know cold:</strong> linear inequality → half-plane, test-point method, solid vs dashed boundary; LP model = decision variables + linear objective (max/min) + structural constraints + non-negativity constraints; the four assumptions (linearity/proportionality, additivity, divisibility, certainty); feasible region = intersection of all constraint half-planes (a convex polygon); the corner-point theorem; corner-point method and isoprofit-line method; the four special cases; simplex standard form (≤ → +slack, ≥ → −surplus +artificial, = → +artificial; RHS ≥ 0; all variables ≥ 0); simplex Rules 1/2/3 (max) and 1A/2A (min); Big-M (artificial variables −M / +M); dual (max↔min, n vars ↔ n constraints, c ↔ RHS, A ↔ Aᵀ, ≤ ↔ ≥); the primal–dual property; dual variables = shadow prices; standard minimisation (min, all ≥) solved via its dual.</p>
+<p><strong>Confirmed real past-paper question</strong> (tag <code>real:"2023 model paper"</code>, TU FOM Model Question 2023, BBM Business Mathematics II):</p>
+<ol>
+<li><strong>Section C Q21</strong> — Two products P, Q on two machines X (20 h) and Y (35 h); time per unit X: 1, 2 and Y: 1, 5; profit 10, 30. (a) units of each to maximise profit; (b) the maximum profit. <em>(10 marks, "simplex method or graphical method")</em> — worked in §1.4 (graphical) and §1.5 (simplex): <strong>P = 10, Q = 5, maximum profit Rs 250.</strong></li>
+</ol>
+<p>Also expect: a Section-A brief on formulating an LP or defining a slack / surplus / artificial variable; a Section-B LP formulation or a 2-variable graphical solve; a Section-B or C question on writing the dual of a given primal.</p>`;
+
+/* ===== UNIT 2 — Linear Algebra and Applications ===== */
 window.SUBJECT_NOTES["bmath2"]["1"] = `<p><strong>Syllabus scope (7 lecture hours):</strong> Introduction to matrices and types of matrices; operations on matrices — addition, subtraction, scalar multiplication, multiplication; transpose; determinant of a square matrix; minors and cofactors; singular and non-singular matrices; adjoint and inverse matrices; elementary row operations; methods of solving linear equations — Cramer's rule, the inverse-matrix method (applied to business and economics problems), Gauss elimination and Gauss–Jordan; input/output analysis; technology coefficient matrix; Hawkins–Simon conditions for the viability of the system.</p>
 <p><em>Notation used below:</em> a matrix is written in bracket–row form, <code>[a  b ; c  d]</code> = the 2×2 matrix with first row (a, b), second row (c, d). <code>|A|</code> is the determinant of A. Fractions are written <code>1/3</code>.</p>
 <hr>
@@ -12989,6 +13287,109 @@ So <strong>A<sup>−1</sup> = [5 −7 ; −2 3]</strong>. If the left block cann
    w:3 = confirmed past-paper idea or guaranteed-core; w:2 core; w:1 finer point.
 --------------------------------------------------------------------------- */
 window.SUBJECT_QUIZ["bmath2"] = window.SUBJECT_QUIZ["bmath2"] || {};
+window.SUBJECT_QUIZ["bmath2"]["0"] = [
+  {q:"The solution set of a linear inequality in two variables such as 2x + 3y ≤ 12 is:", o:["a half-plane (one side of the boundary line)", "a single point", "a straight line", "the whole plane"], a:0, w:3,
+   why:"A linear inequality divides the plane into two half-planes; the solution is the one satisfying the inequality, together with the boundary line for ≤ or ≥."},
+  {q:"To decide which side of the boundary line ax + by = c satisfies an inequality, the quickest method is to:", o:["always shade above the line", "measure the slope", "substitute a test point not on the line (the origin if it is not on the line)", "shade both sides"], a:2, w:3,
+   why:"Test-point method: if the point satisfies the inequality, shade its side; if not, shade the other side. The origin (0,0) is easiest whenever the line does not pass through it."},
+  {q:"For the inequality x + y < 8 (strict inequality), the boundary line x + y = 8 is drawn:", o:["solid, and included in the solution", "not drawn at all", "as a curve", "dashed, and NOT included in the solution"], a:3, w:2,
+   why:"A strict inequality (< or >) excludes the boundary, shown by a dashed line. ≤ or ≥ include it, shown by a solid line."},
+  {q:"Rewriting 2x + 5y ≤ 20 in slope-intercept form gives y ≤ −(2/5)x + 4, so the half-plane lies:", o:["above the line", "below the line", "on the line only", "to the right of the y-axis"], a:1, w:2,
+   why:"'y ≤ (expression)' is the region below the boundary line; 'y ≥ (expression)' is the region above it."},
+  {q:"The solution set of a SYSTEM of linear inequalities is:", o:["the union of all the individual half-planes", "only the boundary lines", "empty unless all inequalities are ≤", "the region common to (the intersection of) all the half-planes"], a:3, w:3,
+   why:"Every point must satisfy every inequality, so the solution is the overlap of all the half-planes. In LP this common region is the feasible region."},
+  {q:"In a linear programming model, the DECISION VARIABLES represent:", o:["the quantities the decision-maker chooses (e.g. units of each product)", "the resources available", "the profit per unit", "the constraints"], a:0, w:3,
+   why:"Decision variables x₁, x₂, … are the unknowns whose values the model determines — typically activity levels such as units to produce."},
+  {q:"The OBJECTIVE FUNCTION in an LP is:", o:["a list of the resource limits", "always equal to zero", "the linear function to be maximised or minimised (e.g. total profit or total cost)", "the non-negativity requirement"], a:2, w:3,
+   why:"z = c₁x₁ + c₂x₂ + … states the goal as a linear function of the decision variables."},
+  {q:"Which of the following makes a programming problem NOT a LINEAR programming problem?", o:["a constraint of the form 3x₁ + 2x₂ ≤ 60", "a constraint of the form x₁·x₂ ≤ 40", "an objective z = 5x₁ + 6x₂", "a non-negativity constraint x₁ ≥ 0"], a:1, w:3,
+   why:"x₁·x₂ is a product of variables — non-linear. LP requires the objective and every constraint to be linear (variables appear only to the first power, no products, roots, etc.)."},
+  {q:"The constraints x₁ ≥ 0 and x₂ ≥ 0 in an LP are called the:", o:["non-negativity constraints", "structural constraints", "objective constraints", "slack constraints"], a:0, w:3,
+   why:"There is one non-negativity constraint per decision variable (you cannot produce a negative quantity). Resource limits and requirements are the structural constraints."},
+  {q:"A firm makes x₁ units of A and x₂ units of B. Department 1 has 120 hours; A needs 3 h/unit and B needs 2 h/unit there. The correct structural constraint for Department 1 is:", o:["3x₁ + 2x₂ ≥ 120", "3x₁ + 2x₂ = 120", "x₁ + x₂ ≤ 120", "3x₁ + 2x₂ ≤ 120"], a:3, w:3,
+   why:"Hours used (3x₁ + 2x₂) cannot exceed hours available (120), so the constraint is ≤."},
+  {q:"A minimum-requirement condition such as 'at least 25 units must be produced' is written as a constraint of type:", o:["≤", "≥", "=", "< only"], a:1, w:2,
+   why:"'At least' means the quantity must be greater than or equal to the requirement, so a ≥ constraint. Resource ceilings give ≤ constraints."},
+  {q:"In the diet-mix (least-cost meal) problem, the objective and the constraints are typically:", o:["maximise cost, subject to ≤ constraints", "maximise nutrients, subject to = constraints", "minimise cost, subject to ≥ (minimum nutrient) constraints", "minimise nutrients, subject to ≤ constraints"], a:2, w:2,
+   why:"You minimise total cost while meeting each nutrient's minimum daily requirement — a minimisation with all ≥ constraints (the 'standard minimisation' form)."},
+  {q:"The LP assumption that doubling an activity doubles both its resource use and its contribution to the objective is called:", o:["divisibility", "certainty", "additivity", "proportionality (linearity)"], a:3, w:2,
+   why:"Proportionality/linearity: contributions and resource usage are strictly proportional to the activity level — no economies of scale, no fixed set-up costs."},
+  {q:"The LP assumption of DIVISIBILITY means:", o:["the decision variables may take fractional values", "the problem can be split into smaller problems", "all coefficients are whole numbers", "the feasible region is divided by the constraints"], a:0, w:2,
+   why:"Divisibility allows non-integer solutions (e.g. 3.5 units). If variables must be whole numbers it becomes integer programming."},
+  {q:"The LP assumption of CERTAINTY means:", o:["there is always a unique optimal solution", "the feasible region is bounded", "all the coefficients (objective, constraint, RHS) are known constants", "the problem has no risk"], a:2, w:1,
+   why:"Certainty: every parameter is a known constant, not a random variable. Sensitivity analysis explores how the solution changes if they vary."},
+  {q:"The REGION OF FEASIBLE SOLUTIONS of an LP is:", o:["only the corner points", "the set of all points satisfying every constraint (structural and non-negativity)", "the set of points maximising the objective", "the area outside all constraint lines"], a:1, w:3,
+   why:"It is the intersection of all the constraint half-planes and the first quadrant — the set of candidate solutions."},
+  {q:"The region of feasible solutions of an LP is always:", o:["a circle", "a single line segment", "non-convex", "a convex set (a convex polygon, possibly unbounded)"], a:3, w:2,
+   why:"An intersection of half-planes is convex — the line segment joining any two feasible points is entirely feasible. This is why the corner-point method works."},
+  {q:"The fundamental theorem of linear programming states that an optimal solution, if one exists, occurs:", o:["at a corner (extreme point) of the feasible region", "at the centre of the feasible region", "only where two constraints are non-binding", "at the origin"], a:0, w:3,
+   why:"Because the objective is linear and the feasible region is convex, sliding the objective line as far as possible always leaves it touching at least one vertex."},
+  {q:"To find the exact coordinates of a corner point where two constraint lines meet, you:", o:["read them approximately off the graph", "solve the two constraint equations simultaneously", "take the average of the two intercepts", "use the objective function"], a:1, w:2,
+   why:"The corner is the intersection of the two lines, found by solving the pair of equations together (the graph only gives an approximate reading)."},
+  {q:"In the corner-point method, once the feasible region is drawn you:", o:["pick any corner point as the answer", "find the midpoint of the region", "evaluate the objective function at every corner and choose the best value", "choose the corner farthest from the origin"], a:2, w:3,
+   why:"Evaluate z at each vertex; the largest z is the maximum, the smallest z is the minimum. The 'farthest from origin' rule is not reliable — it depends on the objective's coefficients."},
+  {q:"For a MAXIMISATION problem solved by corner points, the optimal solution is the corner with the:", o:["smallest objective value", "most constraints passing through it", "smallest x₁ value", "largest objective value"], a:3, w:3,
+   why:"Maximisation → pick the corner giving the highest z. Minimisation → pick the corner giving the lowest z."},
+  {q:"An ISOPROFIT line for the objective z = 5x₁ + 6x₂ is:", o:["the boundary of a constraint", "a line along which z has a fixed value; the family of such lines are all parallel", "the x₁-axis", "the line joining the origin to the optimal corner"], a:1, w:2,
+   why:"Setting z to a constant gives one line; different constants give parallel lines. Moving the line away from the origin increases z (for positive coefficients)."},
+  {q:"Solving max z = 5x₁ + 6x₂ subject to 3x₁ + 2x₂ ≤ 120, 4x₁ + 6x₂ ≤ 260, x₁,x₂ ≥ 0 gives the optimum at:", o:["(20, 30), z = 280", "(40, 0), z = 200", "(0, 43⅓), z = 260", "(0, 0), z = 0"], a:0, w:3,
+   why:"The two constraint lines cross at (20, 30): 3x₁+2x₂=120 and 4x₁+6x₂=260 give x₁=20, x₂=30, and z = 5(20)+6(30) = 280 — the largest of the four corner values."},
+  {q:"When the objective line is PARALLEL to a binding constraint edge, the LP has:", o:["no feasible solution", "a unique optimal solution", "alternative (multiple) optimal solutions along that edge", "an unbounded solution"], a:2, w:2,
+   why:"Every point on that edge gives the same optimal z, so there are infinitely many optimal solutions. The corner-point method shows a tie for the best z."},
+  {q:"An LP has NO FEASIBLE SOLUTION when:", o:["the feasible region is unbounded", "the objective is a minimisation", "there are more than two variables", "the constraints have no common region (they contradict each other)"], a:3, w:2,
+   why:"E.g. x₁ + x₂ ≤ 5 together with x₁ + x₂ ≥ 20 — no point satisfies both, so the feasible region is empty."},
+  {q:"An UNBOUNDED solution occurs when:", o:["the feasible region extends to infinity in the direction the objective improves, so z has no limit", "the feasible region is a closed polygon", "there is a tie between two corners", "a constraint is redundant"], a:0, w:2,
+   why:"Possible only with an open feasible region (typically ≥ constraints) and an objective that keeps improving in the unbounded direction. z can be made arbitrarily large (max) or small (min)."},
+  {q:"A REDUNDANT constraint in an LP is one that:", o:["makes the problem infeasible", "does not touch the feasible region, so removing it changes nothing", "must be an equality", "always passes through the optimum"], a:1, w:1,
+   why:"Its half-plane fully contains the feasible region already, so it never binds. Identifying redundant constraints simplifies large models."},
+  {q:"To convert a ≤ constraint such as 3x₁ + 2x₂ ≤ 120 into an equation for the simplex method, you:", o:["subtract a surplus variable", "add an artificial variable only", "multiply by −1", "add a non-negative slack variable: 3x₁ + 2x₂ + S₁ = 120"], a:3, w:3,
+   why:"A slack variable S₁ ≥ 0 absorbs the unused amount of the resource, balancing the equation."},
+  {q:"A SLACK variable in an LP represents:", o:["the shortage of a resource", "the profit per unit", "the unused (idle) amount of a resource", "a violation of a constraint"], a:2, w:3,
+   why:"For a ≤ resource constraint, the slack is how much of that resource is left over at a given solution. Slack = 0 means the constraint is binding (fully used)."},
+  {q:"To convert a ≥ constraint such as 2x₁ + x₂ ≥ 10 into standard form for the simplex method, you:", o:["subtract a surplus variable and add an artificial variable: 2x₁ + x₂ − E₁ + A₁ = 10", "add a slack variable only", "add two slack variables", "do nothing"], a:0, w:3,
+   why:"The surplus variable E₁ ≥ 0 carries the excess over the minimum; an artificial variable A₁ is added to give a starting basic feasible solution."},
+  {q:"An ARTIFICIAL variable is added to a constraint in order to:", o:["represent unused resources", "provide a convenient starting (initial) basic feasible solution for the simplex method", "measure profit", "make the constraint an inequality again"], a:1, w:2,
+   why:"Artificial variables have no physical meaning. They are forced out of the final solution by the Big-M penalty (−M in a max, +M in a min)."},
+  {q:"For an EQUALITY constraint (=) in the simplex method you add:", o:["a slack variable", "a surplus variable", "an artificial variable only", "nothing"], a:2, w:2,
+   why:"An = constraint has no slack or surplus; only an artificial variable is added to start the simplex."},
+  {q:"One of the three requirements of the simplex method is that:", o:["there be at most two decision variables", "the objective be a maximisation", "every constraint be a ≤", "the right-hand side of every constraint be non-negative"], a:3, w:2,
+   why:"The three requirements: all constraints as equations; every RHS ≥ 0 (multiply by −1 if not, which flips the inequality); all variables ≥ 0."},
+  {q:"If a constraint is 2x₁ − 5x₂ ≤ −10, before applying the simplex method you should:", o:["leave it as it is", "multiply through by −1 to get −2x₁ + 5x₂ ≥ 10 (RHS now positive)", "drop the constraint", "add a slack variable directly"], a:1, w:2,
+   why:"Requirement II: the RHS must be non-negative. Multiplying by −1 makes the RHS +10 and reverses the inequality sense."},
+  {q:"Slack and surplus variables are given which coefficient in the objective function?", o:["0", "+M", "−M", "1"], a:0, w:2,
+   why:"They contribute nothing to the objective, so their coefficient is 0. Only artificial variables get the ±M penalty."},
+  {q:"In a maximisation simplex tableau, the current solution is OPTIMAL when:", o:["all row-(0) coefficients are ≤ 0", "the objective value stops changing sign", "every basic variable equals zero", "all row-(0) coefficients are ≥ 0"], a:3, w:3,
+   why:"Rule 1: if no row-(0) coefficient is negative, no non-basic variable can improve z, so the solution is optimal. (Minimisation: optimal when all row-(0) coefficients are ≤ 0.)"},
+  {q:"In a maximisation simplex tableau that is not yet optimal, the ENTERING variable is the one with the:", o:["most positive row-(0) coefficient", "largest right-hand-side value", "most negative row-(0) coefficient", "smallest ratio"], a:2, w:3,
+   why:"Rule 2: the most negative row-(0) coefficient gives the largest per-unit improvement in z; that variable's column is the key (pivot) column. Minimisation uses the most positive coefficient."},
+  {q:"The LEAVING (departing) basic variable in the simplex method is found by:", o:["choosing the row with the largest right-hand side", "computing bᵢ ÷ (key-column entry) for rows with a positive key-column entry, and taking the SMALLEST ratio", "choosing the first row", "taking the largest ratio"], a:1, w:3,
+   why:"Rule 3: the minimum non-negative ratio bᵢ ÷ aᵢₖ (over positive aᵢₖ) identifies the row whose basic variable hits zero first — that variable leaves the basis."},
+  {q:"In the initial simplex tableau of a maximisation problem with all ≤ constraints, the starting basic variables are:", o:["the slack variables (all decision variables are non-basic, set to 0)", "the decision variables", "the artificial variables", "one decision and one slack variable"], a:0, w:2,
+   why:"Setting every decision variable to 0, each slack equals its constraint's RHS — a basic feasible solution at the origin corner."},
+  {q:"If, when choosing the leaving variable, the key column has NO positive entry, the LP has:", o:["a unique optimum", "alternative optima", "no feasible solution", "an unbounded solution"], a:3, w:2,
+   why:"No positive key-column entry means the entering variable can increase without any basic variable being driven to zero — the objective can improve without limit."},
+  {q:"In the OPTIMAL simplex tableau, a value of 0 in row (0) under a NON-BASIC variable signals:", o:["an error", "alternative (multiple) optimal solutions", "no feasible solution", "an unbounded solution"], a:1, w:1,
+   why:"That non-basic variable can be brought into the basis without changing the (already optimal) objective value — a second optimal corner exists."},
+  {q:"In the simplex method, no feasible solution is indicated when the optimal tableau contains:", o:["a slack variable in the basis", "a zero in row (0)", "an artificial variable in the basis at a positive value", "a negative right-hand side"], a:2, w:2,
+   why:"Artificial variables must leave the basis (or be zero) in a genuine solution. One stuck in the basis at a positive value means the original constraints cannot all be met."},
+  {q:"In the Big-M method for a MAXIMISATION problem, each artificial variable is given an objective coefficient of:", o:["−M (a large negative number)", "0", "+M (a large positive number)", "+1"], a:0, w:2,
+   why:"A −M coefficient (with M very large) makes any positive artificial variable extremely unattractive, forcing it out of the optimal solution. Minimisation uses +M."},
+  {q:"When solving a MINIMISATION LP by the simplex method, Rule 2A says the entering variable is the one with the:", o:["most negative row-(0) coefficient", "smallest right-hand side", "largest slack", "most positive row-(0) coefficient"], a:3, w:2,
+   why:"Minimisation reverses the maximisation rules: enter the most positive row-(0) coefficient; stop when all row-(0) coefficients are ≤ 0. Rule 3 (min ratio) is unchanged."},
+  {q:"If the PRIMAL LP is a maximisation with 2 variables and 3 constraints, its DUAL is a:", o:["maximisation with 2 variables and 3 constraints", "minimisation with 3 variables and 2 constraints", "maximisation with 3 variables and 2 constraints", "minimisation with 2 variables and 3 constraints"], a:1, w:3,
+   why:"The dual reverses the sense (max ↔ min); the number of dual variables equals the number of primal constraints, and the number of dual constraints equals the number of primal variables."},
+  {q:"In forming the dual, the objective-function coefficients of the primal become the:", o:["objective coefficients of the dual", "dual variables", "right-hand-side constants of the dual constraints", "coefficient matrix of the dual"], a:2, w:2,
+   why:"Primal objective coefficients c → dual RHS constants; primal RHS constants b → dual objective coefficients; the primal coefficient matrix A → its transpose Aᵀ in the dual."},
+  {q:"The dual of  max Z = 10P + 30Q  s.t.  P + 2Q ≤ 20,  P + 5Q ≤ 35,  P,Q ≥ 0  is:", o:["max W = 20y₁ + 35y₂ s.t. y₁ + y₂ ≤ 10, 2y₁ + 5y₂ ≤ 30", "min W = 10y₁ + 30y₂ s.t. y₁ + y₂ ≥ 20, 2y₁ + 5y₂ ≥ 35", "min W = 20y₁ + 35y₂ s.t. y₁ + 2y₂ ≥ 10, y₁ + 5y₂ ≥ 30", "min W = 20y₁ + 35y₂ s.t. y₁ + y₂ ≥ 10, 2y₁ + 5y₂ ≥ 30, y₁,y₂ ≥ 0"], a:3, w:3,
+   why:"Dual: minimise (RHS·y), one ≥ constraint per primal variable using that variable's primal column, dual variables ≥ 0. This is the dual of the real 2023 model-paper Q21."},
+  {q:"The PRIMAL–DUAL property (strong duality) states that when both problems have feasible solutions:", o:["their optimal objective values are equal", "the primal value is always larger than the dual value", "the dual has no solution", "only the primal has an optimal solution"], a:0, w:3,
+   why:"At optimality the two objective values coincide (for Q21, both equal 250). If one problem is unbounded, the other is infeasible."},
+  {q:"Each optimal DUAL variable yᵢ can be interpreted as the:", o:["number of units of product i to make", "slack in constraint i", "shadow price of primal constraint i — the extra objective value from one more unit of that resource", "cost of product i"], a:2, w:2,
+   why:"The dual variable measures the marginal worth of relaxing the i-th primal constraint by one unit (the shadow price / marginal value of the resource)."},
+  {q:"A 'standard minimisation' LP (minimise, all ≥ constraints) is usually easiest to solve by:", o:["the graphical method only", "forming its dual (a standard maximisation) and solving that by simplex", "ignoring the non-negativity constraints", "adding slack variables to the ≥ constraints"], a:1, w:2,
+   why:"The dual of a standard-minimisation problem is a standard maximisation whose initial tableau needs only slack variables — no artificial variables or Big-M. Read the primal answer off the dual's optimal tableau."}
+];
+
 window.SUBJECT_QUIZ["bmath2"]["1"] = [
   {q:"A matrix with 3 rows and 4 columns has order:", o:["4 × 3","3 × 4","12 × 1","3 + 4"], a:1, w:3,
    why:"Order is written rows × columns, so 3 × 4. The element count (12) is not the order."},
@@ -13091,6 +13492,67 @@ window.SUBJECT_QUIZ["bmath2"]["1"] = [
    later unit — Group D content is Unit 4 material.
 --------------------------------------------------------------------------- */
 window.SUBJECT_EXAM["bmath2"] = window.SUBJECT_EXAM["bmath2"] || { units: {}, cases: [] };
+window.SUBJECT_EXAM["bmath2"].units["0"] = {
+  brief: [
+    {q:"What is the solution set of a linear inequality in two variables? How is the boundary line drawn for a strict inequality?",
+     pts:["Solution set = a half-plane: all points on one side of the boundary line ax + by = c","For ≤ or ≥ the boundary line is solid (included); for < or > it is dashed (excluded)"]},
+    {q:"Distinguish between the structural constraints and the non-negativity constraints of an LP.",
+     pts:["Structural constraints — resource limits or requirements linking the decision variables (e.g. 3x₁ + 2x₂ ≤ 120), written ≤, ≥ or =","Non-negativity constraints — one per decision variable, x_j ≥ 0, since activity levels cannot be negative"]},
+    {q:"Define a slack variable and a surplus variable, and state which constraint type each is used for.",
+     pts:["Slack variable (S ≥ 0) — added to the LHS of a ≤ constraint; represents the unused amount of that resource","Surplus variable (E ≥ 0) — subtracted from the LHS of a ≥ constraint; represents the amount by which the minimum requirement is exceeded"]},
+    {q:"What is an artificial variable and why is it introduced in the simplex method?",
+     pts:["A non-negative variable added to a ≥ or an = constraint","It has no physical meaning; it provides a convenient starting basic feasible solution","It is driven out of the final solution by the Big-M penalty (−M in a maximisation, +M in a minimisation)"]},
+    {q:"State the corner-point (extreme-point) theorem of linear programming.",
+     pts:["If an LP has an optimal solution, at least one optimal solution occurs at a corner (vertex / extreme point) of the region of feasible solutions","True for both maximisation and minimisation, regardless of the objective's slope"]},
+    {q:"What is an isoprofit line? What does moving it away from the origin do?",
+     pts:["The set of points for which the objective function z = c₁x₁ + c₂x₂ takes a fixed value","The family of isoprofit lines are all parallel","For positive coefficients, moving the line away from the origin increases z (toward the origin decreases it)"]},
+    {q:"Write the constraint 2x₁ + x₂ ≥ 10 in the standard form required by the simplex method.",
+     pts:["Subtract a surplus variable E₁ and add an artificial variable A₁","2x₁ + x₂ − E₁ + A₁ = 10, with E₁, A₁ ≥ 0"]},
+    {q:"State the three requirements a problem must satisfy before the simplex method can be applied.",
+     pts:["All constraints must be expressed as equations (add slack / surplus / artificial variables)","The right-hand side of every constraint must be non-negative","All variables (including slack, surplus and artificial) must be ≥ 0"]},
+    {q:"How is an unbounded solution and how is 'no feasible solution' recognised in an LP?",
+     pts:["Unbounded — the feasible region extends to infinity in the direction the objective improves, so z has no finite optimum (in the simplex tableau, the key column has no positive entry)","No feasible solution — the constraints have no common region (in the simplex tableau, an artificial variable remains in the basis at a positive value in the optimal tableau)"]},
+    {q:"Write the dual of:  Maximise Z = 4x₁ + 3x₂  subject to  2x₁ + x₂ ≤ 10,  x₁ + 3x₂ ≤ 15,  x₁, x₂ ≥ 0.",
+     pts:["Minimise W = 10y₁ + 15y₂","subject to 2y₁ + y₂ ≥ 4 (from the x₁ column)","y₁ + 3y₂ ≥ 3 (from the x₂ column)","y₁, y₂ ≥ 0"]},
+    {q:"Define the region of feasible solutions of an LP and state one of its key properties.",
+     pts:["The set of all points (x₁, x₂, …) that satisfy every structural constraint and every non-negativity constraint","It is a convex set (a convex polygon, possibly unbounded) — the line segment joining any two feasible points is itself feasible"]},
+    {q:"State the primal–dual property (strong duality).",
+     pts:["If both the primal and its dual have feasible solutions, both have optimal solutions and their optimal objective values are equal","If one problem has an unbounded solution, the other has no feasible solution"]},
+    {q:"Rewrite the constraint 2x₁ − 5x₂ ≤ −10 so that its right-hand side is non-negative.",
+     pts:["Multiply both sides by −1","The inequality sense reverses: −2x₁ + 5x₂ ≥ 10"]},
+    {q:"What does a slack value of zero for a constraint tell you at the optimal solution?",
+     pts:["The constraint is binding (active) — that resource is fully used","The corresponding dual variable (shadow price) may be positive; a non-binding constraint has a zero shadow price"]}
+  ],
+  short: [
+    {q:"A furniture firm makes tables (x₁) and chairs (x₂). A table needs 4 hours of carpentry and 2 hours of finishing; a chair needs 3 hours of carpentry and 1 hour of finishing. There are 240 carpentry hours and 100 finishing hours per week. Profit is Rs 70 per table and Rs 50 per chair. Formulate the linear programming model.",
+     pts:["Decision variables: x₁ = tables per week, x₂ = chairs per week","Objective: Maximise Z = 70x₁ + 50x₂","Carpentry constraint: 4x₁ + 3x₂ ≤ 240","Finishing constraint: 2x₁ + x₂ ≤ 100","Non-negativity: x₁, x₂ ≥ 0"]},
+    {q:"Solve graphically:  Maximise Z = 40x₁ + 30x₂  subject to  x₁ + x₂ ≤ 12,  2x₁ + x₂ ≤ 16,  x₁, x₂ ≥ 0.",
+     pts:["Plot the two lines; feasible region is the polygon with corners (0,0), (8,0), (4,8), (0,12)","(4,8) is the intersection of x₁ + x₂ = 12 and 2x₁ + x₂ = 16 → x₁ = 4, x₂ = 8","Evaluate Z: (0,0)→0; (8,0)→320; (0,12)→360; (4,8)→160 + 240 = 400","Maximum Z = 400 at x₁ = 4, x₂ = 8"]},
+    {q:"Solve by the simplex method:  Maximise Z = 5x₁ + 4x₂  subject to  6x₁ + 4x₂ ≤ 24,  x₁ + 2x₂ ≤ 6,  x₁, x₂ ≥ 0.  Show the tableaux.",
+     pts:["Standard form: 6x₁ + 4x₂ + S₁ = 24; x₁ + 2x₂ + S₂ = 6","Tableau 0: row-0 (−5, −4, 0, 0 | 0). x₁ enters (−5 most negative); ratios 24/6 = 4, 6/1 = 6 → S₁ leaves (pivot 6)","Tableau 1: row-0 (0, −2/3, 5/6, 0 | 20). x₂ enters; ratios 4 ÷ (2/3) = 6, 2 ÷ (4/3) = 1.5 → S₂ leaves","Tableau 2: row-0 all ≥ 0 (0, 0, 3/4, 1/2 | 21) → optimal","x₁ = 3, x₂ = 1.5, Z = 21 (both constraints binding: 6(3)+4(1.5)=24, 3+2(1.5)=6)"]},
+    {q:"Write the dual of the following primal and state the relationship between the two problems.  Primal: Maximise Z = 3x₁ + 5x₂  subject to  x₁ ≤ 4,  2x₂ ≤ 12,  3x₁ + 2x₂ ≤ 18,  x₁, x₂ ≥ 0.",
+     pts:["Three primal constraints → three dual variables y₁, y₂, y₃ ≥ 0","Dual: Minimise W = 4y₁ + 12y₂ + 18y₃","subject to y₁ + 3y₃ ≥ 3 (x₁ column); 2y₂ + 2y₃ ≥ 5 (x₂ column); y₁, y₂, y₃ ≥ 0","Relationship: max ↔ min; n primal variables ↔ n dual constraints, m primal constraints ↔ m dual variables; at optimality the two objective values are equal (primal–dual property); each yᵢ is the shadow price of primal constraint i"]},
+    {q:"A patient's diet must supply at least 8 units of vitamin A and at least 6 units of vitamin B per day, from two foods. One unit of food 1 provides 2 units of A and 1 unit of B and costs Rs 5; one unit of food 2 provides 1 unit of A and 3 units of B and costs Rs 4. Formulate the LP to meet the requirements at least cost.",
+     pts:["Decision variables: x₁ = units of food 1, x₂ = units of food 2","Objective: Minimise Z = 5x₁ + 4x₂","Vitamin A: 2x₁ + x₂ ≥ 8","Vitamin B: x₁ + 3x₂ ≥ 6","Non-negativity: x₁, x₂ ≥ 0 (a 'standard minimisation' — min with all ≥ constraints)"]},
+    {q:"Explain, with the constraint type each attaches to, the slack, surplus and artificial variables used to put an LP into standard form for the simplex method.",
+     pts:["≤ constraint → add a slack variable S ≥ 0 (unused resource): a + b ≤ c becomes a + b + S = c","≥ constraint → subtract a surplus variable E ≥ 0 (excess over requirement) AND add an artificial variable A ≥ 0: a + b ≥ c becomes a + b − E + A = c","= constraint → add an artificial variable A only","Slack and surplus get objective coefficient 0; artificial variables get −M (max) or +M (min) so they leave the optimal basis"]},
+    {q:"Using a graph, explain the three special outcomes an LP can have besides a unique optimum: alternative optimal solutions, no feasible solution, and an unbounded solution.",
+     pts:["Alternative optima — the objective line is parallel to a binding constraint edge; every point on that edge gives the same optimal z (a tie between two corners)","No feasible solution — the constraint half-planes have no common region, so the feasible region is empty","Unbounded solution — the feasible region is open in the direction the objective improves, so z can be increased (max) or decreased (min) without limit","A fourth situation — a redundant constraint — does not touch the feasible region and can be removed without effect"]},
+    {q:"For the LP  Maximise Z = 5x₁ + 4x₂  subject to  6x₁ + 4x₂ ≤ 24,  x₁ + 2x₂ ≤ 6,  the optimal tableau has row-0 entries of 3/4 under S₁ and 1/2 under S₂. Interpret these two numbers.",
+     pts:["They are the shadow prices (dual values) of the two constraints","3/4: one extra unit of the first resource (the 24) would raise the maximum profit Z by 0.75","1/2: one extra unit of the second resource (the 6) would raise Z by 0.50","They hold only within a range of right-hand-side changes; a non-binding constraint would have a shadow price of 0"]}
+  ],
+  long: [
+    {q:"A factory produces two products P and Q, each processed on two machines X and Y. The total hours available per week are 20 on machine X and 35 on machine Y. Product P needs 1 hour on X and 1 hour on Y; product Q needs 2 hours on X and 5 hours on Y. Profit is Rs 10 per unit of P and Rs 30 per unit of Q. (a) Formulate the LP. (b) Solve it by the graphical method. (c) Solve it again by the simplex method. (d) State the maximum profit and the machine-hour shadow prices.", real:"2023 model paper", dia:"mth2-u1-q21",
+     pts:["(a) Let P, Q = units per week. Maximise Z = 10P + 30Q s.t. P + 2Q ≤ 20 (machine X), P + 5Q ≤ 35 (machine Y), P, Q ≥ 0","(b) Corners of the feasible region: (0,0) Z = 0; (20,0) Z = 200; (0,7) Z = 210; (10,5) Z = 250. (10,5) is the intersection P + 2Q = 20, P + 5Q = 35 → 3Q = 15 → Q = 5, P = 10. Maximum Z = 250 at (10,5)","(c) Simplex: P + 2Q + S₁ = 20; P + 5Q + S₂ = 35. Tableau 0 row-0 (−10, −30, 0, 0 | 0): Q enters, ratios 20/2=10 and 35/5=7 → S₂ leaves. Tableau 1 row-0 (−4, 0, 0, 6 | 210): P enters, ratios 6÷0.6=10 and 7÷0.2=35 → S₁ leaves. Tableau 2 row-0 all ≥ 0 (0, 0, 20/3, 10/3 | 250) → optimal: P = 10, Q = 5, Z = 250","(d) Maximum profit = Rs 250 with P = 10 units, Q = 5 units. Shadow price of machine X = 20/3 ≈ Rs 6.67 per hour; of machine Y = 10/3 ≈ Rs 3.33 per hour (both machines fully used)"]},
+    {q:"A company makes two products A and B with profit Rs 6 per unit of A and Rs 8 per unit of B. Each unit of A needs 2 machine-hours and 3 labour-hours; each unit of B needs 4 machine-hours and 2 labour-hours. There are 100 machine-hours and 90 labour-hours available per week, and demand for B is at most 20 units per week. (a) Formulate the LP. (b) Solve by the corner-point (graphical) method. (c) Interpret the solution for the production manager.",
+     pts:["(a) Let x₁ = units of A, x₂ = units of B. Maximise Z = 6x₁ + 8x₂ s.t. 2x₁ + 4x₂ ≤ 100 (machine), 3x₁ + 2x₂ ≤ 90 (labour), x₂ ≤ 20 (demand), x₁, x₂ ≥ 0","(b) Corners of the feasible region: (0,0), (30,0), (20,15), (10,20), (0,20). (20,15) solves 2x₁ + 4x₂ = 100 and 3x₁ + 2x₂ = 90 → x₂ = 15, x₁ = 20. (10,20) solves x₂ = 20 and 2x₁ + 4x₂ = 100 → x₁ = 10","Evaluate Z: (0,0)→0; (30,0)→180; (20,15)→120 + 120 = 240; (10,20)→60 + 160 = 220; (0,20)→160. Maximum Z = 240 at (20, 15)","(c) Make 20 units of A and 15 units of B per week for a maximum weekly profit of Rs 240. Machine-hours (2·20 + 4·15 = 100) and labour-hours (3·20 + 2·15 = 90) are both fully used; the demand limit on B (15 < 20) is not binding — extra demand for B would not help unless more machine or labour hours are found"]},
+    {q:"Solve the following linear programming problem by the simplex method, showing every tableau, and state the optimal solution and the shadow prices.  Maximise Z = 6x₁ + 8x₂  subject to  5x₁ + 10x₂ ≤ 60,  4x₁ + 4x₂ ≤ 40,  x₁, x₂ ≥ 0.",
+     pts:["Standard form: 5x₁ + 10x₂ + S₁ = 60; 4x₁ + 4x₂ + S₂ = 40. Initial basis S₁ = 60, S₂ = 40, Z = 0","Tableau 0 row-0 (−6, −8, 0, 0 | 0): x₂ enters (−8); ratios 60/10 = 6, 40/4 = 10 → S₁ leaves (pivot 10)","Tableau 1: x₂-row (0.5, 1, 0.1, 0 | 6); row-0 (−2, 0, 0.8, 0 | 48); S₂-row (2, 0, −0.4, 1 | 16). x₁ enters (−2); ratios 6 ÷ 0.5 = 12, 16 ÷ 2 = 8 → S₂ leaves (pivot 2)","Tableau 2: x₁-row (1, 0, −0.2, 0.5 | 8); x₂-row (0, 1, 0.2, −0.25 | 2); row-0 (0, 0, 0.4, 1 | 64) — all ≥ 0 → optimal","Optimal: x₁ = 8, x₂ = 2, Z = 64. Check: 5(8) + 10(2) = 60 ✓, 4(8) + 4(2) = 40 ✓. Shadow prices: first constraint 0.4, second constraint 1.0"]},
+    {q:"Consider the minimisation problem  Minimise Z = 40x₁ + 30x₂  subject to  x₁ + x₂ ≥ 10,  x₁ + 2x₂ ≥ 14,  x₁, x₂ ≥ 0.  (a) Solve it by the graphical (corner-point) method. (b) Write its dual. (c) Solve the dual and verify the primal–dual property.",
+     pts:["(a) Feasible region (≥ constraints) has corners (14,0), (6,4), (0,10). (6,4) solves x₁ + x₂ = 10 and x₁ + 2x₂ = 14 → x₂ = 4, x₁ = 6","Evaluate Z: (14,0)→560; (6,4)→240 + 120 = 360; (0,10)→300. Minimum Z = 300 at x₁ = 0, x₂ = 10","(b) Dual: Maximise W = 10y₁ + 14y₂ s.t. y₁ + y₂ ≤ 40 (x₁ column), y₁ + 2y₂ ≤ 30 (x₂ column), y₁, y₂ ≥ 0","(c) Dual feasible corners: (0,0) W = 0; (30,0) W = 300; (0,15) W = 210. Maximum W = 300 at y₁ = 30, y₂ = 0","Primal–dual property verified: minimum Z = 300 = maximum W = 300. (y₁ = 30 is the shadow price of the first primal constraint; y₂ = 0 because the second primal constraint is slack at the optimum: 0 + 2(10) = 20 > 14)"]}
+  ]
+};
+
 window.SUBJECT_EXAM["bmath2"].units["1"] = {
   brief: [
     {q:"If A = [8 2 ; 3 4] and B = [2 −1 ; 1 −3], find 7(A − B).", real:"2023 model paper",
