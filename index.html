@@ -13,6 +13,7 @@
     --soc:#9457c9; --soc-d:#4c2470;
     --eng:#e08a3f; --eng-d:#8a4a12;
     --facc:#2f8fa8; --facc-d:#164e5c;
+    --bmath2:#4a5bd0; --bmath2-d:#2b3080;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -55,6 +56,7 @@
   .c-soc{background:linear-gradient(135deg,var(--soc),var(--soc-d));}
   .c-eng{background:linear-gradient(135deg,var(--eng),var(--eng-d));}
   .c-facc{background:linear-gradient(135deg,var(--facc),var(--facc-d));}
+  .c-bmath2{background:linear-gradient(135deg,var(--bmath2),var(--bmath2-d));}
   .c-notes{background:linear-gradient(135deg,#5a4a8a,#2c2050);grid-column:span 2;height:92px;}
 
   /* ---- Subject view ---- */
@@ -12566,6 +12568,590 @@ window.SUBJECT_EXAM["facc"].cases = [
 
 </script>
 <script>
+/* ===== MTH 202 Business Mathematics II — Semester 2 =====
+   Edit this file alone; the shell and the other subjects are untouched.
+   Loaded by index.html after data-acc*.js.
+
+   Sem-2 metadata namespace: window.SUBJECT_DATA_S2, unique subject key "bmath2".
+   Notes / quiz / exam live in the shared window.SUBJECT_* objects, keyed "bmath2".
+
+   Build order: Unit 2 built first as the schema / UI checkpoint (source for
+   Units 1,3,4,5,6 not yet fully processed). Units array carries all 6 real
+   titles; unbuilt units flagged notBuilt (inert marker — the app never reads it).
+   ===== */
+window.SUBJECT_DATA_S2 = window.SUBJECT_DATA_S2 || {};
+window.SUBJECT_QUIZ  = window.SUBJECT_QUIZ  || {};
+window.SUBJECT_NOTES = window.SUBJECT_NOTES || {};
+window.SUBJECT_EXAM  = window.SUBJECT_EXAM  || {};
+
+/* ---------------------------------------------------------------------------
+   SUBJECT METADATA
+--------------------------------------------------------------------------- */
+window.SUBJECT_DATA_S2["bmath2"] = {
+  title: "Business Mathematics II",
+  code: "MTH 202 • 3 Credits • 48 LHs • Tribhuvan University",
+  examSectionLabel: "Section",
+  colorClass: "c-bmath2", hex:"#4a5bd0", hexD:"#2b3080",
+  banner: "linear-gradient(135deg,#4a5bd0,#2b3080)",
+  book: "Applied Mathematics for Business, Economics & the Social Sciences (Budnick)",
+  bookMatch: "budnick|applied mathematics for business",
+  units: [
+    {title:"Unit 1: Linear Inequalities and Linear Programming",
+      primaryBook:"Applied Mathematics for Business, Economics & the Social Sciences (Budnick), Ch 10–11",
+      primaryWeak:"NOT YET BUILT. Budnick Ch 10 (graphical LP) + Ch 11 (simplex, duality) is the primary; Rosser Ch 5A and Bradley also cover it.",
+      pages:"Budnick Ch 10–11 · book p.420–514", startPage:440, endPage:534, lh:6,
+      desc:"Linear inequalities in two variables; formulation of an LP problem; solving by the graphical method and the simplex method (two variables); duality and standard minimisation problems.",
+      subtopics:"Inequalities, LP formulation, graphical method, simplex (2-var), duality",
+      notBuilt:true, refs:[]},
+
+    {title:"Unit 2: Linear Algebra and Applications",
+      primaryBook:"Applied Mathematics for Business, Economics & the Social Sciences (Budnick), Ch 9 + Ch 3.2–3.3",
+      primaryWeak:"Matrices/operations/determinants/inverse/Cramer/Gauss–Jordan: Budnick Ch 9 (book p.348–414) + Ch 3.2–3.3 (Gauss elimination, book p.97–112). Input–output analysis + the Hawkins–Simon conditions are NOT in Budnick — taken from Rosser Ch 15.12–15.13 (book p.575–588) and Chiang Ch 5.7 (Spanish 4th ed).",
+      pages:"Budnick Ch 9 + Ch 3.2–3.3", startPage:376, endPage:414, lh:7,
+      desc:"Matrices and their types; addition, subtraction, scalar multiplication, multiplication, transpose; determinant of a square matrix; minors and cofactors; singular and non-singular matrices; adjoint and inverse; elementary row operations; solving linear equations by Cramer's rule, the inverse-matrix method, Gauss elimination and Gauss–Jordan; input–output analysis, the technology coefficient matrix, and the Hawkins–Simon conditions for viability.",
+      subtopics:"Matrices & types, operations, transpose, determinant, minors/cofactors, adjoint & inverse, row ops, Cramer's rule, Gauss/Gauss–Jordan, input–output, Hawkins–Simon",
+      primaryMatch:"budnick|applied mathematics for business",
+      refs:[
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 15.12–15.13, book p.575–588", note:"Input–output analysis (flow table → technology coefficient matrix → (I−A)x = d) and the Hawkins–Simon conditions — the clearest treatment; not in Budnick.", match:"rosser|basic mathematics for economists|annas arch", start:589},
+        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish: Métodos Fundamentales de Economía Matemática)", pages:"Ch 4–5, book p.44–121", note:"Rigorous backbone: determinants, Laplace expansion, adjoint/inverse, Cramer's rule, Leontief input–output and Hawkins–Simon (Ch 5.7). Writes the transpose as A′.", match:"chiang|metodos fundamentales|economia matematica", start:65}
+      ]},
+
+    {title:"Unit 3: Integration and Applications",
+      primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 8",
+      primaryWeak:"NOT YET BUILT. Bradley Ch 8 (integration, area under a curve, consumer/producer surplus) is the primary; Chiang Ch 14 and Rosser Ch 12.5–12.7 also cover it.",
+      pages:"Bradley Ch 8", startPage:0, endPage:0, lh:8,
+      desc:"Concept of integration; standard forms, substitution, integration by parts; integration of algebraic, logarithmic and exponential functions; definite integrals; applications in business and economics including consumer's surplus and producer's surplus; area under a curve.",
+      subtopics:"Integration techniques, definite integrals, surplus, area under a curve",
+      notBuilt:true, refs:[]},
+
+    {title:"Unit 4: Functions of Several Variables",
+      primaryBook:"Chiang Ch 7.4, 11, 12 + Bradley Ch 7",
+      primaryWeak:"NOT YET BUILT. Partial differentiation and its applications, unconstrained and constrained optimisation, Lagrange multipliers — Chiang Ch 11–12 and Bradley Ch 7; Rosser Ch 10–11.",
+      pages:"Chiang Ch 11–12 · Bradley Ch 7", startPage:0, endPage:0, lh:9,
+      desc:"Functions of several variables and their business/economic applications; partial differentiation and its applications (elasticity, utility, production); graphical representation; unconstrained optimisation; constrained optimisation and Lagrange multipliers.",
+      subtopics:"Partial differentiation, applications, unconstrained & constrained optimisation, Lagrange multipliers",
+      notBuilt:true, refs:[]},
+
+    {title:"Unit 5: First-order Differential Equations and Applications",
+      primaryBook:"Chiang Ch 15 + Rosser Ch 14",
+      primaryWeak:"NOT YET BUILT. First-order differential equations, dynamics of market price, exact and variable-coefficient equations — Chiang Ch 15 (Spanish 4th ed); Rosser Ch 14.6–14.9.",
+      pages:"Chiang Ch 15 · Rosser Ch 14", startPage:0, endPage:0, lh:9,
+      desc:"Introduction to differential equations; order and degree; solution of differential equations; first-order linear equations with constant coefficient and term; equations for limited and unlimited growth; dynamics of market price; variable-coefficient and variable-term equations; exact equations; non-linear first-order first-degree equations.",
+      subtopics:"Order & degree, first-order linear ODEs, growth, dynamics of market price, exact equations",
+      notBuilt:true, refs:[]},
+
+    {title:"Unit 6: Dynamic Economic Analysis and Difference Equations",
+      primaryBook:"Chiang Ch 17 & 19 + Rosser Ch 13",
+      primaryWeak:"NOT YET BUILT. First-order difference equations, the cobweb model, the lagged Keynesian model, duopoly price adjustment — Chiang Ch 17 & 19; Rosser Ch 13.",
+      pages:"Chiang Ch 17 & 19 · Rosser Ch 13", startPage:0, endPage:0, lh:9,
+      desc:"Introduction to difference equations; solution of first-order difference equations (homogeneous and non-homogeneous); economic applications of first-order difference equations — the cobweb model, the lagged Keynesian macroeconomic model, and duopoly price adjustment.",
+      subtopics:"Difference equations, homogeneous & non-homogeneous solutions, cobweb, lagged Keynesian, duopoly",
+      notBuilt:true, refs:[]}
+  ]
+};
+
+/* ---------------------------------------------------------------------------
+   UNIT 2 — WRITTEN NOTES  (source of truth: book/mth202/MTH202-unit2-notes.md)
+   Matrices are written in bracket–row notation:  [a  b ; c  d]  means the 2×2
+   matrix with first row (a, b) and second row (c, d).  |A| is the determinant.
+--------------------------------------------------------------------------- */
+window.SUBJECT_NOTES["bmath2"] = window.SUBJECT_NOTES["bmath2"] || {};
+window.SUBJECT_NOTES["bmath2"]["1"] = `<p><strong>Syllabus scope (7 lecture hours):</strong> Introduction to matrices and types of matrices; operations on matrices — addition, subtraction, scalar multiplication, multiplication; transpose; determinant of a square matrix; minors and cofactors; singular and non-singular matrices; adjoint and inverse matrices; elementary row operations; methods of solving linear equations — Cramer's rule, the inverse-matrix method (applied to business and economics problems), Gauss elimination and Gauss–Jordan; input/output analysis; technology coefficient matrix; Hawkins–Simon conditions for the viability of the system.</p>
+<p><em>Notation used below:</em> a matrix is written in bracket–row form, <code>[a  b ; c  d]</code> = the 2×2 matrix with first row (a, b), second row (c, d). <code>|A|</code> is the determinant of A. Fractions are written <code>1/3</code>.</p>
+<hr>
+
+<h2>2.1 Matrices — Concept and Types</h2>
+<p>A <strong>matrix</strong> is a rectangular array of numbers (its <em>elements</em>) arranged in rows and columns, written inside brackets. A matrix with <em>m</em> rows and <em>n</em> columns has <strong>order</strong> (or <strong>dimension</strong>) <em>m × n</em> ("m by n"). The element in row <em>i</em>, column <em>j</em> is written <strong>a<sub>ij</sub></strong> — <em>row index first, column index second</em>.</p>
+<p>A matrix is only a <strong>table of numbers</strong>; unlike a determinant (§2.3) it has no single numerical value.</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Type</th><th>Definition</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Row matrix / row vector</strong></td><td>one row (order 1 × n)</td><td>[3&nbsp;&nbsp;−1&nbsp;&nbsp;5]</td></tr>
+<tr><td><strong>Column matrix / column vector</strong></td><td>one column (order m × 1)</td><td>[4 ; 2 ; 7]</td></tr>
+<tr><td><strong>Square matrix</strong></td><td>rows = columns (order n × n)</td><td>2×2, 3×3, …</td></tr>
+<tr><td><strong>Rectangular matrix</strong></td><td>rows ≠ columns</td><td>2×3, 3×2, …</td></tr>
+<tr><td><strong>Diagonal matrix</strong></td><td>square; every off-diagonal element is 0</td><td>[3 0 0 ; 0 0 0 ; 0 0 −2]</td></tr>
+<tr><td><strong>Scalar matrix</strong></td><td>diagonal matrix with all diagonal elements equal</td><td>[5 0 ; 0 5]</td></tr>
+<tr><td><strong>Identity / unit matrix (I or I<sub>n</sub>)</strong></td><td>scalar matrix with 1s on the diagonal</td><td>[1 0 ; 0 1]</td></tr>
+<tr><td><strong>Null / zero matrix (O)</strong></td><td>every element is 0</td><td>[0 0 ; 0 0]</td></tr>
+<tr><td><strong>Upper-triangular</strong></td><td>square; all elements <em>below</em> the main diagonal are 0</td><td>[2 5 ; 0 3]</td></tr>
+<tr><td><strong>Lower-triangular</strong></td><td>square; all elements <em>above</em> the main diagonal are 0</td><td>[2 0 ; 5 3]</td></tr>
+<tr><td><strong>Symmetric matrix</strong></td><td>square; A<sup>T</sup> = A (so a<sub>ij</sub> = a<sub>ji</sub>)</td><td>[2 3 ; 3 5]</td></tr>
+<tr><td><strong>Skew-symmetric matrix</strong></td><td>square; A<sup>T</sup> = −A (so the diagonal is all 0)</td><td>[0 4 ; −4 0]</td></tr>
+</tbody></table></div>
+<p>The <strong>main (principal) diagonal</strong> of a square matrix is the elements a<sub>11</sub>, a<sub>22</sub>, a<sub>33</sub>, …, a<sub>nn</sub>.</p>
+<p><strong>Equality of matrices:</strong> A = B only if they have the <strong>same order</strong> <em>and</em> every corresponding element is equal (a<sub>ij</sub> = b<sub>ij</sub> for all i, j).</p>
+
+<h2>2.2 Operations on Matrices</h2>
+<h3>Addition and subtraction</h3>
+<p>Two matrices can be added or subtracted <strong>only if they have the same order</strong>. Add/subtract corresponding elements: (A ± B)<sub>ij</sub> = a<sub>ij</sub> ± b<sub>ij</sub>.</p>
+<p><strong>Worked example.</strong> A = [1 3 ; 4 −2], B = [−3 2 ; 0 4].</p>
+<ul>
+<li>A + B = [1−3&nbsp;&nbsp;3+2 ; 4+0&nbsp;&nbsp;−2+4] = <strong>[−2 5 ; 4 2]</strong></li>
+<li>A − B = [1−(−3)&nbsp;&nbsp;3−2 ; 4−0&nbsp;&nbsp;−2−4] = <strong>[4 1 ; 4 −6]</strong></li>
+</ul>
+<p>Properties: A + B = B + A (commutative); (A + B) + C = A + (B + C) (associative); A + O = A.</p>
+
+<h3>Scalar multiplication</h3>
+<p>Multiply <strong>every</strong> element by the scalar <em>k</em>: (kA)<sub>ij</sub> = k·a<sub>ij</sub>.</p>
+<p><strong>Worked example</strong> — this is the real 2023 Model Question, Section A Q8: find <strong>7(A − B)</strong> where A = [8 2 ; 3 4], B = [2 −1 ; 1 −3].</p>
+<p>A − B = [8−2&nbsp;&nbsp;2−(−1) ; 3−1&nbsp;&nbsp;4−(−3)] = [6 3 ; 2 7]. Then 7(A − B) = <strong>[42 21 ; 14 49]</strong>.</p>
+<p>Note the difference between <strong>kA</strong> (multiply a <em>matrix</em> by k — every element scales) and <strong>k|A|</strong> (multiply a <em>determinant</em> by k — only one row or column scales; see §2.3 Property III).</p>
+
+<h3>Matrix multiplication</h3>
+<p>The product <strong>AB</strong> is defined <strong>only if the number of columns of A equals the number of rows of B</strong>. If A is <em>m × p</em> and B is <em>p × n</em>, then <strong>AB is m × n</strong>, and element (i, j) of the product is the <strong>inner product</strong> of row <em>i</em> of A and column <em>j</em> of B — multiply matching entries and add:</p>
+<p style="text-align:center">(AB)<sub>ij</sub> = a<sub>i1</sub>b<sub>1j</sub> + a<sub>i2</sub>b<sub>2j</sub> + … + a<sub>ip</sub>b<sub>pj</sub></p>
+<p><strong>Worked example.</strong> A = [2 4 ; 3 1] (2×2), B = [1 0 5 ; 2 1 0] (2×3). The product is 2×3:</p>
+<p>AB = [ 2(1)+4(2)&nbsp;&nbsp;2(0)+4(1)&nbsp;&nbsp;2(5)+4(0) ; 3(1)+1(2)&nbsp;&nbsp;3(0)+1(1)&nbsp;&nbsp;3(5)+1(0) ] = <strong>[10 4 10 ; 5 1 15]</strong>.</p>
+<p>Key properties and warnings:</p>
+<ul>
+<li><strong>Not commutative:</strong> in general <strong>AB ≠ BA</strong>. Often BA is not even defined; even when both exist they usually differ.</li>
+<li><strong>Associative:</strong> (AB)C = A(BC). <strong>Distributive:</strong> A(B + C) = AB + AC.</li>
+<li><strong>AI = IA = A</strong> — I is the identity, the "1" of matrix multiplication.</li>
+<li><strong>AB = O does not imply A = O or B = O</strong> (no zero-product rule).</li>
+<li>(AB)<sup>T</sup> = <strong>B<sup>T</sup>A<sup>T</sup></strong> — the order reverses.</li>
+</ul>
+
+<h3>Transpose</h3>
+<p>The <strong>transpose A<sup>T</sup></strong> (also written A′ or A<sup>t</sup>) is formed by <strong>interchanging rows and columns</strong>: row <em>i</em> of A becomes column <em>i</em> of A<sup>T</sup>, so (A<sup>T</sup>)<sub>ij</sub> = a<sub>ji</sub>. If A is <em>m × n</em>, then A<sup>T</sup> is <em>n × m</em>.</p>
+<p><strong>Worked example.</strong> A = [3 2 ; 4 0 ; 1 −2] (3×2) → A<sup>T</sup> = [3 4 1 ; 2 0 −2] (2×3).</p>
+<p>Properties: (A<sup>T</sup>)<sup>T</sup> = A; (A + B)<sup>T</sup> = A<sup>T</sup> + B<sup>T</sup>; (kA)<sup>T</sup> = kA<sup>T</sup>; <strong>(AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup></strong>. A matrix is <strong>symmetric</strong> if A<sup>T</sup> = A, <strong>skew-symmetric</strong> if A<sup>T</sup> = −A.</p>
+
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u2-matmul">
+  <h3>How matrix multiplication works</h3>
+  <p class="dgm-sub">Element (i, j) = row i of A · column j of B</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:560px" viewBox="0 0 560 200" role="img" aria-label="Row 2 of matrix A multiplied element-by-element with column 2 of matrix B to give the element in row 2 column 2 of the product">
+    <defs><marker id="ahm2mm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F5FA8"/></marker></defs>
+    <text class="tb" x="70" y="16" text-anchor="middle">A  (2 × 3)</text>
+    <rect x="18" y="26" width="150" height="74" rx="4" class="ck" style="fill:rgba(255,255,255,.5)"/>
+    <text class="t" x="40" y="52" text-anchor="middle">2</text><text class="t" x="93" y="52" text-anchor="middle">4</text><text class="t" x="146" y="52" text-anchor="middle">1</text>
+    <rect x="22" y="66" width="142" height="24" rx="3" class="fd"/>
+    <text class="tb" x="40" y="83" text-anchor="middle">3</text><text class="tb" x="93" y="83" text-anchor="middle">0</text><text class="tb" x="146" y="83" text-anchor="middle">5</text>
+    <text class="ts" x="70" y="116" text-anchor="middle">row 2 = (3, 0, 5)</text>
+    <text class="tb" x="250" y="16" text-anchor="middle">B  (3 × 2)</text>
+    <rect x="210" y="26" width="90" height="104" rx="4" class="ck" style="fill:rgba(255,255,255,.5)"/>
+    <rect x="256" y="30" width="40" height="96" rx="3" class="fd"/>
+    <text class="t" x="230" y="48" text-anchor="middle">1</text><text class="tb" x="276" y="48" text-anchor="middle">2</text>
+    <text class="t" x="230" y="82" text-anchor="middle">0</text><text class="tb" x="276" y="82" text-anchor="middle">1</text>
+    <text class="t" x="230" y="116" text-anchor="middle">4</text><text class="tb" x="276" y="116" text-anchor="middle">3</text>
+    <text class="ts" x="255" y="148" text-anchor="middle">col 2 = (2, 1, 3)</text>
+    <path d="M 168 80 C 195 80, 205 54, 250 50" class="cd thin" fill="none" marker-end="url(#ahm2mm)"/>
+    <text class="tb" x="440" y="16" text-anchor="middle">AB  (2 × 2)</text>
+    <rect x="380" y="34" width="150" height="84" rx="4" class="ck" style="fill:rgba(255,255,255,.5)"/>
+    <text class="ts" x="418" y="62" text-anchor="middle">·</text><text class="ts" x="492" y="62" text-anchor="middle">·</text>
+    <text class="ts" x="418" y="100" text-anchor="middle">·</text>
+    <circle class="dot" cx="492" cy="96" r="11" style="fill:rgba(31,95,168,.18);stroke:#1F5FA8"/>
+    <text class="tb" x="492" y="100" text-anchor="middle">21</text>
+    <text class="ts" x="455" y="140" text-anchor="middle">(AB)₂₂ = 3·2 + 0·1 + 5·3 = 21</text>
+    <text class="ts" x="455" y="156" text-anchor="middle">columns of A (3) = rows of B (3) ✓</text>
+  </svg></div>
+  <figcaption>
+    <p>Slide row <em>i</em> of A along column <em>j</em> of B, multiply the overlapping pairs, and add. The product has as many rows as A and as many columns as B; the "inner" dimensions must match or the product does not exist.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The conformability check (cols of A = rows of B); the row·column rule; the order of the product matrix.</div>
+  </figcaption>
+</figure></div>
+
+<h2>2.3 Determinant of a Square Matrix</h2>
+<p>The <strong>determinant</strong> of a square matrix A — written <strong>|A|</strong> or <strong>det A</strong> or <strong>Δ</strong> — is a single number computed from its elements. It is defined <strong>only for square matrices</strong>. Its main use here: |A| ≠ 0 tells us the matrix has an inverse and the linked system of equations has a unique solution (§2.4).</p>
+<h3>2 × 2 determinant</h3>
+<p style="text-align:center">| a&nbsp;&nbsp;b ; c&nbsp;&nbsp;d | = <strong>ad − bc</strong>&nbsp;&nbsp;&nbsp;(main-diagonal product minus other-diagonal product)</p>
+<p>Example: | 10 4 ; 8 5 | = 10(5) − 4(8) = 50 − 32 = <strong>18</strong>.</p>
+<h3>3 × 3 determinant — the diagonal ("Sarrus") method</h3>
+<p>Copy the first two columns to the right; add the three "↘" diagonal products, subtract the three "↙" diagonal products:</p>
+<p style="text-align:center">|A| = a<sub>11</sub>a<sub>22</sub>a<sub>33</sub> + a<sub>12</sub>a<sub>23</sub>a<sub>31</sub> + a<sub>13</sub>a<sub>21</sub>a<sub>32</sub> − a<sub>31</sub>a<sub>22</sub>a<sub>13</sub> − a<sub>32</sub>a<sub>23</sub>a<sub>11</sub> − a<sub>33</sub>a<sub>21</sub>a<sub>12</sub></p>
+<p><strong>⚠ Sarrus works only for 3 × 3.</strong> For 4 × 4 and larger, use the cofactor (Laplace) expansion below.</p>
+<h3>Minors and cofactors</h3>
+<ul>
+<li>The <strong>minor M<sub>ij</sub></strong> of element a<sub>ij</sub> is the determinant of the sub-matrix left after <strong>deleting row i and column j</strong>.</li>
+<li>The <strong>cofactor C<sub>ij</sub></strong> is the signed minor: <strong>C<sub>ij</sub> = (−1)<sup>i+j</sup> M<sub>ij</sub></strong>. So the cofactor equals the minor when <em>i + j</em> is even, and minus the minor when <em>i + j</em> is odd. The sign pattern is a checkerboard: [+ − + ; − + − ; + − +].</li>
+</ul>
+<p><strong>Worked example.</strong> In | 9 8 7 ; 6 5 4 ; 3 2 1 | the element 8 sits in position (1, 2). Its minor is M<sub>12</sub> = | 6 4 ; 3 1 | = 6 − 12 = −6. Its cofactor is C<sub>12</sub> = (−1)<sup>1+2</sup>(−6) = <strong>+6</strong>.</p>
+<h3>Laplace (cofactor) expansion — works for any order</h3>
+<p>Pick <strong>any one row or column</strong>, multiply each element by its cofactor, and add: |A| = Σ<sub>j</sub> a<sub>ij</sub>C<sub>ij</sub> (along row i) = Σ<sub>i</sub> a<sub>ij</sub>C<sub>ij</sub> (along column j). The value is the same whichever you choose — so <strong>pick the row or column with the most zeros</strong>.</p>
+<p><strong>Worked example</strong> — the real 2023 Model Question, Section A Q9: evaluate | 1 4 2 ; 2 5 1 ; 3 6 9 |.</p>
+<p>Expand along row 1:<br>
+= 1·(5·9 − 1·6) − 4·(2·9 − 1·3) + 2·(2·6 − 5·3)<br>
+= 1·(45 − 6) − 4·(18 − 3) + 2·(12 − 15)<br>
+= 39 − 60 − 6 = <strong>−27</strong>.</p>
+<p>Check by Sarrus: [1·5·9 + 4·1·3 + 2·2·6] − [3·5·2 + 6·1·1 + 9·2·4] = [45 + 12 + 24] − [30 + 6 + 72] = 81 − 108 = −27 ✓</p>
+<h3>Properties of determinants (useful for fast evaluation)</h3>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>#</th><th>Property</th></tr></thead>
+<tbody>
+<tr><td>I</td><td>|A<sup>T</sup>| = |A| — transposing does not change the determinant</td></tr>
+<tr><td>II</td><td>Interchanging two rows (or two columns) <strong>changes the sign</strong> of |A|</td></tr>
+<tr><td>III</td><td>Multiplying <strong>one</strong> row (or column) by k multiplies |A| by k. A common factor of a row/column can be taken outside.</td></tr>
+<tr><td>IV</td><td>Adding a multiple of one row (column) to another <strong>does not change</strong> |A| — the basis of row-reduction</td></tr>
+<tr><td>V</td><td>If any row (column) is all zeros, or two rows (columns) are equal, or one is a multiple of another → <strong>|A| = 0</strong></td></tr>
+<tr><td>VI</td><td>Expansion by "alien" cofactors (elements of one row × cofactors of a <em>different</em> row) always gives <strong>0</strong> — this is what makes the adjoint method work (§2.5)</td></tr>
+</tbody></table></div>
+
+<h2>2.4 Singular and Non-singular Matrices</h2>
+<p>A square matrix A is:</p>
+<ul>
+<li><strong>non-singular (invertible)</strong> if <strong>|A| ≠ 0</strong> — rows/columns are linearly independent, the inverse A<sup>−1</sup> exists, and Ax = d has a <strong>unique</strong> solution x = A<sup>−1</sup>d;</li>
+<li><strong>singular</strong> if <strong>|A| = 0</strong> — rows/columns are linearly dependent, <strong>no inverse exists</strong>, and Ax = d has either <strong>no solution</strong> or <strong>infinitely many</strong>.</li>
+</ul>
+<p><strong>Worked example.</strong> Does 7x<sub>1</sub> − 3x<sub>2</sub> − 3x<sub>3</sub> = 7, 2x<sub>1</sub> + 4x<sub>2</sub> + x<sub>3</sub> = 0, −2x<sub>2</sub> − x<sub>3</sub> = 2 have a unique solution?</p>
+<p>|A| = | 7 −3 −3 ; 2 4 1 ; 0 −2 −1 |. Expand along column 1:<br>
+= 7·(4·(−1) − 1·(−2)) − 2·((−3)(−1) − (−3)(−2)) + 0<br>
+= 7·(−4 + 2) − 2·(3 − 6) = 7(−2) − 2(−3) = −14 + 6 = <strong>−8 ≠ 0</strong> → A is non-singular → <strong>yes, a unique solution exists</strong>.</p>
+
+<h2>2.5 Adjoint and Inverse of a Matrix</h2>
+<h3>Adjoint (adjugate)</h3>
+<p>The <strong>adjoint of A</strong>, written <strong>adj A</strong>, is the <strong>transpose of the cofactor matrix</strong>. Steps: replace every element a<sub>ij</sub> by its cofactor C<sub>ij</sub> to get the cofactor matrix C; then transpose it. adj A = C<sup>T</sup>.</p>
+<h3>Inverse by the adjoint method</h3>
+<p style="text-align:center"><strong>A<sup>−1</sup> = (1 / |A|) · adj A</strong>&nbsp;&nbsp;&nbsp;(provided |A| ≠ 0)</p>
+<p>Procedure: (1) compute |A| — if it is 0, stop, there is no inverse; (2) build the cofactor matrix C; (3) transpose C to get adj A; (4) divide every element by |A|.</p>
+<p><strong>Worked example (2 × 2).</strong> A = [4 3 ; −2 −1]. |A| = 4(−1) − 3(−2) = −4 + 6 = 2.<br>
+Cofactor matrix C = [−1 2 ; −3 4]. adj A = C<sup>T</sup> = [−1 −3 ; 2 4].<br>
+A<sup>−1</sup> = (1/2)·[−1 −3 ; 2 4] = <strong>[−1/2&nbsp;&nbsp;−3/2 ; 1&nbsp;&nbsp;2]</strong>.</p>
+<p><strong>Shortcut for 2 × 2 only:</strong> for A = [a b ; c d], A<sup>−1</sup> = (1/(ad − bc))·[d −b ; −c a] — "swap the diagonal, negate the off-diagonal, divide by the determinant."</p>
+<p><strong>Worked example (3 × 3).</strong> B = [1 2 0 ; 1 0 −1 ; −1 3 2]. |B| = 1·(0·2 − (−1)·3) − 2·(1·2 − (−1)(−1)) + 0 = 1(3) − 2(1) = 1.<br>
+Cofactor matrix C = [3 −1 3 ; −4 2 −5 ; −2 1 −2]; adj B = C<sup>T</sup> = [3 −4 −2 ; −1 2 1 ; 3 −5 −2].<br>
+Since |B| = 1, <strong>B<sup>−1</sup> = adj B = [3 −4 −2 ; −1 2 1 ; 3 −5 −2]</strong>. (Check: B·B<sup>−1</sup> = I.)</p>
+<h3>Properties of the inverse</h3>
+<ul>
+<li>(A<sup>−1</sup>)<sup>−1</sup> = A</li>
+<li><strong>(AB)<sup>−1</sup> = B<sup>−1</sup>A<sup>−1</sup></strong> — the order reverses</li>
+<li>(A<sup>T</sup>)<sup>−1</sup> = (A<sup>−1</sup>)<sup>T</sup>; (kA)<sup>−1</sup> = (1/k)A<sup>−1</sup>; |A<sup>−1</sup>| = 1 / |A|</li>
+<li>The inverse, when it exists, is <strong>unique</strong>.</li>
+</ul>
+
+<h2>2.6 Elementary Row Operations, Gauss Elimination and Gauss–Jordan</h2>
+<h3>The three elementary row operations</h3>
+<p>On the <strong>augmented matrix</strong> [A | d] of a system:</p>
+<ol>
+<li><strong>Swap</strong> two rows (R<sub>i</sub> ↔ R<sub>j</sub>)</li>
+<li><strong>Scale</strong> a row by a non-zero constant (R<sub>i</sub> → k·R<sub>i</sub>)</li>
+<li><strong>Add a multiple</strong> of one row to another (R<sub>i</sub> → R<sub>i</sub> + k·R<sub>j</sub>)</li>
+</ol>
+<p>Each keeps the solution set unchanged (it produces an <em>equivalent</em> system).</p>
+<h3>Gauss elimination (forward elimination + back-substitution)</h3>
+<p>Row-reduce [A | d] to <strong>row-echelon form</strong> — an upper-triangular staircase with leading 1s and zeros below — then solve from the <strong>bottom equation upward</strong>.</p>
+<p><strong>Worked example.</strong> 5x<sub>1</sub> + 20x<sub>2</sub> = 25, 4x<sub>1</sub> − 7x<sub>2</sub> = −26.</p>
+<p>[5 20 | 25 ; 4 −7 | −26] &nbsp;—R<sub>1</sub>→(1/5)R<sub>1</sub>→&nbsp; [1 4 | 5 ; 4 −7 | −26] &nbsp;—R<sub>2</sub>→R<sub>2</sub>−4R<sub>1</sub>→&nbsp; [1 4 | 5 ; 0 −23 | −46].</p>
+<p>Bottom row: −23x<sub>2</sub> = −46 → <strong>x<sub>2</sub> = 2</strong>. Back-substitute into the top row: x<sub>1</sub> + 4(2) = 5 → <strong>x<sub>1</sub> = −3</strong>.</p>
+<h3>Gauss–Jordan (full reduction)</h3>
+<p>Keep going past echelon form to <strong>reduced row-echelon form</strong> — a leading 1 in each pivot column and <strong>zeros above and below</strong> it, i.e. the identity on the left. The solution is then read directly off the right-hand column.</p>
+<p>Continuing the example: R<sub>2</sub>→−(1/23)R<sub>2</sub> gives [0 1 | 2]; then R<sub>1</sub>→R<sub>1</sub>−4R<sub>2</sub> gives [1 0 | −3]. So <strong>x<sub>1</sub> = −3, x<sub>2</sub> = 2</strong> with no back-substitution.</p>
+<h3>Finding an inverse by Gauss–Jordan: [A | I] → [I | A<sup>−1</sup>]</h3>
+<p>Augment A with the identity, row-reduce the left block to I, and the right block becomes A<sup>−1</sup>.</p>
+<p><strong>Worked example.</strong> A = [3 7 ; 2 5].<br>
+[3 7 | 1 0 ; 2 5 | 0 1] → [1 7/3 | 1/3 0 ; 2 5 | 0 1] → [1 7/3 | 1/3 0 ; 0 1/3 | −2/3 1] → [1 0 | 5 −7 ; 0 1 | −2 3].<br>
+So <strong>A<sup>−1</sup> = [5 −7 ; −2 3]</strong>. If the left block cannot be reduced to I (a zero row appears), A is singular and has no inverse.</p>
+<p><strong>Reading the outcome from row-reduction:</strong> a row like [0 0 0 | 5] (0 = 5) → <strong>no solution</strong>; a row [0 0 0 | 0] with fewer pivots than variables → <strong>infinitely many solutions</strong>.</p>
+
+<h2>2.7 Solving Linear Equations — Cramer's Rule and the Inverse Method</h2>
+<p>Write the system as <strong>Ax = d</strong>: A is the n × n coefficient matrix, x the column of unknowns, d the column of right-hand constants.</p>
+<h3>Cramer's rule</h3>
+<p>For each variable <em>j</em>, form <strong>A<sub>j</sub></strong> by replacing the <em>j</em>-th column of A with the constant vector d. Then <strong>x<sub>j</sub> = |A<sub>j</sub>| / |A|</strong> (requires |A| ≠ 0).</p>
+<p><strong>Worked example</strong> (structure of the real 2023 Model Question, Section B Q13): solve<br>
+2x + 3y − 4z = −1,&nbsp;&nbsp; 3x − 2y + 2z = 14,&nbsp;&nbsp; −10x + 8y + z = 6.</p>
+<p>|A| = | 2 3 −4 ; 3 −2 2 ; −10 8 1 | = 2(−2−16) − 3(3+20) + (−4)(24−20) = 2(−18) − 3(23) − 4(4) = −36 − 69 − 16 = <strong>−121</strong>.</p>
+<p>|A<sub>x</sub>| (col 1 ← d) = | −1 3 −4 ; 14 −2 2 ; 6 8 1 | = −1(−18) − 3(2) − 4(124) = 18 − 6 − 496 = −484 → x = −484/−121 = <strong>4</strong>.</p>
+<p>|A<sub>y</sub>| (col 2 ← d) = | 2 −1 −4 ; 3 14 2 ; −10 6 1 | = 2(2) + 1(23) − 4(158) = 4 + 23 − 632 = −605 → y = −605/−121 = <strong>5</strong>.</p>
+<p>|A<sub>z</sub>| (col 3 ← d) = | 2 3 −1 ; 3 −2 14 ; −10 8 6 | = 2(−124) − 3(158) − 1(4) = −248 − 474 − 4 = −726 → z = −726/−121 = <strong>6</strong>.</p>
+<p><strong>Solution: x = 4, y = 5, z = 6.</strong> Always check: 2(4) + 3(5) − 4(6) = 8 + 15 − 24 = −1 ✓</p>
+<h3>Inverse-matrix method</h3>
+<p>If |A| ≠ 0, then <strong>x = A<sup>−1</sup>d</strong>. This is the better method when the <em>same</em> A must be solved against <em>several</em> different d vectors — compute A<sup>−1</sup> once, then just multiply. Cramer's rule needs a fresh set of determinants for every new d.</p>
+<p><strong>Business application.</strong> A firm makes 3 products on 3 departments. Hours per unit and weekly capacity: Dept A — 2, 3.5, 3 → 1,200; Dept B — 3, 2.5, 2 → 1,150; Dept C — 4, 3, 2 → 1,400. The output mix (x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>) that exactly uses every department's capacity solves 2x<sub>1</sub> + 3.5x<sub>2</sub> + 3x<sub>3</sub> = 1200; 3x<sub>1</sub> + 2.5x<sub>2</sub> + 2x<sub>3</sub> = 1150; 4x<sub>1</sub> + 3x<sub>2</sub> + 2x<sub>3</sub> = 1400 — an Ax = d system solved by Cramer's rule or x = A<sup>−1</sup>d. (Solution: x<sub>1</sub> = 200, x<sub>2</sub> = 100, x<sub>3</sub> = 150 units.) Blending, portfolio and cost-allocation problems all reduce to the same Ax = d form.</p>
+
+<h2>2.8 Input–Output Analysis</h2>
+<p><strong>Input–output (I–O) analysis</strong> — developed by Nobel laureate <strong>Wassily Leontief</strong> — answers: <em>what total output must each industry produce so that supply exactly meets demand everywhere</em>, given that industries use each other's output as inputs?</p>
+<h3>The transactions (flow) table and the technology coefficient matrix</h3>
+<p>An I–O flow table records, for each pair of industries, how much of industry <em>i</em>'s output is used as an input by industry <em>j</em>, plus each industry's <strong>final demand</strong> (households, government, exports — demand from <em>outside</em> the industrial sector) and its <strong>total output</strong>.</p>
+<p>The <strong>technology coefficient</strong> (also <strong>input coefficient</strong> / <strong>technical coefficient</strong>) is</p>
+<p style="text-align:center">a<sub>ij</sub> = (amount of industry <em>i</em>'s output used by industry <em>j</em>) ÷ (total output of industry <em>j</em>)</p>
+<p>so a<sub>ij</sub> = the rupees of input <em>i</em> needed to produce <strong>one rupee</strong> of output <em>j</em>. The matrix <strong>A = [a<sub>ij</sub>]</strong> is the <strong>technology coefficient matrix</strong>. Each <em>column</em> of A is the input recipe for one rupee of that industry's output; for a viable open economy each column sum is <strong>less than 1</strong> (the remainder pays for primary inputs — labour, imports, profit).</p>
+<h3>The Leontief equation</h3>
+<p>Total output of each industry = interindustry demand + final demand: x<sub>i</sub> = a<sub>i1</sub>x<sub>1</sub> + a<sub>i2</sub>x<sub>2</sub> + … + a<sub>in</sub>x<sub>n</sub> + d<sub>i</sub>. In matrix form <strong>x = Ax + d</strong>, which rearranges to</p>
+<p style="text-align:center">(I − A)·x = d&nbsp;&nbsp;&nbsp;⟹&nbsp;&nbsp;&nbsp;<strong>x = (I − A)<sup>−1</sup>·d</strong></p>
+<p><strong>I − A</strong> is the <strong>Leontief matrix</strong>. Once (I − A)<sup>−1</sup> is found, <strong>any</strong> final-demand vector d can be fed in to get the required output vector x — which is why the method is used for planning.</p>
+<ul>
+<li><strong>Open model:</strong> a sector outside the <em>n</em> industries supplies primary inputs and absorbs final demand (the usual case).</li>
+<li><strong>Closed model:</strong> the outside sector is folded in as an extra industry; there is no final demand, the system is homogeneous, and only <em>relative</em> outputs can be found.</li>
+</ul>
+<p><strong>Worked example</strong> — the real 2023 Model Question, Section C Q20. Two industries X and Y (₹ millions):</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Producer</th><th>Used by X</th><th>Used by Y</th><th>Final demand</th><th>Total output</th></tr></thead>
+<tbody>
+<tr><td>X</td><td>150</td><td>250</td><td>100</td><td>500</td></tr>
+<tr><td>Y</td><td>200</td><td>250</td><td>300</td><td>750</td></tr>
+</tbody></table></div>
+<p>Technology coefficients: a<sub>XX</sub> = 150/500 = 0.3; a<sub>XY</sub> = 250/750 = 1/3; a<sub>YX</sub> = 200/500 = 0.4; a<sub>YY</sub> = 250/750 = 1/3.</p>
+<p>A = [0.3&nbsp;&nbsp;1/3 ; 0.4&nbsp;&nbsp;1/3],&nbsp;&nbsp; I − A = [0.7&nbsp;&nbsp;−1/3 ; −0.4&nbsp;&nbsp;2/3].</p>
+<p>|I − A| = (0.7)(2/3) − (−1/3)(−0.4) = 0.46667 − 0.13333 = <strong>1/3</strong>.</p>
+<p>(I − A)<sup>−1</sup> = (1 ÷ 1/3)·[2/3&nbsp;&nbsp;1/3 ; 0.4&nbsp;&nbsp;0.7] = 3·[2/3&nbsp;&nbsp;1/3 ; 0.4&nbsp;&nbsp;0.7] = <strong>[2&nbsp;&nbsp;1 ; 1.2&nbsp;&nbsp;2.1]</strong>.</p>
+<p><em>Check against the original data:</em> d = (100, 300) should return x = (500, 750). x<sub>X</sub> = 2(100) + 1(300) = 500 ✓; x<sub>Y</sub> = 1.2(100) + 2.1(300) = 120 + 630 = 750 ✓.</p>
+<p><strong>(a) New final demand d = (120, 180):</strong> x<sub>X</sub> = 2(120) + 1(180) = <strong>420</strong>; x<sub>Y</sub> = 1.2(120) + 2.1(180) = 144 + 378 = <strong>522</strong>.</p>
+<p><strong>(b) New final demand d = (180, 240):</strong> x<sub>X</sub> = 2(180) + 1(240) = <strong>600</strong>; x<sub>Y</sub> = 1.2(180) + 2.1(240) = 216 + 504 = <strong>720</strong>.</p>
+
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u2-io">
+  <h3>A two-industry input–output economy</h3>
+  <p class="dgm-sub">Every industry's output feeds the other industries and final demand</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:520px" viewBox="0 0 520 250" role="img" aria-label="Industry X and Industry Y each send output to each other, to themselves, and to final demand">
+    <defs><marker id="ahm2io" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6A7A8C"/></marker></defs>
+    <circle cx="140" cy="100" r="44" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="tb" x="140" y="97" text-anchor="middle">Industry X</text>
+    <text class="ts" x="140" y="112" text-anchor="middle">output 500</text>
+    <circle cx="380" cy="100" r="44" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="tb" x="380" y="97" text-anchor="middle">Industry Y</text>
+    <text class="ts" x="380" y="112" text-anchor="middle">output 750</text>
+    <path d="M 184 86 C 250 60, 290 60, 336 86" class="cc thin" fill="none" marker-end="url(#ahm2io)"/>
+    <text class="ts" x="260" y="54" text-anchor="middle">X→Y: 250</text>
+    <path d="M 336 116 C 290 142, 250 142, 184 116" class="cc thin" fill="none" marker-end="url(#ahm2io)"/>
+    <text class="ts" x="260" y="162" text-anchor="middle">Y→X: 200</text>
+    <path d="M 112 60 C 92 38, 130 32, 140 56" class="cc thin" fill="none" marker-end="url(#ahm2io)"/>
+    <text class="ts" x="100" y="32" text-anchor="middle">X→X 150</text>
+    <path d="M 408 60 C 428 38, 390 32, 380 56" class="cc thin" fill="none" marker-end="url(#ahm2io)"/>
+    <text class="ts" x="420" y="32" text-anchor="middle">Y→Y 250</text>
+    <rect x="98" y="196" width="92" height="34" rx="5" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="144" y="217" text-anchor="middle">Final demand 100</text>
+    <path d="M 140 145 L 140 194" class="cd thin" fill="none" marker-end="url(#ahm2io)"/>
+    <rect x="334" y="196" width="92" height="34" rx="5" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="380" y="217" text-anchor="middle">Final demand 300</text>
+    <path d="M 380 145 L 380 194" class="cd thin" fill="none" marker-end="url(#ahm2io)"/>
+    <text class="ts" x="260" y="245" text-anchor="middle">A column of A = input recipe for ₹1 of that industry's output — e.g. col X = (0.30, 0.40)</text>
+  </svg></div>
+  <figcaption>
+    <p>Reading across a row of the flow table: total output = what the industries use + final demand (500 = 150 + 250 + 100). Dividing each interindustry flow by the <em>using</em> industry's total output gives the technology coefficients a<sub>ij</sub>. Solving (I − A)x = d finds the outputs that make every row balance.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Interindustry flows both ways; each industry's final demand; that a column of A is the recipe per ₹1 of output; the balance equation output = interindustry use + final demand.</div>
+  </figcaption>
+</figure></div>
+
+<h2>2.9 Hawkins–Simon Conditions for Viability</h2>
+<p>Solving (I − A)x = d can fail in two ways that make no economic sense:</p>
+<ol>
+<li><strong>(I − A) is singular</strong> — no inverse, no solution (like dividing by zero);</li>
+<li>the solution exists but some <strong>x<sub>j</sub> is negative</strong> — a real industry cannot produce a negative amount.</li>
+</ol>
+<p>The <strong>Hawkins–Simon conditions</strong> are the test that rules both out:</p>
+<blockquote>Given the Leontief matrix <strong>(I − A)</strong> (off-diagonal elements ≤ 0, final demand d ≥ 0), a <strong>non-negative</strong> output solution x ≥ 0 exists <strong>if and only if every leading principal minor of (I − A) is strictly positive</strong>.</blockquote>
+<p>The <strong>leading (successive / naturally-ordered) principal minors</strong> of B = I − A are the determinants of the top-left 1×1, then top-left 2×2, then top-left 3×3, … sub-matrices: M<sub>1</sub> = |b<sub>11</sub>|, M<sub>2</sub> = |b<sub>11</sub> b<sub>12</sub> ; b<sub>21</sub> b<sub>22</sub>|, M<sub>3</sub> = |the full top-left 3×3|, and so on.</p>
+<p><strong>Economic meaning (two-industry case).</strong> With I − A = [1−a<sub>11</sub>&nbsp;&nbsp;−a<sub>12</sub> ; −a<sub>21</sub>&nbsp;&nbsp;1−a<sub>22</sub>]:</p>
+<ul>
+<li>M<sub>1</sub> &gt; 0 means <strong>1 − a<sub>11</sub> &gt; 0</strong>, i.e. <strong>a<sub>11</sub> &lt; 1</strong> — industry 1 uses <em>less than one rupee</em> of its own output to make one rupee of output (otherwise it could never leave a surplus for anyone else);</li>
+<li>M<sub>2</sub> &gt; 0 means (1 − a<sub>11</sub>)(1 − a<sub>22</sub>) − a<sub>12</sub>a<sub>21</sub> &gt; 0 — the <em>direct plus indirect</em> amount of industry 1's good needed to deliver one rupee of final output must be under one rupee. In short: production must be <strong>self-supporting with something left over</strong>.</li>
+</ul>
+<p><strong>Worked example</strong> — the real 2023 Model Question, Section A Q10: test the Hawkins–Simon conditions for the technology matrix A = [1/2&nbsp;&nbsp;1/3 ; 2/7&nbsp;&nbsp;2/3].</p>
+<p>Form the Leontief matrix: I − A = [1/2&nbsp;&nbsp;−1/3 ; −2/7&nbsp;&nbsp;1/3].</p>
+<ul>
+<li><strong>M<sub>1</sub></strong> = 1/2 = <strong>0.5 &gt; 0</strong> ✓</li>
+<li><strong>M<sub>2</sub></strong> = (1/2)(1/3) − (−1/3)(−2/7) = 1/6 − 2/21 = 7/42 − 4/42 = 3/42 = <strong>1/14 ≈ 0.071 &gt; 0</strong> ✓</li>
+</ul>
+<p>Both leading principal minors are strictly positive → <strong>the Hawkins–Simon conditions are satisfied</strong>, so this economy has a viable, non-negative output solution for any non-negative final demand.</p>
+
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u2-hs">
+  <h3>Leading principal minors — the Hawkins–Simon test</h3>
+  <p class="dgm-sub">Nested top-left blocks of (I − A); each determinant must be &gt; 0</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:520px" viewBox="0 0 520 185" role="img" aria-label="A 3 by 3 Leontief matrix with the top-left 1x1, 2x2 and 3x3 blocks highlighted as the three leading principal minors">
+    <text class="tb" x="120" y="22" text-anchor="middle">M₁ &gt; 0</text>
+    <rect x="40" y="32" width="160" height="120" rx="4" class="ck" style="fill:rgba(255,255,255,.5)"/>
+    <rect x="46" y="38" width="48" height="36" class="fd"/>
+    <text class="t" x="70" y="61" text-anchor="middle">b₁₁</text><text class="t" x="122" y="61" text-anchor="middle">b₁₂</text><text class="t" x="174" y="61" text-anchor="middle">b₁₃</text>
+    <text class="t" x="70" y="101" text-anchor="middle">b₂₁</text><text class="t" x="122" y="101" text-anchor="middle">b₂₂</text><text class="t" x="174" y="101" text-anchor="middle">b₂₃</text>
+    <text class="t" x="70" y="141" text-anchor="middle">b₃₁</text><text class="t" x="122" y="141" text-anchor="middle">b₃₂</text><text class="t" x="174" y="141" text-anchor="middle">b₃₃</text>
+    <text class="tb" x="290" y="22" text-anchor="middle">M₂ &gt; 0</text>
+    <rect x="210" y="32" width="160" height="120" rx="4" class="ck" style="fill:rgba(255,255,255,.5)"/>
+    <rect x="216" y="38" width="100" height="76" class="fd"/>
+    <text class="t" x="240" y="61" text-anchor="middle">b₁₁</text><text class="t" x="292" y="61" text-anchor="middle">b₁₂</text><text class="t" x="344" y="61" text-anchor="middle">b₁₃</text>
+    <text class="t" x="240" y="101" text-anchor="middle">b₂₁</text><text class="t" x="292" y="101" text-anchor="middle">b₂₂</text><text class="t" x="344" y="101" text-anchor="middle">b₂₃</text>
+    <text class="t" x="240" y="141" text-anchor="middle">b₃₁</text><text class="t" x="292" y="141" text-anchor="middle">b₃₂</text><text class="t" x="344" y="141" text-anchor="middle">b₃₃</text>
+    <text class="tb" x="450" y="22" text-anchor="middle">M₃ &gt; 0</text>
+    <rect x="380" y="32" width="120" height="120" rx="4" class="ck" style="fill:rgba(255,255,255,.5)"/>
+    <rect x="386" y="38" width="108" height="108" class="fd"/>
+    <text class="t" x="410" y="61" text-anchor="middle">b₁₁</text><text class="t" x="440" y="61" text-anchor="middle">b₁₂</text><text class="t" x="470" y="61" text-anchor="middle">b₁₃</text>
+    <text class="t" x="410" y="101" text-anchor="middle">b₂₁</text><text class="t" x="440" y="101" text-anchor="middle">b₂₂</text><text class="t" x="470" y="101" text-anchor="middle">b₂₃</text>
+    <text class="t" x="410" y="141" text-anchor="middle">b₃₁</text><text class="t" x="440" y="141" text-anchor="middle">b₃₂</text><text class="t" x="470" y="141" text-anchor="middle">b₃₃</text>
+    <text class="ts" x="260" y="176" text-anchor="middle">B = I − A. If ANY Mₖ ≤ 0 the economy is not viable (negative or impossible output).</text>
+  </svg></div>
+  <figcaption>
+    <p>Take the determinant of the shaded block each time. All must be strictly positive for the input–output system to have a workable (non-negative) solution. For a 2×2 you only check M₁ and M₂.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>That B = I − A (not A); the nested top-left blocks; "strictly positive"; the two things the test rules out (singular matrix / negative outputs).</div>
+  </figcaption>
+</figure></div>
+
+<hr>
+<h2>Exam checklist</h2>
+<p><strong>Definitions to know cold:</strong> order of a matrix and the types; conformability rules (same order for ±; cols of A = rows of B for AB; product order = rows of A × cols of B); AB ≠ BA in general; (AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup>; (AB)<sup>−1</sup> = B<sup>−1</sup>A<sup>−1</sup>; minor M<sub>ij</sub>, cofactor C<sub>ij</sub> = (−1)<sup>i+j</sup>M<sub>ij</sub>, the + − + sign pattern; singular ⇔ |A| = 0 ⇔ no inverse ⇔ no unique solution; A<sup>−1</sup> = (1/|A|)·adj A with adj A = (cofactor matrix)<sup>T</sup>; 2×2 inverse shortcut; Cramer's rule x<sub>j</sub> = |A<sub>j</sub>|/|A|; inverse method x = A<sup>−1</sup>d; technology coefficient a<sub>ij</sub> = (input i used by j) ÷ (total output of j); (I − A)x = d with solution x = (I − A)<sup>−1</sup>d; Hawkins–Simon = all leading principal minors of (I − A) strictly positive.</p>
+<p><strong>Confirmed real past-paper questions</strong> (tag <code>real:"2023 model paper"</code>, from the official TU FOM Model Question 2023, BBM Business Mathematics II):</p>
+<ol>
+<li><strong>Section A Q8</strong> — Find 7(A − B) for given 2×2 matrices <em>(2 marks)</em> — §2.2, answer [42 21 ; 14 49]</li>
+<li><strong>Section A Q9</strong> — Evaluate the 3×3 determinant | 1 4 2 ; 2 5 1 ; 3 6 9 | <em>(2 marks)</em> — §2.3, answer −27</li>
+<li><strong>Section A Q10</strong> — Test the Hawkins–Simon conditions for A = [1/2 1/3 ; 2/7 2/3] <em>(2 marks)</em> — §2.9, answer: satisfied (M₁ = 0.5, M₂ = 1/14)</li>
+<li><strong>Section B Q13</strong> — Solve a 3×3 linear system by matrix / determinant method <em>(5 marks)</em> — §2.7 (x = 4, y = 5, z = 6)</li>
+<li><strong>Section C Q20</strong> — Input–output: given the 2-industry flow table, find outputs after final demand changes to (120, 180) and to (180, 240) <em>(10 marks)</em> — §2.8, answers (420, 522) and (600, 720)</li>
+</ol>`;
+
+/* ---------------------------------------------------------------------------
+   UNIT 2 — MCQ QUIZ BANK   {q, o:[4], a, why, w}
+   w:3 = confirmed past-paper idea or guaranteed-core; w:2 core; w:1 finer point.
+--------------------------------------------------------------------------- */
+window.SUBJECT_QUIZ["bmath2"] = window.SUBJECT_QUIZ["bmath2"] || {};
+window.SUBJECT_QUIZ["bmath2"]["1"] = [
+  {q:"A matrix with 3 rows and 4 columns has order:", o:["4 × 3","3 × 4","12 × 1","3 + 4"], a:1, w:3,
+   why:"Order is written rows × columns, so 3 × 4. The element count (12) is not the order."},
+  {q:"In the element a₂₃ of a matrix, the subscripts tell you it is in:", o:["column 2, row 3","row 2, column 3","the 23rd position reading across","row 2 and row 3"], a:1, w:3,
+   why:"Row index first, column index second: a₂₃ is row 2, column 3."},
+  {q:"A square matrix in which every element off the main diagonal is zero is called a:", o:["scalar matrix","diagonal matrix","null matrix","identity matrix"], a:1, w:2,
+   why:"A diagonal matrix has zeros off the diagonal; the diagonal entries may be anything. A scalar matrix additionally has all diagonal entries equal; the identity has them all 1."},
+  {q:"The identity matrix I is best described as a:", o:["matrix of all 1s","diagonal matrix of 1s (a scalar matrix with k = 1)","matrix with 1 in the top-left only","lower-triangular matrix of 1s"], a:1, w:2,
+   why:"I has 1s on the main diagonal and 0s elsewhere; it is the scalar matrix with k = 1, and AI = IA = A."},
+  {q:"A matrix A for which Aᵀ = A is called:", o:["skew-symmetric","symmetric","orthogonal","singular"], a:1, w:2,
+   why:"Symmetric: aᵢⱼ = aⱼᵢ, so the matrix is unchanged by transposing. If Aᵀ = −A it is skew-symmetric (and its diagonal is all zero)."},
+  {q:"Two matrices can be ADDED only if they:", o:["are both square","have the same order","have non-zero determinants","are both symmetric"], a:1, w:3,
+   why:"Addition and subtraction are element-by-element, so the two matrices must have exactly the same order."},
+  {q:"If A = [8 2 ; 3 4] and B = [2 −1 ; 1 −3], then A − B equals:", o:["[6 3 ; 2 7]","[6 1 ; 2 1]","[10 1 ; 4 1]","[6 3 ; 4 7]"], a:0, w:3,
+   why:"Subtract corresponding entries: 8−2=6, 2−(−1)=3, 3−1=2, 4−(−3)=7. (The 2023 model paper Q8 then asked for 7(A−B) = [42 21 ; 14 49].)"},
+  {q:"7(A − B) where A − B = [6 3 ; 2 7] equals:", o:["[13 10 ; 9 14]","[42 21 ; 14 49]","[42 3 ; 2 49]","[6 21 ; 14 7]"], a:1, w:3,
+   why:"Scalar multiplication multiplies EVERY element by 7: 42, 21, 14, 49. This is the real 2023 model paper Section A Q8."},
+  {q:"The product AB is defined only when:", o:["A and B are the same order","the number of columns of A equals the number of rows of B","both A and B are square","the determinant of A is non-zero"], a:1, w:3,
+   why:"Conformability for multiplication: (columns of A) = (rows of B). The product then has order (rows of A) × (columns of B)."},
+  {q:"If A is 2 × 3 and B is 3 × 4, the product AB has order:", o:["3 × 3","2 × 4","2 × 3","4 × 2"], a:1, w:2,
+   why:"Inner dimensions (3 and 3) match; the product takes the outer dimensions: 2 × 4."},
+  {q:"For general matrices, AB and BA are:", o:["always equal","usually different, and BA may not even be defined","equal only if A is symmetric","equal only for 2 × 2 matrices"], a:1, w:3,
+   why:"Matrix multiplication is not commutative. Order matters, e.g. (AB)ᵀ = BᵀAᵀ, not AᵀBᵀ."},
+  {q:"[2 4 ; 3 1] × [1 ; 2] equals:", o:["[10 ; 5]","[6 ; 5]","[2 8 ; 3 2]","[6 ; 7]"], a:0, w:2,
+   why:"Row 1: 2(1)+4(2) = 10. Row 2: 3(1)+1(2) = 5. Result is the 2×1 column [10 ; 5]."},
+  {q:"The transpose of [3 2 ; 4 0 ; 1 −2] is:", o:["[3 4 1 ; 2 0 −2]","[2 0 −2 ; 3 4 1]","[3 2 ; 4 0 ; 1 −2]","[1 −2 ; 4 0 ; 3 2]"], a:0, w:2,
+   why:"Rows become columns: the first row of the transpose is the first column (3, 4, 1); the second row is (2, 0, −2). A 3×2 matrix transposes to 2×3."},
+  {q:"(AB)ᵀ is equal to:", o:["AᵀBᵀ","BᵀAᵀ","(BA)ᵀ","AB"], a:1, w:2,
+   why:"The transpose of a product reverses the order: (AB)ᵀ = BᵀAᵀ. The same reversal holds for the inverse: (AB)⁻¹ = B⁻¹A⁻¹."},
+  {q:"The determinant | 10 4 ; 8 5 | equals:", o:["50","18","82","−18"], a:1, w:3,
+   why:"ad − bc = 10(5) − 4(8) = 50 − 32 = 18."},
+  {q:"A determinant is defined:", o:["for any rectangular matrix","only for a square matrix","only for a 2 × 2 matrix","only when the matrix is non-singular"], a:1, w:3,
+   why:"Determinants exist only for square matrices; a rectangular matrix has no determinant."},
+  {q:"The minor M₁₂ of an element is the determinant of the sub-matrix left after deleting:", o:["row 2 and column 1","row 1 and column 2","the first two rows","row 1 and column 1"], a:1, w:3,
+   why:"Mᵢⱼ deletes row i and column j. So M₁₂ deletes row 1 and column 2."},
+  {q:"The cofactor Cᵢⱼ is related to the minor Mᵢⱼ by:", o:["Cᵢⱼ = Mᵢⱼ always","Cᵢⱼ = (−1)^(i+j) · Mᵢⱼ","Cᵢⱼ = i·j·Mᵢⱼ","Cᵢⱼ = 1/Mᵢⱼ"], a:1, w:3,
+   why:"The cofactor is the signed minor: plus when i+j is even, minus when i+j is odd. The 3×3 sign pattern is [+ − + ; − + − ; + − +]."},
+  {q:"The determinant | 1 4 2 ; 2 5 1 ; 3 6 9 | equals:", o:["27","−27","81","0"], a:1, w:3,
+   why:"Expanding along row 1: 1(45−6) − 4(18−3) + 2(12−15) = 39 − 60 − 6 = −27. This is the real 2023 model paper Section A Q9."},
+  {q:"The 'Sarrus' (repeat-first-two-columns) diagonal method for determinants works:", o:["for any square matrix","only for 3 × 3 matrices","only for 2 × 2 matrices","for 4 × 4 and larger"], a:1, w:2,
+   why:"Sarrus applies only to 3 × 3. For 4 × 4 and larger you must use Laplace (cofactor) expansion."},
+  {q:"When evaluating a determinant by cofactor expansion, you should expand along the row or column with:", o:["the largest entries","the most zeros","the smallest index","the diagonal entries"], a:1, w:2,
+   why:"The value is the same along any row or column, so choosing the one with the most zeros kills terms and saves work."},
+  {q:"If two rows of a square matrix are identical, its determinant is:", o:["1","0","the product of the diagonal","undefined"], a:1, w:2,
+   why:"Property V: equal rows (or columns), a zero row, or one row a multiple of another all give |A| = 0 — the matrix is singular."},
+  {q:"Interchanging two rows of a determinant:", o:["does not change its value","changes its sign","doubles its value","makes it zero"], a:1, w:2,
+   why:"Property II: swapping two rows (or two columns) multiplies the determinant by −1."},
+  {q:"A square matrix A is called SINGULAR when:", o:["|A| = 0","|A| ≠ 0","A is not square","A = Aᵀ"], a:0, w:3,
+   why:"Singular ⇔ |A| = 0 ⇔ no inverse ⇔ the linked system Ax = d has no unique solution (either none or infinitely many)."},
+  {q:"If |A| ≠ 0 for the coefficient matrix of Ax = d, the system has:", o:["no solution","exactly one (unique) solution","infinitely many solutions","a solution only if d = 0"], a:1, w:3,
+   why:"A non-singular coefficient matrix guarantees a unique solution x = A⁻¹d."},
+  {q:"The adjoint (adj A) of a matrix is the:", o:["inverse of A","transpose of the cofactor matrix of A","matrix of minors of A","determinant of A"], a:1, w:3,
+   why:"adj A = Cᵀ, where C is the matrix of cofactors. Then A⁻¹ = (1/|A|)·adj A."},
+  {q:"The inverse of a non-singular matrix A is given by:", o:["A⁻¹ = |A| · adj A","A⁻¹ = (1/|A|) · adj A","A⁻¹ = adj A / Aᵀ","A⁻¹ = (1/|A|) · Aᵀ"], a:1, w:3,
+   why:"A⁻¹ = adj A divided by the determinant. If |A| = 0 the formula breaks down — there is no inverse."},
+  {q:"For A = [a b ; c d], the 2 × 2 inverse shortcut gives A⁻¹ =", o:["(1/(ad−bc)) · [d −b ; −c a]","(1/(ad−bc)) · [a −b ; −c d]","(ad−bc) · [d −b ; −c a]","[d −b ; −c a]"], a:0, w:2,
+   why:"Swap the main-diagonal entries, negate the off-diagonal entries, divide by the determinant ad − bc."},
+  {q:"The inverse of A = [4 3 ; −2 −1] is:", o:["[−1/2 −3/2 ; 1 2]","[−1 −3 ; 2 4]","[1/2 3/2 ; −1 −2]","[4 −3 ; 2 −1]"], a:0, w:2,
+   why:"|A| = 4(−1) − 3(−2) = 2. Shortcut: (1/2)[−1 −3 ; 2 4] = [−1/2 −3/2 ; 1 2]."},
+  {q:"Which property is correct?", o:["(AB)⁻¹ = A⁻¹B⁻¹","(AB)⁻¹ = B⁻¹A⁻¹","(A⁻¹)⁻¹ = A⁻¹","|A⁻¹| = |A|"], a:1, w:2,
+   why:"The inverse of a product reverses the order, just like the transpose. Also (A⁻¹)⁻¹ = A and |A⁻¹| = 1/|A|."},
+  {q:"Which of these is NOT an elementary row operation?", o:["swapping two rows","multiplying a row by a non-zero constant","adding a multiple of one row to another","replacing a row by the sum of all columns"], a:3, w:2,
+   why:"The three elementary row operations are swap, scale by a non-zero constant, and add a multiple of one row to another. Each preserves the solution set."},
+  {q:"In the Gauss ELIMINATION method you reduce the augmented matrix to:", o:["a diagonal matrix, then read the answer","upper-triangular (row-echelon) form, then back-substitute","its inverse","reduced row-echelon form directly"], a:1, w:2,
+   why:"Gauss elimination = forward elimination to an upper-triangular staircase, then solve from the bottom equation upward. Gauss–Jordan continues all the way to the identity so no back-substitution is needed."},
+  {q:"To find A⁻¹ by the Gauss–Jordan method you row-reduce:", o:["[A | d] to [I | x]","[A | I] to [I | A⁻¹]","[A | A] to [I | I]","[Aᵀ | I] to [I | Aᵀ]"], a:1, w:3,
+   why:"Augment A with the identity; when the left block becomes I, the right block has become A⁻¹. If A cannot be reduced to I it is singular."},
+  {q:"During row-reduction a row becomes [0 0 0 | 5]. This means the system has:", o:["a unique solution","no solution (it is inconsistent)","infinitely many solutions","x₁ = 5"], a:1, w:2,
+   why:"0 = 5 is a contradiction, so the system is inconsistent — no solution. A row [0 0 0 | 0] instead would signal infinitely many solutions."},
+  {q:"By Cramer's rule, x_j =", o:["|A| / |A_j|","|A_j| / |A|, where A_j replaces column j of A with the constants d","|A_j| · |A|","|A| − |A_j|"], a:1, w:3,
+   why:"Form A_j by putting the constant vector d in place of column j, then divide its determinant by |A|. Requires |A| ≠ 0."},
+  {q:"For the system 5x₁ + 3x₂ = 30, 6x₁ − 2x₂ = 8, the determinant |A| of the coefficient matrix is:", o:["−28","28","−10","16"], a:0, w:2,
+   why:"|A| = 5(−2) − 3(6) = −10 − 18 = −28. (Cramer's rule then gives x₁ = 3, x₂ = 5.)"},
+  {q:"The inverse-matrix method x = A⁻¹d is preferable to Cramer's rule when:", o:["|A| = 0","the same coefficient matrix A must be solved for several different constant vectors d","the system has only one equation","the matrix is not square"], a:1, w:1,
+   why:"Compute A⁻¹ once, then reuse it for every new d. Cramer's rule needs a fresh batch of determinants for each new d."},
+  {q:"Solving a 3×3 system by Cramer's rule gave |A| = −121, |A_x| = −484, |A_y| = −605, |A_z| = −726. The solution (x, y, z) is:", o:["(4, 5, 6)","(−4, −5, −6)","(2, 3, 4)","(121, 484, 605)"], a:0, w:3,
+   why:"x = −484/−121 = 4, y = −605/−121 = 5, z = −726/−121 = 6. This is the real 2023 model paper Section B Q13."},
+  {q:"In input–output analysis, the technology (input) coefficient a_ij is:", o:["the total output of industry j","the rupees of industry i's output needed to produce ONE rupee of industry j's output","the final demand for industry i","the profit of industry j"], a:1, w:3,
+   why:"a_ij = (flow from i to j) ÷ (total output of j). A column of the coefficient matrix A is the input recipe for ₹1 of that industry's output."},
+  {q:"In the Leontief model, the equation giving the required outputs is:", o:["x = A·d","(I − A)·x = d, so x = (I − A)⁻¹·d","x = A⁻¹·d","x = (I + A)·d"], a:1, w:3,
+   why:"Output = interindustry demand + final demand: x = Ax + d, which rearranges to (I − A)x = d, hence x = (I − A)⁻¹d. (I − A) is the Leontief matrix."},
+  {q:"A two-industry economy has (I − A)⁻¹ = [2 1 ; 1.2 2.1]. If final demand becomes d = (120, 180), the required outputs (x_X, x_Y) are:", o:["(420, 522)","(300, 480)","(240, 360)","(600, 720)"], a:0, w:3,
+   why:"x_X = 2(120) + 1(180) = 420; x_Y = 1.2(120) + 2.1(180) = 144 + 378 = 522. This is part (a) of the real 2023 model paper Section C Q20."},
+  {q:"For an open input–output economy to be viable, each COLUMN sum of the technology coefficient matrix A should be:", o:["exactly 1","less than 1","greater than 1","zero"], a:1, w:2,
+   why:"A column sum below 1 leaves a positive share of each rupee of output to pay primary inputs (labour, imports, profit). A closed model has column sums exactly 1."},
+  {q:"The Hawkins–Simon conditions are checked on which matrix?", o:["A (the technology coefficient matrix)","I − A (the Leontief matrix)","A⁻¹","Aᵀ"], a:1, w:3,
+   why:"The test is on the Leontief matrix B = I − A: every leading principal minor of B must be strictly positive."},
+  {q:"The Hawkins–Simon conditions require that:", o:["the determinant of A is 1","every leading principal minor of (I − A) is strictly positive","every element of A is positive","(I − A) is symmetric"], a:1, w:3,
+   why:"Leading principal minors are the determinants of the nested top-left 1×1, 2×2, 3×3, … blocks of (I − A). All strictly positive ⇒ a non-negative output solution exists."},
+  {q:"For A = [1/2 1/3 ; 2/7 2/3], the Leontief matrix I − A and the Hawkins–Simon test give:", o:["M₁ = 0.5 > 0 and M₂ = 1/14 > 0 — conditions satisfied","M₁ = 0.5 and M₂ = −1/14 — conditions fail","I − A is singular","M₁ = −0.5 — conditions fail"], a:0, w:3,
+   why:"I − A = [1/2 −1/3 ; −2/7 1/3]. M₁ = 1/2. M₂ = (1/2)(1/3) − (1/3)(2/7) = 1/6 − 2/21 = 1/14 > 0. Both positive ⇒ satisfied. This is the real 2023 model paper Section A Q10."},
+  {q:"Wassily Leontief is associated with:", o:["the simplex method","input–output analysis","the theory of the firm","matrix diagonalisation"], a:1, w:1,
+   why:"Leontief won the 1973 Nobel Prize for developing input–output analysis of an economy."}
+];
+
+/* ---------------------------------------------------------------------------
+   UNIT 2 — WRITTEN EXAM-MODE BANK
+   Section A = brief (2), B = short (5), C = long (10). Subject-level Section-D
+   case (a big 2-variable optimisation, per the model paper) is built with a
+   later unit — Group D content is Unit 4 material.
+--------------------------------------------------------------------------- */
+window.SUBJECT_EXAM["bmath2"] = window.SUBJECT_EXAM["bmath2"] || { units: {}, cases: [] };
+window.SUBJECT_EXAM["bmath2"].units["1"] = {
+  brief: [
+    {q:"If A = [8 2 ; 3 4] and B = [2 −1 ; 1 −3], find 7(A − B).", real:"2023 model paper",
+     pts:["A − B = [6 3 ; 2 7] (subtract corresponding elements)","Multiply every element by 7 (scalar multiplication)","7(A − B) = [42 21 ; 14 49]"]},
+    {q:"Evaluate the determinant | 1 4 2 ; 2 5 1 ; 3 6 9 |.", real:"2023 model paper",
+     pts:["Expand along row 1: 1(5·9 − 1·6) − 4(2·9 − 1·3) + 2(2·6 − 5·3)","= 1(39) − 4(15) + 2(−3) = 39 − 60 − 6","= −27"]},
+    {q:"Test whether the Hawkins–Simon conditions are satisfied for A = [1/2 1/3 ; 2/7 2/3].", real:"2023 model paper",
+     pts:["Form the Leontief matrix I − A = [1/2 −1/3 ; −2/7 1/3]","M₁ = 1/2 = 0.5 > 0","M₂ = (1/2)(1/3) − (−1/3)(−2/7) = 1/6 − 2/21 = 1/14 ≈ 0.071 > 0","Both leading principal minors strictly positive ⇒ conditions satisfied ⇒ viable non-negative output solution exists"]},
+    {q:"Define a singular matrix and state its key consequence.",
+     pts:["A square matrix A is singular when its determinant |A| = 0","Consequence: it has no inverse; the system Ax = d has no unique solution (either no solution or infinitely many)"]},
+    {q:"Write the order of the matrix [2 −1 5 ; 0 3 7] and of its transpose.",
+     pts:["The matrix has 2 rows and 3 columns → order 2 × 3","Its transpose interchanges rows and columns → order 3 × 2"]},
+    {q:"State the condition under which the product AB of two matrices is defined, and give the order of the product.",
+     pts:["AB is defined only if the number of columns of A equals the number of rows of B","If A is m × p and B is p × n, then AB has order m × n (the outer dimensions)"]},
+    {q:"Find the minor and the cofactor of the element 8 in | 9 8 7 ; 6 5 4 ; 3 2 1 |.",
+     pts:["8 is in position (1, 2). Delete row 1 and column 2 → sub-matrix [6 4 ; 3 1]","Minor M₁₂ = 6(1) − 4(3) = −6","Cofactor C₁₂ = (−1)^(1+2)·(−6) = +6"]},
+    {q:"Write down the technology (input) coefficient formula used in input–output analysis and say what a column of the coefficient matrix represents.",
+     pts:["a_ij = (output of industry i used as input by industry j) ÷ (total output of industry j)","A column of A is the input recipe needed to produce one rupee of that industry's output","For a viable open economy each column sum is less than 1"]},
+    {q:"State Cramer's rule for solving Ax = d.",
+     pts:["Require |A| ≠ 0","For each variable j, form A_j by replacing column j of A with the constant vector d","Then x_j = |A_j| / |A|"]},
+    {q:"Distinguish between the Gauss elimination method and the Gauss–Jordan method.",
+     pts:["Gauss elimination: row-reduce to upper-triangular (echelon) form, then solve by back-substitution from the last equation upward","Gauss–Jordan: continue reducing to the identity (reduced row-echelon form); the solution is read off directly, no back-substitution","Gauss–Jordan is also used to find an inverse: [A | I] → [I | A⁻¹]"]},
+    {q:"Solve for x₂ only, using Cramer's rule: 3x₁ + 2x₂ = 12, 2x₁ + 4x₂ = 80.",
+     pts:["|A| = 3(4) − 2(2) = 8","|A₂| = | 3 12 ; 2 80 | = 3(80) − 12(2) = 240 − 24 = 216","x₂ = 216 / 8 = 27"]},
+    {q:"State any two properties of determinants.",
+     pts:["|Aᵀ| = |A|","Interchanging two rows (or columns) changes the sign of |A|","Multiplying one row (or column) by k multiplies |A| by k","Adding a multiple of one row to another leaves |A| unchanged","A zero row, two equal rows, or one row a multiple of another ⇒ |A| = 0 (any two)"]},
+    {q:"If |A| = 2 for a 2 × 2 matrix, what is |A⁻¹| and why?",
+     pts:["|A⁻¹| = 1/|A| = 1/2","Because A·A⁻¹ = I and |A|·|A⁻¹| = |I| = 1"]}
+  ],
+  short: [
+    {q:"Solve the following system by the matrix (determinant) method: 2x + 3y − 4z = −1; 3x − 2y + 2z = 14; −10x + 8y + z = 6.", real:"2023 model paper",
+     pts:["Coefficient determinant |A| = | 2 3 −4 ; 3 −2 2 ; −10 8 1 | = 2(−2−16) − 3(3+20) − 4(24−20) = −36 − 69 − 16 = −121","|A_x| = | −1 3 −4 ; 14 −2 2 ; 6 8 1 | = −484 → x = −484/−121 = 4","|A_y| = | 2 −1 −4 ; 3 14 2 ; −10 6 1 | = −605 → y = −605/−121 = 5","|A_z| = | 2 3 −1 ; 3 −2 14 ; −10 8 6 | = −726 → z = −726/−121 = 6","Check: 2(4) + 3(5) − 4(6) = −1 ✓  Solution: x = 4, y = 5, z = 6"]},
+    {q:"Find the inverse of A = [1 2 0 ; 1 0 −1 ; −1 3 2] by the adjoint method.",
+     pts:["|A| = 1(0·2 − (−1)·3) − 2(1·2 − (−1)(−1)) + 0 = 1(3) − 2(1) = 1","Cofactor matrix C = [3 −1 3 ; −4 2 −5 ; −2 1 −2]","adj A = Cᵀ = [3 −4 −2 ; −1 2 1 ; 3 −5 −2]","A⁻¹ = (1/|A|)·adj A = [3 −4 −2 ; −1 2 1 ; 3 −5 −2] (since |A| = 1)","Verify A·A⁻¹ = I"]},
+    {q:"Find A⁻¹ for A = [3 7 ; 2 5] using the Gauss–Jordan (row-reduction) method, showing the row operations.",
+     pts:["Augment: [3 7 | 1 0 ; 2 5 | 0 1]","R₁ → (1/3)R₁: [1 7/3 | 1/3 0 ; 2 5 | 0 1]","R₂ → R₂ − 2R₁: [1 7/3 | 1/3 0 ; 0 1/3 | −2/3 1]","R₂ → 3R₂: [1 7/3 | 1/3 0 ; 0 1 | −2 3]","R₁ → R₁ − (7/3)R₂: [1 0 | 5 −7 ; 0 1 | −2 3]","A⁻¹ = [5 −7 ; −2 3]"]},
+    {q:"Given A = [2 −1 ; 3 4] and B = [1 0 2 ; −2 5 1], compute AB and state why BA is not defined.",
+     pts:["A is 2 × 2, B is 2 × 3 → AB is 2 × 3","AB = [2(1)+(−1)(−2)  2(0)+(−1)(5)  2(2)+(−1)(1) ; 3(1)+4(−2)  3(0)+4(5)  3(2)+4(1)]","= [4 −5 3 ; −5 20 10]","BA: B is 2 × 3, A is 2 × 2 — columns of B (3) ≠ rows of A (2), so BA is not defined"]},
+    {q:"A firm makes two products P and Q. Product P needs 2 hours of machining and 1 hour of finishing; product Q needs 1 hour of machining and 3 hours of finishing. 100 machining hours and 150 finishing hours are available. Set the problem up as a matrix equation and solve for the output mix that uses all the hours.",
+     pts:["2p + q = 100 (machining); p + 3q = 150 (finishing)","Matrix form: [2 1 ; 1 3]·[p ; q] = [100 ; 150]","|A| = 2(3) − 1(1) = 5","By Cramer: p = | 100 1 ; 150 3 | / 5 = (300 − 150)/5 = 30; q = | 2 100 ; 1 150 | / 5 = (300 − 100)/5 = 40","Output mix: P = 30 units, Q = 40 units"]},
+    {q:"Explain, with the two-industry case, the economic meaning of the Hawkins–Simon conditions.",
+     pts:["I − A = [1−a₁₁ −a₁₂ ; −a₂₁ 1−a₂₂]","M₁ > 0 ⇒ 1 − a₁₁ > 0 ⇒ a₁₁ < 1: an industry must use less than one rupee of its own output to make one rupee of output — else no surplus is possible","M₂ > 0 ⇒ (1−a₁₁)(1−a₂₂) − a₁₂a₂₁ > 0: the direct + indirect requirement of a good to deliver one rupee of final output is under one rupee","Together: the production system must be self-supporting with a positive surplus — otherwise outputs would be negative or the model would have no solution"]},
+    {q:"For the input–output flow table below (₹ millions) find the technology coefficient matrix A and the Leontief matrix (I − A). Producer X: used by X 150, used by Y 250, final demand 100, total output 500. Producer Y: used by X 200, used by Y 250, final demand 300, total output 750.",
+     pts:["a_XX = 150/500 = 0.30; a_XY = 250/750 = 1/3","a_YX = 200/500 = 0.40; a_YY = 250/750 = 1/3","A = [0.30 1/3 ; 0.40 1/3]","I − A = [0.70 −1/3 ; −0.40 2/3]","(check each column of A sums to less than 1: 0.70 and 2/3 — viable)"]},
+    {q:"Solve by Gauss elimination: x + y + z = 6; 2x − y + 3z = 4; 4x + 5y − 10z = 13.",
+     pts:["Augmented [1 1 1 | 6 ; 2 −1 3 | 4 ; 4 5 −10 | 13]","R₂ → R₂ − 2R₁: [0 −3 1 | −8]; R₃ → R₃ − 4R₁: [0 1 −14 | −11]","R₂ → −(1/3)R₂: [0 1 −1/3 | 8/3]; R₃ → R₃ − R₂: [0 0 −41/3 | −41/3] → z = 1","Back-substitute: y − (1/3)(1) = 8/3 → y = 3; x + 3 + 1 = 6 → x = 2","Solution: x = 2, y = 3, z = 1"]}
+  ],
+  long: [
+    {q:"In an economy of two industries P and Q the following table gives the supply and demand position (₹ millions). Producer X: used by X 150, used by Y 250, final demand 100, total output 500. Producer Y: used by X 200, used by Y 250, final demand 300, total output 750. Determine the output levels of the two industries (a) if the final demand changes to 120 for X and 180 for Y; (b) if the final demand changes to 180 for X and 240 for Y.", real:"2023 model paper", dia:"mth2-u2-io",
+     pts:["Technology coefficients: a_XX = 150/500 = 0.3; a_XY = 250/750 = 1/3; a_YX = 200/500 = 0.4; a_YY = 250/750 = 1/3","A = [0.3 1/3 ; 0.4 1/3]; I − A = [0.7 −1/3 ; −0.4 2/3]","|I − A| = (0.7)(2/3) − (−1/3)(−0.4) = 7/15 − 2/15 = 1/3","(I − A)⁻¹ = 3 · [2/3 1/3 ; 0.4 0.7] = [2 1 ; 1.2 2.1]","Check with original d = (100, 300): x_X = 2(100) + 300 = 500 ✓; x_Y = 1.2(100) + 2.1(300) = 750 ✓","(a) d = (120, 180): x_X = 2(120) + 1(180) = 420; x_Y = 1.2(120) + 2.1(180) = 144 + 378 = 522","(b) d = (180, 240): x_X = 2(180) + 1(240) = 600; x_Y = 1.2(180) + 2.1(240) = 216 + 504 = 720"]},
+    {q:"(a) Solve the system by Cramer's rule: 2x + 3y − 4z = −1; 3x − 2y + 2z = 14; −10x + 8y + z = 6. (b) Verify your answer by substituting into all three equations. (c) State how the same system would be solved by the inverse-matrix method and when that method is preferable.", real:"2023 model paper",
+     pts:["(a) |A| = −121; |A_x| = −484 → x = 4; |A_y| = −605 → y = 5; |A_z| = −726 → z = 6","(b) Eq1: 2(4)+3(5)−4(6) = 8+15−24 = −1 ✓; Eq2: 3(4)−2(5)+2(6) = 12−10+12 = 14 ✓; Eq3: −10(4)+8(5)+6 = −40+40+6 = 6 ✓","(c) Inverse method: write Ax = d, find A⁻¹ = (1/|A|)·adj A, then x = A⁻¹d","Preferable when the same coefficient matrix A must be solved against several different right-hand vectors d — compute A⁻¹ once and reuse it"]},
+    {q:"For the matrix A = [2 −1 1 ; 0 3 −1 ; 1 4 2]: (a) find |A|; (b) state whether A is singular or non-singular; (c) find adj A; (d) hence write A⁻¹.",
+     pts:["(a) |A| = 2(3·2 − (−1)·4) − (−1)(0·2 − (−1)·1) + 1(0·4 − 3·1) = 2(10) + 1(1) + 1(−3) = 20 + 1 − 3 = 18","(b) |A| = 18 ≠ 0 → A is non-singular (invertible)","(c) Cofactors: C₁₁=10, C₁₂=−1, C₁₃=−3, C₂₁=6, C₂₂=3, C₂₃=−9, C₃₁=−2, C₃₂=2, C₃₃=6 → cofactor matrix C = [10 −1 −3 ; 6 3 −9 ; −2 2 6]; adj A = Cᵀ = [10 6 −2 ; −1 3 2 ; −3 −9 6]","(d) A⁻¹ = (1/18)·[10 6 −2 ; −1 3 2 ; −3 −9 6]"]},
+    {q:"(a) State the three elementary row operations. (b) Using the Gauss–Jordan method, find the inverse of A = [1 1 1 ; 0 2 3 ; 5 5 1], showing each step. (c) Use the inverse to solve Ax = [6 ; 13 ; 20].",
+     pts:["(a) swap two rows; multiply a row by a non-zero constant; add a multiple of one row to another","(b) Augment [A | I]; reduce left block to I. |A| = 1(2−15) − 1(0−15) + 1(0−10) = −13 + 15 − 10 = −8 (non-singular). Cofactor/adjoint or full row-reduction gives A⁻¹ = (1/−8)·[ −13 4 1 ; 15 −4 −3 ; −10 0 2 ] = [13/8 −1/2 −1/8 ; −15/8 1/2 3/8 ; 5/4 0 −1/4 ]","(c) x = A⁻¹·[6 ; 13 ; 20]: x₁ = (1/−8)(−13·6 + 4·13 + 1·20) = (1/−8)(−78 + 52 + 20) = (1/−8)(−6) = 0.75; x₂ = (1/−8)(15·6 − 4·13 − 3·20) = (1/−8)(90 − 52 − 60) = (1/−8)(−22) = 2.75; x₃ = (1/−8)(−10·6 + 0 + 2·20) = (1/−8)(−20) = 2.5","Solution x = (0.75, 2.75, 2.5) — check against the original equations"]}
+  ]
+};
+
+</script>
+<script>
 /* ============ ICONOGRAPHY ============
    Small inline SVGs per subject, used as card decoration, banner watermark,
    and unit-tile pattern tint — no external images, so everything still
@@ -12591,6 +13177,10 @@ const ICONS = {
   facc: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M50 12 V82 M28 82 H72" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
     <path d="M20 30 H80 M20 30 L10 52 H30 Z M80 30 L70 52 H90 Z" stroke="#fff" stroke-width="5" stroke-linejoin="round"/></svg>`,
+  bmath2: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M32 16 H18 V84 H32 M68 16 H82 V84 H68" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="40" cy="36" r="5" fill="#fff"/><circle cx="60" cy="36" r="5" fill="#fff"/>
+    <circle cx="40" cy="64" r="5" fill="#fff"/><circle cx="60" cy="64" r="5" fill="#fff"/></svg>`,
   notes: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 85 L20 20 Q20 15 25 15 H75 Q80 15 80 20 V85 L65 75 L50 85 L35 75 Z" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></svg>`
 };
