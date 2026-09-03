@@ -355,12 +355,16 @@
   .nt-body mark.nt-hl{background:rgba(240,200,60,.34);color:inherit;border-radius:3px;
     padding:1px 0;box-shadow:0 0 0 1px rgba(240,200,60,.25);cursor:pointer;}
   .nt-diagrams mark.nt-hl{background:rgba(240,200,60,.5);}
-  #nt-hl-pill{position:fixed;z-index:2600;display:none;gap:6px;
-    background:#1f1e2b;border:1px solid var(--line);border-radius:11px;
-    padding:6px;box-shadow:0 6px 20px rgba(0,0,0,.55);}
+  /* Docked bottom-centre rather than floating next to the selection: on iOS the
+     native "Copy / Look Up" callout sits right on top of the selection and would
+     hide a floating pill. A fixed bar well clear of it always works. */
+  #nt-hl-pill{position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(20px + env(safe-area-inset-bottom));z-index:2600;display:none;gap:8px;
+    background:#1f1e2b;border:1px solid var(--line);border-radius:13px;
+    padding:8px;box-shadow:0 8px 26px rgba(0,0,0,.6);}
   #nt-hl-pill.active{display:flex;}
-  #nt-hl-pill button{background:var(--accent);color:#1a1608;border:none;border-radius:8px;
-    padding:7px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
+  #nt-hl-pill button{background:var(--accent);color:#1a1608;border:none;border-radius:9px;
+    padding:10px 16px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
   #nt-hl-pill button.clear{background:rgba(255,255,255,.12);color:#fff;}
   .nt-hl-count{font-size:.7rem;color:var(--ink-dim);font-weight:600;}
   /* The pencil FAB lives at z-index 999, below the notes reader, so lift it
@@ -829,8 +833,8 @@
   <div class="nt-body" id="nt-body"></div>
 </div>
 <div id="nt-hl-pill">
-  <button onclick="ntHighlightSelection()">✏️ Highlight</button>
-  <button class="clear" onclick="ntHidePill()">✕</button>
+  <button onmousedown="event.preventDefault()" ontouchstart="" onclick="ntHighlightSelection()">✏️ Highlight</button>
+  <button class="clear" onmousedown="event.preventDefault()" onclick="ntHidePill()">✕</button>
 </div>
 
 
@@ -16018,6 +16022,7 @@ function ntApplyStoredHl(){
 }
 function ntHidePill(){
   document.getElementById('nt-hl-pill').classList.remove('active');
+  window.__ntHlRange = null;
   const s = window.getSelection(); if(s) s.removeAllRanges();
 }
 function ntShowPill(){
@@ -16025,21 +16030,17 @@ function ntShowPill(){
   if(!sel || sel.isCollapsed || !sel.toString().trim()){ ntHidePill(); return; }
   const body = document.getElementById('nt-body');
   if(!body.contains(sel.anchorNode)){ ntHidePill(); return; }
-  const r = sel.getRangeAt(0).getBoundingClientRect();
-  const pill = document.getElementById('nt-hl-pill');
-  pill.classList.add('active');
-  const pw = pill.offsetWidth || 170;
-  let left = r.left + r.width / 2 - pw / 2;
-  left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
-  let top = r.top - pill.offsetHeight - 10;
-  if(top < 8) top = r.bottom + 10;
-  pill.style.left = left + 'px';
-  pill.style.top = top + 'px';
+  /* Remember the range NOW. On iOS Safari, the moment you tap the "Highlight"
+     button the text selection collapses, so by the time ntHighlightSelection()
+     runs window.getSelection() is empty. It falls back to this stored range. */
+  window.__ntHlRange = sel.getRangeAt(0).cloneRange();
+  document.getElementById('nt-hl-pill').classList.add('active');  // CSS docks it bottom-centre
 }
 function ntHighlightSelection(){
+  clearTimeout(window.__ntSelT);
   const sel = window.getSelection();
-  if(!sel || sel.isCollapsed) return ntHidePill();
-  const range = sel.getRangeAt(0);
+  let range = (sel && !sel.isCollapsed && sel.rangeCount) ? sel.getRangeAt(0) : window.__ntHlRange;
+  if(!range) return ntHidePill();
   const body = document.getElementById('nt-body');
   let block = range.startContainer;
   while(block && block !== body && !(block.nodeType === 1 && block.hasAttribute('data-nb'))) block = block.parentNode;
