@@ -358,15 +358,16 @@
   /* Docked bottom-centre rather than floating next to the selection: on iOS the
      native "Copy / Look Up" callout sits right on top of the selection and would
      hide a floating pill. A fixed bar well clear of it always works. */
-  #nt-hl-pill,#nt-hl-remove{position:fixed;left:50%;transform:translateX(-50%);
+  #nt-hl-pill{position:fixed;left:50%;transform:translateX(-50%);
     bottom:calc(20px + env(safe-area-inset-bottom));z-index:2600;display:none;gap:8px;
     background:#1f1e2b;border:1px solid var(--line);border-radius:13px;
     padding:8px;box-shadow:0 8px 26px rgba(0,0,0,.6);}
-  #nt-hl-pill.active,#nt-hl-remove.active{display:flex;}
-  #nt-hl-pill button,#nt-hl-remove button{background:var(--accent);color:#1a1608;border:none;border-radius:9px;
+  #nt-hl-pill.active{display:flex;}
+  #nt-hl-pill button{background:var(--accent);color:#1a1608;border:none;border-radius:9px;
     padding:10px 16px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
-  #nt-hl-pill button.clear,#nt-hl-remove button.clear{background:rgba(255,255,255,.12);color:#fff;}
-  #nt-hl-remove button:not(.clear){background:var(--micro);color:#fff;}
+  #nt-hl-pill button.clear{background:rgba(255,255,255,.12);color:#fff;}
+  #nt-hl-del{background:var(--micro)!important;color:#fff!important;display:none;}
+  #nt-hl-pill.has-hl #nt-hl-del{display:inline-block;}
   .nt-hl-count{font-size:.7rem;color:var(--ink-dim);font-weight:600;}
   /* The pencil FAB lives at z-index 999, below the notes reader, so lift it
      while the reader is open — otherwise it disappears exactly when you want
@@ -835,11 +836,8 @@
 </div>
 <div id="nt-hl-pill">
   <button onmousedown="event.preventDefault()" ontouchstart="" onclick="ntHighlightSelection()">✏️ Highlight</button>
+  <button id="nt-hl-del" onmousedown="event.preventDefault()" ontouchstart="" onclick="ntRemoveSelection()">🗑 Remove</button>
   <button class="clear" onmousedown="event.preventDefault()" onclick="ntHidePill()">✕</button>
-</div>
-<div id="nt-hl-remove">
-  <button onmousedown="event.preventDefault()" ontouchstart="" onclick="ntRemoveTappedHl()">🗑 Remove highlight</button>
-  <button class="clear" onmousedown="event.preventDefault()" onclick="ntHideRemove()">✕</button>
 </div>
 
 
@@ -15985,30 +15983,45 @@ function ntTextNodes(root){
   let n; while((n = w.nextNode())) out.push(n);
   return out;
 }
-/* Character offset of a (node, offset) pair measured from the start of its block. */
-function ntOffsetIn(block, node, off){
-  let total = 0;
-  for(const t of ntTextNodes(block)){
-    if(t === node) return total + off;
-    total += t.nodeValue.length;
+/* Character offset of a (node, offset) point measured from the start of `block`.
+   Uses a Range so it works even when the point is an ELEMENT node (which is what
+   iOS Safari hands you when you select "to the end of a sentence" — the endpoint
+   comes back as (<p>, childCount), not a text node). Clamped to [0, block length]. */
+function ntCharOffset(block, node, off){
+  const total = block.textContent.length;
+  if(!node) return -1;
+  if(!block.contains(node) && node !== block){
+    // point is outside this block — treat as "before" or "after" it
+    const pos = block.compareDocumentPosition(node);
+    if(pos & Node.DOCUMENT_POSITION_PRECEDING) return 0;
+    if(pos & Node.DOCUMENT_POSITION_FOLLOWING) return total;
+    return -1;
   }
-  return -1;
+  const r = document.createRange();
+  r.selectNodeContents(block);
+  try{ r.setEnd(node, off); }catch(e){ return -1; }
+  return Math.max(0, Math.min(total, r.toString().length));
 }
+/* Wrap the character span [start,end) of `block` in <mark class="nt-hl"> elements.
+   Splits text nodes manually (splitText never throws) and skips text already
+   inside a highlight, so it copes with <strong>/<em> boundaries and re-highlights. */
 function ntWrapRange(block, start, end){
   if(end <= start) return false;
   let pos = 0, made = false;
-  for(const t of ntTextNodes(block).slice()){
+  for(const t of ntTextNodes(block)){
     const len = t.nodeValue.length, tStart = pos, tEnd = pos + len;
     pos = tEnd;
     if(tEnd <= start || tStart >= end) continue;
-    if(t.parentElement && t.parentElement.tagName === 'MARK') continue;
+    if(t.parentElement && t.parentElement.closest('mark.nt-hl')) continue;
     const a = Math.max(0, start - tStart), b = Math.min(len, end - tStart);
     if(b <= a) continue;
-    const r = document.createRange();
-    r.setStart(t, a); r.setEnd(t, b);
+    let mid = (a > 0) ? t.splitText(a) : t;
+    if((b - a) < mid.nodeValue.length) mid.splitText(b - a);
     const m = document.createElement('mark');
     m.className = 'nt-hl';
-    try{ r.surroundContents(m); made = true; }catch(err){ /* crosses an element edge; skip */ }
+    mid.parentNode.insertBefore(m, mid);
+    m.appendChild(mid);
+    made = true;
   }
   return made;
 }
@@ -16020,13 +16033,52 @@ function ntApplyStoredHl(){
   Object.keys(byBlock).forEach(bi => {
     const block = body.querySelector(`[data-nb="${bi}"]`);
     if(!block) return;
-    // Apply latest-first so earlier offsets stay valid as the DOM changes.
-    byBlock[bi].sort((x, y) => y.s - x.s).forEach(h => ntWrapRange(block, h.s, h.e));
+    byBlock[bi].sort((x, y) => x.s - y.s).forEach(h => ntWrapRange(block, h.s, h.e));
   });
   ntUpdateHlCount(stored);
 }
+/* Nuke every mark then rebuild from storage — the reliable way to reflect an
+   add OR a removal without incremental-DOM-mutation bugs. */
+function ntRebuildHl(){
+  const body = document.getElementById('nt-body');
+  body.querySelectorAll('mark.nt-hl').forEach(m => {
+    const p = m.parentNode;
+    while(m.firstChild) p.insertBefore(m.firstChild, m);
+    p.removeChild(m);
+  });
+  body.querySelectorAll('[data-nb]').forEach(b => b.normalize());
+  ntApplyStoredHl();
+}
+/* The [data-nb] blocks a range covers, each with the range clipped to that block
+   and converted to character offsets {nb, s, e}. */
+function ntRangeBlocks(range){
+  const body = document.getElementById('nt-body');
+  const out = [];
+  body.querySelectorAll('[data-nb]').forEach(block => {
+    if(!range.intersectsNode(block)) return;
+    const sub = document.createRange();
+    sub.selectNodeContents(block);
+    if(range.compareBoundaryPoints(Range.START_TO_START, sub) > 0) sub.setStart(range.startContainer, range.startOffset);
+    if(range.compareBoundaryPoints(Range.END_TO_END, sub) < 0) sub.setEnd(range.endContainer, range.endOffset);
+    if(sub.collapsed) return;
+    let s = ntCharOffset(block, sub.startContainer, sub.startOffset);
+    let e = ntCharOffset(block, sub.endContainer, sub.endOffset);
+    // trim trailing / leading whitespace so the mark hugs the words
+    const txt = block.textContent;
+    while(e > s && /\s/.test(txt[e - 1])) e--;
+    while(s < e && /\s/.test(txt[s])) s++;
+    if(e - s < 1) return;
+    out.push({ nb: Number(block.getAttribute('data-nb')), s, e });
+  });
+  return out;
+}
+function ntActiveRange(){
+  const sel = window.getSelection();
+  if(sel && !sel.isCollapsed && sel.rangeCount) return sel.getRangeAt(0);
+  return window.__ntHlRange || null;
+}
 function ntHidePill(){
-  document.getElementById('nt-hl-pill').classList.remove('active');
+  document.getElementById('nt-hl-pill').classList.remove('active', 'has-hl');
   window.__ntHlRange = null;
   const s = window.getSelection(); if(s) s.removeAllRanges();
 }
@@ -16035,79 +16087,67 @@ function ntShowPill(){
   if(!sel || sel.isCollapsed || !sel.toString().trim()){ ntHidePill(); return; }
   const body = document.getElementById('nt-body');
   if(!body.contains(sel.anchorNode)){ ntHidePill(); return; }
-  /* Remember the range NOW. On iOS Safari, the moment you tap the "Highlight"
-     button the text selection collapses, so by the time ntHighlightSelection()
-     runs window.getSelection() is empty. It falls back to this stored range. */
-  window.__ntHlRange = sel.getRangeAt(0).cloneRange();
-  ntHideRemove();
-  document.getElementById('nt-hl-pill').classList.add('active');  // CSS docks it bottom-centre
-}
-/* Shown when you tap an existing highlight — gives a clear way to undo it. */
-function ntShowRemove(mark){
-  window.__ntRemoveMark = mark;
-  ntHidePill();
-  document.getElementById('nt-hl-remove').classList.add('active');
-}
-function ntHideRemove(){
-  document.getElementById('nt-hl-remove').classList.remove('active');
-  window.__ntRemoveMark = null;
-}
-function ntRemoveTappedHl(){
-  const m = window.__ntRemoveMark;
-  if(m && m.parentNode){
-    let block = m;
-    while(block && !(block.nodeType === 1 && block.hasAttribute('data-nb'))) block = block.parentNode;
-    if(block){
-      const bi = Number(block.getAttribute('data-nb'));
-      const start = ntOffsetIn(block, m.firstChild || m, 0);
-      ntSaveHl(ntLoadHl().filter(h => !(h.b === bi && Math.abs(h.s - start) < 2)));
-    }
-    const parent = m.parentNode;
-    while(m.firstChild) parent.insertBefore(m.firstChild, m);
-    parent.removeChild(m);
-    parent.normalize();
-    ntUpdateHlCount(ntLoadHl());
-  }
-  ntHideRemove();
+  /* Remember the range NOW. On iOS Safari, the moment you tap a pill button the
+     text selection collapses, so by the time the handler runs the live selection
+     is gone — everything below falls back to this stored range. */
+  const range = sel.getRangeAt(0).cloneRange();
+  window.__ntHlRange = range;
+  // show "Remove" only when the selection actually covers a highlight
+  const touchesHl = [...body.querySelectorAll('mark.nt-hl')].some(m => range.intersectsNode(m));
+  document.getElementById('nt-hl-pill').classList.toggle('has-hl', touchesHl);
+  document.getElementById('nt-hl-pill').classList.add('active');   // CSS docks it bottom-centre
 }
 function ntHighlightSelection(){
   clearTimeout(window.__ntSelT);
-  const sel = window.getSelection();
-  let range = (sel && !sel.isCollapsed && sel.rangeCount) ? sel.getRangeAt(0) : window.__ntHlRange;
-  if(!range) return ntHidePill();
-  const body = document.getElementById('nt-body');
-  let block = range.startContainer;
-  while(block && block !== body && !(block.nodeType === 1 && block.hasAttribute('data-nb'))) block = block.parentNode;
-  if(!block || block === body) return ntHidePill();
-  const s = ntOffsetIn(block, range.startContainer, range.startOffset);
-  const e = ntOffsetIn(block, range.endContainer, range.endOffset);
-  if(s < 0 || e < 0 || e <= s) return ntHidePill();
-  const bi = block.getAttribute('data-nb');
+  const range = ntActiveRange();
+  if(!range || range.collapsed) return ntHidePill();
+  const spans = ntRangeBlocks(range);
+  if(!spans.length) return ntHidePill();
   const arr = ntLoadHl();
-  arr.push({b: Number(bi), s, e});
+  spans.forEach(sp => arr.push({ b: sp.nb, s: sp.s, e: sp.e }));
   ntSaveHl(arr);
-  ntWrapRange(block, s, e);
-  ntUpdateHlCount(arr);
+  ntRebuildHl();
   ntHidePill();
 }
-/* Tapping an existing highlight offers a "Remove highlight" button. */
+function ntRemoveSelection(){
+  clearTimeout(window.__ntSelT);
+  const range = ntActiveRange();
+  if(!range || range.collapsed) return ntHidePill();
+  const spans = ntRangeBlocks(range);
+  if(!spans.length) return ntHidePill();
+  // drop every stored highlight that overlaps the selection in its block
+  const kept = ntLoadHl().filter(h => !spans.some(sp => sp.nb === h.b && h.s < sp.e && h.e > sp.s));
+  ntSaveHl(kept);
+  ntRebuildHl();
+  ntHidePill();
+}
+/* Tapping an existing highlight selects it, which brings up the pill with both
+   "Highlight" and "Remove" — same flow as selecting text by hand. */
 function ntWireHighlightRemoval(){
   const body = document.getElementById('nt-body');
   body.addEventListener('click', ev => {
     const m = ev.target.closest && ev.target.closest('mark.nt-hl');
-    if(!m){ ntHideRemove(); return; }
-    ntShowRemove(m);
+    if(!m) return;
+    /* Show the pill directly — no dependence on window.getSelection(), which
+       iOS collapses the instant the tap ends. The stashed range covers just
+       this highlight, so "Remove" clears exactly it. */
+    const r = document.createRange();
+    r.selectNodeContents(m);
+    window.__ntHlRange = r;
+    clearTimeout(window.__ntSelT);
+    const pill = document.getElementById('nt-hl-pill');
+    pill.classList.add('has-hl');
+    pill.classList.add('active');
   });
   document.addEventListener('selectionchange', () => {
     if(!document.body.classList.contains('notes-open')) return;
-    // Never let the highlight pill react to a caret move inside an editable
-    // field THAT IS ACTUALLY ON SCREEN — its ntHidePill()/removeAllRanges()
-    // disrupts typing on iOS. A blurred-but-still-activeElement textarea from a
-    // closed view (e.g. exam mode) must NOT block the pill, or highlighting
-    // silently stops working after you've used exam mode once.
+    // Don't fight a caret inside a VISIBLE editable field (the exam textarea) —
+    // ntHidePill()'s removeAllRanges() would drop the caret on iOS. A blurred,
+    // off-screen textarea (offsetParent null) must NOT block the pill though, or
+    // highlighting stops working after you've used exam mode once.
     const ae = document.activeElement;
     const editable = ae && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT' || ae.isContentEditable);
-    if(editable && ae.offsetParent !== null) return;   // visible editable field → leave it alone
+    if(editable && ae.offsetParent !== null) return;
     clearTimeout(window.__ntSelT);
     window.__ntSelT = setTimeout(ntShowPill, 180);
   });
@@ -16150,7 +16190,7 @@ function ntRenderBody(html){
     el.setAttribute('data-nb', nb++);
   });
   ntApplyStoredHl();
-  ntHidePill(); ntHideRemove();
+  ntHidePill();
   /* Clear any lingering focus (e.g. the exam answer box) — otherwise the
      `selectionchange` handler below bails on a focused INPUT/TEXTAREA and the
      highlight pill never appears when you select text in the notes. */
@@ -16170,7 +16210,7 @@ function openUnitNotes(){
   ntRenderBody(UNIT_NOTES[currentSubjectKey][currentUnitIdx]);
 }
 function closeUnitNotes(){
-  ntHidePill(); ntHideRemove();
+  ntHidePill();
   document.body.classList.remove('notes-open');
   document.getElementById('view-notes-reader').classList.remove('active');
   if(currentChapterIdx !== null){
