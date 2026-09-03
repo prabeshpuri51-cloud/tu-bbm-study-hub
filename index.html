@@ -12609,14 +12609,13 @@ window.SUBJECT_DATA_S2["bmath2"] = {
 
     {title:"Unit 2: Linear Algebra and Applications",
       primaryBook:"Applied Mathematics for Business, Economics & the Social Sciences (Budnick), Ch 9 + Ch 3.2–3.3",
-      primaryWeak:"Matrices/operations/determinants/inverse/Cramer/Gauss–Jordan: Budnick Ch 9 (book p.348–414) + Ch 3.2–3.3 (Gauss elimination, book p.97–112). Input–output analysis + the Hawkins–Simon conditions are NOT in Budnick — taken from Rosser Ch 15.12–15.13 (book p.575–588) and Chiang Ch 5.7 (Spanish 4th ed).",
+      primaryWeak:"Matrices/operations/determinants/inverse/Cramer/Gauss–Jordan: Budnick Ch 9 (book p.348–414) + Ch 3.2–3.3 (Gauss elimination, book p.97–112). Input–output analysis + the Hawkins–Simon conditions are NOT in Budnick — the notes cover them from Rosser Ch 15.12–15.13 (book p.575–588); the formulas are standard.",
       pages:"Budnick Ch 9 + Ch 3.2–3.3", startPage:376, endPage:414, lh:7,
       desc:"Matrices and their types; addition, subtraction, scalar multiplication, multiplication, transpose; determinant of a square matrix; minors and cofactors; singular and non-singular matrices; adjoint and inverse; elementary row operations; solving linear equations by Cramer's rule, the inverse-matrix method, Gauss elimination and Gauss–Jordan; input–output analysis, the technology coefficient matrix, and the Hawkins–Simon conditions for viability.",
       subtopics:"Matrices & types, operations, transpose, determinant, minors/cofactors, adjoint & inverse, row ops, Cramer's rule, Gauss/Gauss–Jordan, input–output, Hawkins–Simon",
       primaryMatch:"budnick|applied mathematics for business",
       refs:[
-        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 15.12–15.13, book p.575–588", note:"Input–output analysis (flow table → technology coefficient matrix → (I−A)x = d) and the Hawkins–Simon conditions — the clearest treatment; not in Budnick.", match:"rosser|basic mathematics for economists|annas arch", start:589},
-        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish: Métodos Fundamentales de Economía Matemática)", pages:"Ch 4–5, book p.44–121", note:"Rigorous backbone: determinants, Laplace expansion, adjoint/inverse, Cramer's rule, Leontief input–output and Hawkins–Simon (Ch 5.7). Writes the transpose as A′.", match:"chiang|metodos fundamentales|economia matematica", start:65}
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 15.12–15.13, book p.575–588", note:"Input–output analysis (flow table → technology coefficient matrix → (I−A)x = d) and the Hawkins–Simon conditions — the clearest treatment; not in Budnick.", match:"rosser|basic mathematics for economists|annas arch", start:589}
       ]},
 
     {title:"Unit 3: Integration and Applications",
@@ -12627,44 +12626,39 @@ window.SUBJECT_DATA_S2["bmath2"] = {
       subtopics:"Integration techniques, definite integrals, surplus, area under a curve",
       primaryMatch:"bradley|essential mathematics for economics",
       refs:[
-        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 12.5–12.7, book p.429–447", note:"Indefinite/definite integrals, MC→TC and MR→TR, integration by substitution and by parts, net investment / capital formation. Has the integration-by-parts treatment Bradley's print edition omits.", match:"rosser|basic mathematics for economists|annas arch", start:443},
-        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish)", pages:"Ch 14, book p.435–460", note:"Rigorous treatment of the definite integral and economic dynamics; heavier than needed for a BBM course.", match:"chiang|metodos fundamentales|economia matematica", start:456}
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 12.5–12.7, book p.429–447", note:"Indefinite/definite integrals, MC→TC and MR→TR, integration by substitution and by parts, net investment / capital formation. Has the integration-by-parts treatment Bradley's print edition omits.", match:"rosser|basic mathematics for economists|annas arch", start:443}
       ]},
 
     {title:"Unit 4: Functions of Several Variables",
       primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 7",
-      primaryWeak:"Functions of two variables, isoquants, partial differentiation (first + second order), partial elasticities, MRS/MRTS, Euler's theorem, the D-test for unconstrained optimisation, and Lagrange multipliers: Bradley Ch 7 (book p.332–388) — a good level match for a BBM course. Chiang Ch 11–12 and Rosser Ch 10–11 give more rigorous treatments.",
+      primaryWeak:"Functions of two variables, isoquants, partial differentiation (first + second order), partial elasticities, MRS/MRTS, Euler's theorem, the D-test for unconstrained optimisation, and Lagrange multipliers: Bradley Ch 7 (book p.332–388) — a good level match for a BBM course. Rosser Ch 10–11 gives a more rigorous treatment.",
       pages:"Bradley Ch 7 · book p.332–388", startPage:351, endPage:407, lh:9,
       desc:"Functions of several variables and their business/economic applications; partial differentiation and its applications (elasticity, utility, production); graphical representation; unconstrained optimisation; constrained optimisation and Lagrange multipliers.",
       subtopics:"Partial differentiation, second-order partials, elasticity, MRTS/MRS, Euler, the D-test, Lagrange multipliers",
       primaryMatch:"bradley|essential mathematics for economics",
       refs:[
-        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish)", pages:"Ch 11–12, book p.291–370", note:"Multi-variable optimisation with quadratic forms and the Hessian (Ch 11); constrained optimisation and Lagrange multipliers, incl. the bordered Hessian and the meaning of λ (Ch 12). More formal than the BBM course needs.", match:"chiang|metodos fundamentales|economia matematica", start:312},
         {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 10–11, book p.326–406", note:"Partial differentiation and its applications (Ch 10); constrained optimisation, the Lagrange multiplier, second-order conditions and constrained minimisation (Ch 11).", match:"rosser|basic mathematics for economists|annas arch", start:340}
       ]},
 
     {title:"Unit 5: First-order Differential Equations and Applications",
-      primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 8.7–8.8 + Chiang Ch 15",
-      primaryWeak:"Introduction, order/degree, solution of dy/dx = f(x), separable equations, and limited/unlimited growth: Bradley Ch 8.7–8.8 (book p.422–438) — a good level match. First-order linear dy/dt + ay = b, dynamics of market price, the integrating factor (variable coefficient), and exact equations are NOT in Bradley's print edition — taken from Chiang Ch 15.1–15.4 (Spanish 4th ed, book p.475–491) and Rosser Ch 14.6–14.9 (book p.506–516). Non-linear first-order first-degree = the separable and exact cases.",
-      pages:"Bradley Ch 8.7–8.8 · Chiang Ch 15.1–15.4 · Rosser Ch 14.6–14.9", startPage:441, endPage:457, lh:9,
+      primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 8.7–8.8",
+      primaryWeak:"Introduction, order/degree, solution of dy/dx = f(x), separable equations, and limited/unlimited growth: Bradley Ch 8.7–8.8 (book p.422–438) — a good level match. First-order linear dy/dt + ay = b, dynamics of market price, the integrating factor (variable coefficient), and exact equations are NOT in Bradley's print edition — the notes cover them as original prose (⚠) from standard treatments; the methods and formulas are standard. Non-linear first-order first-degree = the separable and exact cases.",
+      pages:"Bradley Ch 8.7–8.8 · book p.422–438", startPage:441, endPage:457, lh:9,
       desc:"Introduction to differential equations; order and degree; solution of differential equations; first-order linear equations with constant coefficient and term; equations for limited and unlimited growth; dynamics of market price; variable-coefficient and variable-term equations (the integrating factor); exact equations; non-linear first-order first-degree equations.",
       subtopics:"Order & degree, general vs particular solution, separable equations, first-order linear ODEs (constant coefficient), limited & unlimited growth, dynamics of market price, integrating factor, exact equations",
       primaryMatch:"bradley|essential mathematics for economics",
       refs:[
-        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish: Métodos Fundamentales de Economía Matemática)", pages:"Ch 15.1–15.4, book p.475–491", note:"First-order linear DE with constant coefficient and term (Ch 15.1), dynamics of market price (Ch 15.2), variable coefficient / integrating factor (Ch 15.3), exact differential equations (Ch 15.4) — the parts Bradley's print edition omits. Uses t as the independent variable.", match:"chiang|metodos fundamentales|economia matematica", start:500},
-        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 14.6–14.9, book p.506–516", note:"Introduction to integration and differential equations, first-order linear DEs, the dynamics of a market price, and the stability condition — a gentler treatment than Chiang.", match:"rosser|basic mathematics for economists|annas arch", start:520}
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 14.6–14.9, book p.506–516", note:"Introduction to integration and differential equations, first-order linear DEs, the dynamics of a market price, and the stability condition — the syllabus's English reference for the parts Bradley's print edition omits.", match:"rosser|basic mathematics for economists|annas arch", start:520}
       ]},
 
     {title:"Unit 6: Dynamic Economic Analysis and Difference Equations",
-      primaryBook:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish), Ch 17",
-      primaryWeak:"Introduction, order/classification, solution of first-order difference equations (homogeneous + non-homogeneous), dynamic stability (the seven regions of b), and the cobweb model: Chiang Ch 17.1–17.4 (Spanish 4th ed, book p.544–561). Rosser Ch 13 (the syllabus's English pairing) has no digital copy. The LAGGED KEYNESIAN model is worked from the standard macro treatment and the real 2023 model paper (Q19/Q21). DUOPOLY PRICE ADJUSTMENT ⚠ is written from scratch from the standard Cournot dynamic-adjustment treatment — it is not in Chiang Ch 17 and the model paper does not test it.",
-      pages:"Chiang Ch 17.1–17.4 · book p.544–561", startPage:565, endPage:582, lh:9,
+      primaryBook:"Original notes — no readable textbook for this unit (see the ⚠ note)",
+      primaryWeak:"No syllabus reference for this unit is available in a form you can read: Rosser Ch 13 (the syllabus's English pairing) has no digital copy. The whole unit is written as original English prose from standard treatments — first-order difference equations, dynamic stability (the seven regions of b), and the cobweb model follow the standard method; the LAGGED KEYNESIAN model uses the standard macro treatment and the real 2023 model paper (Q19/Q21); DUOPOLY PRICE ADJUSTMENT ⚠ is written from the standard Cournot dynamic-adjustment model (the model paper does not test it). Every method and formula is standard.",
+      pages:"Rosser Ch 13 (no digital copy) — notes are original", startPage:0, endPage:0, lh:9,
       desc:"Introduction to difference equations; solution of first-order difference equations (homogeneous and non-homogeneous); economic applications of first-order difference equations — the cobweb model, the lagged Keynesian macroeconomic model, and duopoly price adjustment.",
       subtopics:"First difference & order, homogeneous solution yₜ = y₀·bᵗ, non-homogeneous solution + equilibrium c/(1−b), dynamic stability by the value of b, cobweb model, lagged Keynesian model, duopoly (Cournot) price adjustment",
-      primaryMatch:"chiang|metodos fundamentales|economia matematica",
       refs:[
-        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish: Métodos Fundamentales de Economía Matemática)", pages:"Ch 17.1–17.4, book p.544–561", note:"Discrete time and first differences (17.1); solving yₜ₊₁ = b·yₜ + c by complementary function + particular solution (17.2); the seven regions of b and dynamic stability (17.3); the cobweb model, 'Las telarañas' (17.4). Writes the equation as yₜ₊₁ = b·yₜ + c.", match:"chiang|metodos fundamentales|economia matematica", start:565},
-        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 13 (dynamic analysis / difference equations)", note:"The syllabus's English pairing for this unit — first-order difference equations, the cobweb model, the lagged Keynesian model and duopoly price adjustment. No digital copy was available; the notes were written from Chiang Ch 17 and standard treatments instead.", match:"rosser|basic mathematics for economists|annas arch", start:0}
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 13 (dynamic analysis / difference equations)", note:"The syllabus's English reference for this unit — first-order difference equations, the cobweb model, the lagged Keynesian model and duopoly price adjustment. No digital copy was available, so the notes were written as original prose from standard treatments.", match:"rosser|basic mathematics for economists|annas arch", start:0}
       ]}
   ]
 };
@@ -13736,7 +13730,7 @@ window.SUBJECT_NOTES["bmath2"]["3"] = `<p><strong>Syllabus scope (9 lecture hour
 <p>Also expect: a Section-A brief on defining a partial derivative or writing ∂F/∂x, ∂F/∂y for a given F; a Section-B Lagrange-multiplier utility/output maximisation; a Section-B or C two-good profit maximisation.</p>`;
 
 window.SUBJECT_NOTES["bmath2"]["4"] = `<p><strong>Syllabus scope (9 lecture hours):</strong> Introduction to differential equations; order and degree of a differential equation; solution of differential equations; first-order linear differential equations with constant coefficient and constant term; differential equations for limited and unlimited growth; dynamics of market price; first-order differential equations with variable coefficient and variable term; exact differential equations; non-linear differential equations of the first order and first degree.</p>
-<p><em>Notation:</em> the independent variable is written x or t depending on the source (Bradley uses x, Chiang uses t); read the derivative — dy/dx or dy/dt — to see which.</p>
+<p><em>Notation:</em> the independent variable is written x or t depending on the source; read the derivative — dy/dx or dy/dt — to see which.</p>
 <hr>
 
 <h2>5.1 Introduction — Order and Degree</h2>
@@ -13860,7 +13854,7 @@ window.SUBJECT_NOTES["bmath2"]["4"] = `<p><strong>Syllabus scope (9 lecture hour
 <blockquote><p><strong>y · IF = ∫ (Q(x) · IF) dx + c</strong></p></blockquote>
 <p><strong>Worked example — the real 2023 Model Question, Section B Q12</strong> (the scan prints "dy/dt" with x-terms and drops part of the numerator; the standard reading is dy/dx + 2xy/(1 + x²) = 4x²/(1 + x²)): Here P(x) = 2x/(1 + x²), Q(x) = 4x²/(1 + x²). IF = e^∫[2x/(1 + x²)] dx = e^ln(1 + x²) = <strong>1 + x²</strong>. So (1 + x²)·y = ∫ (1 + x²) · 4x²/(1 + x²) dx = ∫ 4x² dx = (4/3)x³ + c. <strong>y = [(4/3)x³ + c] / (1 + x²).</strong></p>
 <p><strong>Worked example.</strong> dy/dx + y/x = 5/x. Here P = 1/x, Q = 5/x. IF = e^∫(1/x) dx = e^ln x = x. x·y = ∫ x·(5/x) dx = ∫ 5 dx = 5x + c → <strong>y = 5 + c/x</strong>. If y = 3 when x = 1: 3 = 5 + c → c = −2, so y = 5 − 2/x.</p>
-<p>Chiang's compact form: dy/dt + u(t)y = w(t) has the general solution y(t) = e^(−∫u dt)·[A + ∫ w·e^(∫u dt) dt] — the same thing, with the IF written explicitly.</p>
+<p>Compact form: dy/dt + u(t)y = w(t) has the general solution y(t) = e^(−∫u dt)·[A + ∫ w·e^(∫u dt) dt] — the same thing, with the IF written explicitly.</p>
 
 <h2>5.8 Exact Differential Equations</h2>
 <p>Write the DE in the form <strong>M dx + N dy = 0</strong> (M and N functions of x and y). It is <strong>exact</strong> if and only if</p>
@@ -14106,7 +14100,7 @@ Iₜ = I₀ &nbsp;&nbsp;(autonomous investment)</p></blockquote>
 </figure></div>
 
 <h2>6.6 Economic Application 3 — Duopoly Price Adjustment ⚠</h2>
-<p><em>(⚠ Not in Chiang Ch 17 or any sourced text; written from the standard Cournot dynamic-adjustment treatment — Rosser Ch 13.3, which has no digital copy, gives the same model. The 2023 model paper does not test this topic; it is included because the syllabus names it.)</em></p>
+<p><em>(⚠ Not in any digitally available sourced text; written from the standard Cournot dynamic-adjustment treatment — Rosser Ch 13.3, which has no digital copy, gives the same model. The 2023 model paper does not test this topic; it is included because the syllabus names it.)</em></p>
 <p>Two firms (1 and 2) sell an identical product. Market demand: <strong>P = a − b(q₁ + q₂)</strong>. Each firm has constant marginal cost <strong>c</strong>.</p>
 <p><strong>Best-response (reaction) function.</strong> Firm 1 maximises π₁ = [a − b(q₁ + q₂)]q₁ − c·q₁. Setting dπ₁/dq₁ = 0:</p>
 <blockquote><p>q₁ = (a − c)/(2b) − ½·q₂ &nbsp;&nbsp;&nbsp; and symmetrically &nbsp;&nbsp;&nbsp; q₂ = (a − c)/(2b) − ½·q₁</p></blockquote>
@@ -14650,7 +14644,7 @@ window.SUBJECT_QUIZ["bmath2"]["4"] = [
    why:"P(x) = 2x/(1 + x²), so ∫ P dx = ln(1 + x²) and IF = e^(ln(1 + x²)) = 1 + x². The solution is y = [(4/3)x³ + c]/(1 + x²). This is the real 2023 model paper Section B Q12."},
   {q:"For dy/dx + 3y = e^(2x), the integrating factor is:", o:["e^(2x)", "3x", "e^(5x)", "e^(3x)"], a:3, w:2,
    why:"P(x) = 3 (constant), so IF = e^∫3 dx = e^(3x)."},
-  {q:"Chiang's compact solution formula for dy/dt + u(t)y = w(t) is:", o:["y = ∫ w dt + c", "y(t) = e^(−∫u dt) · [A + ∫ w·e^(∫u dt) dt]", "y = w/u", "y = A e^(u·t)"], a:1, w:1,
+  {q:"The compact integrating-factor solution formula for dy/dt + u(t)y = w(t) is:", o:["y = ∫ w dt + c", "y(t) = e^(−∫u dt) · [A + ∫ w·e^(∫u dt) dt]", "y = w/u", "y = A e^(u·t)"], a:1, w:1,
    why:"This is just the integrating-factor method written out: the factor e^(∫u dt) is applied, integrated against w, and A is the arbitrary constant."},
   {q:"A differential equation written M dx + N dy = 0 is EXACT if and only if:", o:["M = N", "M + N = 0", "∂M/∂y = ∂N/∂x", "∂M/∂x = ∂N/∂y"], a:2, w:3,
    why:"Then there is a function F(x, y) with ∂F/∂x = M and ∂F/∂y = N, and the solution is F(x, y) = c."},
