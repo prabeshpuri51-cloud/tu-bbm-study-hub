@@ -12632,12 +12632,16 @@ window.SUBJECT_DATA_S2["bmath2"] = {
       ]},
 
     {title:"Unit 4: Functions of Several Variables",
-      primaryBook:"Chiang Ch 7.4, 11, 12 + Bradley Ch 7",
-      primaryWeak:"NOT YET BUILT. Partial differentiation and its applications, unconstrained and constrained optimisation, Lagrange multipliers — Chiang Ch 11–12 and Bradley Ch 7; Rosser Ch 10–11.",
-      pages:"Chiang Ch 11–12 · Bradley Ch 7", startPage:0, endPage:0, lh:9,
+      primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 7",
+      primaryWeak:"Functions of two variables, isoquants, partial differentiation (first + second order), partial elasticities, MRS/MRTS, Euler's theorem, the D-test for unconstrained optimisation, and Lagrange multipliers: Bradley Ch 7 (book p.332–388) — a good level match for a BBM course. Chiang Ch 11–12 and Rosser Ch 10–11 give more rigorous treatments.",
+      pages:"Bradley Ch 7 · book p.332–388", startPage:351, endPage:407, lh:9,
       desc:"Functions of several variables and their business/economic applications; partial differentiation and its applications (elasticity, utility, production); graphical representation; unconstrained optimisation; constrained optimisation and Lagrange multipliers.",
-      subtopics:"Partial differentiation, applications, unconstrained & constrained optimisation, Lagrange multipliers",
-      notBuilt:true, refs:[]},
+      subtopics:"Partial differentiation, second-order partials, elasticity, MRTS/MRS, Euler, the D-test, Lagrange multipliers",
+      primaryMatch:"bradley|essential mathematics for economics",
+      refs:[
+        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish)", pages:"Ch 11–12, book p.291–370", note:"Multi-variable optimisation with quadratic forms and the Hessian (Ch 11); constrained optimisation and Lagrange multipliers, incl. the bordered Hessian and the meaning of λ (Ch 12). More formal than the BBM course needs.", match:"chiang|metodos fundamentales|economia matematica", start:312},
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 10–11, book p.326–406", note:"Partial differentiation and its applications (Ch 10); constrained optimisation, the Lagrange multiplier, second-order conditions and constrained minimisation (Ch 11).", match:"rosser|basic mathematics for economists|annas arch", start:340}
+      ]},
 
     {title:"Unit 5: First-order Differential Equations and Applications",
       primaryBook:"Chiang Ch 15 + Rosser Ch 14",
@@ -13495,6 +13499,234 @@ window.SUBJECT_NOTES["bmath2"]["2"] = `<p><strong>Syllabus scope (8 lecture hour
 </ol>
 <p>Also expect: a "total cost / value after N years from a given rate dc/dt" definite-integral question; a consumer-surplus or producer-surplus calculation for a linear or simple non-linear curve.</p>`;
 
+/* ===== UNIT 4 — Functions of Several Variables ===== */
+window.SUBJECT_NOTES["bmath2"]["3"] = `<p><strong>Syllabus scope (9 lecture hours):</strong> Functions of several variables and their applications in business and economics; partial differentiation and its applications; elasticity of demand; utility; production; graphical representations; unconstrained optimisation; constrained optimisation and Lagrange multipliers.</p>
+<p><em>Notation:</em> ∂z/∂x (also z_x) is the partial derivative of z with respect to x; z_xx, z_yy are the straight second-order partials, z_xy the mixed one.</p>
+<hr>
+
+<h2>4.1 Functions of Two (or More) Variables</h2>
+<p>A <strong>function of two variables</strong> is written <strong>z = f(x, y)</strong>: the value of z depends on <em>both</em> x and y. Example: z = x + 2y + 4, or the production function Q = f(L, K).</p>
+<p>Graphically, z = f(x, y) is a <strong>surface in three dimensions</strong> (x and y on the two horizontal axes, z vertical). A linear function z = ax + by + c is a flat <strong>plane</strong>; anything with x², xy, etc. is a curved surface with <strong>hills</strong> (relative maxima), <strong>hollows</strong> (relative minima) and <strong>saddles</strong>.</p>
+<h3>Graphical representation — hold one variable fixed</h3>
+<p>3-D diagrams are hard to draw, so in economics we <strong>fix one variable</strong> and plot the resulting 2-D curve:</p>
+<ul>
+<li>Production function Q = f(L, K), holding <strong>Q</strong> fixed → an <strong>isoquant</strong> (the combinations of L and K that produce the same output). Downward-sloping, convex to the origin; isoquants further out = higher output.</li>
+<li>Utility function U = f(x, y), holding <strong>U</strong> fixed → an <strong>indifference curve</strong>. Same shape; ones further out = higher utility.</li>
+</ul>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u4-isoquant">
+  <h3>Isoquants / indifference curves</h3>
+  <p class="dgm-sub">A 3-D function shown in 2-D by holding z fixed at several levels</p>
+  <svg viewBox="0 0 360 250" role="img" aria-label="Three downward-sloping curves convex to the origin, labelled as increasing levels of output or utility further from the origin">
+    <line class="ax" x1="45" y1="215" x2="345" y2="215"/>
+    <line class="ax" x1="45" y1="215" x2="45" y2="18"/>
+    <text class="t" x="336" y="232">x, L</text><text class="t" x="28" y="22">y, K</text>
+    <path class="cd" d="M 55 100 Q 80 185 150 200" fill="none"/>
+    <path class="cd" d="M 55 62 Q 105 160 225 190" fill="none"/>
+    <path class="cd" d="M 62 34 Q 150 125 315 160" fill="none"/>
+    <text class="td" x="320" y="158">Q₃</text>
+    <text class="td" x="230" y="182">Q₂</text>
+    <text class="td" x="150" y="194">Q₁</text>
+    <line class="gd" x1="70" y1="192" x2="240" y2="70"/>
+    <text class="ts" x="120" y="52">higher output / utility ⟶</text>
+  </svg>
+  <figcaption>
+    <p>Each curve is one "slice" of the 3-D surface at a fixed height z = Q₀ (or U₀). Downward-sloping (more of one input means less of the other for the same output) and convex to the origin (a diminishing marginal rate of substitution). Curves further from the origin represent higher output or higher utility.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both axes (L, K or x, y); at least three curves; convex to the origin and downward-sloping; that curves further out = higher output/utility.</div>
+  </figcaption>
+</figure></div>
+
+<h2>4.2 Partial Differentiation</h2>
+<p>To differentiate z = f(x, y) <strong>partially with respect to x</strong>, treat <em>y</em> as a constant and differentiate as normal. The symbol is <strong>∂</strong> (not d): <strong>∂z/∂x</strong> (also <strong>z_x</strong>). Likewise <strong>∂z/∂y</strong> (z_y) treats <em>x</em> as constant.</p>
+<p><strong>Worked example.</strong> z = 2x² + 3xy + 5.</p>
+<ul>
+<li>∂z/∂x = 4x + 3y &nbsp;(the 3xy term → 3y·(1); the 5 → 0)</li>
+<li>∂z/∂y = 3x &nbsp;(the 2x² term → 0; the 3xy term → 3x·(1))</li>
+</ul>
+<p><strong>Worked example (Cobb–Douglas).</strong> Q = 10 L^0.7 K^0.3. ∂Q/∂L = 10(0.7) L^−0.3 K^0.3 = <strong>7 L^−0.3 K^0.3</strong>; ∂Q/∂K = 10(0.3) L^0.7 K^−0.7 = <strong>3 L^0.7 K^−0.7</strong>.</p>
+<h3>Second-order partial derivatives</h3>
+<p>Differentiate each first-order partial again:</p>
+<ul>
+<li><strong>Straight:</strong> z_xx = ∂²z/∂x²; z_yy = ∂²z/∂y².</li>
+<li><strong>Mixed:</strong> z_xy = ∂/∂y (z_x); z_yx = ∂/∂x (z_y).</li>
+</ul>
+<p><strong>Young's theorem:</strong> for the functions met in practice, <strong>z_xy = z_yx</strong> (the mixed partials are equal).</p>
+<p><strong>Worked example.</strong> z = 2x² + 3xy + 5 → z_x = 4x + 3y, z_y = 3x. z_xx = 4, z_yy = 0, z_xy = 3, z_yx = 3 (equal ✓).</p>
+
+<h2>4.3 Applications of Partial Differentiation</h2>
+<h3>Partial elasticities of demand</h3>
+<p>For a demand function Q = f(P, P_A, Y) (own price P, price of a related good P_A, income Y):</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Elasticity</th><th>Formula</th></tr></thead>
+<tbody>
+<tr><td><strong>Own-price</strong></td><td>ε_P = (∂Q/∂P) · (P/Q)</td></tr>
+<tr><td><strong>Income</strong></td><td>ε_Y = (∂Q/∂Y) · (Y/Q)</td></tr>
+<tr><td><strong>Cross-price</strong></td><td>ε_C = (∂Q/∂P_A) · (P_A/Q)</td></tr>
+</tbody></table></div>
+<p>ε_Y &gt; 0 → normal good (ε_Y &gt; 1 luxury, 0 &lt; ε_Y &lt; 1 necessity); ε_Y &lt; 0 → inferior good. ε_C &gt; 0 → substitutes; ε_C &lt; 0 → complements. <strong>%ΔQ ≈ ε × (% change in the relevant variable)</strong>.</p>
+<p><strong>Worked example — the real 2023 Model Question, Section B Q17.</strong> Q = 100 − 2P + 0.3P_A + 0.2Y, with P = 6, P_A = 10, Y = 500. First Q = 100 − 12 + 3 + 100 = <strong>191</strong>. Partials: ∂Q/∂P = −2, ∂Q/∂P_A = 0.3, ∂Q/∂Y = 0.2.</p>
+<ul>
+<li>ε_P = −2 × (6/191) = <strong>−0.063</strong></li>
+<li>ε_C = 0.3 × (10/191) = <strong>+0.016</strong> (substitutes)</li>
+<li>ε_Y = 0.2 × (500/191) = <strong>+0.524</strong> (normal necessity)</li>
+</ul>
+<p>Effects: (i) P falls 10% → %ΔQ ≈ (−0.063)(−10) = <strong>+0.63%</strong>; (ii) P_A rises 10% → ≈ (0.016)(10) = <strong>+0.16%</strong>; (iii) Y rises 5% → ≈ (0.524)(5) = <strong>+2.62%</strong>.</p>
+<h3>Utility and the marginal rate of substitution</h3>
+<p>For U = f(x, y): <strong>marginal utilities</strong> MU_x = ∂U/∂x, MU_y = ∂U/∂y. The slope of an indifference curve is the <strong>marginal rate of substitution</strong>: MRS = dy/dx = <strong>− MU_x / MU_y</strong>.</p>
+<h3>Production — marginal products, MRTS, Euler's theorem</h3>
+<p>For Q = f(L, K): <strong>marginal products</strong> MP_L = ∂Q/∂L, MP_K = ∂Q/∂K. The slope of an isoquant is the <strong>marginal rate of technical substitution</strong>: MRTS = dK/dL = <strong>− MP_L / MP_K</strong>.</p>
+<p>For the <strong>Cobb–Douglas</strong> function Q = A L^α K^β:</p>
+<ul>
+<li>MRTS = (α/β)(K/L)</li>
+<li><strong>Returns to scale</strong> from α + β: α + β = 1 → <strong>constant</strong>; &lt; 1 → <strong>decreasing</strong>; &gt; 1 → <strong>increasing</strong>.</li>
+<li><strong>Euler's theorem:</strong> L·(∂Q/∂L) + K·(∂Q/∂K) = (α + β)·Q. For constant returns (α + β = 1), <strong>L·MP_L + K·MP_K = Q</strong> — the total product is exactly exhausted by paying each factor its marginal product.</li>
+</ul>
+<p><strong>Worked example — the real 2023 Model Question, Section B Q15.</strong> Q = 10 L^0.7 K^0.3. Find MP_L and MP_K, and verify L(∂Q/∂L) + K(∂Q/∂K) = Q. MP_L = 7 L^−0.3 K^0.3; MP_K = 3 L^0.7 K^−0.7. L·MP_L = 7 L^0.7 K^0.3; K·MP_K = 3 L^0.7 K^0.3. Sum = 10 L^0.7 K^0.3 = <strong>Q</strong> ✓ (α + β = 0.7 + 0.3 = 1 → constant returns to scale).</p>
+
+<h2>4.4 Unconstrained Optimisation</h2>
+<p>To find and classify the optimum (turning) points of z = f(x, y):</p>
+<p><strong>Step 1 — first- and second-order partials.</strong> Find z_x, z_y, z_xx, z_yy, z_xy.</p>
+<p><strong>Step 2 — stationary points.</strong> Solve <strong>z_x = 0 and z_y = 0</strong> simultaneously for (x, y). (Substitute back to get z if needed.)</p>
+<p><strong>Step 3 — classify each stationary point</strong> using the <strong>discriminant</strong> Δ = (z_xx)(z_yy) − (z_xy)², evaluated at that point:</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Δ</th><th>z_xx, z_yy</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Δ &gt; 0</td><td>both &gt; 0</td><td><strong>relative minimum</strong></td></tr>
+<tr><td>Δ &gt; 0</td><td>both &lt; 0</td><td><strong>relative maximum</strong></td></tr>
+<tr><td>Δ &lt; 0</td><td>(any signs)</td><td><strong>saddle point</strong> (max along one axis, min along the other)</td></tr>
+<tr><td>Δ = 0</td><td>—</td><td>test fails — no conclusion</td></tr>
+</tbody></table></div>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u4-dtest">
+  <h3>Classifying a stationary point — the D-test</h3>
+  <p class="dgm-sub">Compute Δ = z_xx·z_yy − (z_xy)² at the point</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:500px" viewBox="0 0 500 200" role="img" aria-label="Flowchart: from the stationary point compute Delta; if Delta is less than zero it is a saddle point; if Delta is greater than zero check z-xx: negative gives maximum, positive gives minimum; if Delta equals zero the test fails">
+    <defs><marker id="ahm2u4d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F5FA8"/></marker></defs>
+    <rect x="12" y="80" width="120" height="40" rx="6" class="ck" style="fill:rgba(240,180,60,.14)"/>
+    <text class="tb" x="72" y="97" text-anchor="middle" style="font-size:10px">stationary point</text>
+    <text class="ts" x="72" y="110" text-anchor="middle">compute Δ</text>
+    <rect x="185" y="15" width="140" height="34" rx="6" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="255" y="30" text-anchor="middle">Δ &lt; 0</text>
+    <text class="tb" x="255" y="43" text-anchor="middle" style="font-size:10px">SADDLE POINT</text>
+    <rect x="185" y="83" width="140" height="34" rx="6" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="tb" x="255" y="100" text-anchor="middle" style="font-size:10px">Δ &gt; 0 → check z_xx</text>
+    <text class="ts" x="255" y="113" text-anchor="middle">sign of z_xx</text>
+    <rect x="185" y="150" width="140" height="30" rx="6" class="ck" style="fill:rgba(255,255,255,.6)"/>
+    <text class="ts" x="255" y="169" text-anchor="middle">Δ = 0 → test fails</text>
+    <rect x="380" y="70" width="110" height="30" rx="6" class="ck" style="fill:rgba(70,160,90,.16)"/>
+    <text class="tb" x="435" y="89" text-anchor="middle" style="font-size:10px">z_xx &lt; 0 → MAX</text>
+    <rect x="380" y="108" width="110" height="30" rx="6" class="ck" style="fill:rgba(70,160,90,.16)"/>
+    <text class="tb" x="435" y="127" text-anchor="middle" style="font-size:10px">z_xx &gt; 0 → MIN</text>
+    <path d="M 132 92 C 155 60, 165 40, 183 34" class="cd thin" fill="none" marker-end="url(#ahm2u4d)"/>
+    <path d="M 132 100 L 183 100" class="cd thin" fill="none" marker-end="url(#ahm2u4d)"/>
+    <path d="M 132 108 C 155 135, 165 155, 183 163" class="cd thin" fill="none" marker-end="url(#ahm2u4d)"/>
+    <path d="M 325 96 C 350 90, 360 85, 378 84" class="cd thin" fill="none" marker-end="url(#ahm2u4d)"/>
+    <path d="M 325 104 C 350 110, 360 118, 378 122" class="cd thin" fill="none" marker-end="url(#ahm2u4d)"/>
+  </svg></div>
+  <figcaption>
+    <p>Δ = z_xx·z_yy − (z_xy)². Δ &lt; 0 → saddle (no need to check anything else). Δ &gt; 0 → a genuine extremum: z_xx (equivalently z_yy) negative → maximum, positive → minimum. Δ = 0 → the test gives no answer.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The formula for Δ; that Δ &lt; 0 is a saddle; that Δ &gt; 0 with z_xx &lt; 0 is a max and z_xx &gt; 0 is a min.</div>
+  </figcaption>
+</figure></div>
+<h3>Worked example — the real 2023 Model Question, Section D (Q22)</h3>
+<p>A joint function of a factory is <strong>F(x, y) = x³ + xy² − 3x</strong>, where x and y are the outputs of two goods. Find (a) the stationary points, (b) the saddle points, (c) the maximum value, (d) the minimum value.</p>
+<p><strong>Step 1.</strong> F_x = 3x² + y² − 3;&nbsp; F_y = 2xy.&nbsp; F_xx = 6x;&nbsp; F_yy = 2x;&nbsp; F_xy = 2y.</p>
+<p><strong>Step 2 — stationary points.</strong> F_y = 2xy = 0 → <strong>x = 0 or y = 0</strong>.</p>
+<ul>
+<li>If <strong>y = 0</strong>: F_x = 3x² − 3 = 0 → x = ±1. Points <strong>(1, 0)</strong> and <strong>(−1, 0)</strong>.</li>
+<li>If <strong>x = 0</strong>: F_x = y² − 3 = 0 → y = ±√3. Points <strong>(0, √3)</strong> and <strong>(0, −√3)</strong>.</li>
+</ul>
+<p><strong>(a) Stationary points: (1, 0), (−1, 0), (0, √3), (0, −√3).</strong></p>
+<p><strong>Step 3 — classify.</strong> Δ = (6x)(2x) − (2y)² = <strong>12x² − 4y²</strong>.</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Point</th><th>Δ = 12x² − 4y²</th><th>F_xx = 6x</th><th>Type</th><th>F value</th></tr></thead>
+<tbody>
+<tr><td>(1, 0)</td><td>12 − 0 = 12 &gt; 0</td><td>6 &gt; 0</td><td><strong>minimum</strong></td><td>F = 1 + 0 − 3 = <strong>−2</strong></td></tr>
+<tr><td>(−1, 0)</td><td>12 − 0 = 12 &gt; 0</td><td>−6 &lt; 0</td><td><strong>maximum</strong></td><td>F = −1 − 0 + 3 = <strong>2</strong></td></tr>
+<tr><td>(0, √3)</td><td>0 − 12 = −12 &lt; 0</td><td>0</td><td><strong>saddle</strong></td><td>F = 0</td></tr>
+<tr><td>(0, −√3)</td><td>0 − 12 = −12 &lt; 0</td><td>0</td><td><strong>saddle</strong></td><td>F = 0</td></tr>
+</tbody></table></div>
+<p><strong>(b) Saddle points: (0, √3) and (0, −√3). (c) Maximum value: F(−1, 0) = 2. (d) Minimum value: F(1, 0) = −2.</strong></p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u4-types">
+  <h3>The three kinds of stationary point</h3>
+  <p class="dgm-sub">maximum (hill) · minimum (bowl) · saddle</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:520px" viewBox="0 0 520 170" role="img" aria-label="Three small sketches: a dome shape labelled maximum, a bowl shape labelled minimum, and a saddle shape labelled saddle point">
+    <path class="cd" d="M 20 130 Q 80 20 140 130" fill="none"/>
+    <circle class="dot" cx="80" cy="50" r="3.5"/>
+    <text class="tb" x="80" y="152" text-anchor="middle">MAXIMUM</text>
+    <text class="ts" x="80" y="165" text-anchor="middle">Δ &gt; 0, z_xx &lt; 0</text>
+    <path class="cd" d="M 200 40 Q 260 150 320 40" fill="none"/>
+    <circle class="dot" cx="260" cy="120" r="3.5"/>
+    <text class="tb" x="260" y="152" text-anchor="middle">MINIMUM</text>
+    <text class="ts" x="260" y="165" text-anchor="middle">Δ &gt; 0, z_xx &gt; 0</text>
+    <path class="cd" d="M 380 35 Q 440 100 500 35" fill="none"/>
+    <path class="cc" d="M 380 130 Q 440 60 500 130" fill="none"/>
+    <circle class="dot" cx="440" cy="82" r="3.5"/>
+    <text class="tb" x="440" y="152" text-anchor="middle">SADDLE</text>
+    <text class="ts" x="440" y="165" text-anchor="middle">Δ &lt; 0</text>
+  </svg></div>
+  <figcaption>
+    <p>At a <em>maximum</em> the surface curves down in every direction (both z_xx, z_yy &lt; 0, Δ &gt; 0). At a <em>minimum</em> it curves up in every direction (both &gt; 0, Δ &gt; 0). At a <em>saddle</em> it curves up along one axis and down along the other (Δ &lt; 0) — like a horse's saddle or a mountain pass.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>All three shapes with the stationary point marked; the sign of Δ for each; the sign of z_xx (and z_yy) distinguishing max from min when Δ &gt; 0.</div>
+  </figcaption>
+</figure></div>
+<h3>Two-good optimisation (business applications)</h3>
+<ul>
+<li><strong>Monopolist maximising total revenue for two goods</strong> — with P_X = a − bx, P_Y = c − dy, write TR = P_X·x + P_Y·y, then optimise.</li>
+<li><strong>Multi-product firm maximising profit</strong> — π = TR − TC; find π_x, π_y, set to zero, solve, classify with Δ.</li>
+<li><strong>Price discrimination</strong> — a single good sold in two markets: maximum profit where MR₁ = MR₂ = MC. The higher price is charged in the market with the <strong>less elastic</strong> (more inelastic) demand.</li>
+</ul>
+<p><strong>Worked example.</strong> A firm sells two goods X, Y at Rs 54 and Rs 52 per unit. TC = 3x² + 3xy + 2y² − 100. π = 54x + 52y − 3x² − 3xy − 2y² + 100. π_x = 54 − 6x − 3y = 0; π_y = 52 − 3x − 4y = 0. Solving: x = 4, y = 10. π_xx = −6, π_yy = −4, π_xy = −3 → Δ = 24 − 9 = 15 &gt; 0, and π_xx &lt; 0 → <strong>maximum</strong>. Max profit = 216 + 520 − 48 − 120 − 200 + 100 = <strong>Rs 468</strong>.</p>
+
+<h2>4.5 Constrained Optimisation and Lagrange Multipliers</h2>
+<p>Often x and y are limited by a <strong>constraint</strong> — a budget line, a cost limit, an output requirement. We still want the optimum of z = f(x, y), but now <strong>subject to</strong> a linear constraint ax + by = M.</p>
+<h3>The Lagrange multiplier method</h3>
+<p>Define the <strong>Lagrangian</strong>: <strong>L = f(x, y) + λ·(M − ax − by)</strong>, where <strong>λ</strong> is the <strong>Lagrange multiplier</strong>, treated as a third variable.</p>
+<p><strong>Step 1.</strong> Find L_x, L_y, L_λ. <strong>Step 2.</strong> Set L_x = 0, L_y = 0, L_λ = 0 and solve for x, y, λ (usually eliminate λ from the first two, then use the constraint).</p>
+<p>The (x, y) that optimise L also optimise f(x, y) subject to the constraint. For the standard economic problems, the method gives a <strong>maximum</strong> for a maximisation problem and a <strong>minimum</strong> for a minimisation problem.</p>
+<p><strong>Worked example (utility maximisation).</strong> Maximise U = 5xy subject to 5x + y = 30. L = 5xy + λ(30 − 5x − y). L_x = 5y − 5λ = 0 → λ = y; L_y = 5x − λ = 0 → λ = 5x; hence y = 5x. Constraint: 5x + 5x = 30 → x = 3, y = 15, λ = 15. <strong>Maximum utility U = 5(3)(15) = 225.</strong></p>
+<h3>The condition MU_x / MU_y = P_x / P_y</h3>
+<p>Eliminating λ from a utility-maximisation Lagrangian always gives <strong>MU_x / MU_y = P_x / P_y</strong> — at the optimum the marginal rate of substitution equals the price ratio, so the highest indifference curve is <em>tangent</em> to the budget line.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u4-tangency">
+  <h3>Constrained optimum — tangency</h3>
+  <p class="dgm-sub">Highest indifference curve that still touches the budget line</p>
+  <svg viewBox="0 0 360 250" role="img" aria-label="A straight budget line and three indifference curves; the middle curve is tangent to the budget line at point C, which is the constrained maximum">
+    <line class="ax" x1="45" y1="215" x2="345" y2="215"/>
+    <line class="ax" x1="45" y1="215" x2="45" y2="18"/>
+    <text class="t" x="336" y="232">x</text><text class="t" x="30" y="22">y</text>
+    <line class="ck" x1="55" y1="45" x2="300" y2="215"/>
+    <text class="tc" x="228" y="200">budget line</text>
+    <path class="cd" d="M 68 100 Q 105 170 200 192" fill="none"/>
+    <path class="cd" d="M 82 42 Q 108 118 255 168" fill="none"/>
+    <path class="cd" d="M 108 30 Q 175 105 320 150" fill="none"/>
+    <circle class="dot" cx="116" cy="88" r="4"/>
+    <text class="tm" x="122" y="84">C (optimum)</text>
+    <text class="td" x="180" y="52">U₃ (unreachable)</text>
+    <text class="td" x="258" y="160">U₂*</text>
+    <text class="td" x="205" y="196">U₁</text>
+  </svg>
+  <figcaption>
+    <p>Utility rises as the indifference curves move out from the origin, but the budget line limits the affordable bundles. The best affordable bundle is where the highest reachable indifference curve (U₂) just <em>touches</em> the budget line — point C. There the slope of the indifference curve (−MU_x/MU_y) equals the slope of the budget line (−P_x/P_y), so MU_x/MU_y = P_x/P_y.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The budget line; at least three indifference curves; the tangency point C; that a higher curve is unaffordable and a lower one is not the best; the tangency condition MU_x/MU_y = P_x/P_y.</div>
+  </figcaption>
+</figure></div>
+<h3>Other constrained problems</h3>
+<ul>
+<li><strong>Maximum output subject to a cost constraint</strong> — maximise Q = f(L, K) s.t. wL + rK = C. Optimum where MP_L/MP_K = w/r.</li>
+<li><strong>Minimum cost subject to a production constraint</strong> — minimise wL + rK s.t. f(L, K) = Q₀. Same tangency condition.</li>
+</ul>
+<h3>The meaning of λ</h3>
+<p>The Lagrange multiplier <strong>λ measures how much the optimal value of the objective changes per one-unit increase in the constraint limit M</strong> (a "shadow price"). If λ &gt; 0, relaxing the constraint by one unit raises the maximum by approximately λ. <em>Example:</em> in the utility problem above λ = 15, so raising the budget from 30 to 31 raises maximum utility by about 15.</p>
+
+<hr>
+<h2>Exam checklist</h2>
+<p><strong>To know cold:</strong> z = f(x, y) is a surface; hold z fixed → isoquant / indifference curve, convex to origin. ∂z/∂x: treat y constant; z_xy = z_yx (Young). ε_P = (∂Q/∂P)(P/Q), ε_Y = (∂Q/∂Y)(Y/Q), ε_C = (∂Q/∂P_A)(P_A/Q); %ΔQ ≈ ε × %Δ(variable). MRS = −MU_x/MU_y; MRTS = −MP_L/MP_K. Cobb–Douglas: MRTS = (α/β)(K/L); returns to scale from α + β; <strong>Euler: L·Q_L + K·Q_K = (α+β)Q</strong>. Unconstrained optimum: solve z_x = z_y = 0; classify with <strong>Δ = z_xx z_yy − (z_xy)²</strong> — Δ&lt;0 saddle; Δ&gt;0 &amp; z_xx&lt;0 max; Δ&gt;0 &amp; z_xx&gt;0 min. Lagrangian L = f + λ(M − ax − by); solve L_x = L_y = L_λ = 0; optimum where MU_x/MU_y = P_x/P_y (or MP_L/MP_K = w/r). λ = change in optimal objective per one-unit change in the constraint limit.</p>
+<p><strong>Confirmed real past-paper questions</strong> (tag <code>real:"2023 model paper"</code>, TU FOM Model Question 2023, BBM Business Mathematics II):</p>
+<ol>
+<li><strong>Section D (Q22)</strong> — F(x, y) = x³ + xy² − 3x: stationary points, saddle points, maximum value, minimum value <em>(4 × 5 = 20 marks, compulsory)</em> — <strong>stationary (1,0), (−1,0), (0,±√3); saddles (0,±√3); max F(−1,0) = 2; min F(1,0) = −2</strong> — this is the Section-D case for the app's mock paper</li>
+<li><strong>Section B Q15</strong> — Q = 10 L^0.7 K^0.3: find MP_L and MP_K and verify L(∂Q/∂L) + K(∂Q/∂K) = Q <em>(5 marks)</em> — verified (constant returns to scale)</li>
+<li><strong>Section B Q17</strong> — demand Q = 100 − 2P + 0.3P_A + 0.2Y (P = 6, P_A = 10, Y = 500): find the price, cross and income elasticities and the effect of % changes <em>(5 marks)</em> — ε_P = −0.063, ε_C = +0.016, ε_Y = +0.524</li>
+</ol>
+<p>Also expect: a Section-A brief on defining a partial derivative or writing ∂F/∂x, ∂F/∂y for a given F; a Section-B Lagrange-multiplier utility/output maximisation; a Section-B or C two-good profit maximisation.</p>`;
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — MCQ QUIZ BANK   {q, o:[4], a, why, w}
    w:3 = confirmed past-paper idea or guaranteed-core; w:2 core; w:1 finer point.
@@ -13807,6 +14039,117 @@ window.SUBJECT_QUIZ["bmath2"]["2"] = [
    why:"P₀ = 20 + 16 = 36. PS (triangle) = ½ × 4 × (36 − 20) = ½ × 4 × 16 = 32. (Check by integration: 144 − ∫₀⁴(20 + 4Q) dQ = 144 − 112 = 32.)"}
 ];
 
+window.SUBJECT_QUIZ["bmath2"]["3"] = [
+  {q:"A function of two variables z = f(x, y) is represented graphically by:", o:["a surface in three dimensions", "a single straight line", "a circle", "a point"], a:0, w:2,
+   why:"x and y are on the two horizontal axes, z on the vertical axis. A linear z = ax + by + c is a flat plane; anything with x², xy etc. is a curved surface."},
+  {q:"An ISOQUANT is obtained from a production function Q = f(L, K) by:", o:["differentiating with respect to L", "setting L = K", "holding Q fixed at a constant value and plotting the (L, K) combinations that give it", "holding L fixed"], a:2, w:3,
+   why:"An isoquant ('equal quantity') shows all input combinations producing the same output. An indifference curve is the same idea for a utility function."},
+  {q:"Isoquants and indifference curves are normally drawn:", o:["as upward-sloping straight lines", "as vertical lines", "as circles centred on the origin", "downward-sloping and convex to the origin"], a:3, w:3,
+   why:"More of one input/good means less of the other for the same output/utility (downward-sloping); the diminishing marginal rate of substitution makes them convex to the origin."},
+  {q:"An indifference curve further from the origin represents:", o:["lower utility", "higher utility", "the same utility", "zero utility"], a:1, w:2,
+   why:"Bundles with more of both goods lie further out and give more satisfaction. Likewise an isoquant further out means higher output."},
+  {q:"The slope of an isoquant is called the:", o:["marginal product", "elasticity of substitution", "average product", "marginal rate of technical substitution (MRTS)"], a:3, w:2,
+   why:"MRTS = dK/dL = −MP_L/MP_K — the rate at which capital can be traded for labour keeping output constant."},
+  {q:"Reducing a three-dimensional function to a two-dimensional diagram is done by:", o:["fixing one of the variables at a constant value", "ignoring one of the variables", "adding the two variables", "squaring the function"], a:0, w:1,
+   why:"Fixing z (output or utility) gives an isoquant / indifference curve; fixing one input gives a cross-section along that plane."},
+  {q:"To find ∂z/∂x for z = f(x, y), you differentiate with respect to x while treating:", o:["x as a constant", "z as a constant", "y as a constant", "both x and y as constants"], a:2, w:3,
+   why:"Partial differentiation w.r.t. x holds every other variable (here y) constant."},
+  {q:"For z = 2x² + 3xy + 5, the partial derivative ∂z/∂x is:", o:["3x", "4x + 3y", "4x + 3x", "2x² + 3y"], a:1, w:3,
+   why:"2x² → 4x; 3xy → 3y (y treated as a constant coefficient of x); 5 → 0."},
+  {q:"For z = 2x² + 3xy + 5, the partial derivative ∂z/∂y is:", o:["3x", "4x + 3y", "2x²", "3y"], a:0, w:3,
+   why:"2x² → 0 (no y); 3xy → 3x (x treated as constant); 5 → 0."},
+  {q:"For U = x²y⁵, the partial derivative ∂U/∂x is:", o:["2x + 5y", "x²·5y⁴", "5x²y⁴", "2xy⁵"], a:3, w:2,
+   why:"Treat y⁵ as a constant multiplier: d/dx (x²·y⁵) = 2x·y⁵ = 2xy⁵."},
+  {q:"For Q = 10 L^0.7 K^0.3, the marginal product of labour ∂Q/∂L is:", o:["10 L^0.7 K^0.3", "7 L^−0.3 K^0.3", "3 L^0.7 K^−0.7", "0.7 L^−0.3"], a:1, w:3,
+   why:"10(0.7) L^(0.7−1) K^0.3 = 7 L^−0.3 K^0.3."},
+  {q:"For Q = 10 L^0.7 K^0.3, the marginal product of capital ∂Q/∂K is:", o:["30 L^0.7 K^0.3", "3 K^−0.7", "3 L^0.7 K^−0.7", "10 L^0.7"], a:2, w:3,
+   why:"10(0.3) L^0.7 K^(0.3−1) = 3 L^0.7 K^−0.7."},
+  {q:"The symbol used for a partial derivative is:", o:["d", "Δ", "∫", "∂ (curly d)"], a:3, w:1,
+   why:"∂z/∂x distinguishes partial differentiation from ordinary differentiation dz/dx (function of one variable)."},
+  {q:"For z = 5xy + y/x, the partial derivative ∂z/∂x is:", o:["5y − y/x²", "5x + 1/x", "5y + y", "5x − y"], a:0, w:2,
+   why:"5xy → 5y; y/x = y·x⁻¹ → y·(−x⁻²) = −y/x²."},
+  {q:"The second-order partial derivative z_xy means:", o:["differentiate z twice with respect to x", "z_x multiplied by z_y", "differentiate z_x (the first partial w.r.t. x) with respect to y", "(∂z/∂x) + (∂z/∂y)"], a:2, w:2,
+   why:"z_xy = ∂/∂y (∂z/∂x). z_yx = ∂/∂x (∂z/∂y)."},
+  {q:"Young's theorem states that, for the functions met in practice:", o:["z_xx = z_yy", "z_xy = z_yx (the mixed second-order partials are equal)", "z_x = z_y", "all second partials are zero"], a:1, w:2,
+   why:"The order of mixed partial differentiation does not matter, so ∂²z/∂x∂y = ∂²z/∂y∂x."},
+  {q:"For z = 2x² + 3xy + 5 (with z_x = 4x + 3y, z_y = 3x), the straight second partial z_xx is:", o:["3", "0", "4x", "4"], a:3, w:2,
+   why:"Differentiate z_x = 4x + 3y again w.r.t. x: 4 + 0 = 4."},
+  {q:"For z = 2x² + 3xy + 5, the mixed second partial z_xy is:", o:["3", "4", "0", "3x"], a:0, w:2,
+   why:"z_x = 4x + 3y; differentiate w.r.t. y → 3. (And z_yx: z_y = 3x, differentiate w.r.t. x → 3. Equal, as Young's theorem requires.)"},
+  {q:"The partial (own-price) elasticity of demand is defined as:", o:["∂Q/∂P", "(∂Q/∂P) · (P/Q)", "(∂Q/∂P) · (Q/P)", "P/Q"], a:1, w:3,
+   why:"Elasticity = (marginal effect) × (variable ÷ quantity) = (∂Q/∂P)(P/Q). It is a pure (unit-free) number."},
+  {q:"If the income elasticity of demand ε_Y is negative, the good is:", o:["a luxury", "a necessity", "an inferior good", "a substitute"], a:2, w:3,
+   why:"ε_Y < 0 → demand falls as income rises (inferior). 0 < ε_Y < 1 = necessity; ε_Y > 1 = luxury."},
+  {q:"If the cross-price elasticity ε_C between goods A and B is positive, the two goods are:", o:["complements", "unrelated", "inferior", "substitutes"], a:3, w:3,
+   why:"ε_C > 0: a rise in the price of B raises demand for A → substitutes. ε_C < 0 → complements."},
+  {q:"For Q = 100 − 2P + 0.3P_A + 0.2Y with P = 6, P_A = 10, Y = 500, first compute Q. Q equals:", o:["100", "191", "150", "209"], a:1, w:2,
+   why:"Q = 100 − 2(6) + 0.3(10) + 0.2(500) = 100 − 12 + 3 + 100 = 191."},
+  {q:"For the demand function in the previous question (Q = 191), the own-price elasticity ε_P is:", o:["−0.063", "−2", "−12", "−0.5"], a:0, w:3,
+   why:"∂Q/∂P = −2, so ε_P = (−2)(6/191) = −0.063. (This is the real 2023 model paper Section B Q17.)"},
+  {q:"An approximate percentage change in Q is found from:", o:["ε + (% change in the variable)", "ε − (% change in the variable)", "ε × (% change in the relevant variable)", "(% change in the variable) ÷ ε"], a:2, w:2,
+   why:"%ΔQ ≈ ε × %Δ(variable). E.g. ε_Y = 0.524 and income rises 5% → %ΔQ ≈ 0.524 × 5 = 2.62%."},
+  {q:"The marginal rate of substitution (the slope of an indifference curve) is:", o:["MU_x × MU_y", "MU_x + MU_y", "−MU_y / MU_x", "−MU_x / MU_y"], a:3, w:3,
+   why:"MRS = dy/dx = −MU_x/MU_y — the rate a consumer will trade good y for good x keeping utility constant."},
+  {q:"The marginal utility MU_x of a utility function U = f(x, y) is:", o:["∂U/∂x", "U ÷ x", "U × x", "the second partial U_xx"], a:0, w:2,
+   why:"Marginal utility of x is the partial derivative of total utility with respect to x."},
+  {q:"For U = 5xy, the marginal utility of x (MU_x) is:", o:["5x", "5y", "5", "x + y"], a:1, w:2,
+   why:"∂(5xy)/∂x = 5y (y treated as constant)."},
+  {q:"The marginal rate of technical substitution (slope of an isoquant) is:", o:["MP_L + MP_K", "−MP_K / MP_L", "MP_L × MP_K", "−MP_L / MP_K"], a:3, w:3,
+   why:"MRTS = dK/dL = −MP_L/MP_K — how much capital can be given up per extra unit of labour keeping output constant."},
+  {q:"For a Cobb–Douglas function Q = A L^α K^β, the sum α + β determines the:", o:["marginal product of labour", "price of the good", "returns to scale", "elasticity of demand"], a:2, w:3,
+   why:"α + β = 1 → constant returns to scale; α + β < 1 → decreasing; α + β > 1 → increasing."},
+  {q:"A Cobb–Douglas production function Q = A L^α K^β with α + β = 1 exhibits:", o:["constant returns to scale", "increasing returns to scale", "decreasing returns to scale", "no returns to scale"], a:0, w:3,
+   why:"Doubling both inputs exactly doubles output when α + β = 1."},
+  {q:"Euler's theorem for a production function states that L(∂Q/∂L) + K(∂Q/∂K) equals:", o:["Q ÷ (α + β)", "(α + β)·Q", "α·β·Q", "Q − (α + β)"], a:1, w:3,
+   why:"For Q = AL^α K^β, L·MP_L + K·MP_K = (α + β)Q. For constant returns (α + β = 1) this equals Q exactly — the product is fully exhausted by paying each factor its marginal product."},
+  {q:"For Q = 10 L^0.7 K^0.3, computing L(∂Q/∂L) + K(∂Q/∂K) gives:", o:["20 L^0.7 K^0.3", "2Q", "Q ( = 10 L^0.7 K^0.3 )", "0.7Q"], a:2, w:3,
+   why:"L·(7 L^−0.3 K^0.3) + K·(3 L^0.7 K^−0.7) = 7 L^0.7 K^0.3 + 3 L^0.7 K^0.3 = 10 L^0.7 K^0.3 = Q. This is the real 2023 model paper Section B Q15 (α + β = 1)."},
+  {q:"For the Cobb–Douglas function Q = A L^α K^β, the MRTS equals:", o:["(β/α)(K/L)", "(α/β)(L/K)", "α + β", "(α/β)(K/L)"], a:3, w:2,
+   why:"MRTS = MP_L/MP_K = [αAL^(α−1)K^β] / [βAL^α K^(β−1)] = (α/β)(K/L)."},
+  {q:"The marginal product of labour is defined as the:", o:["total output ÷ number of workers", "partial derivative of output with respect to labour, ∂Q/∂L", "wage rate", "output per machine"], a:1, w:2,
+   why:"MP_L = ∂Q/∂L is the extra output from one more unit of labour, capital held constant. Q/L is the AVERAGE product."},
+  {q:"To find the stationary points of z = f(x, y), you solve:", o:["z_x = 0 and z_y = 0 simultaneously", "z_xx = 0 and z_yy = 0", "z = 0", "z_xy = 0 only"], a:0, w:3,
+   why:"A stationary (turning) point has zero slope in both directions, so both first-order partials vanish."},
+  {q:"For z = x² + y² + 20, the stationary point is at:", o:["(1, 1)", "(20, 20)", "there is none", "(0, 0)"], a:3, w:2,
+   why:"z_x = 2x = 0 and z_y = 2y = 0 → x = 0, y = 0. (z = 20 there.)"},
+  {q:"For z = x² + y² + 20, z_xx = 2, z_yy = 2, z_xy = 0. The stationary point (0, 0) is a:", o:["maximum", "saddle point", "minimum", "point of inflection"], a:2, w:3,
+   why:"Δ = (2)(2) − 0² = 4 > 0 and z_xx = 2 > 0 → relative minimum (the bowl z = 20)."},
+  {q:"For z = −x² − y² + 40, the stationary point (0, 0) is a:", o:["minimum", "maximum", "saddle point", "point of inflection"], a:1, w:2,
+   why:"z_xx = −2, z_yy = −2, z_xy = 0; Δ = 4 > 0 and both second partials negative → relative maximum (z = 40)."},
+  {q:"A saddle point is a point that is:", o:["a maximum along one axis and a minimum along the other", "a maximum in every direction", "a minimum in every direction", "undefined"], a:0, w:2,
+   why:"Like a horse's saddle or a mountain pass — it curves up one way and down the other."},
+  {q:"In the second-order (D-) test for functions of two variables, the discriminant Δ is:", o:["z_xx + z_yy", "z_x · z_y", "(z_xx)² − z_yy", "z_xx · z_yy − (z_xy)²"], a:3, w:3,
+   why:"Δ = (∂²z/∂x²)(∂²z/∂y²) − (∂²z/∂x∂y)². Its sign, with the sign of z_xx, classifies the stationary point."},
+  {q:"If Δ < 0 at a stationary point, the point is a:", o:["maximum", "saddle point", "minimum", "point of inflection"], a:1, w:3,
+   why:"Δ < 0 always means a saddle point — no need to check anything else."},
+  {q:"If Δ > 0 and z_xx < 0 at a stationary point, the point is a:", o:["relative minimum", "saddle point", "relative maximum", "no conclusion"], a:2, w:3,
+   why:"Δ > 0 confirms a genuine extremum; z_xx < 0 (and z_yy < 0) means the surface curves downward in all directions → maximum."},
+  {q:"If Δ > 0 and z_xx > 0 at a stationary point, the point is a:", o:["relative minimum", "relative maximum", "saddle point", "no conclusion"], a:0, w:3,
+   why:"Δ > 0 with z_xx > 0 (and z_yy > 0) → the surface curves upward in all directions → minimum."},
+  {q:"If Δ = 0 at a stationary point, the D-test:", o:["gives a maximum", "gives a saddle point", "gives a minimum", "gives no conclusion (higher-order tests are needed)"], a:3, w:2,
+   why:"Δ = 0 is inconclusive; the test fails and further analysis is required (beyond the BBM course)."},
+  {q:"For F(x, y) = x³ + xy² − 3x, the first partials are F_x = 3x² + y² − 3 and F_y = 2xy. The stationary points are:", o:["only (0, 0)", "(1, 0), (−1, 0), (0, √3), (0, −√3)", "(3, 3) and (−3, −3)", "(1, 1) and (−1, −1)"], a:1, w:3,
+   why:"F_y = 2xy = 0 → x = 0 or y = 0. If y = 0: 3x² − 3 = 0 → x = ±1. If x = 0: y² − 3 = 0 → y = ±√3. This is the real 2023 model paper Section D (Q22)."},
+  {q:"For F(x, y) = x³ + xy² − 3x, with Δ = 12x² − 4y², the point (1, 0) is a MINIMUM and its value is F(1, 0) =", o:["0", "2", "−2", "4"], a:2, w:3,
+   why:"At (1, 0): Δ = 12 − 0 = 12 > 0 and F_xx = 6(1) = 6 > 0 → minimum. F(1, 0) = 1 + 0 − 3 = −2. Real 2023 model paper Section D."},
+  {q:"For F(x, y) = x³ + xy² − 3x, the points (0, √3) and (0, −√3) are:", o:["both maxima", "both minima", "points of inflection with a max value", "saddle points"], a:3, w:3,
+   why:"Δ = 12(0)² − 4(√3)² = −12 < 0 → saddle points. F = 0 at each. Real 2023 model paper Section D."},
+  {q:"For a constrained-optimisation problem 'optimise z = f(x, y) subject to ax + by = M', the Lagrangian is:", o:["L = f(x, y) + λ(M − ax − by)", "L = f(x, y) × (ax + by)", "L = f(x, y) − M", "L = ax + by − M"], a:0, w:3,
+   why:"L is the objective plus λ times (constraint written as = 0). λ is the Lagrange multiplier, treated as a third variable."},
+  {q:"With the Lagrangian set up, the next step is to:", o:["set f(x, y) = 0", "differentiate L twice", "set L_x = 0, L_y = 0 and L_λ = 0 and solve the three equations", "substitute M = 0"], a:2, w:3,
+   why:"The three first-order conditions give three equations in x, y and λ; usually you eliminate λ from the first two, then use the constraint (L_λ = 0)."},
+  {q:"Eliminating λ from a utility-maximisation Lagrangian gives the condition:", o:["MU_x = MU_y", "MU_x / MU_y = P_x / P_y", "MU_x + MU_y = M", "P_x = P_y"], a:1, w:3,
+   why:"At the constrained optimum the marginal rate of substitution equals the price ratio — the highest indifference curve is tangent to the budget line."},
+  {q:"Maximise U = 5xy subject to 5x + y = 30. The optimal values are:", o:["x = 3, y = 15", "x = 6, y = 0", "x = 15, y = 3", "x = 5, y = 5"], a:0, w:3,
+   why:"L = 5xy + λ(30 − 5x − y); L_x = 5y − 5λ = 0, L_y = 5x − λ = 0 → y = 5x; sub into 5x + y = 30 → x = 3, y = 15 (U = 225, λ = 15)."},
+  {q:"The Lagrange multiplier λ can be interpreted as:", o:["the number of units of good x to buy", "the total budget", "the change in the optimal objective value per one-unit change in the constraint limit (a shadow price)", "the price of good y"], a:2, w:2,
+   why:"If the budget/limit M rises by one unit, the optimum value of the objective changes by approximately λ."},
+  {q:"For 'maximise output Q = f(L, K) subject to a cost constraint wL + rK = C', the optimum condition is:", o:["MP_L = MP_K", "w = r", "L = K", "MP_L / MP_K = w / r"], a:3, w:2,
+   why:"The Lagrange method gives MP_L/MP_K = w/r — the marginal rate of technical substitution equals the input-price ratio."},
+  {q:"In the Lagrange method for the usual economic problems, the solution obtained is:", o:["always a maximum", "a maximum for a maximisation problem and a minimum for a minimisation problem", "always a minimum", "never an optimum"], a:1, w:1,
+   why:"Formal second-order conditions are complex, but for the standard business/economics problems the method safely yields the intended max or min."}
+];
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — WRITTEN EXAM-MODE BANK
    Section A = brief (2), B = short (5), C = long (10). Subject-level Section-D
@@ -13992,6 +14335,105 @@ window.SUBJECT_EXAM["bmath2"].units["2"] = {
      pts:["(a) TC = ∫ (3Q² − 8Q + 5) dQ + TFC = Q³ − 4Q² + 5Q + 20","AC = TC / Q = Q² − 4Q + 5 + 20/Q","(b) TC(4) = 64 − 64 + 20 + 20 = Rs 40","(c) Extra cost = ∫ from 2 to 4 of (3Q² − 8Q + 5) dQ = [Q³ − 4Q² + 5Q] from 2 to 4 = (64 − 64 + 20) − (8 − 16 + 10) = 20 − 2 = Rs 18","Verification: TC(2) = 8 − 16 + 10 + 20 = 22; TC(4) − TC(2) = 40 − 22 = Rs 18 ✓"]}
   ]
 };
+
+window.SUBJECT_EXAM["bmath2"].units["3"] = {
+  brief: [
+    {q:"What does the partial derivative ∂z/∂x of z = f(x, y) measure, and how is it found?",
+     pts:["The rate of change of z with respect to x when y is held constant","Found by differentiating f w.r.t. x, treating y (and every other variable) as a constant"]},
+    {q:"Find F_x and F_y when F(x, y) = 3x³y³ + 2x²y².", real:"2023 model paper",
+     pts:["F_x = 9x²y³ + 4xy² (treat y as constant: 3(3x²)y³ + 2(2x)y²)","F_y = 9x³y² + 4x²y (treat x as constant: 3x³(3y²) + 2x²(2y))"]},
+    {q:"State Young's theorem for the second-order partial derivatives of a function of two variables.",
+     pts:["The two mixed second-order partial derivatives are equal: ∂²z/∂x∂y = ∂²z/∂y∂x (z_xy = z_yx)","True for all the functions met in business/economics practice"]},
+    {q:"State the second-order (discriminant / D-) test for classifying a stationary point of z = f(x, y).",
+     pts:["Compute Δ = z_xx·z_yy − (z_xy)² at the point","Δ < 0 → saddle point; Δ > 0 and z_xx < 0 → maximum; Δ > 0 and z_xx > 0 → minimum; Δ = 0 → no conclusion"]},
+    {q:"Define the marginal rate of technical substitution (MRTS) and write it in terms of marginal products.",
+     pts:["The rate at which capital can be substituted for labour along an isoquant (keeping output constant) — the slope of the isoquant","MRTS = dK/dL = −MP_L / MP_K"]},
+    {q:"State Euler's theorem for a Cobb–Douglas production function Q = A L^α K^β.",
+     pts:["L·(∂Q/∂L) + K·(∂Q/∂K) = (α + β)·Q","For constant returns to scale (α + β = 1) this equals Q exactly — the total product is exhausted by paying each factor its marginal product"]},
+    {q:"Write down the Lagrangian for the problem: maximise U(x, y) subject to the budget constraint P_x·x + P_y·y = M.",
+     pts:["L = U(x, y) + λ(M − P_x·x − P_y·y)","λ is the Lagrange multiplier, treated as a third variable alongside x and y"]},
+    {q:"Find the stationary point of z = x² + y² − 4x + 6y.",
+     pts:["z_x = 2x − 4 = 0 → x = 2","z_y = 2y + 6 = 0 → y = −3","Stationary point (2, −3)"]},
+    {q:"Define an isoquant and state two of its usual properties.",
+     pts:["An isoquant is the set of all (L, K) input combinations that produce the same level of output","Downward-sloping (more of one input needs less of the other)","Convex to the origin (diminishing MRTS); isoquants further from the origin represent higher output (any two)"]},
+    {q:"What does the Lagrange multiplier λ represent at the optimum?",
+     pts:["The approximate change in the optimal value of the objective function per one-unit change in the constraint limit M","A 'shadow price' — e.g. the extra utility from one more rupee of budget"]},
+    {q:"For Q = 20 L^0.5 K^0.5, state the returns to scale and find the marginal product of labour.",
+     pts:["α + β = 0.5 + 0.5 = 1 → constant returns to scale","MP_L = ∂Q/∂L = 20(0.5) L^−0.5 K^0.5 = 10 L^−0.5 K^0.5"]},
+    {q:"What is a saddle point of a function of two variables?",
+     pts:["A stationary point that is a maximum when viewed along one axis and a minimum along the other","It occurs when the discriminant Δ = z_xx·z_yy − (z_xy)² < 0"]},
+    {q:"Find the second-order partial derivatives z_xx, z_yy and z_xy for z = 4x²y + 3y³.",
+     pts:["First-order: z_x = 8xy, z_y = 4x² + 9y²","z_xx = 8y; z_yy = 18y; z_xy = 8x (= z_yx)"]}
+  ],
+  short: [
+    {q:"A firm has the production function Q = 10 L^0.7 K^0.3, where L and K are labour and capital. Find the marginal product of labour and the marginal product of capital. Verify that L(∂Q/∂L) + K(∂Q/∂K) = Q.", real:"2023 model paper",
+     pts:["MP_L = ∂Q/∂L = 7 L^−0.3 K^0.3","MP_K = ∂Q/∂K = 3 L^0.7 K^−0.7","L·MP_L = 7 L^0.7 K^0.3;  K·MP_K = 3 L^0.7 K^0.3","Sum = 10 L^0.7 K^0.3 = Q ✓ (Euler's theorem; α + β = 0.7 + 0.3 = 1 → constant returns to scale)"]},
+    {q:"The demand function is Q = 100 − 2P + 0.3P_A + 0.2Y, where P = 6, P_A = 10 and Y = 500. Find the price elasticity, the cross-price elasticity and the income elasticity of demand. What happens to demand when (i) P falls 10%, (ii) P_A rises 10%, (iii) Y rises 5%?", real:"2023 model paper",
+     pts:["First Q = 100 − 12 + 3 + 100 = 191","∂Q/∂P = −2 → ε_P = (−2)(6/191) = −0.063","∂Q/∂P_A = 0.3 → ε_C = (0.3)(10/191) = +0.016 (substitutes)","∂Q/∂Y = 0.2 → ε_Y = (0.2)(500/191) = +0.524 (normal, necessity)","(i) %ΔQ ≈ (−0.063)(−10) = +0.63%;  (ii) ≈ (0.016)(10) = +0.16%;  (iii) ≈ (0.524)(5) = +2.62% — demand rises in every case"]},
+    {q:"Find and classify the stationary point of z = x² + xy + y² − 3x − 6y.",
+     pts:["z_x = 2x + y − 3 = 0;  z_y = x + 2y − 6 = 0","Solve: from the first y = 3 − 2x; substitute → x + 2(3 − 2x) − 6 = 0 → −3x = 0 → x = 0, y = 3","z_xx = 2, z_yy = 2, z_xy = 1 → Δ = (2)(2) − 1² = 3 > 0 and z_xx > 0 → relative minimum","z at (0, 3) = 0 + 0 + 9 − 0 − 18 = −9"]},
+    {q:"Use Lagrange multipliers to maximise the utility function U = 5xy subject to the budget 5x + y = 30.",
+     pts:["L = 5xy + λ(30 − 5x − y)","L_x = 5y − 5λ = 0 → λ = y;  L_y = 5x − λ = 0 → λ = 5x;  hence y = 5x","L_λ = 30 − 5x − y = 0 → 5x + 5x = 30 → x = 3, y = 15","Maximum utility U = 5(3)(15) = 225 (and λ = 15)"]},
+    {q:"A monopolist produces two goods X and Y with demand functions P_X = 36 − 3x and P_Y = 56 − 4y. (a) Write the total revenue function. (b) Find the quantities that maximise total revenue and the maximum revenue.",
+     pts:["(a) TR = P_X·x + P_Y·y = (36 − 3x)x + (56 − 4y)y = 36x − 3x² + 56y − 4y²","(b) TR_x = 36 − 6x = 0 → x = 6;  TR_y = 56 − 8y = 0 → y = 7","TR_xx = −6, TR_yy = −8, TR_xy = 0 → Δ = 48 > 0, both negative → maximum","Maximum TR = 36(6) − 3(36) + 56(7) − 4(49) = 216 − 108 + 392 − 196 = Rs 304"]},
+    {q:"Use Lagrange multipliers to find the values of L and K that maximise output Q = L^0.5 K^0.5 subject to the cost constraint 2L + 8K = 80.",
+     pts:["L = L^0.5 K^0.5 + λ(80 − 2L − 8K)","L_L = 0.5 L^−0.5 K^0.5 − 2λ = 0;  L_K = 0.5 L^0.5 K^−0.5 − 8λ = 0","Dividing: (K/L) = 2/8 = 1/4 → L = 4K","Constraint: 2(4K) + 8K = 80 → 16K = 80 → K = 5, L = 20","Maximum output Q = √20 · √5 = √100 = 10"]},
+    {q:"For F(x, y) = 3x³y³ + 2x²y², find all four second-order partial derivatives and verify that F_xy = F_yx.",
+     pts:["F_x = 9x²y³ + 4xy²;  F_y = 9x³y² + 4x²y","F_xx = 18xy³ + 4y²;  F_yy = 18x³y + 4x²","F_xy = ∂/∂y(9x²y³ + 4xy²) = 27x²y² + 8xy","F_yx = ∂/∂x(9x³y² + 4x²y) = 27x²y² + 8xy → F_xy = F_yx ✓"]},
+    {q:"A firm produces two goods x and y with the joint cost function C = x² + 2xy + 3y² − 40x − 60y + 500. Find the output levels that minimise cost, and the minimum cost.",
+     pts:["C_x = 2x + 2y − 40 = 0 → x + y = 20;  C_y = 2x + 6y − 60 = 0 → x + 3y = 30","Subtract: 2y = 10 → y = 5, x = 15","C_xx = 2, C_yy = 6, C_xy = 2 → Δ = 12 − 4 = 8 > 0 and C_xx > 0 → minimum","Minimum cost C = 225 + 2(75) + 3(25) − 40(15) − 60(5) + 500 = 225 + 150 + 75 − 600 − 300 + 500 = Rs 50"]}
+  ],
+  long: [
+    {q:"A perfectly competitive firm produces two goods X and Y, sold at Rs 54 and Rs 52 per unit. Its total cost function is TC = 3x² + 3xy + 2y² − 100. (a) Write the profit function and find π_x and π_y. (b) Find the stationary point. (c) Use the D-test to confirm its nature. (d) State the maximum profit and the output of each good.",
+     pts:["(a) TR = 54x + 52y; π = TR − TC = 54x + 52y − 3x² − 3xy − 2y² + 100. π_x = 54 − 6x − 3y; π_y = 52 − 3x − 4y","(b) Set both to zero: 54 = 6x + 3y and 52 = 3x + 4y. Solving (e.g. ×2 the second: 104 = 6x + 8y, subtract) → 50 = 5y → y = 10, x = 4","(c) π_xx = −6, π_yy = −4, π_xy = −3 → Δ = (−6)(−4) − (−3)² = 24 − 9 = 15 > 0, and π_xx < 0 → maximum","(d) Maximum profit π = 54(4) + 52(10) − 3(16) − 3(40) − 2(100) + 100 = 216 + 520 − 48 − 120 − 200 + 100 = Rs 468, with x = 4 units of X and y = 10 units of Y"]},
+    {q:"The total revenue function for two goods is TR = 36x − 3x² + 56y − 4y². (a) Find the unconstrained revenue-maximising output and the maximum revenue. (b) The firm now faces the budget constraint 5x + 10y = 80. Use Lagrange multipliers to find the revenue-maximising x and y and the maximum revenue subject to this constraint. (c) Compare the two answers and comment.",
+     pts:["(a) TR_x = 36 − 6x = 0 → x = 6;  TR_y = 56 − 8y = 0 → y = 7.  Max TR = 216 − 108 + 392 − 196 = Rs 304","(b) L = 36x − 3x² + 56y − 4y² + λ(80 − 5x − 10y). L_x = 36 − 6x − 5λ = 0; L_y = 56 − 8y − 10λ = 0; L_λ = 80 − 5x − 10y = 0","Eliminate λ: 2(36 − 6x) = 56 − 8y → 72 − 12x = 56 − 8y → y = 1.5x − 2","Constraint: 5x + 10(1.5x − 2) = 80 → 20x = 100 → x = 5, y = 5.5","Max TR = 36(5) − 3(25) + 56(5.5) − 4(30.25) = 180 − 75 + 308 − 121 = Rs 292","(c) 292 < 304: the constraint is a genuine limitation. The unconstrained optimum (6, 7) is unaffordable (5·6 + 10·7 = 130 > 80), so revenue must be lower"]},
+    {q:"A consumer has the utility function U = xy and faces prices P_x = Rs 4, P_y = Rs 2 with income M = Rs 80. (a) Write the budget constraint and the Lagrangian. (b) Find the utility-maximising quantities of x and y and the maximum utility. (c) Find the value of λ and interpret it.",
+     pts:["(a) Budget: 4x + 2y = 80. Lagrangian: L = xy + λ(80 − 4x − 2y)","(b) L_x = y − 4λ = 0; L_y = x − 2λ = 0; L_λ = 80 − 4x − 2y = 0. From the first two: y = 4λ, x = 2λ → y = 2x","Constraint: 4x + 2(2x) = 80 → 8x = 80 → x = 10, y = 20. Maximum utility U = 10 × 20 = 200","(c) λ = x/2 = 5 (or y/4 = 5). Interpretation: if income rises by Rs 1 (to 81), maximum utility rises by approximately 5 (to ≈ 205)"]},
+    {q:"Find and classify ALL of the stationary points of F(x, y) = x³ + y³ − 3xy. Give the coordinates, the type (maximum / minimum / saddle), and the value of F at each point.",
+     pts:["F_x = 3x² − 3y = 0 → y = x²;  F_y = 3y² − 3x = 0 → x = y²","Substitute: x = (x²)² = x⁴ → x⁴ − x = 0 → x(x³ − 1) = 0 → x = 0 or x = 1. So (0, 0) and (1, 1)","F_xx = 6x, F_yy = 6y, F_xy = −3 → Δ = 36xy − 9","At (0, 0): Δ = −9 < 0 → SADDLE POINT; F(0, 0) = 0","At (1, 1): Δ = 36 − 9 = 27 > 0 and F_xx = 6 > 0 → RELATIVE MINIMUM; F(1, 1) = 1 + 1 − 3 = −1","(There is no maximum: F → +∞ as x, y → +∞ and → −∞ as x, y → −∞)"]}
+  ],
+};
+
+window.SUBJECT_EXAM["bmath2"].cases = [
+    {title:"Joint output function of a factory", real:"2023 model paper",
+     scenario:"A joint function of a factory in terms of x and y is given by F(x, y) = x³ + xy² − 3x, where x and y represent the output of two goods. (This is the compulsory Section D of the 2023 Model Question, Q22.)",
+     qs:[
+       {q:"Find all the stationary points of F(x, y).", m:5,
+        pts:["F_x = 3x² + y² − 3;  F_y = 2xy","F_y = 2xy = 0 → x = 0 or y = 0","If y = 0: 3x² − 3 = 0 → x² = 1 → x = ±1 → points (1, 0) and (−1, 0)","If x = 0: y² − 3 = 0 → y = ±√3 → points (0, √3) and (0, −√3)","Stationary points: (1, 0), (−1, 0), (0, √3), (0, −√3)"]},
+       {q:"Identify the saddle point(s), using the second-order (D-) test.", m:5,
+        pts:["F_xx = 6x, F_yy = 2x, F_xy = 2y → Δ = (6x)(2x) − (2y)² = 12x² − 4y²","At (0, √3): Δ = 12(0) − 4(3) = −12 < 0 → saddle point","At (0, −√3): Δ = 12(0) − 4(3) = −12 < 0 → saddle point","Saddle points: (0, √3) and (0, −√3); at each, F = 0"]},
+       {q:"Find the maximum value of F(x, y).", m:5,
+        pts:["At (−1, 0): Δ = 12(1) − 0 = 12 > 0 and F_xx = 6(−1) = −6 < 0 → relative maximum","F(−1, 0) = (−1)³ + (−1)(0)² − 3(−1) = −1 − 0 + 3 = 2","Maximum value = 2, at (x, y) = (−1, 0)"]},
+       {q:"Find the minimum value of F(x, y).", m:5,
+        pts:["At (1, 0): Δ = 12(1) − 0 = 12 > 0 and F_xx = 6(1) = 6 > 0 → relative minimum","F(1, 0) = (1)³ + (1)(0)² − 3(1) = 1 − 0 − 3 = −2","Minimum value = −2, at (x, y) = (1, 0)"]}
+     ]},
+    {title:"Joint profit function for two products",
+     scenario:"A firm's joint profit function for two products x and y (in Rs thousand) is π(x, y) = x³ + y³ − 3x − 3y.",
+     qs:[
+       {q:"Find all the stationary points of the profit function.", m:5,
+        pts:["π_x = 3x² − 3 = 0 → x² = 1 → x = ±1","π_y = 3y² − 3 = 0 → y² = 1 → y = ±1","Stationary points: (1, 1), (1, −1), (−1, 1), (−1, −1)"]},
+       {q:"Determine the nature of each stationary point.", m:5,
+        pts:["π_xx = 6x, π_yy = 6y, π_xy = 0 → Δ = 36xy","(1, 1): Δ = 36 > 0, π_xx = 6 > 0 → minimum","(−1, −1): Δ = 36 > 0, π_xx = −6 < 0 → maximum","(1, −1) and (−1, 1): Δ = −36 < 0 → saddle points"]},
+       {q:"State the maximum profit and the outputs at which it occurs.", m:5,
+        pts:["Maximum at (−1, −1)","π(−1, −1) = (−1)³ + (−1)³ − 3(−1) − 3(−1) = −1 − 1 + 3 + 3 = 4","Maximum profit = Rs 4 thousand at x = −1, y = −1 (mathematically; in practice negative outputs are not feasible, so the true business optimum is a boundary point — worth noting)"]},
+       {q:"State the minimum-profit stationary point and its value.", m:5,
+        pts:["Minimum at (1, 1)","π(1, 1) = 1 + 1 − 3 − 3 = −4","Minimum stationary value = −Rs 4 thousand at x = 1, y = 1; the two saddle points (1, −1) and (−1, 1) give π = 0"]}
+     ]},
+    {title:"Joint function of two goods (large-coefficient case)",
+     scenario:"A joint function of a factory is F(x, y) = −x³ + 2y³ + 147x − 54y + 12, where x and y are the outputs of two goods.",
+     qs:[
+       {q:"Find all the stationary points of F(x, y).", m:5,
+        pts:["F_x = −3x² + 147 = 0 → x² = 49 → x = ±7","F_y = 6y² − 54 = 0 → y² = 9 → y = ±3","Stationary points: (7, 3), (7, −3), (−7, 3), (−7, −3)"]},
+       {q:"Identify the saddle points.", m:5,
+        pts:["F_xx = −6x, F_yy = 12y, F_xy = 0 → Δ = (−6x)(12y) = −72xy","(7, 3): Δ = −72(21) = −1512 < 0 → saddle","(−7, −3): Δ = −72(21) = −1512 < 0 → saddle","Saddle points: (7, 3) and (−7, −3)"]},
+       {q:"Find the maximum value of F(x, y).", m:5,
+        pts:["At (7, −3): Δ = −72(−21) = 1512 > 0 and F_xx = −42 < 0 → maximum","F(7, −3) = −343 + 2(−27) + 147(7) − 54(−3) + 12 = −343 − 54 + 1029 + 162 + 12 = 806","Maximum value = 806, at (7, −3)"]},
+       {q:"Find the minimum value of F(x, y).", m:5,
+        pts:["At (−7, 3): Δ = −72(−21) = 1512 > 0 and F_xx = 42 > 0 → minimum","F(−7, 3) = 343 + 54 − 1029 − 162 + 12 = −782","Minimum value = −782, at (−7, 3)"]}
+     ]}
+  ]
+;
 
 </script>
 <script>
