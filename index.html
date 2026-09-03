@@ -5,10 +5,10 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <meta name="theme-color" content="#14131b">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Study Hub">
+<!-- NB: no apple-mobile-web-app-capable — iOS standalone mode suppresses the
+     native text-selection UI (handles / callout bar) that the notes highlighter
+     relies on. The service worker works the same in a normal Safari view, so
+     offline support is unaffected. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
   :root{
@@ -487,7 +487,8 @@
   .nt-bar-title{flex:1;min-width:0;font-size:.9rem;font-weight:700;overflow:hidden;
     text-overflow:ellipsis;white-space:nowrap;}
   .nt-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 16px 90px;
-    font-size:1rem;line-height:1.62;color:#e8e6ef;}
+    font-size:1rem;line-height:1.62;color:#e8e6ef;
+    -webkit-user-select:text;user-select:text;-webkit-touch-callout:default;}
   .nt-body h2{font-size:1.18rem;margin:30px 0 10px;color:#fff;font-family:Georgia,serif;
     border-bottom:1px solid var(--line);padding-bottom:7px;line-height:1.3;}
   .nt-body h3{font-size:1.02rem;margin:24px 0 8px;color:var(--accent);line-height:1.35;}
@@ -15710,6 +15711,10 @@ function openExam(){
 function closeExam(){
   syncExamTA();
   _examTA = null; _examTAId = null;
+  /* Drop focus off the answer <textarea>. If it stays the document.activeElement,
+     the notes-highlight `selectionchange` handler (which bails on a focused
+     INPUT/TEXTAREA) will refuse to show the highlight pill in the notes reader. */
+  if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
   document.getElementById('view-exam').classList.remove('active');
 }
 function renderExamTabs(){
@@ -16070,9 +16075,13 @@ function ntWireHighlightRemoval(){
   document.addEventListener('selectionchange', () => {
     if(!document.body.classList.contains('notes-open')) return;
     // Never let the highlight pill react to a caret move inside an editable
-    // field — its ntHidePill()/removeAllRanges() disrupts typing on iOS.
+    // field THAT IS ACTUALLY ON SCREEN — its ntHidePill()/removeAllRanges()
+    // disrupts typing on iOS. A blurred-but-still-activeElement textarea from a
+    // closed view (e.g. exam mode) must NOT block the pill, or highlighting
+    // silently stops working after you've used exam mode once.
     const ae = document.activeElement;
-    if(ae && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT' || ae.isContentEditable)) return;
+    const editable = ae && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT' || ae.isContentEditable);
+    if(editable && ae.offsetParent !== null) return;   // visible editable field → leave it alone
     clearTimeout(window.__ntSelT);
     window.__ntSelT = setTimeout(ntShowPill, 180);
   });
@@ -16115,6 +16124,10 @@ function ntRenderBody(html){
     el.setAttribute('data-nb', nb++);
   });
   ntApplyStoredHl();
+  /* Clear any lingering focus (e.g. the exam answer box) — otherwise the
+     `selectionchange` handler below bails on a focused INPUT/TEXTAREA and the
+     highlight pill never appears when you select text in the notes. */
+  if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
   document.body.classList.add('notes-open');
   document.getElementById('view-notes-chapters').classList.remove('active');
   document.getElementById('view-notes-reader').classList.add('active');
