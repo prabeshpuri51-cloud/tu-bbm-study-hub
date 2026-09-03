@@ -16080,6 +16080,7 @@ function ntActiveRange(){
 function ntHidePill(){
   document.getElementById('nt-hl-pill').classList.remove('active', 'has-hl');
   window.__ntHlRange = null;
+  window.__ntHlTap = false;
   const s = window.getSelection(); if(s) s.removeAllRanges();
 }
 function ntShowPill(){
@@ -16092,6 +16093,7 @@ function ntShowPill(){
      is gone — everything below falls back to this stored range. */
   const range = sel.getRangeAt(0).cloneRange();
   window.__ntHlRange = range;
+  window.__ntHlTap = false;   // this is a hand selection → "Remove" clips, doesn't nuke
   // show "Remove" only when the selection actually covers a highlight
   const touchesHl = [...body.querySelectorAll('mark.nt-hl')].some(m => range.intersectsNode(m));
   document.getElementById('nt-hl-pill').classList.toggle('has-hl', touchesHl);
@@ -16115,9 +16117,30 @@ function ntRemoveSelection(){
   if(!range || range.collapsed) return ntHidePill();
   const spans = ntRangeBlocks(range);
   if(!spans.length) return ntHidePill();
-  // drop every stored highlight that overlaps the selection in its block
-  const kept = ntLoadHl().filter(h => !spans.some(sp => sp.nb === h.b && h.s < sp.e && h.e > sp.s));
-  ntSaveHl(kept);
+  let out;
+  if(window.__ntHlTap){
+    // you tapped a highlight → remove the whole thing
+    out = ntLoadHl().filter(h => !spans.some(sp => sp.nb === h.b && sp.s < h.e && sp.e > h.s));
+  } else {
+    // you selected part of a highlight → cut just that part out, keep the rest
+    out = [];
+    ntLoadHl().forEach(h => {
+      const cuts = spans.filter(sp => sp.nb === h.b && sp.s < h.e && sp.e > h.s);
+      if(!cuts.length){ out.push(h); return; }
+      let pieces = [[h.s, h.e]];
+      cuts.forEach(c => {
+        const next = [];
+        pieces.forEach(([ps, pe]) => {
+          if(c.e <= ps || c.s >= pe){ next.push([ps, pe]); return; }
+          if(c.s > ps) next.push([ps, c.s]);
+          if(c.e < pe) next.push([c.e, pe]);
+        });
+        pieces = next;
+      });
+      pieces.forEach(([ps, pe]) => { if(pe - ps >= 1) out.push({ b: h.b, s: ps, e: pe }); });
+    });
+  }
+  ntSaveHl(out);
   ntRebuildHl();
   ntHidePill();
 }
@@ -16134,6 +16157,7 @@ function ntWireHighlightRemoval(){
     const r = document.createRange();
     r.selectNodeContents(m);
     window.__ntHlRange = r;
+    window.__ntHlTap = true;   // tapped a highlight → "Remove" nukes the whole highlight
     clearTimeout(window.__ntSelT);
     const pill = document.getElementById('nt-hl-pill');
     pill.classList.add('has-hl');
