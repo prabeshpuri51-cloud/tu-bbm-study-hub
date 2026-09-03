@@ -12621,11 +12621,15 @@ window.SUBJECT_DATA_S2["bmath2"] = {
 
     {title:"Unit 3: Integration and Applications",
       primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 8",
-      primaryWeak:"NOT YET BUILT. Bradley Ch 8 (integration, area under a curve, consumer/producer surplus) is the primary; Chiang Ch 14 and Rosser Ch 12.5–12.7 also cover it.",
-      pages:"Bradley Ch 8", startPage:0, endPage:0, lh:8,
+      primaryWeak:"Standard forms, ∫1/x = ln|x|, ∫eˣ, substitution for linear functions, definite integrals, area under a curve, and consumer/producer surplus: Bradley Ch 8 (book p.394–420). Integration BY PARTS is on Bradley's companion website only — taken from Rosser Ch 12.7 (book p.442–447); the formula is standard.",
+      pages:"Bradley Ch 8 + Rosser Ch 12.5–12.7", startPage:413, endPage:440, lh:8,
       desc:"Concept of integration; standard forms, substitution, integration by parts; integration of algebraic, logarithmic and exponential functions; definite integrals; applications in business and economics including consumer's surplus and producer's surplus; area under a curve.",
       subtopics:"Integration techniques, definite integrals, surplus, area under a curve",
-      notBuilt:true, refs:[]},
+      primaryMatch:"bradley|essential mathematics for economics",
+      refs:[
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 12.5–12.7, book p.429–447", note:"Indefinite/definite integrals, MC→TC and MR→TR, integration by substitution and by parts, net investment / capital formation. Has the integration-by-parts treatment Bradley's print edition omits.", match:"rosser|basic mathematics for economists|annas arch", start:443},
+        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish)", pages:"Ch 14, book p.435–460", note:"Rigorous treatment of the definite integral and economic dynamics; heavier than needed for a BBM course.", match:"chiang|metodos fundamentales|economia matematica", start:456}
+      ]},
 
     {title:"Unit 4: Functions of Several Variables",
       primaryBook:"Chiang Ch 7.4, 11, 12 + Bradley Ch 7",
@@ -13282,6 +13286,215 @@ So <strong>A<sup>−1</sup> = [5 −7 ; −2 3]</strong>. If the left block cann
 <li><strong>Section C Q20</strong> — Input–output: given the 2-industry flow table, find outputs after final demand changes to (120, 180) and to (180, 240) <em>(10 marks)</em> — §2.8, answers (420, 522) and (600, 720)</li>
 </ol>`;
 
+/* ===== UNIT 3 — Integration and Applications ===== */
+window.SUBJECT_NOTES["bmath2"]["2"] = `<p><strong>Syllabus scope (8 lecture hours):</strong> Concept of integration; techniques of integration — standard forms, substitution, and integration by parts; integration of algebraic, logarithmic and exponential functions; methods of evaluating definite integrals; application of integration in business and economics, including consumer's and producer's surplus; area under a curve.</p>
+<p><em>Note:</em> "log x" here means the <strong>natural</strong> logarithm (ln x). "∫ from a to b" is written for the definite integral with lower limit a and upper limit b.</p>
+<hr>
+
+<h2>3.1 The Concept of Integration</h2>
+<p><strong>Integration is the reverse of differentiation.</strong> If differentiating F(x) gives f(x), then integrating f(x) gives F(x) back (plus a constant). The <strong>indefinite integral</strong> is written</p>
+<p style="text-align:center">∫ f(x) dx = F(x) + c &nbsp;&nbsp;&nbsp; where &nbsp; dF/dx = f(x)</p>
+<ul>
+<li><strong>∫</strong> is the integral sign; <strong>dx</strong> says "integrate with respect to x"; <strong>f(x)</strong> is the <em>integrand</em>.</li>
+<li><strong>c is the constant of integration.</strong> It must always be included, because any constant term in the original function differentiates to zero, so it cannot be recovered. The indefinite integral is really a whole <em>family</em> of curves, one for each value of c.</li>
+<li>Always <strong>check</strong> by differentiating your answer — you should get the integrand back.</li>
+</ul>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u3-reverse">
+  <h3>Integration reverses differentiation</h3>
+  <p class="dgm-sub">Differentiate F(x) + c → f(x); integrate f(x) → F(x) + c</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:460px" viewBox="0 0 460 150" role="img" aria-label="F of x plus c on the left and f of x on the right; the top arrow labelled differentiate goes from left to right, the bottom arrow labelled integrate goes from right to left">
+    <defs><marker id="ahm2u3r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F5FA8"/></marker></defs>
+    <ellipse cx="95" cy="75" rx="78" ry="34" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="tb" x="95" y="72" text-anchor="middle">F(x) + c</text>
+    <text class="ts" x="95" y="90" text-anchor="middle">the integral</text>
+    <ellipse cx="365" cy="75" rx="70" ry="34" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="tb" x="365" y="72" text-anchor="middle">f(x)</text>
+    <text class="ts" x="365" y="90" text-anchor="middle">the derivative</text>
+    <path d="M 165 48 C 230 22, 300 22, 300 48" class="cd thin" fill="none" marker-end="url(#ahm2u3r)"/>
+    <text class="tm" x="232" y="22" text-anchor="middle">differentiate:  d/dx [F(x) + c]</text>
+    <path d="M 300 104 C 300 128, 230 128, 160 104" class="cd thin" fill="none" marker-end="url(#ahm2u3r)"/>
+    <text class="tm" x="232" y="142" text-anchor="middle">integrate:  ∫ f(x) dx</text>
+  </svg></div>
+  <figcaption>
+    <p>The two operations undo each other. Differentiating loses any constant term (it becomes 0); integrating cannot know what constant was there, so it adds an unknown <em>c</em>. A given point or condition on the curve fixes <em>c</em> (see §3.5 / Unit 5).</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both operations as opposite arrows; that the constant <em>c</em> is lost on differentiating and re-added on integrating; "check by differentiating".</div>
+  </figcaption>
+</figure></div>
+
+<h2>3.2 Standard Forms (Techniques of Integration — 1)</h2>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Rule</th><th>Formula</th></tr></thead>
+<tbody>
+<tr><td><strong>Power rule</strong></td><td>∫ xⁿ dx = xⁿ⁺¹ / (n + 1) + c &nbsp;(for n ≠ −1)</td></tr>
+<tr><td><strong>The n = −1 exception</strong></td><td>∫ x⁻¹ dx = ∫ (1/x) dx = <strong>ln|x| + c</strong></td></tr>
+<tr><td><strong>Constant</strong></td><td>∫ k dx = kx + c</td></tr>
+<tr><td><strong>Constant multiple</strong></td><td>∫ k·f(x) dx = k ∫ f(x) dx</td></tr>
+<tr><td><strong>Sum / difference</strong></td><td>∫ [f(x) ± g(x)] dx = ∫ f(x) dx ± ∫ g(x) dx</td></tr>
+<tr><td><strong>Natural exponential</strong></td><td>∫ eˣ dx = eˣ + c</td></tr>
+<tr><td><strong>Linear function to a power</strong></td><td>∫ (mx + c)ⁿ dx = (mx + c)ⁿ⁺¹ / [m(n + 1)] + c &nbsp;(n ≠ −1)</td></tr>
+<tr><td><strong>1 over a linear function</strong></td><td>∫ 1/(mx + c) dx = <strong>(1/m) ln|mx + c| + c</strong></td></tr>
+<tr><td><strong>e to a linear function</strong></td><td>∫ e^(mx + c) dx = (1/m) e^(mx + c) + c</td></tr>
+<tr><td><strong>General exponential</strong></td><td>∫ aˣ dx = aˣ / ln a + c</td></tr>
+</tbody></table></div>
+<p><strong>Step 1 always: simplify first</strong> — write roots as powers (√x = x^0.5), bring every variable term above the line (1/x² = x⁻²), split fractions term by term.</p>
+<p><strong>Worked example (power + exception + constant).</strong> ∫ (x² + 1/x) dx = ∫ x² dx + ∫ x⁻¹ dx = x³/3 + ln|x| + c.</p>
+<p><strong>Worked example (simplify then integrate).</strong> ∫ (x + 5x²)/x² dx = ∫ (1/x + 5) dx = ln|x| + 5x + c.</p>
+<p><strong>Worked example (linear function).</strong> ∫ √(3x + 4) dx = ∫ (3x + 4)^0.5 dx = (3x + 4)^1.5 / [3 × 1.5] + c = <strong>(2/9)(3x + 4)^1.5 + c</strong>.</p>
+<p><strong>Worked example — the real 2023 Model Question, Section A Q7.</strong> ∫ (x + 6)/(x − 4) dx. Long-divide the fraction: x + 6 = (x − 4) + 10, so (x + 6)/(x − 4) = 1 + 10/(x − 4). ∫ [1 + 10/(x − 4)] dx = <strong>x + 10 ln|x − 4| + c</strong>.</p>
+<h3>Integration of algebraic, logarithmic and exponential functions</h3>
+<ul>
+<li><strong>Algebraic</strong> — the power rule (with the n = −1 exception).</li>
+<li><strong>Exponential</strong> — ∫ eˣ = eˣ; ∫ e^(mx+c) = (1/m)e^(mx+c); ∫ aˣ = aˣ/ln a.</li>
+<li><strong>Logarithmic</strong> — the log <em>appears as the answer</em> to ∫ 1/x and ∫ 1/(mx + c). To integrate ln x <em>itself</em>, use integration by parts (§3.4): <strong>∫ ln x dx = x ln x − x + c.</strong></li>
+</ul>
+
+<h2>3.3 Integration by Substitution (Techniques of Integration — 2)</h2>
+<p>Used when the integrand can be simplified by replacing part of it with a single new variable <em>u</em>. It comes from the <strong>chain rule in reverse</strong>.</p>
+<h3>Case A — a function of a linear function</h3>
+<p><strong>Worked example.</strong> ∫ (7x + 4)⁶ dx. Let u = 7x + 4 → du/dx = 7 → dx = (1/7) du. ∫ u⁶ (1/7) du = (1/7)(u⁷/7) + c = u⁷/49 + c = <strong>(7x + 4)⁷ / 49 + c</strong>. (This is exactly the "linear function to a power" standard form — substitution <em>derives</em> it.)</p>
+<h3>Case B — one factor is (a multiple of) the derivative of another</h3>
+<p><strong>Worked example.</strong> ∫ (3x² + 4x³)(6x + 12x²) dx. Notice 6x + 12x² is the derivative of 3x² + 4x³. Let u = 3x² + 4x³ → du = (6x + 12x²) dx. The integral becomes ∫ u du = u²/2 + c = <strong>½(3x² + 4x³)² + c</strong>.</p>
+<p><strong>Worked example — the real 2023 Model Question, Section B Q11(i)</strong> <em>(reconstructed — the scan drops the numerator; the intended integrand is (1 + 1/x)/(x + ln x))</em>: ∫ (1 + 1/x)/(x + ln x) dx. Let u = x + ln x → du = (1 + 1/x) dx. Integral = ∫ (1/u) du = <strong>ln|x + ln x| + c</strong>.</p>
+<p><strong>General rule:</strong> if the integrand is g(u)·(du/dx), substitute u to get ∫ g(u) du.</p>
+
+<h2>3.4 Integration by Parts (Techniques of Integration — 3)</h2>
+<p>Used when the integrand is a <strong>product of two factors</strong> and substitution does not work (neither factor is the derivative of the other). It comes from the <strong>product rule in reverse</strong>:</p>
+<p style="text-align:center"><strong>∫ u dv = uv − ∫ v du</strong></p>
+<p>Choose <strong>u</strong> = the part that gets <em>simpler</em> when differentiated; <strong>dv</strong> = the rest (must be integrable). A useful priority order for choosing <em>u</em>: <strong>L</strong>ogarithm, then <strong>A</strong>lgebraic (powers of x), then <strong>E</strong>xponential ("LAE" — differentiate the earlier one).</p>
+<p><strong>Worked example (logarithmic).</strong> ∫ ln x dx. Let u = ln x (→ du = (1/x) dx) and dv = dx (→ v = x). ∫ ln x dx = (ln x)(x) − ∫ x · (1/x) dx = x ln x − ∫ 1 dx = <strong>x ln x − x + c</strong>.</p>
+<p><strong>Worked example (algebraic × exponential).</strong> ∫ x eˣ dx. Let u = x (→ du = dx), dv = eˣ dx (→ v = eˣ). ∫ x eˣ dx = x eˣ − ∫ eˣ dx = <strong>x eˣ − eˣ + c</strong> = eˣ(x − 1) + c.</p>
+<p><strong>Worked example.</strong> ∫ x(x³ + 1) dx. Let u = x (→ du = dx), dv = (x³ + 1) dx (→ v = x⁴/4 + x). ∫ x(x³ + 1) dx = x(x⁴/4 + x) − ∫ (x⁴/4 + x) dx = x⁵/4 + x² − (x⁵/20 + x²/2) + c = <strong>x⁵/5 + x²/2 + c</strong>. <em>(Check: expanding first, ∫ (x⁴ + x) dx = x⁵/5 + x²/2 + c — the same.)</em></p>
+
+<h2>3.5 Definite Integrals and Area Under a Curve</h2>
+<h3>The definite integral</h3>
+<p>The <strong>definite integral</strong> has limits — a lower limit <em>a</em> and an upper limit <em>b</em>:</p>
+<p style="text-align:center">∫ from a to b of f(x) dx = [F(x)] from a to b = <strong>F(b) − F(a)</strong></p>
+<p>Procedure: (1) integrate as normal to get F(x); (2) substitute the upper limit b, then the lower limit a, and subtract. <strong>The constant c cancels</strong> (F(b) + c) − (F(a) + c), so it is omitted for definite integrals.</p>
+<p><strong>Worked example.</strong> ∫ from 1 to 3 of (x + 2) dx = [x²/2 + 2x] from 1 to 3 = (9/2 + 6) − (1/2 + 2) = 10.5 − 2.5 = <strong>8</strong>.</p>
+<h3>Area under a curve</h3>
+<p>The area between the curve y = f(x), the x-axis, and the vertical lines x = a and x = b is approximated by narrow rectangles of width Δx and height y; as Δx → 0 the sum of the rectangle areas becomes the definite integral:</p>
+<p style="text-align:center">Area = ∫ from a to b of f(x) dx</p>
+<p><strong>Worked example — the real 2023 Model Question, Section A Q4.</strong> Find the area bounded by the x-axis and the ordinates of y = 8x² from x₁ = 0 to x₂ = 2. Area = ∫ from 0 to 2 of 8x² dx = [8x³/3] from 0 to 2 = 8(8)/3 − 0 = <strong>64/3 ≈ 21.33 square units</strong>.</p>
+<h3>Net signed area</h3>
+<p>Definite integration gives the <strong>net</strong> area: parts of the curve <strong>above</strong> the x-axis count <strong>positive</strong>, parts <strong>below</strong> count <strong>negative</strong>. To find the <em>total</em> (unsigned) area when a curve crosses the axis, split the integral at the crossing point(s) and add the absolute values.</p>
+<p><strong>Worked example.</strong> For f(x) = x² − 1 (crosses the x-axis at x = 1): ∫ from 0 to 1 of (x² − 1) dx = (1/3 − 1) − 0 = <strong>−2/3</strong> (below the axis); ∫ from 1 to 2 of (x² − 1) dx = (8/3 − 2) − (1/3 − 1) = <strong>4/3</strong> (above). Net over 0→2 = −2/3 + 4/3 = <strong>2/3</strong>; total unsigned area = 2/3 + 4/3 = <strong>2</strong>.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u3-area">
+  <h3>Area under a curve = a definite integral</h3>
+  <p class="dgm-sub">Sum of narrow rectangles → ∫ from a to b of f(x) dx as Δx → 0</p>
+  <svg viewBox="0 0 360 250" role="img" aria-label="A rising curve with the region under it between x equals a and x equals b filled, and several narrow rectangles drawn to approximate that area">
+    <line class="ax" x1="45" y1="215" x2="345" y2="215"/>
+    <line class="ax" x1="45" y1="215" x2="45" y2="20"/>
+    <text class="t" x="336" y="232">x</text><text class="t" x="30" y="24">y</text>
+    <path class="fd" d="M 110 215 L 110 177 L 138 177 L 138 161 L 166 161 L 166 141 L 194 141 L 194 117 L 222 117 L 222 94 L 250 94 L 250 215 Z"/>
+    <path class="cd" d="M 55 200 Q 130 175 190 120 T 320 30" fill="none"/>
+    <line class="gd" x1="110" y1="215" x2="110" y2="177"/>
+    <line class="gd" x1="250" y1="215" x2="250" y2="94"/>
+    <rect x="110" y="177" width="28" height="38" class="fn" style="stroke:#6A7A8C;stroke-width:.8"/>
+    <rect x="138" y="161" width="28" height="54" class="fn" style="stroke:#6A7A8C;stroke-width:.8"/>
+    <rect x="166" y="141" width="28" height="74" class="fn" style="stroke:#6A7A8C;stroke-width:.8"/>
+    <rect x="194" y="117" width="28" height="98" class="fn" style="stroke:#6A7A8C;stroke-width:.8"/>
+    <rect x="222" y="94" width="28" height="121" class="fn" style="stroke:#6A7A8C;stroke-width:.8"/>
+    <text class="td" x="288" y="52">y = f(x)</text>
+    <text class="ts" x="103" y="230">x = a</text>
+    <text class="ts" x="240" y="230">x = b</text>
+    <text class="tm" x="55" y="90">Area = ∫ₐᵇ f(x) dx</text>
+  </svg>
+  <figcaption>
+    <p>Each rectangle has width Δx and height f(xᵢ); its area is f(xᵢ)·Δx. Adding them approximates the area under the curve. Letting Δx → 0 turns the sum Σ f(xᵢ)Δx into the definite integral ∫ from a to b of f(x) dx = F(b) − F(a).</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The curve and the shaded region between x = a and x = b; the approximating rectangles of width Δx; the limit statement Σ → ∫ as Δx → 0; Area = F(b) − F(a).</div>
+  </figcaption>
+</figure></div>
+<h3>Area between two curves</h3>
+<p>Between x = a and x = b, with f(x) the upper curve and g(x) the lower: <strong>Area = ∫ from a to b of [f(x) − g(x)] dx</strong>.</p>
+
+<h2>3.6 Applications in Business and Economics</h2>
+<h3>Marginal → total (recover the total function from the rate of change)</h3>
+<p>Because MR = dTR/dQ and MC = dTC/dQ, integrating a marginal function recovers the total function: <strong>TR = ∫ MR dQ</strong>, <strong>TC = ∫ MC dQ</strong>.</p>
+<ul>
+<li><strong>MR → TR:</strong> the constant of integration is <strong>0</strong>, because TR = 0 when Q = 0.</li>
+<li><strong>MC → TC:</strong> the constant of integration is the <strong>total fixed cost (TFC)</strong>, because TC = TFC when Q = 0. (Integrating MC alone gives total <em>variable</em> cost; TC = TVC + TFC.)</li>
+<li>The <strong>demand function</strong> is then found from p = TR / Q.</li>
+<li>The <strong>increase in TC (or TR)</strong> when output rises from Q₁ to Q₂ is the <em>definite</em> integral ∫ from Q₁ to Q₂ of MC dQ.</li>
+</ul>
+<p><strong>Worked example — the real 2023 Model Question, Section A Q5.</strong> If MR = 1 + 10x − 3x², find the total revenue function. TR = ∫ (1 + 10x − 3x²) dx = x + 5x² − x³ + C. Since TR = 0 at x = 0, C = 0. <strong>TR = x + 5x² − x³.</strong></p>
+<p><strong>Worked example — the real 2023 Model Question, Section B Q16.</strong> MC = x² + x + 2, fixed cost Rs 50. TC = ∫ (x² + x + 2) dx + TFC = x³/3 + x²/2 + 2x + 50. At x = 10: TC = 1000/3 + 100/2 + 20 + 50 = 333.33 + 120 = <strong>Rs 453.33</strong>. Average cost AC = TC / x = 453.33 / 10 = <strong>Rs 45.33</strong>.</p>
+<h3>Consumer surplus (CS)</h3>
+<p><strong>Consumer surplus</strong> is the gain to buyers because some would have paid <em>more</em> than the market price P₀ for the earlier units. It is the area <strong>between the demand curve and the horizontal price line P = P₀</strong>, from Q = 0 to the market quantity Q₀:</p>
+<p style="text-align:center">CS = ∫ from 0 to Q₀ of (demand function) dQ − P₀Q₀</p>
+<p>For a <strong>linear</strong> demand curve this is simply the area of a triangle: CS = ½ × Q₀ × (demand-price-intercept − P₀).</p>
+<p><strong>Worked example.</strong> Demand P = 60 − 2Q, market price P₀ = 12. Q₀: 12 = 60 − 2Q → <strong>Q₀ = 24</strong>. CS (triangle) = ½ × 24 × (60 − 12) = <strong>576</strong>. CS (by integration) = ∫ from 0 to 24 of (60 − 2Q) dQ − (12 × 24) = [60Q − Q²] from 0 to 24 − 288 = (1440 − 576) − 288 = <strong>576</strong> ✓.</p>
+<p><strong>Non-linear demand.</strong> For P = 100/(Q + 2) at P₀ = 20: Q₀ = 3, and CS = ∫ from 0 to 3 of 100/(Q + 2) dQ − 60 = 100[ln(Q + 2)] from 0 to 3 − 60 = 100(ln 5 − ln 2) − 60 = 100(0.9163) − 60 = <strong>31.63</strong>.</p>
+<h3>Producer surplus (PS)</h3>
+<p><strong>Producer surplus</strong> is the gain to sellers because some would have supplied for <em>less</em> than P₀. It is the area <strong>between the price line P = P₀ and the supply curve</strong>, from Q = 0 to Q₀:</p>
+<p style="text-align:center">PS = P₀Q₀ − ∫ from 0 to Q₀ of (supply function) dQ</p>
+<p>For a <strong>linear</strong> supply curve: PS = ½ × Q₀ × (P₀ − supply-price-intercept).</p>
+<p><strong>Worked example.</strong> Supply P = 20 + 4Q, at Q₀ = 4 → P₀ = 20 + 16 = 36. PS (triangle) = ½ × 4 × (36 − 20) = <strong>32</strong>. PS (by integration) = (36 × 4) − ∫ from 0 to 4 of (20 + 4Q) dQ = 144 − [20Q + 2Q²] from 0 to 4 = 144 − (80 + 32) = <strong>32</strong> ✓.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u3-surplus">
+  <h3>Consumer surplus and producer surplus as areas</h3>
+  <p class="dgm-sub">CS = between demand curve and P₀; PS = between P₀ and supply curve</p>
+  <svg viewBox="0 0 360 255" role="img" aria-label="Downward-sloping demand curve and upward-sloping supply curve crossing at the equilibrium price P-zero and quantity Q-zero; the triangle above the price line and under demand is consumer surplus, the triangle below the price line and above supply is producer surplus">
+    <line class="ax" x1="45" y1="215" x2="345" y2="215"/>
+    <line class="ax" x1="45" y1="215" x2="45" y2="18"/>
+    <text class="t" x="336" y="232">Q</text><text class="t" x="30" y="22">P</text>
+    <polygon class="fd" points="45,45 190,120 45,120"/>
+    <polygon class="fs" points="45,185 190,120 45,120"/>
+    <line class="cd" x1="45" y1="45" x2="320" y2="187" fill="none"/>
+    <line class="cs" x1="45" y1="185" x2="300" y2="71" fill="none"/>
+    <text class="td" x="300" y="200">D</text>
+    <text class="tsu" x="286" y="68">S</text>
+    <line class="gd" x1="45" y1="120" x2="190" y2="120"/>
+    <line class="gd" x1="190" y1="120" x2="190" y2="215"/>
+    <circle class="dot" cx="190" cy="120" r="3.6"/>
+    <text class="tb" x="196" y="116">E</text>
+    <text class="ts" x="24" y="124">P₀</text>
+    <text class="ts" x="182" y="230">Q₀</text>
+    <text class="td" x="85" y="88">CS</text>
+    <text class="tsu" x="85" y="160">PS</text>
+  </svg>
+  <figcaption>
+    <p>CS (blue) is the area under the demand curve above the line P = P₀, integrated from Q = 0 to Q₀ — i.e. ∫₀^{Q₀}(demand) dQ − P₀Q₀. PS (orange) is the area under the line P = P₀ above the supply curve — i.e. P₀Q₀ − ∫₀^{Q₀}(supply) dQ. For straight-line demand/supply both are just triangle areas.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both curves and the equilibrium point E with P₀, Q₀; the CS region (above P₀, under demand) and PS region (below P₀, above supply) shaded and labelled; the integral formula for each.</div>
+  </figcaption>
+</figure></div>
+<h3>Net investment and capital formation</h3>
+<p>If net investment is I(t) = dK/dt (the rate the capital stock grows), then the <strong>capital formation</strong> between years t₁ and t₂ is ∫ from t₁ to t₂ of I(t) dt. <em>Example:</em> if dc/dt = 3t + 85 (Rs per year), the total cost over the first 5 years is ∫ from 0 to 5 of (3t + 85) dt = [3t²/2 + 85t] from 0 to 5 = 37.5 + 425 = <strong>Rs 462.5</strong>.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u3-net">
+  <h3>Definite integration gives NET signed area</h3>
+  <p class="dgm-sub">Above the x-axis counts +, below counts −</p>
+  <svg viewBox="0 0 360 230" role="img" aria-label="A curve dipping below the x-axis between x equals 0 and x equals 1 then rising above it; the region below the axis is marked minus and the region above is marked plus">
+    <line class="ax" x1="45" y1="130" x2="345" y2="130"/>
+    <line class="ax" x1="45" y1="205" x2="45" y2="20"/>
+    <text class="t" x="336" y="147">x</text><text class="t" x="30" y="24">y</text>
+    <path class="fm" d="M 60 130 Q 100 175 150 130 Z"/>
+    <path class="fd" d="M 150 130 Q 230 40 320 30 L 320 130 Z"/>
+    <path class="cd" d="M 60 130 Q 100 178 150 130 Q 230 40 320 30" fill="none"/>
+    <text class="tm" x="103" y="160">− area</text>
+    <text class="td" x="235" y="95">+ area</text>
+    <text class="ts" x="146" y="145">x = 1</text>
+    <line class="gd" x1="150" y1="130" x2="150" y2="30"/>
+    <text class="ts" x="240" y="45">y = f(x)</text>
+  </svg>
+  <figcaption>
+    <p>∫ from 0 to 2 of (x² − 1) dx = −2/3 + 4/3 = +2/3 (the net area). The <em>total</em> unsigned area is |−2/3| + |4/3| = 2 — found by splitting the integral at the crossing point x = 1 and adding the absolute values.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The crossing point of the curve with the x-axis; the region below the axis marked negative and above marked positive; that you must split the integral at the crossing to get the total (not net) area.</div>
+  </figcaption>
+</figure></div>
+
+<hr>
+<h2>Exam checklist</h2>
+<p><strong>Standard forms to know cold:</strong> ∫ xⁿ dx = xⁿ⁺¹/(n+1) + c (n ≠ −1); <strong>∫ 1/x dx = ln|x| + c</strong>; ∫ k dx = kx + c; ∫ eˣ dx = eˣ + c; ∫ e^(mx+c) dx = (1/m)e^(mx+c) + c; ∫ (mx+c)ⁿ dx = (mx+c)ⁿ⁺¹ / [m(n+1)] + c; <strong>∫ 1/(mx+c) dx = (1/m) ln|mx+c| + c</strong>; ∫ ln x dx = x ln x − x + c (by parts).</p>
+<p><strong>Techniques:</strong> substitution — let u = the inner/repeated expression, find dx in terms of du, integrate in u, substitute back (use when one factor is a multiple of the derivative of another). Integration by parts — ∫ u dv = uv − ∫ v du; choose u by "LAE". Definite integral — ∫ from a to b of f(x) dx = F(b) − F(a); c cancels; split at axis crossings for total area.</p>
+<p><strong>Applications:</strong> TR = ∫ MR dQ (C = 0); TC = ∫ MC dQ + TFC; demand p = TR/Q; increase in TC = ∫ from Q₁ to Q₂ of MC dQ. CS = ∫ from 0 to Q₀ of (demand) dQ − P₀Q₀; PS = P₀Q₀ − ∫ from 0 to Q₀ of (supply) dQ; both are triangle areas for linear curves.</p>
+<p><strong>Confirmed real past-paper questions</strong> (tag <code>real:"2023 model paper"</code>, TU FOM Model Question 2023, BBM Business Mathematics II):</p>
+<ol>
+<li><strong>Section A Q4</strong> — area bounded by the x-axis and the ordinates of y = 8x² from x = 0 to x = 2 <em>(2 marks)</em> — answer <strong>64/3 ≈ 21.33</strong></li>
+<li><strong>Section A Q5</strong> — if MR = 1 + 10x − 3x², find the total revenue function <em>(2 marks)</em> — answer <strong>TR = x + 5x² − x³</strong></li>
+<li><strong>Section A Q7</strong> — integrate ∫ (x + 6)/(x − 4) dx <em>(2 marks)</em> — answer <strong>x + 10 ln|x − 4| + c</strong></li>
+<li><strong>Section B Q11</strong> — (i) ∫ (…)/(x + ln x) dx <em>(numerator garbled; reconstructed as ln|x + ln x| + c)</em>; (ii) ∫ from 0 to 1 of (2x + 1)/(5x + 3) dx = (2/5) − (1/25) ln(8/3) ≈ <strong>0.361</strong> <em>(5 marks)</em></li>
+<li><strong>Section B Q16</strong> — MC = x² + x + 2, fixed cost Rs 50: find the total cost function and the average cost at x = 10 <em>(5 marks)</em> — answers <strong>TC = x³/3 + x²/2 + 2x + 50</strong>, <strong>AC(10) = Rs 45.33</strong></li>
+</ol>
+<p>Also expect: a "total cost / value after N years from a given rate dc/dt" definite-integral question; a consumer-surplus or producer-surplus calculation for a linear or simple non-linear curve.</p>`;
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — MCQ QUIZ BANK   {q, o:[4], a, why, w}
    w:3 = confirmed past-paper idea or guaranteed-core; w:2 core; w:1 finer point.
@@ -13485,6 +13698,115 @@ window.SUBJECT_QUIZ["bmath2"]["1"] = [
    why:"Leontief won the 1973 Nobel Prize for developing input–output analysis of an economy."}
 ];
 
+window.SUBJECT_QUIZ["bmath2"]["2"] = [
+  {q:"Integration is best described as the:", o:["reverse of differentiation", "reverse of multiplication", "same as finding a limit", "reverse of taking a square root"], a:0, w:3,
+   why:"If dF/dx = f(x), then ∫ f(x) dx = F(x) + c. Integration undoes differentiation."},
+  {q:"Why must an indefinite integral always include a constant of integration c?", o:["to make the answer look longer", "because c is always equal to 1", "because any constant term differentiates to zero and cannot be recovered", "to cancel the dx"], a:2, w:3,
+   why:"Differentiating F(x) + c gives the same f(x) for every value of c, so integrating f(x) cannot determine which constant was originally present."},
+  {q:"In the expression ∫ f(x) dx, the part 'dx' indicates:", o:["multiply the answer by x", "the derivative of x", "divide by x", "the variable of integration (integrate with respect to x)"], a:3, w:2,
+   why:"'dx' names the variable being integrated. ∫ f(Q) dQ would integrate with respect to Q instead."},
+  {q:"The quickest way to check that an indefinite integral is correct is to:", o:["substitute x = 0", "differentiate the answer and see if you get the integrand back", "integrate it again", "multiply by the constant of integration"], a:1, w:2,
+   why:"Since integration reverses differentiation, differentiating a correct integral returns the original integrand."},
+  {q:"The indefinite integral of a function represents:", o:["a single curve", "only the area under the curve", "the slope of the curve", "a family of curves, one for each value of c"], a:3, w:1,
+   why:"y = F(x) + c is a family of vertically-shifted curves; a given point or condition fixes c and picks one member (see differential equations, Unit 5)."},
+  {q:"∫ xⁿ dx equals (for n ≠ −1):", o:["xⁿ⁺¹/(n + 1) + c", "n·xⁿ⁻¹ + c", "xⁿ/n + c", "xⁿ⁻¹/(n − 1) + c"], a:0, w:3,
+   why:"The power rule for integration: raise the power by 1, then divide by the new power."},
+  {q:"∫ x⁴ dx equals:", o:["4x³ + c", "x⁵ + c", "x⁵/5 + c", "x³/3 + c"], a:2, w:3,
+   why:"Power rule: (x⁴⁺¹)/(4 + 1) = x⁵/5."},
+  {q:"The power rule fails for n = −1. Instead, ∫ (1/x) dx equals:", o:["x⁰/0 + c", "ln|x| + c", "−x⁻² + c", "1 + c"], a:1, w:3,
+   why:"n = −1 would give division by zero. The correct rule is ∫ x⁻¹ dx = ln|x| + c."},
+  {q:"∫ 7 dx equals:", o:["7x + c", "0 + c", "7 + c", "x⁷ + c"], a:0, w:2,
+   why:"The integral of a constant k is kx + c (since 7 = 7x⁰, and applying the power rule gives 7x)."},
+  {q:"Before integrating (x + 5x²)/x², the first step should be to:", o:["apply the power rule immediately", "use integration by parts", "multiply out the brackets", "simplify to 1/x + 5, then integrate term by term"], a:3, w:3,
+   why:"Always simplify first: (x + 5x²)/x² = x/x² + 5x²/x² = 1/x + 5. Then ∫ = ln|x| + 5x + c."},
+  {q:"∫ (3x² − 4x + 2) dx equals:", o:["6x − 4 + c", "x³ − 2x² + 2x + c", "3x³ − 4x² + 2x + c", "x³ − 4x² + 2x + c"], a:1, w:2,
+   why:"Integrate term by term: 3x²→x³, −4x→−2x², 2→2x."},
+  {q:"∫ √x dx equals:", o:["(1/2)x⁻⁰·⁵ + c", "x^0.5 + c", "x^1.5 / 1.5 + c = (2/3)x^1.5 + c", "(3/2)x^1.5 + c"], a:2, w:2,
+   why:"Write √x = x^0.5; power rule gives x^1.5/1.5 = (2/3)x√x + c."},
+  {q:"∫ k·f(x) dx equals:", o:["f(x) + c", "k + ∫ f(x) dx", "∫ f(x) dx / k", "k·∫ f(x) dx"], a:3, w:2,
+   why:"A constant multiplier can be taken outside the integral sign."},
+  {q:"∫ eˣ dx equals:", o:["eˣ + c", "x·eˣ⁻¹ + c", "eˣ/x + c", "x·eˣ + c"], a:0, w:3,
+   why:"eˣ is the only function unchanged by both differentiation and integration."},
+  {q:"∫ e^(5x) dx equals:", o:["5e^(5x) + c", "e^(5x) + c", "(1/5)e^(5x) + c", "e^(5x)/x + c"], a:2, w:3,
+   why:"∫ e^(mx+c) dx = (1/m)e^(mx+c) + c; here m = 5."},
+  {q:"∫ 3e^x + 5 dx equals:", o:["3e^x + 5 + c", "3e^x + 5x + c", "e^x + 5x + c", "3xe^x + 5x + c"], a:1, w:2,
+   why:"∫ 3e^x dx = 3e^x; ∫ 5 dx = 5x."},
+  {q:"∫ aˣ dx (a a positive constant, a ≠ 1) equals:", o:["aˣ + c", "x·aˣ⁻¹ + c", "aˣ · ln a + c", "aˣ / ln a + c"], a:3, w:1,
+   why:"The general exponential rule: divide by the natural log of the base."},
+  {q:"∫ (2x + 1)⁵ dx equals:", o:["(2x + 1)⁶ / 12 + c", "(2x + 1)⁶ / 6 + c", "5(2x + 1)⁴ + c", "(2x + 1)⁶ + c"], a:0, w:3,
+   why:"∫ (mx + c)ⁿ dx = (mx + c)ⁿ⁺¹ / [m(n + 1)] + c; here m = 2, n = 5, so divide by 2 × 6 = 12."},
+  {q:"∫ 1/(4x − 3) dx equals:", o:["ln|4x − 3| + c", "(1/4) ln|4x − 3| + c", "4 ln|4x − 3| + c", "−1/(4x − 3)² + c"], a:1, w:3,
+   why:"∫ 1/(mx + c) dx = (1/m) ln|mx + c| + c; here m = 4."},
+  {q:"∫ (x + 6)/(x − 4) dx (2023 model paper A Q7) equals:", o:["ln|x − 4| + c", "(x + 6) ln|x − 4| + c", "x + 10 ln|x − 4| + c", "x − 10 ln|x − 4| + c"], a:2, w:3,
+   why:"Divide first: (x + 6)/(x − 4) = 1 + 10/(x − 4). Then ∫ = x + 10 ln|x − 4| + c. This is the real 2023 model paper Section A Q7."},
+  {q:"∫ e^(2x − 3) dx equals:", o:["e^(2x − 3) + c", "2e^(2x − 3) + c", "e^(2x − 3)/(2x − 3) + c", "(1/2)e^(2x − 3) + c"], a:3, w:2,
+   why:"∫ e^(mx + c) dx = (1/m)e^(mx + c) + c; here m = 2."},
+  {q:"Integration by substitution is derived from which rule of differentiation, run in reverse?", o:["the product rule", "the chain rule", "the quotient rule", "the power rule"], a:1, w:2,
+   why:"Substitution reverses the chain rule. Integration by parts reverses the product rule."},
+  {q:"To integrate ∫ (7x + 4)⁶ dx by substitution, you let u = 7x + 4 and then need dx in terms of du. Here dx =", o:["(1/7) du", "7 du", "du", "u du"], a:0, w:3,
+   why:"du/dx = 7, so du = 7 dx, hence dx = (1/7) du."},
+  {q:"∫ 2x(x² + 1)³ dx. Using u = x² + 1, this becomes ∫ u³ du, which equals:", o:["(x² + 1)⁴ + c", "3(x² + 1)² + c", "(x² + 1)⁴ / 4 + c", "(x² + 1)³ / 3 + c"], a:2, w:3,
+   why:"du = 2x dx, so the integral is ∫ u³ du = u⁴/4 + c = (x² + 1)⁴/4 + c."},
+  {q:"Substitution is the natural method when the integrand is a product of two parts and:", o:["both parts are constants", "the parts are equal", "neither part contains x", "one part is (a multiple of) the derivative of the other"], a:3, w:2,
+   why:"If the integrand is g(u)·(du/dx), the substitution u collapses it to ∫ g(u) du."},
+  {q:"For ∫ (3x² + 4x³)(6x + 12x²) dx, the correct substitution is:", o:["u = 3x² + 4x³ (since 6x + 12x² is its derivative)", "u = 6x + 12x²", "u = x²", "u = x³ + x⁴"], a:0, w:2,
+   why:"6x + 12x² = d/dx(3x² + 4x³), so let u = 3x² + 4x³; the integral becomes ∫ u du = u²/2 + c."},
+  {q:"The integration by parts formula is:", o:["∫ u dv = u·v", "∫ u dv = uv − ∫ v du", "∫ u dv = ∫ u du · ∫ dv", "∫ u dv = uv + ∫ v du"], a:1, w:3,
+   why:"∫ u dv = uv − ∫ v du. It comes from the product rule of differentiation, rearranged."},
+  {q:"Integration by parts is used when the integrand is:", o:["a single power of x", "a constant", "a sum of two terms", "a product of two factors, and substitution does not apply"], a:3, w:2,
+   why:"Parts handles products where neither factor is the derivative of the other (e.g. x·eˣ, ln x, x·ln x)."},
+  {q:"When choosing u for integration by parts, u should be the factor that:", o:["is the largest", "is a constant", "gets simpler when differentiated (priority: logarithm, then algebraic, then exponential)", "appears second"], a:2, w:2,
+   why:"The 'LAE' order: pick u as the earliest of Logarithm / Algebraic / Exponential, so that differentiating u simplifies the integral."},
+  {q:"∫ ln x dx equals:", o:["x ln x − x + c", "1/x + c", "(ln x)² / 2 + c", "x ln x + c"], a:0, w:3,
+   why:"By parts with u = ln x, dv = dx: ∫ ln x dx = x ln x − ∫ x·(1/x) dx = x ln x − x + c."},
+  {q:"∫ x eˣ dx equals:", o:["x²eˣ/2 + c", "x eˣ − eˣ + c", "eˣ(x + 1) + c", "x eˣ + c"], a:1, w:2,
+   why:"By parts with u = x, dv = eˣ dx: x eˣ − ∫ eˣ dx = x eˣ − eˣ + c = eˣ(x − 1) + c."},
+  {q:"The definite integral ∫ from a to b of f(x) dx is evaluated as:", o:["F(a) − F(b)", "F(b) + F(a)", "F(b) − F(a)", "F(b) × F(a)"], a:2, w:3,
+   why:"Integrate to get F(x), then substitute the upper limit and subtract the value at the lower limit."},
+  {q:"In evaluating a definite integral, the constant of integration c:", o:["must be found from a condition", "is always 1", "is added at the end", "cancels out (F(b) + c) − (F(a) + c), so it is omitted"], a:3, w:3,
+   why:"The two c terms cancel on subtraction, so definite integrals are written without c."},
+  {q:"∫ from 1 to 3 of (x + 2) dx equals:", o:["10", "8", "6", "4"], a:1, w:2,
+   why:"[x²/2 + 2x] from 1 to 3 = (4.5 + 6) − (0.5 + 2) = 10.5 − 2.5 = 8."},
+  {q:"∫ from 1 to 2 of (1/x) dx equals:", o:["ln 2 ≈ 0.693", "1", "0.5", "ln 3"], a:0, w:2,
+   why:"[ln|x|] from 1 to 2 = ln 2 − ln 1 = ln 2 − 0 = ln 2."},
+  {q:"∫ from 0 to 2 of 8x² dx (2023 model paper A Q4) equals:", o:["32", "16", "8", "64/3 ≈ 21.33"], a:3, w:3,
+   why:"[8x³/3] from 0 to 2 = 8(8)/3 − 0 = 64/3 ≈ 21.33 square units. This is the real 2023 model paper Section A Q4 (area under y = 8x²)."},
+  {q:"The area under the curve y = f(x) between x = a and x = b (with f(x) ≥ 0) is:", o:["f(b) − f(a)", "the slope of the curve at b", "∫ from a to b of f(x) dx", "½(a + b)·f(a)"], a:2, w:3,
+   why:"The area is the limit of the sum of narrow rectangles Σ f(xᵢ)Δx as Δx → 0, which is the definite integral."},
+  {q:"As the rectangle width Δx approaches zero, the sum Σ f(xᵢ)Δx approaches:", o:["zero", "the definite integral ∫ from a to b of f(x) dx", "infinity", "the average value of f"], a:1, w:2,
+   why:"This limiting process is the definition of the definite integral as the exact area under the curve."},
+  {q:"When a curve lies BELOW the x-axis over an interval, the definite integral over that interval is:", o:["negative", "positive", "zero", "undefined"], a:0, w:2,
+   why:"Areas below the x-axis are counted negative. Definite integration gives the NET signed area."},
+  {q:"To find the TOTAL (unsigned) area between y = x² − 1 and the x-axis from x = 0 to x = 2, you should:", o:["evaluate one integral from 0 to 2", "take the average of f(0) and f(2)", "integrate from 1 to 2 only", "split the integral at the crossing point x = 1 and add the absolute values of the two parts"], a:3, w:2,
+   why:"The curve crosses the axis at x = 1: the part from 0 to 1 is −2/3, from 1 to 2 is +4/3. Total area = 2/3 + 4/3 = 2 (net = 2/3)."},
+  {q:"The area between two curves f(x) (upper) and g(x) (lower) from x = a to x = b is:", o:["∫ from a to b of [g(x) − f(x)] dx", "∫ from a to b of [f(x) − g(x)] dx", "∫ f(x) dx × ∫ g(x) dx", "f(b) − g(a)"], a:1, w:2,
+   why:"Area under the upper curve minus area under the lower curve = ∫ [f(x) − g(x)] dx over the interval."},
+  {q:"Since MR = dTR/dQ, the total revenue function is found by:", o:["differentiating MR", "dividing MR by Q", "integrating MR: TR = ∫ MR dQ", "multiplying MR by Q"], a:2, w:3,
+   why:"Integration reverses differentiation, so integrating the marginal function recovers the total function."},
+  {q:"When integrating MR to obtain TR, the constant of integration is:", o:["zero (because TR = 0 when Q = 0)", "the total fixed cost", "equal to the price", "always 1"], a:0, w:3,
+   why:"No revenue is earned when nothing is sold, so TR(0) = 0, which forces C = 0."},
+  {q:"When integrating MC to obtain the total cost function TC, the constant of integration equals:", o:["zero", "the marginal cost at Q = 0", "the selling price", "the total fixed cost (TFC), since TC = TFC when Q = 0"], a:3, w:3,
+   why:"Integrating MC gives total variable cost; adding TFC gives TC. At Q = 0 all cost is fixed, so C = TFC."},
+  {q:"If MR = 1 + 10x − 3x² (2023 model paper A Q5), the total revenue function is:", o:["10 − 6x", "x + 5x² − x³", "1 + 5x² − x³ + c", "x + 10x² − 3x³"], a:1, w:3,
+   why:"TR = ∫ (1 + 10x − 3x²) dx = x + 5x² − x³ + C; since TR = 0 at x = 0, C = 0. Real 2023 model paper Section A Q5."},
+  {q:"MC = x² + x + 2 with fixed cost Rs 50 (2023 model paper B Q16). The total cost function is:", o:["x² + x + 52", "2x + 3 + 50", "x³/3 + x²/2 + 2x + 50", "x³ + x² + 2x + 50"], a:2, w:3,
+   why:"TC = ∫ (x² + x + 2) dx + TFC = x³/3 + x²/2 + 2x + 50. (At x = 10, TC = Rs 453.33 and AC = Rs 45.33.) Real 2023 model paper Section B Q16."},
+  {q:"The increase in total cost when output rises from Q₁ to Q₂ is given by:", o:["MC(Q₂) − MC(Q₁)", "TC(Q₁) × TC(Q₂)", "the average of MC over the range", "∫ from Q₁ to Q₂ of MC dQ"], a:3, w:2,
+   why:"The definite integral of the marginal cost between the two output levels gives the change in total (variable) cost."},
+  {q:"Consumer surplus is the area:", o:["between the demand curve and the horizontal price line P = P₀, from Q = 0 to Q₀", "under the supply curve", "under the total cost curve", "between the two axes"], a:0, w:3,
+   why:"CS measures the extra value buyers get because some would have paid more than P₀ for earlier units."},
+  {q:"For a linear demand curve, consumer surplus at price P₀ (quantity Q₀) equals:", o:["P₀ × Q₀", "∫ (supply) dQ", "½ × Q₀ × (demand price-intercept − P₀)", "P₀ − Q₀"], a:2, w:3,
+   why:"The CS region is a right triangle with base Q₀ and height (a − P₀), where a is where the demand line meets the price axis."},
+  {q:"By integration, consumer surplus is:", o:["P₀Q₀ − ∫ from 0 to Q₀ of (demand function) dQ", "∫ from 0 to Q₀ of (demand function) dQ − P₀Q₀", "∫ from 0 to Q₀ of (supply function) dQ", "P₀Q₀ + ∫ (demand) dQ"], a:1, w:3,
+   why:"Total area under the demand curve up to Q₀, minus the rectangle P₀Q₀ that consumers actually pay."},
+  {q:"For the demand function P = 60 − 2Q at market price P₀ = 12, the equilibrium quantity Q₀ and consumer surplus are:", o:["Q₀ = 24, CS = 576", "Q₀ = 12, CS = 288", "Q₀ = 48, CS = 1152", "Q₀ = 24, CS = 288"], a:0, w:3,
+   why:"12 = 60 − 2Q → Q₀ = 24. CS (triangle) = ½ × 24 × (60 − 12) = ½ × 24 × 48 = 576."},
+  {q:"Producer surplus at price P₀ (quantity Q₀) is given by:", o:["∫ from 0 to Q₀ of (supply function) dQ − P₀Q₀", "∫ (demand function) dQ", "P₀Q₀ − ∫ from 0 to Q₀ of (supply function) dQ", "½ × P₀ × Q₀"], a:2, w:3,
+   why:"The revenue actually received (P₀Q₀) minus the area under the supply curve (the least revenue sellers would have accepted)."},
+  {q:"For the linear supply function P = 20 + 4Q at Q₀ = 4, the producer surplus is:", o:["144", "112", "64", "32"], a:3, w:2,
+   why:"P₀ = 20 + 16 = 36. PS (triangle) = ½ × 4 × (36 − 20) = ½ × 4 × 16 = 32. (Check by integration: 144 − ∫₀⁴(20 + 4Q) dQ = 144 − 112 = 32.)"}
+];
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — WRITTEN EXAM-MODE BANK
    Section A = brief (2), B = short (5), C = long (10). Subject-level Section-D
@@ -13609,6 +13931,65 @@ window.SUBJECT_EXAM["bmath2"].units["1"] = {
      pts:["(a) |A| = 2(3·2 − (−1)·4) − (−1)(0·2 − (−1)·1) + 1(0·4 − 3·1) = 2(10) + 1(1) + 1(−3) = 20 + 1 − 3 = 18","(b) |A| = 18 ≠ 0 → A is non-singular (invertible)","(c) Cofactors: C₁₁=10, C₁₂=−1, C₁₃=−3, C₂₁=6, C₂₂=3, C₂₃=−9, C₃₁=−2, C₃₂=2, C₃₃=6 → cofactor matrix C = [10 −1 −3 ; 6 3 −9 ; −2 2 6]; adj A = Cᵀ = [10 6 −2 ; −1 3 2 ; −3 −9 6]","(d) A⁻¹ = (1/18)·[10 6 −2 ; −1 3 2 ; −3 −9 6]"]},
     {q:"(a) State the three elementary row operations. (b) Using the Gauss–Jordan method, find the inverse of A = [1 1 1 ; 0 2 3 ; 5 5 1], showing each step. (c) Use the inverse to solve Ax = [6 ; 13 ; 20].",
      pts:["(a) swap two rows; multiply a row by a non-zero constant; add a multiple of one row to another","(b) Augment [A | I]; reduce left block to I. |A| = 1(2−15) − 1(0−15) + 1(0−10) = −13 + 15 − 10 = −8 (non-singular). Cofactor/adjoint or full row-reduction gives A⁻¹ = (1/−8)·[ −13 4 1 ; 15 −4 −3 ; −10 0 2 ] = [13/8 −1/2 −1/8 ; −15/8 1/2 3/8 ; 5/4 0 −1/4 ]","(c) x = A⁻¹·[6 ; 13 ; 20]: x₁ = (1/−8)(−13·6 + 4·13 + 1·20) = (1/−8)(−78 + 52 + 20) = (1/−8)(−6) = 0.75; x₂ = (1/−8)(15·6 − 4·13 − 3·20) = (1/−8)(90 − 52 − 60) = (1/−8)(−22) = 2.75; x₃ = (1/−8)(−10·6 + 0 + 2·20) = (1/−8)(−20) = 2.5","Solution x = (0.75, 2.75, 2.5) — check against the original equations"]}
+  ]
+};
+
+window.SUBJECT_EXAM["bmath2"].units["2"] = {
+  brief: [
+    {q:"Define the indefinite integral, and explain why the constant of integration must always be included.",
+     pts:["∫ f(x) dx = F(x) + c, where dF/dx = f(x) — integration is the reverse of differentiation","Any constant term in the original function differentiates to zero, so integrating cannot recover it — hence the arbitrary constant c"]},
+    {q:"State the power rule for integration and its one exception.",
+     pts:["∫ xⁿ dx = xⁿ⁺¹ / (n + 1) + c, for n ≠ −1","Exception (n = −1): ∫ (1/x) dx = ln|x| + c"]},
+    {q:"Integrate:  ∫ (x + 6)/(x − 4) dx.", real:"2023 model paper",
+     pts:["Divide first: x + 6 = (x − 4) + 10, so (x + 6)/(x − 4) = 1 + 10/(x − 4)","∫ [1 + 10/(x − 4)] dx = x + 10 ln|x − 4| + c"]},
+    {q:"If the marginal revenue function is MR = 1 + 10x − 3x², find the total revenue function.", real:"2023 model paper",
+     pts:["TR = ∫ MR dx = ∫ (1 + 10x − 3x²) dx = x + 5x² − x³ + C","TR = 0 when x = 0, so C = 0 → TR = x + 5x² − x³"]},
+    {q:"Find the area bounded by the x-axis and the ordinates of y = 8x² from x = 0 to x = 2.", real:"2023 model paper",
+     pts:["Area = ∫ from 0 to 2 of 8x² dx = [8x³/3] from 0 to 2","= 8(8)/3 − 0 = 64/3 ≈ 21.33 square units"]},
+    {q:"State the integration by parts formula and say when it is used.",
+     pts:["∫ u dv = uv − ∫ v du (it comes from the product rule, rearranged)","Used when the integrand is a product of two factors and substitution does not apply (e.g. x·eˣ, ln x, x·ln x)"]},
+    {q:"Evaluate the definite integral  ∫ from 1 to 3 of (2x + 3) dx.",
+     pts:["Integrate: [x² + 3x] from 1 to 3","= (9 + 9) − (1 + 3) = 18 − 4 = 14"]},
+    {q:"Integrate:  (i) ∫ e^(3x) dx   (ii) ∫ 1/(2x + 1) dx.",
+     pts:["(i) ∫ e^(mx) dx = (1/m)e^(mx) + c → (1/3)e^(3x) + c","(ii) ∫ 1/(mx + c) dx = (1/m) ln|mx + c| + c → (1/2) ln|2x + 1| + c"]},
+    {q:"When a total function is recovered by integrating a marginal function, what is the constant of integration (a) for MR → TR and (b) for MC → TC?",
+     pts:["(a) MR → TR: the constant is 0, because total revenue is zero when output is zero","(b) MC → TC: the constant is the total fixed cost (TFC), because at zero output all cost is fixed. (Integrating MC alone gives total variable cost.)"]},
+    {q:"Define consumer surplus and show it on a sketch of a demand curve.",
+     pts:["The extra value buyers get because some would have paid more than the market price P₀ for the earlier units","On the graph: the area below the demand curve and above the horizontal line P = P₀, from Q = 0 to Q₀","By integration: CS = ∫ from 0 to Q₀ of (demand) dQ − P₀Q₀"]},
+    {q:"Define producer surplus.",
+     pts:["The extra revenue sellers get because some would have supplied for less than the market price P₀","The area below P = P₀ and above the supply curve, from Q = 0 to Q₀","PS = P₀Q₀ − ∫ from 0 to Q₀ of (supply) dQ"]},
+    {q:"Integrate:  ∫ ln x dx.",
+     pts:["By parts: u = ln x (du = (1/x) dx), dv = dx (v = x)","∫ ln x dx = x ln x − ∫ x·(1/x) dx = x ln x − ∫ 1 dx = x ln x − x + c"]},
+    {q:"Evaluate  ∫ from 0 to 2 of (3x² − 2) dx.",
+     pts:["Integrate: [x³ − 2x] from 0 to 2","= (8 − 4) − 0 = 4"]}
+  ],
+  short: [
+    {q:"Evaluate the definite integral  ∫ from 0 to 1 of (2x + 1)/(5x + 3) dx.", real:"2023 model paper",
+     pts:["Split the fraction: 2x + 1 = (2/5)(5x + 3) − 1/5, so (2x + 1)/(5x + 3) = 2/5 − (1/5)·1/(5x + 3)","∫ = (2/5)x − (1/25) ln|5x + 3| + c","Evaluate 0 → 1: [(2/5)(1) − (1/25) ln 8] − [0 − (1/25) ln 3]","= 2/5 − (1/25) ln(8/3) = 0.4 − (1/25)(0.9808) ≈ 0.4 − 0.0392 = 0.361"]},
+    {q:"The marginal cost function of a firm is MC = x² + x + 2 and its fixed cost is Rs 50. Find the total cost function, and the average cost when x = 10.", real:"2023 model paper",
+     pts:["TC = ∫ (x² + x + 2) dx + TFC = x³/3 + x²/2 + 2x + 50","At x = 10: TC = 1000/3 + 100/2 + 20 + 50 = 333.33 + 120 = Rs 453.33","Average cost AC = TC / x = 453.33 / 10 = Rs 45.33"]},
+    {q:"For the demand function P = 60 − 2Q, the market price is P₀ = 12. Find the consumer surplus (i) geometrically and (ii) by integration. Sketch the demand curve and shade the consumer surplus.",
+     pts:["Q₀: 12 = 60 − 2Q → Q₀ = 24","(i) CS = area of triangle = ½ × Q₀ × (60 − P₀) = ½ × 24 × 48 = 576","(ii) CS = ∫ from 0 to 24 of (60 − 2Q) dQ − P₀Q₀ = [60Q − Q²] from 0 to 24 − (12 × 24)","= (1440 − 576) − 288 = 864 − 288 = 576","Sketch: demand line from (0, 60) to (30, 0); shade the triangle above P₀ = 12 and below the demand line, up to Q₀ = 24"]},
+    {q:"For the supply function P = 20 + 4Q, find the producer surplus at Q₀ = 4 (i) geometrically and (ii) by integration.",
+     pts:["P₀ = 20 + 4(4) = 36","(i) PS = area of triangle = ½ × Q₀ × (P₀ − 20) = ½ × 4 × 16 = 32","(ii) PS = P₀Q₀ − ∫ from 0 to 4 of (20 + 4Q) dQ = (36 × 4) − [20Q + 2Q²] from 0 to 4","= 144 − (80 + 32) = 144 − 112 = 32"]},
+    {q:"Use the method of substitution to integrate  ∫ x(x² + 1)³ dx.",
+     pts:["Let u = x² + 1 → du/dx = 2x → x dx = (1/2) du","∫ x(x² + 1)³ dx = ∫ u³ (1/2) du = (1/2)(u⁴/4) + c = u⁴/8 + c","Substitute back: (x² + 1)⁴ / 8 + c","(Check by differentiating: (4/8)(x² + 1)³ · 2x = x(x² + 1)³ ✓)"]},
+    {q:"Use integration by parts to integrate  ∫ x e^(2x) dx.",
+     pts:["Let u = x (du = dx) and dv = e^(2x) dx (v = (1/2)e^(2x))","∫ x e^(2x) dx = x·(1/2)e^(2x) − ∫ (1/2)e^(2x) dx","= (x/2)e^(2x) − (1/4)e^(2x) + c = (e^(2x)/4)(2x − 1) + c"]},
+    {q:"The annual rate of repair cost of a machine is dc/dt = 3t + 85 (Rs per year), where t is the age of the machine in years. Find the total repair cost incurred over the first 5 years.",
+     pts:["Total cost = ∫ from 0 to 5 of (3t + 85) dt","= [3t²/2 + 85t] from 0 to 5","= (37.5 + 425) − 0 = Rs 462.5"]},
+    {q:"The demand function for a good is P = 100/(Q + 2). The market price is P₀ = 20. Find the equilibrium quantity and the consumer surplus.",
+     pts:["Q₀: 20 = 100/(Q + 2) → Q + 2 = 5 → Q₀ = 3","CS = ∫ from 0 to 3 of 100/(Q + 2) dQ − P₀Q₀ = 100[ln(Q + 2)] from 0 to 3 − (20 × 3)","= 100(ln 5 − ln 2) − 60 = 100 ln(2.5) − 60 = 100(0.9163) − 60","= 91.63 − 60 = 31.63"]}
+  ],
+  long: [
+    {q:"A firm faces the marginal revenue function MR = 30 − 6Q and the marginal cost function MC = 6 + 2Q. Its total fixed cost is Rs 5. (a) Find the total revenue and total cost functions. (b) Find the profit-maximising output (where MR = MC) and the maximum profit. (c) Find the demand (price) function and the price charged at the optimum.",
+     pts:["(a) TR = ∫ (30 − 6Q) dQ = 30Q − 3Q² (constant = 0 since TR = 0 at Q = 0)","TC = ∫ (6 + 2Q) dQ + TFC = 6Q + Q² + 5","(b) MR = MC: 30 − 6Q = 6 + 2Q → 24 = 8Q → Q* = 3","At Q = 3: TR = 90 − 27 = 63; TC = 18 + 9 + 5 = 32; maximum profit π = 63 − 32 = Rs 31","(c) Demand: p = TR / Q = (30Q − 3Q²)/Q = 30 − 3Q; at Q = 3, price p = 30 − 9 = Rs 21"]},
+    {q:"A competitive market has the demand function P = 50 − 2Q and the supply function P = 5 + Q. (a) Find the equilibrium price and quantity. (b) Calculate the consumer surplus and the producer surplus at equilibrium, using definite integrals. (c) Sketch the demand and supply curves and shade CS and PS.",
+     pts:["(a) Equilibrium: 50 − 2Q = 5 + Q → 45 = 3Q → Q₀ = 15; P₀ = 5 + 15 = Rs 20","(b) CS = ∫ from 0 to 15 of (50 − 2Q) dQ − P₀Q₀ = [50Q − Q²] from 0 to 15 − (20 × 15) = (750 − 225) − 300 = 225","PS = P₀Q₀ − ∫ from 0 to 15 of (5 + Q) dQ = 300 − [5Q + Q²/2] from 0 to 15 = 300 − (75 + 112.5) = 112.5","(Check by triangle areas: CS = ½ × 15 × (50 − 20) = 225; PS = ½ × 15 × (20 − 5) = 112.5)","(c) Sketch: demand from (0, 50) to (25, 0), supply from (0, 5) rising; they cross at E (Q = 15, P = 20). CS = triangle above P₀ under demand; PS = triangle below P₀ above supply"]},
+    {q:"(a) Explain the difference between an indefinite integral and a definite integral. (b) Evaluate ∫ from 0 to 3 of (x² − 2x) dx and comment on the sign of the result. (c) Hence find the TOTAL (unsigned) area enclosed between the curve y = x² − 2x and the x-axis from x = 0 to x = 3.",
+     pts:["(a) An indefinite integral ∫ f(x) dx = F(x) + c is a family of functions (an arbitrary constant). A definite integral ∫ from a to b of f(x) dx = F(b) − F(a) is a number — the net signed area between the curve and the x-axis over [a, b]","(b) ∫ from 0 to 3 of (x² − 2x) dx = [x³/3 − x²] from 0 to 3 = (9 − 9) − 0 = 0","The zero result is a NET area: the region below the axis exactly cancels the region above it","(c) The curve crosses the x-axis at x = 0 and x = 2. From 0 to 2: ∫ (x² − 2x) dx = (8/3 − 4) − 0 = −4/3 (below axis). From 2 to 3: (9 − 9) − (8/3 − 4) = +4/3 (above axis)","Total unsigned area = |−4/3| + |4/3| = 8/3 square units"]},
+    {q:"The marginal cost function of a firm is MC = 3Q² − 8Q + 5 and its total fixed cost is Rs 20. (a) Find the total cost function and the average cost function. (b) Find the total cost of producing 4 units. (c) Using a definite integral, find the extra cost of raising output from 2 units to 4 units, and verify it against your answer to (b).",
+     pts:["(a) TC = ∫ (3Q² − 8Q + 5) dQ + TFC = Q³ − 4Q² + 5Q + 20","AC = TC / Q = Q² − 4Q + 5 + 20/Q","(b) TC(4) = 64 − 64 + 20 + 20 = Rs 40","(c) Extra cost = ∫ from 2 to 4 of (3Q² − 8Q + 5) dQ = [Q³ − 4Q² + 5Q] from 2 to 4 = (64 − 64 + 20) − (8 − 16 + 10) = 20 − 2 = Rs 18","Verification: TC(2) = 8 − 16 + 10 + 20 = 22; TC(4) − TC(2) = 40 − 22 = Rs 18 ✓"]}
   ]
 };
 
