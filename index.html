@@ -12656,12 +12656,16 @@ window.SUBJECT_DATA_S2["bmath2"] = {
       ]},
 
     {title:"Unit 6: Dynamic Economic Analysis and Difference Equations",
-      primaryBook:"Chiang Ch 17 & 19 + Rosser Ch 13",
-      primaryWeak:"NOT YET BUILT. First-order difference equations, the cobweb model, the lagged Keynesian model, duopoly price adjustment — Chiang Ch 17 & 19; Rosser Ch 13.",
-      pages:"Chiang Ch 17 & 19 · Rosser Ch 13", startPage:0, endPage:0, lh:9,
+      primaryBook:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish), Ch 17",
+      primaryWeak:"Introduction, order/classification, solution of first-order difference equations (homogeneous + non-homogeneous), dynamic stability (the seven regions of b), and the cobweb model: Chiang Ch 17.1–17.4 (Spanish 4th ed, book p.544–561). Rosser Ch 13 (the syllabus's English pairing) has no digital copy. The LAGGED KEYNESIAN model is worked from the standard macro treatment and the real 2023 model paper (Q19/Q21). DUOPOLY PRICE ADJUSTMENT ⚠ is written from scratch from the standard Cournot dynamic-adjustment treatment — it is not in Chiang Ch 17 and the model paper does not test it.",
+      pages:"Chiang Ch 17.1–17.4 · book p.544–561", startPage:565, endPage:582, lh:9,
       desc:"Introduction to difference equations; solution of first-order difference equations (homogeneous and non-homogeneous); economic applications of first-order difference equations — the cobweb model, the lagged Keynesian macroeconomic model, and duopoly price adjustment.",
-      subtopics:"Difference equations, homogeneous & non-homogeneous solutions, cobweb, lagged Keynesian, duopoly",
-      notBuilt:true, refs:[]}
+      subtopics:"First difference & order, homogeneous solution yₜ = y₀·bᵗ, non-homogeneous solution + equilibrium c/(1−b), dynamic stability by the value of b, cobweb model, lagged Keynesian model, duopoly (Cournot) price adjustment",
+      primaryMatch:"chiang|metodos fundamentales|economia matematica",
+      refs:[
+        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish: Métodos Fundamentales de Economía Matemática)", pages:"Ch 17.1–17.4, book p.544–561", note:"Discrete time and first differences (17.1); solving yₜ₊₁ = b·yₜ + c by complementary function + particular solution (17.2); the seven regions of b and dynamic stability (17.3); the cobweb model, 'Las telarañas' (17.4). Writes the equation as yₜ₊₁ = b·yₜ + c.", match:"chiang|metodos fundamentales|economia matematica", start:565},
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 13 (dynamic analysis / difference equations)", note:"The syllabus's English pairing for this unit — first-order difference equations, the cobweb model, the lagged Keynesian model and duopoly price adjustment. No digital copy was available; the notes were written from Chiang Ch 17 and standard treatments instead.", match:"rosser|basic mathematics for economists|annas arch", start:0}
+      ]}
   ]
 };
 
@@ -13928,6 +13932,212 @@ window.SUBJECT_NOTES["bmath2"]["4"] = `<p><strong>Syllabus scope (9 lecture hour
 </ol>
 <p>Also expect: a Section-A brief defining "differential equation" or stating order and degree of a given equation; a Section-B linear DE by integrating factor or a separable DE; a Section-B or C limited-growth (sales / advertising / resource) model.</p>`;
 
+window.SUBJECT_NOTES["bmath2"]["5"] = `<p><strong>Syllabus scope (9 lecture hours):</strong> Introduction to difference equations; solution of first-order difference equations (homogeneous and non-homogeneous); economic applications of first-order difference equations — the cobweb model, the lagged Keynesian macroeconomic model, and duopoly price adjustment.</p>
+<p><em>Notation:</em> yₜ is the value of y in period t; yₜ₋₁ the period before, yₜ₊₁ the period after. The equations here are all written yₜ = b·yₜ₋₁ + c with b and c constants.</p>
+<hr>
+
+<h2>6.1 Introduction — Discrete Time and Difference Equations</h2>
+<p>In <strong>continuous time</strong> the pattern of change of a variable y is its <strong>derivative</strong> dy/dt. When time moves in whole steps — <strong>period 1, period 2, period 3, …</strong> — y changes only when t jumps from one integer to the next, so the derivative is no longer the right tool. The pattern of change is described by a <strong>difference</strong>, and the equation stating it is a <strong>difference equation</strong>.</p>
+<p><strong>First difference:</strong></p>
+<blockquote><p><strong>Δyₜ = yₜ₊₁ − yₜ</strong></p></blockquote>
+<p>A difference equation relates values of the variable in different periods. The same equation has several equivalent forms:</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Form</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>difference form</td><td>Δyₜ = 2</td></tr>
+<tr><td>"lead" form</td><td>yₜ₊₁ − yₜ = 2 &nbsp;⟹&nbsp; yₜ₊₁ = yₜ + 2</td></tr>
+<tr><td>"lag" form</td><td>yₜ − yₜ₋₁ = 2 &nbsp;⟹&nbsp; yₜ = yₜ₋₁ + 2</td></tr>
+</tbody></table></div>
+<p>The lag form (yₜ in terms of yₜ₋₁) is the most convenient for <strong>iteration</strong> — computing each period's value from the one before.</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><strong>Order</strong></td><td>the longest time lag in the equation. First order → a one-period lag (yₜ, yₜ₋₁). Second order → a two-period lag (yₜ, yₜ₋₁, yₜ₋₂).</td></tr>
+<tr><td><strong>Linear</strong></td><td>no y-term is raised to a power ≥ 2 and no two y-terms (from different periods) are multiplied together</td></tr>
+<tr><td><strong>Homogeneous</strong></td><td>the constant term is zero (e.g. yₜ = 3yₜ₋₁). Non-homogeneous → non-zero constant term (e.g. yₜ = 3yₜ₋₁ + 6).</td></tr>
+<tr><td><strong>Constant coefficient</strong></td><td>the coefficient of yₜ₋₁ is a constant (the only case in this course)</td></tr>
+</tbody></table></div>
+<p>This unit covers <strong>first-order linear difference equations with constant coefficient</strong>: <strong>yₜ = b·yₜ₋₁ + c</strong>.</p>
+
+<h2>6.2 Solution of a First-order Difference Equation</h2>
+<p><strong>Solving</strong> means finding yₜ as an explicit function of t (a <strong>time path</strong>), given a starting value y₀.</p>
+<h3>Method 1 — iteration (for insight)</h3>
+<p>Start from y₀ and apply the rule repeatedly. For the homogeneous equation yₜ = b·yₜ₋₁: y₁ = b·y₀, y₂ = b²y₀, y₃ = b³y₀, … so <strong>yₜ = y₀·bᵗ</strong>.</p>
+<p><strong>Worked example — the real 2023 model paper, Section A Q3.</strong> Solve Yₜ = 3Yₜ₋₁ with Y₀ = 3. Here b = 3, so <strong>Yₜ = Y₀·3ᵗ = 3·3ᵗ = 3ᵗ⁺¹</strong> (Y₁ = 9, Y₂ = 27, … — explosive growth).</p>
+<p><strong>Worked example — the 2023 BBA model paper, Section A Q2.</strong> Yₜ = 2Yₜ₋₁, Y₀ = 5 → <strong>Yₜ = 5·2ᵗ</strong>.</p>
+<h3>Method 2 — complementary function + particular solution (general)</h3>
+<p>For the full equation <strong>yₜ = b·yₜ₋₁ + c</strong> the general solution is yₜ = y_c + y_p, where</p>
+<ul>
+<li><strong>Complementary function y_c = A·bᵗ</strong> — the general solution of the reduced equation yₜ = b·yₜ₋₁ (A is an arbitrary constant). It measures the <strong>deviation</strong> of the time path from equilibrium.</li>
+<li><strong>Particular solution y_p</strong> — try a constant yₜ = k for all t: then k = bk + c → <strong>y_p = c / (1 − b)</strong> (provided b ≠ 1). This constant is the <strong>intertemporal (stationary) equilibrium</strong> yₑ.</li>
+</ul>
+<blockquote><p><strong>General solution (b ≠ 1):</strong>&nbsp; yₜ = A·bᵗ + c/(1 − b)<br>
+<strong>Definite solution</strong> (given y₀):&nbsp; y₀ = A + yₑ → A = y₀ − yₑ, so&nbsp; <strong>yₜ = (y₀ − yₑ)·bᵗ + yₑ</strong> &nbsp;where&nbsp; yₑ = c/(1 − b)</p></blockquote>
+<p><strong>Special case b = 1:</strong> yₜ = yₜ₋₁ + c has no finite equilibrium; iterating gives <strong>yₜ = y₀ + c·t</strong> (a straight-line path).</p>
+<p><strong>Worked example.</strong> Solve yₜ₊₁ = 0.2yₜ + 4 with y₀ = 4. yₑ = 4/(1 − 0.2) = 5; A = 4 − 5 = −1. So <strong>yₜ = −(0.2)ᵗ + 5</strong>. As t → ∞, (0.2)ᵗ → 0 and yₜ → 5.</p>
+<p><strong>Worked example — the real 2023 model paper, Section B Q14</strong> (printed "Yₜ₋₁ = 0.2Yₜ + 10"; the sensible reading is Yₜ = 0.2Yₜ₋₁ + 10). Y₀ = 6; find Y₄. yₑ = 10/(1 − 0.2) = 12.5; A = 6 − 12.5 = −6.5 → <strong>Yₜ = −6.5(0.2)ᵗ + 12.5</strong>. By iteration: Y₁ = 11.2; Y₂ = 12.24; Y₃ = 12.448; <strong>Y₄ = 0.2(12.448) + 10 = 12.4896 ≈ 12.49</strong>. (Check: −6.5(0.2)⁴ + 12.5 = 12.4896 ✓.)</p>
+
+<h2>6.3 Dynamic Stability of Equilibrium — the value of b</h2>
+<p>Whether the equilibrium is <strong>dynamically stable</strong> depends entirely on whether the complementary function A·bᵗ dies away as t → ∞. Since bᵗ is what matters, the whole question turns on the value of <strong>b</strong>:</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Value of b</th><th>bᵗ as t grows</th><th>Time path</th><th>Stability</th></tr></thead>
+<tbody>
+<tr><td><strong>b &gt; 1</strong></td><td>grows, same sign</td><td>rises away from yₑ at an increasing rate</td><td>divergent (unstable)</td></tr>
+<tr><td><strong>b = 1</strong></td><td>constant (= 1)</td><td>yₜ = y₀ + ct — straight line</td><td>no equilibrium</td></tr>
+<tr><td><strong>0 &lt; b &lt; 1</strong></td><td>shrinks, stays positive</td><td>moves <strong>smoothly (monotonically)</strong> toward yₑ</td><td><strong>convergent (stable)</strong></td></tr>
+<tr><td><strong>b = 0</strong></td><td>0 for t ≥ 1</td><td>jumps straight to yₑ</td><td>stable</td></tr>
+<tr><td><strong>−1 &lt; b &lt; 0</strong></td><td>shrinks, alternates sign</td><td><strong>oscillates</strong> around yₑ with shrinking swings</td><td><strong>convergent (stable)</strong></td></tr>
+<tr><td><strong>b = −1</strong></td><td>±1 forever</td><td>oscillates with constant amplitude</td><td>uniform oscillation (not convergent)</td></tr>
+<tr><td><strong>b &lt; −1</strong></td><td>grows, alternates sign</td><td>oscillates around yₑ with growing swings</td><td>divergent (unstable)</td></tr>
+</tbody></table></div>
+<p><strong>Two things to read off b:</strong></p>
+<ul>
+<li><strong>Sign of b</strong> → <em>how</em> the path moves. b &gt; 0 → the path stays on one side of yₑ (monotonic). b &lt; 0 → the path <strong>alternates</strong> above and below yₑ (oscillatory).</li>
+<li><strong>|b| vs 1</strong> → <em>whether</em> it settles. |b| &lt; 1 → converges to yₑ (stable). |b| &gt; 1 → diverges. |b| = 1 → neither.</li>
+</ul>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u6-paths">
+  <h3>Time paths of a first-order difference equation, by the value of b</h3>
+  <p class="dgm-sub">yₜ = (y₀ − yₑ)·bᵗ + yₑ — four qualitatively different cases</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:600px" viewBox="0 0 600 300" role="img" aria-label="Four small step-graphs. Top left: b greater than 1, points rise further and further above the equilibrium line. Top right: 0 less than b less than 1, points step down smoothly onto the equilibrium line. Bottom left: b between minus 1 and 0, points alternate above and below the equilibrium line with shrinking distance. Bottom right: b less than minus 1, points alternate above and below with growing distance.">
+    <line class="ax" x1="20" y1="135" x2="150" y2="135"/>
+    <line class="gd" x1="20" y1="95" x2="150" y2="95"/>
+    <text class="ts" x="20" y="90">yₑ</text>
+    <circle class="dot" cx="45" cy="86" r="2.6"/><circle class="dot" cx="68" cy="78" r="2.6"/><circle class="dot" cx="91" cy="66" r="2.6"/><circle class="dot" cx="114" cy="46" r="2.6"/><circle class="dot" cx="137" cy="20" r="2.6"/>
+    <text class="tb" x="24" y="14">b &gt; 1 — divergent</text>
+    <line class="ax" x1="320" y1="135" x2="450" y2="135"/>
+    <line class="gd" x1="320" y1="95" x2="450" y2="95"/>
+    <text class="ts" x="320" y="90">yₑ</text>
+    <circle class="dot" cx="345" cy="26" r="2.6"/><circle class="dot" cx="368" cy="52" r="2.6"/><circle class="dot" cx="391" cy="72" r="2.6"/><circle class="dot" cx="414" cy="85" r="2.6"/><circle class="dot" cx="437" cy="91" r="2.6"/>
+    <text class="tb" x="315" y="14">0 &lt; b &lt; 1 — monotone convergent</text>
+    <line class="ax" x1="20" y1="285" x2="150" y2="285"/>
+    <line class="gd" x1="20" y1="240" x2="150" y2="240"/>
+    <text class="ts" x="20" y="235">yₑ</text>
+    <circle class="dot" cx="45" cy="205" r="2.6"/><circle class="dot" cx="68" cy="270" r="2.6"/><circle class="dot" cx="91" cy="224" r="2.6"/><circle class="dot" cx="114" cy="253" r="2.6"/><circle class="dot" cx="137" cy="238" r="2.6"/>
+    <text class="tb" x="24" y="164">−1 &lt; b &lt; 0 — damped oscillation</text>
+    <line class="ax" x1="320" y1="285" x2="450" y2="285"/>
+    <line class="gd" x1="320" y1="240" x2="450" y2="240"/>
+    <text class="ts" x="320" y="235">yₑ</text>
+    <circle class="dot" cx="345" cy="236" r="2.6"/><circle class="dot" cx="368" cy="250" r="2.6"/><circle class="dot" cx="391" cy="218" r="2.6"/><circle class="dot" cx="414" cy="268" r="2.6"/><circle class="dot" cx="437" cy="190" r="2.6"/>
+    <text class="tb" x="315" y="164">b &lt; −1 — explosive oscillation</text>
+  </svg></div>
+  <figcaption>
+    <p>The equilibrium line yₑ is the same in every panel; only b changes. A positive b keeps the path on one side of yₑ; a negative b makes it jump from side to side. |b| &lt; 1 pulls the path onto yₑ (stable); |b| &gt; 1 throws it off (unstable).</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The equilibrium line yₑ; the four cases and their names; that sign of b controls monotonic vs oscillatory and |b| vs 1 controls convergent vs divergent.</div>
+  </figcaption>
+</figure></div>
+
+<h2>6.4 Economic Application 1 — the Cobweb Model</h2>
+<p>A market where <strong>producers decide this period's output on the basis of last period's price</strong> (crops planted a season ahead, livestock, mines). Demand responds to the current price:</p>
+<blockquote><p>Qdₜ = α − βPₜ &nbsp;&nbsp;(demand, slope β &gt; 0)<br>
+Qsₜ = −γ + δPₜ₋₁ &nbsp;&nbsp;(supply, reacts to the <strong>lagged</strong> price, slope δ &gt; 0)</p></blockquote>
+<p>The market <strong>clears every period</strong> (Qdₜ = Qsₜ): α − βPₜ = −γ + δPₜ₋₁, i.e.</p>
+<blockquote><p><strong>Pₜ = −(δ/β)·Pₜ₋₁ + (α + γ)/β</strong></p></blockquote>
+<p>This is a first-order linear difference equation with <strong>b = −δ/β</strong> (always negative → the price path always <strong>oscillates</strong>) and equilibrium <strong>P* = (α + γ) / (β + δ)</strong>.</p>
+<p><strong>Stability</strong> depends on δ vs β, where β = |dQd/dP| and δ = dQs/dP (the <em>quantity</em> responses):</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Condition</th><th>b = −δ/β</th><th>Cobweb</th><th>Price path</th><th>On the usual P-vertical diagram</th></tr></thead>
+<tbody>
+<tr><td><strong>δ &lt; β</strong> (supply's quantity responds less)</td><td>|b| &lt; 1</td><td>spirals <strong>inward</strong></td><td>oscillates, <strong>converges</strong> to P*</td><td>S line is <strong>steeper</strong> than D</td></tr>
+<tr><td><strong>δ = β</strong></td><td>|b| = 1</td><td>closed rectangle</td><td>oscillates forever, constant amplitude</td><td>S and D equally steep</td></tr>
+<tr><td><strong>δ &gt; β</strong> (supply's quantity responds more)</td><td>|b| &gt; 1</td><td>spirals <strong>outward</strong></td><td>oscillates, <strong>diverges</strong> from P*</td><td>S line is <strong>flatter</strong> than D</td></tr>
+</tbody></table></div>
+<p><em>Watch the wording: "δ &lt; β" means supply reacts less in quantity terms, which draws as a steeper line when price is on the vertical axis. A steeper supply curve ⟹ stable cobweb.</em></p>
+<p><strong>Worked example (divergent).</strong> Qdₜ = 18 − 3Pₜ, Qsₜ = −3 + 4Pₜ₋₁. Pₜ = −(4/3)Pₜ₋₁ + 7. b = −4/3, |b| &gt; 1 → <strong>divergent</strong> oscillation. P* = 21/7 = 3. (δ = 4 &gt; β = 3.)</p>
+<p><strong>Worked example (convergent).</strong> Qdₜ = 20 − 2Pₜ, Qsₜ = −4 + Pₜ₋₁, P₀ = 10. Pₜ = −0.5·Pₜ₋₁ + 12; b = −0.5, |b| &lt; 1 → <strong>convergent</strong> oscillation. P* = 24/3 = 8. (δ = 1 &lt; β = 2.) Time path Pₜ = 2(−0.5)ᵗ + 8: P₁ = 7, P₂ = 8.5, P₃ = 7.75, P₄ = 8.125 → homing in on 8, alternating sides.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u6-cobweb">
+  <h3>The cobweb model — convergent case (δ &lt; β)</h3>
+  <p class="dgm-sub">Supply reacts to last period's price; the price spirals in toward P*</p>
+  <svg viewBox="0 0 360 245" role="img" aria-label="A gently downward-sloping demand line and a steeper upward-sloping supply line crossing at the equilibrium point P-star. A stepped path starts at a price P-zero below equilibrium and winds inward — horizontal to the supply line, vertical to the demand line, and so on — the steps getting smaller as they close in on P-star.">
+    <line class="ax" x1="45" y1="225" x2="345" y2="225"/>
+    <line class="ax" x1="45" y1="225" x2="45" y2="18"/>
+    <text class="t" x="332" y="242">Q</text><text class="t" x="30" y="22">P</text>
+    <line class="cd" x1="55" y1="70" x2="330" y2="190"/>
+    <text class="td" x="333" y="192">D</text>
+    <line class="cs" x1="90" y1="210" x2="250" y2="30"/>
+    <text class="ts" x="240" y="26">S (steeper)</text>
+    <path class="gd" d="M 45 185 L 112 185 L 112 95 L 192 95 L 192 130 L 161 130 L 161 116 L 173 116 L 173 121" fill="none"/>
+    <circle class="dot" cx="45" cy="185" r="2.6"/>
+    <text class="ts" x="28" y="199">P₀</text>
+    <circle class="dot" cx="170" cy="120" r="3.4"/>
+    <text class="tm" x="176" y="114">P*</text>
+  </svg>
+  <figcaption>
+    <p>From a starting price P₀ below equilibrium, this period's output is read off the supply curve; the market then clears on the demand curve at a higher price; next period's output responds to that price; and so on. Each swing is smaller than the last — the "web" is woven inward — so the price converges to P*. This happens because supply's quantity response is smaller than demand's (δ &lt; β), which draws as a <em>steeper</em> supply line. If supply were flatter, the web would spiral outward.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>Both curves and the equilibrium P*; the lagged-price assumption on supply; the inward spiral; that convergence needs δ &lt; β (b = −δ/β, |b| &lt; 1), i.e. a steeper S line; that the path is always oscillatory.</div>
+  </figcaption>
+</figure></div>
+
+<h2>6.5 Economic Application 2 — the Lagged Keynesian Model</h2>
+<p>National income with <strong>consumption that responds to last period's income</strong> (a one-period spending lag):</p>
+<blockquote><p>Yₜ = Cₜ + Iₜ<br>
+Cₜ = a + b·Yₜ₋₁ &nbsp;&nbsp;(a = autonomous consumption, b = marginal propensity to consume, 0 &lt; b &lt; 1)<br>
+Iₜ = I₀ &nbsp;&nbsp;(autonomous investment)</p></blockquote>
+<p>Substituting: <strong>Yₜ = b·Yₜ₋₁ + (a + I₀)</strong>. Its equilibrium is</p>
+<blockquote><p><strong>Yₑ = (a + I₀) / (1 − b)</strong> &nbsp;— autonomous spending times the Keynesian multiplier 1/(1 − b)</p></blockquote>
+<p>Because <strong>0 &lt; b &lt; 1</strong>, the time path is <strong>monotonic and convergent</strong>: income moves smoothly (no oscillation) toward Yₑ. The definite solution is <strong>Yₜ = (Y₀ − Yₑ)·bᵗ + Yₑ</strong>.</p>
+<p><strong>Worked example — the real 2023 model paper, Section C Q19.</strong> Yₜ = Cₜ + Iₜ, Cₜ = 0.7Yₜ₋₁ + 100, Iₜ = 500, Y₀ = Rs 2400. Yₜ = 0.7Yₜ₋₁ + 600. Yₑ = 600/(1 − 0.7) = 600/0.3 = <strong>Rs 2000</strong>. A = 2400 − 2000 = 400 → <strong>Yₜ = 400(0.7)ᵗ + 2000</strong>.</p>
+<ul>
+<li><strong>Y₅</strong> = 400(0.7)⁵ + 2000 = 400(0.16807) + 2000 ≈ <strong>Rs 2067.2</strong></li>
+<li><strong>Y₁₀</strong> = 400(0.7)¹⁰ + 2000 = 400(0.02825) + 2000 ≈ <strong>Rs 2011.3</strong></li>
+</ul>
+<p>Income falls steadily from 2400 toward 2000 (b = 0.7, positive and &lt; 1 → smooth convergence). The 2023 BBA paper Q21 is the same model with Y₀ = 2300: A = 300, so <strong>Yₜ = 300(0.7)ᵗ + 2000</strong> (Y₁₀ ≈ Rs 2008.5, Y₁₅ ≈ Rs 2001.4).</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u6-keynes">
+  <h3>Lagged Keynesian model — monotonic convergence to Yₑ</h3>
+  <p class="dgm-sub">Q19: Yₜ = 400(0.7)ᵗ + 2000, starting from Y₀ = 2400</p>
+  <svg viewBox="0 0 360 240" role="img" aria-label="A horizontal equilibrium line at Y equals 2000. A sequence of points starts at 2400 and steps downward, each closer to the line than the last, approaching 2000 without ever crossing it.">
+    <line class="ax" x1="50" y1="205" x2="345" y2="205"/>
+    <line class="ax" x1="50" y1="205" x2="50" y2="20"/>
+    <text class="t" x="336" y="222">t</text><text class="t" x="24" y="24">Yₜ</text>
+    <line class="gd" x1="50" y1="150" x2="345" y2="150"/>
+    <text class="ts" x="300" y="145">Yₑ = 2000</text>
+    <circle class="dot" cx="70" cy="40" r="3"/><text class="ts" x="58" y="34">Y₀ = 2400</text>
+    <circle class="dot" cx="110" cy="79" r="3"/>
+    <circle class="dot" cx="150" cy="105" r="3"/>
+    <circle class="dot" cx="190" cy="123" r="3"/>
+    <circle class="dot" cx="230" cy="134" r="3"/>
+    <circle class="dot" cx="270" cy="141" r="3"/>
+    <circle class="dot" cx="310" cy="145" r="3"/>
+    <path class="cd" d="M 70 40 Q 150 150 310 148" fill="none" opacity="0.5"/>
+  </svg>
+  <figcaption>
+    <p>Each period income covers 30% less of the remaining gap to Yₑ (because b = 0.7). The path is smooth and one-sided — it never overshoots — which is the signature of 0 &lt; b &lt; 1. Contrast the cobweb (§6.4), where b &lt; 0 forces the path to jump above and below the equilibrium.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The equilibrium line Yₑ = (a + I₀)/(1 − b); the monotonic (non-oscillatory) approach; that stability comes from 0 &lt; b = MPC &lt; 1; the multiplier interpretation of 1/(1 − b).</div>
+  </figcaption>
+</figure></div>
+
+<h2>6.6 Economic Application 3 — Duopoly Price Adjustment ⚠</h2>
+<p><em>(⚠ Not in Chiang Ch 17 or any sourced text; written from the standard Cournot dynamic-adjustment treatment — Rosser Ch 13.3, which has no digital copy, gives the same model. The 2023 model paper does not test this topic; it is included because the syllabus names it.)</em></p>
+<p>Two firms (1 and 2) sell an identical product. Market demand: <strong>P = a − b(q₁ + q₂)</strong>. Each firm has constant marginal cost <strong>c</strong>.</p>
+<p><strong>Best-response (reaction) function.</strong> Firm 1 maximises π₁ = [a − b(q₁ + q₂)]q₁ − c·q₁. Setting dπ₁/dq₁ = 0:</p>
+<blockquote><p>q₁ = (a − c)/(2b) − ½·q₂ &nbsp;&nbsp;&nbsp; and symmetrically &nbsp;&nbsp;&nbsp; q₂ = (a − c)/(2b) − ½·q₁</p></blockquote>
+<p><strong>The dynamic assumption (naïve / Cournot expectations):</strong> in each period every firm produces the best response to the rival's output <strong>in the previous period</strong>:</p>
+<blockquote><p>q₁,ₜ = (a − c)/(2b) − ½·q₂,ₜ₋₁ &nbsp;&nbsp;&nbsp; q₂,ₜ = (a − c)/(2b) − ½·q₁,ₜ₋₁</p></blockquote>
+<p>Substituting one into the other gives a difference equation for each firm's output, q₁,ₜ = (a − c)/(4b) + ¼·q₁,ₜ₋₂. The coefficient has magnitude <strong>¼</strong> (or −½ per single step), so |b| &lt; 1 and the process <strong>converges</strong> to the <strong>Cournot equilibrium</strong>:</p>
+<blockquote><p><strong>q₁* = q₂* = (a − c) / (3b)</strong> &nbsp;&nbsp;⟹&nbsp;&nbsp; P* = (a + 2c)/3</p></blockquote>
+<p><strong>Worked example.</strong> P = 100 − (q₁ + q₂), c = 10. Reaction: qᵢ = 45 − ½qⱼ. Cournot equilibrium q₁* = q₂* = 90/3 = 30, P* = 100 − 60 = 40. Start q₂,₀ = 0: q₁,₁ = 45; q₂,₂ = 22.5; q₁,₃ = 33.75; q₂,₄ = 28.125 → converging (with damped oscillation) to 30 each.</p>
+
+<hr>
+<h2>Exam checklist</h2>
+<p><strong>Definitions / formulas to know cold:</strong></p>
+<ul>
+<li>First difference Δyₜ = yₜ₊₁ − yₜ; <strong>order</strong> = longest lag; linear / homogeneous / constant-coefficient</li>
+<li><strong>Homogeneous</strong> yₜ = b·yₜ₋₁ → <strong>yₜ = y₀·bᵗ</strong></li>
+<li><strong>Non-homogeneous</strong> yₜ = b·yₜ₋₁ + c → <strong>yₜ = (y₀ − yₑ)·bᵗ + yₑ</strong>, yₑ = c/(1 − b) (b ≠ 1); if b = 1, yₜ = y₀ + ct</li>
+<li><strong>Stability:</strong> sign of b → monotonic (b &gt; 0) vs oscillatory (b &lt; 0); |b| vs 1 → convergent (|b| &lt; 1) vs divergent (|b| &gt; 1)</li>
+<li><strong>Cobweb:</strong> Qdₜ = α − βPₜ, Qsₜ = −γ + δPₜ₋₁ → Pₜ = −(δ/β)Pₜ₋₁ + (α + γ)/β; P* = (α + γ)/(β + δ); converges iff δ &lt; β; always oscillatory</li>
+<li><strong>Lagged Keynesian:</strong> Yₜ = b·Yₜ₋₁ + (a + I₀); Yₑ = (a + I₀)/(1 − b) = multiplier × autonomous spending; monotonic convergence since 0 &lt; b &lt; 1</li>
+<li><strong>Duopoly (Cournot):</strong> qᵢ,ₜ = (a − c)/(2b) − ½qⱼ,ₜ₋₁ → converges to q* = (a − c)/(3b) ⚠</li>
+</ul>
+<p><strong>Confirmed real past-paper questions</strong> (TU 2023 Model Question — BBM unless noted):</p>
+<ol>
+<li><strong>Section A Q3</strong> — solve Yₜ = 3Yₜ₋₁ when Y₀ = 3 (2 marks) — §6.2, answer <strong>Yₜ = 3ᵗ⁺¹</strong></li>
+<li><strong>Section A Q2 (BBA)</strong> — solve Yₜ = 2Yₜ₋₁ when Y₀ = 5 (2 marks) — §6.2, answer <strong>Yₜ = 5·2ᵗ</strong></li>
+<li><strong>Section B Q14</strong> — solve Yₜ = 0.2Yₜ₋₁ + 10, Y₀ = 6, find Y₄ (5 marks) — §6.2, answer <strong>Yₜ = −6.5(0.2)ᵗ + 12.5; Y₄ ≈ 12.49</strong></li>
+<li><strong>Section C Q19</strong> — lagged Keynesian: Cₜ = 0.7Yₜ₋₁ + 100, Iₜ = 500, Y₀ = 2400. (a) solve for Yₜ; (b) find Y₅ and Y₁₀ (10 marks) — §6.5, answer <strong>Yₜ = 400(0.7)ᵗ + 2000; Y₅ ≈ 2067.2, Y₁₀ ≈ 2011.3</strong></li>
+<li><strong>Section C Q21 (BBA)</strong> — same model, Y₀ = 2300, find Y₁₀ and Y₁₅ — §6.5, <strong>Yₜ = 300(0.7)ᵗ + 2000</strong></li>
+</ol>
+<p>Also expect: a Section-A brief defining a difference equation / stating its order; a Section-B homogeneous or non-homogeneous solve with a stability comment; a Section-B/C cobweb model (derive Pₜ equation, find P*, test δ vs β).</p>`;
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — MCQ QUIZ BANK   {q, o:[4], a, why, w}
    w:3 = confirmed past-paper idea or guaranteed-core; w:2 core; w:1 finer point.
@@ -14458,6 +14668,113 @@ window.SUBJECT_QUIZ["bmath2"]["4"] = [
    why:"dF = (∂F/∂x) dx + (∂F/∂y) dy. If M = ∂F/∂x and N = ∂F/∂y, then M dx + N dy = dF, and dF = 0 gives F = c."}
 ];
 
+window.SUBJECT_QUIZ["bmath2"]["5"] = [
+  {q:"A difference equation describes the pattern of change of a variable when time is treated as:", o:["a discrete variable (whole-number periods)", "a continuous variable", "a constant", "irrelevant"], a:0, w:2,
+   why:"In discrete time y changes only when t moves from one integer (period) to the next, so derivatives are replaced by differences."},
+  {q:"The first difference of y is defined as:", o:["yₜ · yₜ₋₁", "Δyₜ = yₜ₊₁ − yₜ", "yₜ / yₜ₋₁", "yₜ₊₁ + yₜ"], a:1, w:3,
+   why:"Δyₜ is the discrete-time counterpart of the derivative dy/dt; because Δt = 1 between consecutive periods, the difference quotient Δy/Δt simplifies to Δy."},
+  {q:"The equation yₜ₊₁ = yₜ + 2 is equivalent to:", o:["yₜ = 2", "Δyₜ = yₜ", "Δyₜ = 2", "yₜ₊₁ = 2yₜ"], a:2, w:2,
+   why:"yₜ₊₁ − yₜ = 2 is exactly Δyₜ = 2. The 'lead' form and the difference form carry the same information."},
+  {q:"The ORDER of a difference equation is:", o:["the highest power of yₜ", "the number of constants", "the coefficient of yₜ₋₁", "the length of the longest time lag it contains"], a:3, w:3,
+   why:"A first-order equation has only a one-period lag (yₜ and yₜ₋₁); a second-order equation reaches back two periods (yₜ, yₜ₋₁, yₜ₋₂)."},
+  {q:"The difference equation yₜ = 3yₜ₋₁ is:", o:["linear, first-order, homogeneous", "non-linear", "second-order", "linear, first-order, non-homogeneous"], a:0, w:3,
+   why:"y appears only to the first power (linear), only a one-period lag (first-order), and the constant term is zero (homogeneous)."},
+  {q:"The difference equation yₜ = 3yₜ₋₁ + 6 is:", o:["homogeneous", "non-homogeneous (its constant term is not zero)", "non-linear", "second-order"], a:1, w:2,
+   why:"The presence of the non-zero constant 6 makes it non-homogeneous. It is still linear and first-order."},
+  {q:"Which equation is NON-LINEAR?", o:["yₜ = 0.5yₜ₋₁ + 4", "yₜ − yₜ₋₁ = 10", "yₜ = 2(yₜ₋₁)² − 1", "yₜ = −yₜ₋₁"], a:2, w:2,
+   why:"(yₜ₋₁)² raises a y-term to the second power. Multiplying two y-terms from different periods would also make it non-linear."},
+  {q:"In this course the difference equations studied are first-order, linear, and have:", o:["variable coefficients", "no constant term", "second differences", "a constant coefficient (and, in §6.2 onward, a constant term)"], a:3, w:1,
+   why:"The standard form is yₜ = b·yₜ₋₁ + c with b and c constants."},
+  {q:"Solving a difference equation means finding:", o:["yₜ as an explicit function of t (the time path), given a starting value", "the value of b", "the first difference", "the order"], a:0, w:2,
+   why:"The solution is a formula yₜ = f(t) that reproduces the equation and satisfies the initial condition y₀."},
+  {q:"Solving yₜ = b·yₜ₋₁ by iteration from y₀ gives:", o:["yₜ = y₀ + bt", "yₜ = y₀·bᵗ", "yₜ = b·t", "yₜ = y₀ / bᵗ"], a:1, w:3,
+   why:"y₁ = by₀, y₂ = b²y₀, y₃ = b³y₀, … so yₜ = y₀·bᵗ."},
+  {q:"The solution of Yₜ = 3Yₜ₋₁ with Y₀ = 3 is:", o:["Yₜ = 3 + 3t", "Yₜ = 9ᵗ", "Yₜ = 3ᵗ⁺¹", "Yₜ = 3/3ᵗ"], a:2, w:3,
+   why:"Yₜ = Y₀·3ᵗ = 3·3ᵗ = 3ᵗ⁺¹ (Y₁ = 9, Y₂ = 27, …). This is the real 2023 model paper Section A Q3."},
+  {q:"The solution of Yₜ = 2Yₜ₋₁ with Y₀ = 5 is:", o:["Yₜ = 5 + 2t", "Yₜ = 10ᵗ", "Yₜ = 2ᵗ / 5", "Yₜ = 5·2ᵗ"], a:3, w:3,
+   why:"Yₜ = Y₀·2ᵗ = 5·2ᵗ. This is the real 2023 BBA model paper Section A Q2."},
+  {q:"For the homogeneous equation yₜ = b·yₜ₋₁, the term A·bᵗ is called the:", o:["complementary function", "particular integral", "equilibrium", "initial condition"], a:0, w:2,
+   why:"It is the general solution of the reduced (homogeneous) equation and measures the deviation of the time path from equilibrium."},
+  {q:"For yₜ = b·yₜ₋₁ + c (b ≠ 1), a particular solution is found by trying yₜ = k (a constant), which gives:", o:["k = 0", "yp = c / (1 − b)", "yp = bc", "yp = c − b"], a:1, w:3,
+   why:"k = bk + c → k(1 − b) = c → k = c/(1 − b). This constant is the intertemporal (stationary) equilibrium yₑ."},
+  {q:"The general solution of yₜ = b·yₜ₋₁ + c (b ≠ 1) is:", o:["yₜ = A·bᵗ − c", "yₜ = c/(1 − b) only", "yₜ = A·bᵗ + c/(1 − b)", "yₜ = A + bt + c"], a:2, w:3,
+   why:"yₜ = complementary function + particular solution = A·bᵗ + c/(1 − b). A is fixed by the initial condition."},
+  {q:"The definite solution of yₜ = b·yₜ₋₁ + c given y₀ is:", o:["yₜ = y₀·bᵗ", "yₜ = yₑ for all t", "yₜ = y₀ + (yₑ)t", "yₜ = (y₀ − yₑ)·bᵗ + yₑ, where yₑ = c/(1 − b)"], a:3, w:3,
+   why:"Put t = 0 in the general solution: y₀ = A + yₑ → A = y₀ − yₑ."},
+  {q:"When b = 1, the equation yₜ = yₜ₋₁ + c has solution:", o:["yₜ = y₀ + c·t", "yₜ = y₀·1ᵗ", "yₜ = c / (1 − 1)", "yₜ = y₀ − ct"], a:0, w:2,
+   why:"c/(1 − b) is undefined when b = 1; iterating instead gives yₜ = y₀ + ct — a straight-line time path with no finite equilibrium."},
+  {q:"Solving yₜ₊₁ = 0.2yₜ + 4 with y₀ = 4:", o:["yₜ = 4·(0.2)ᵗ", "yₜ = −(0.2)ᵗ + 5", "yₜ = 5·(0.2)ᵗ + 4", "yₜ = 4 + 5t"], a:1, w:3,
+   why:"yₑ = 4/(1 − 0.2) = 5; A = y₀ − yₑ = 4 − 5 = −1. So yₜ = −(0.2)ᵗ + 5, converging up to 5."},
+  {q:"For Yₜ = 0.2Yₜ₋₁ + 10 with Y₀ = 6, the equilibrium level Yₑ is:", o:["10", "6", "12.5", "50"], a:2, w:3,
+   why:"Yₑ = 10/(1 − 0.2) = 10/0.8 = 12.5. This is the real 2023 model paper Section B Q14."},
+  {q:"For Yₜ = 0.2Yₜ₋₁ + 10 with Y₀ = 6, the value of Y₄ is approximately:", o:["11.20", "12.24", "12.45", "12.49"], a:3, w:3,
+   why:"Y₁ = 0.2(6) + 10 = 11.2; Y₂ = 12.24; Y₃ = 12.448; Y₄ = 0.2(12.448) + 10 = 12.4896 ≈ 12.49. Real 2023 model paper Section B Q14."},
+  {q:"In yₜ = (y₀ − yₑ)·bᵗ + yₑ, the equilibrium yₑ is dynamically STABLE when:", o:["|b| < 1", "b > 1", "b = 1", "|b| > 1"], a:0, w:3,
+   why:"|b| < 1 makes bᵗ → 0 as t → ∞, so the deviation term dies away and yₜ → yₑ."},
+  {q:"If b > 1, the time path of a difference equation:", o:["converges monotonically to yₑ", "moves away from yₑ at an increasing rate (divergent)", "oscillates around yₑ with shrinking swings", "stays constant"], a:1, w:3,
+   why:"bᵗ grows without bound and keeps the same sign, so the path rises (or falls) ever faster away from equilibrium."},
+  {q:"If 0 < b < 1, the time path:", o:["oscillates around yₑ", "diverges from yₑ", "moves smoothly (monotonically) toward yₑ", "is a straight line"], a:2, w:3,
+   why:"bᵗ shrinks toward 0 and stays positive, so the path approaches yₑ from one side without oscillating."},
+  {q:"If −1 < b < 0, the time path:", o:["diverges monotonically", "stays on one side of yₑ", "grows without limit", "oscillates around yₑ with swings that shrink toward zero (damped oscillation)"], a:3, w:3,
+   why:"bᵗ alternates in sign (because b < 0) but shrinks in size (because |b| < 1), so the path jumps above and below yₑ while converging."},
+  {q:"If b < −1, the time path:", o:["oscillates around yₑ with swings that grow (explosive oscillation)", "converges smoothly", "converges with damped oscillation", "is constant at yₑ"], a:0, w:2,
+   why:"bᵗ alternates in sign and grows in magnitude, so the path swings above and below yₑ ever more widely."},
+  {q:"When b = −1 exactly, the time path:", o:["converges to yₑ", "oscillates between two values with constant amplitude (never settling)", "diverges monotonically", "equals y₀ + ct"], a:1, w:2,
+   why:"(−1)ᵗ is +1, −1, +1, −1, … forever, so the deviation neither grows nor shrinks — a uniform, undamped oscillation."},
+  {q:"The SIGN of b in yₜ = b·yₜ₋₁ + c tells you:", o:["whether the equilibrium exists", "the value of yₑ", "whether the path is monotonic (b > 0) or oscillatory (b < 0)", "the order of the equation"], a:2, w:3,
+   why:"A positive b keeps the path on one side of yₑ; a negative b makes it alternate above and below."},
+  {q:"The MAGNITUDE of b (|b| versus 1) tells you:", o:["the sign of the deviation", "the length of a period", "the number of arbitrary constants", "whether the path converges (|b| < 1) or diverges (|b| > 1)"], a:3, w:3,
+   why:"|b| < 1 shrinks the complementary function to zero (stable); |b| > 1 lets it grow (unstable); |b| = 1 is the borderline."},
+  {q:"A difference equation with b = 0.9 and c = 5 has an equilibrium that is:", o:["stable, approached monotonically", "unstable", "stable, approached with oscillation", "non-existent"], a:0, w:2,
+   why:"0 < b = 0.9 < 1: |b| < 1 → stable; b > 0 → monotonic. yₑ = 5/(1 − 0.9) = 50."},
+  {q:"A difference equation with b = −0.5 has a time path that is:", o:["divergent and oscillatory", "convergent and oscillatory", "convergent and monotonic", "constant"], a:1, w:3,
+   why:"b < 0 → oscillatory; |b| = 0.5 < 1 → convergent. The path damps toward equilibrium, alternating sides."},
+  {q:"In the cobweb model, producers set the current period's output on the basis of:", o:["the current price Pₜ", "expected future price", "last period's price Pₜ₋₁", "a fixed target"], a:2, w:3,
+   why:"Qsₜ = −γ + δPₜ₋₁ — the lagged price. This one-period supply lag is what generates the cobweb dynamics."},
+  {q:"In the cobweb model Qdₜ = α − βPₜ and Qsₜ = −γ + δPₜ₋₁, imposing market clearing (Qdₜ = Qsₜ) gives:", o:["Pₜ = Pₜ₋₁", "a second-order equation", "Pₜ = constant", "Pₜ = −(δ/β)·Pₜ₋₁ + (α + γ)/β"], a:3, w:3,
+   why:"α − βPₜ = −γ + δPₜ₋₁ → βPₜ = α + γ − δPₜ₋₁ → Pₜ = −(δ/β)Pₜ₋₁ + (α + γ)/β."},
+  {q:"In the cobweb price equation, the coefficient b = −δ/β is always negative, so the price path is always:", o:["oscillatory", "constant", "monotonic", "explosive"], a:0, w:3,
+   why:"A negative b makes the price alternate above and below equilibrium each period — whether it converges or diverges depends on |δ/β|."},
+  {q:"The equilibrium price in the cobweb model is:", o:["P* = α/β", "P* = (α + γ)/(β + δ)", "P* = δ/β", "P* = α + γ"], a:1, w:3,
+   why:"Set Pₜ = Pₜ₋₁ = P*: P* = −(δ/β)P* + (α + γ)/β → P*(1 + δ/β) = (α + γ)/β → P* = (α + γ)/(β + δ)."},
+  {q:"The cobweb converges to equilibrium if and only if:", o:["δ > β", "δ = β", "δ < β", "β = 0"], a:2, w:3,
+   why:"Convergence needs |b| = |−δ/β| = δ/β < 1, i.e. δ < β (supply's quantity response is smaller than demand's)."},
+  {q:"When δ = β in the cobweb model, the price path:", o:["converges to P*", "explodes", "is constant", "oscillates forever with constant amplitude (a closed rectangle)"], a:3, w:2,
+   why:"|b| = δ/β = 1, so the deviation neither shrinks nor grows — the cobweb traces the same rectangle each cycle."},
+  {q:"On the usual diagram with price on the vertical axis, a CONVERGENT (stable) cobweb has:", o:["the supply curve steeper than the demand curve", "a demand curve steeper than supply", "the supply and demand curves parallel", "a horizontal supply curve"], a:0, w:2,
+   why:"δ < β (the stable condition) means supply's quantity response is smaller, which draws as a steeper S line when P is on the vertical axis."},
+  {q:"For Qdₜ = 18 − 3Pₜ and Qsₜ = −3 + 4Pₜ₋₁, the cobweb is:", o:["convergent", "divergent (δ = 4 > β = 3, so |b| = 4/3 > 1)", "a closed rectangle", "monotonic"], a:1, w:3,
+   why:"Pₜ = −(4/3)Pₜ₋₁ + 7; b = −4/3, |b| > 1 → the price oscillates with ever-widening swings. P* = 21/7 = 3."},
+  {q:"For Qdₜ = 20 − 2Pₜ and Qsₜ = −4 + Pₜ₋₁, the equilibrium price and stability are:", o:["P* = 12, divergent", "P* = 8, divergent", "P* = 8, convergent (b = −0.5)", "P* = 4, a closed rectangle"], a:2, w:3,
+   why:"Pₜ = −0.5Pₜ₋₁ + 12; P* = 24/3 = 8; b = −0.5, |b| < 1 → convergent oscillation (δ = 1 < β = 2)."},
+  {q:"For the model in the previous question (P* = 8, b = −0.5) starting at P₀ = 10, the first two prices P₁ and P₂ are:", o:["10 and 10", "8 and 8", "12 and 6", "7 and 8.5"], a:3, w:2,
+   why:"P₁ = −0.5(10) + 12 = 7; P₂ = −0.5(7) + 12 = 8.5. The price alternates around 8 while closing in on it."},
+  {q:"In the lagged Keynesian model Yₜ = Cₜ + Iₜ with Cₜ = a + b·Yₜ₋₁ and Iₜ = I₀, the difference equation for income is:", o:["Yₜ = b·Yₜ₋₁ + (a + I₀)", "Yₜ = a·Yₜ₋₁ + I₀", "Yₜ = Yₜ₋₁ + a", "Yₜ = (a + I₀)/(1 − b)"], a:0, w:3,
+   why:"Substitute C and I into Y = C + I: Yₜ = a + bYₜ₋₁ + I₀ = bYₜ₋₁ + (a + I₀). The coefficient b is the marginal propensity to consume."},
+  {q:"The equilibrium income in the lagged Keynesian model is:", o:["Yₑ = a + I₀", "Yₑ = (a + I₀)/(1 − b)", "Yₑ = b(a + I₀)", "Yₑ = (a + I₀)/b"], a:1, w:3,
+   why:"Yₑ = c/(1 − b) with c = a + I₀. The factor 1/(1 − b) is the Keynesian multiplier."},
+  {q:"The lagged Keynesian time path converges MONOTONICALLY (without oscillation) because:", o:["the multiplier is large", "investment is autonomous", "the coefficient b is the MPC, and 0 < b < 1 (positive and less than one)", "income always rises"], a:2, w:3,
+   why:"0 < b < 1 gives |b| < 1 (convergent) and b > 0 (monotonic), so income eases smoothly toward Yₑ."},
+  {q:"For Cₜ = 0.7Yₜ₋₁ + 100 and Iₜ = 500, the equilibrium income Yₑ is:", o:["Rs 600", "Rs 857", "Rs 1714", "Rs 2000"], a:3, w:3,
+   why:"Yₜ = 0.7Yₜ₋₁ + 600; Yₑ = 600/(1 − 0.7) = 600/0.3 = 2000. This is the real 2023 model paper Section C Q19."},
+  {q:"For Cₜ = 0.7Yₜ₋₁ + 100, Iₜ = 500, Y₀ = 2400, the time path of income is:", o:["Yₜ = 400(0.7)ᵗ + 2000", "Yₜ = 2400(0.7)ᵗ", "Yₜ = 2000(0.7)ᵗ + 400", "Yₜ = 2400 − 400t"], a:0, w:3,
+   why:"Yₑ = 2000; A = Y₀ − Yₑ = 2400 − 2000 = 400. So Yₜ = 400(0.7)ᵗ + 2000. Real 2023 model paper Section C Q19."},
+  {q:"For Yₜ = 400(0.7)ᵗ + 2000, the income Y₅ is approximately (0.7⁵ ≈ 0.168):", o:["Rs 2400", "Rs 2067", "Rs 2000", "Rs 1933"], a:1, w:2,
+   why:"Y₅ = 400(0.168) + 2000 = 67.2 + 2000 ≈ Rs 2067. Income is easing down from 2400 toward the equilibrium 2000."},
+  {q:"For Yₜ = 400(0.7)ᵗ + 2000, as t → ∞ the income approaches:", o:["0", "2400", "Rs 2000 (the equilibrium)", "infinity"], a:2, w:2,
+   why:"(0.7)ᵗ → 0, so Yₜ → 2000. The approach is smooth and one-sided because b = 0.7 is between 0 and 1."},
+  {q:"In the lagged Keynesian model with Y₀ = 2300 and Yₑ = 2000, the time path is:", o:["Yₜ = 2000(0.7)ᵗ + 300", "Yₜ = −300(0.7)ᵗ + 2000", "Yₜ = 2300(0.7)ᵗ", "Yₜ = 300(0.7)ᵗ + 2000"], a:3, w:2,
+   why:"A = Y₀ − Yₑ = 2300 − 2000 = 300, so Yₜ = 300(0.7)ᵗ + 2000. Income falls from 2300 toward 2000 (2023 BBA model paper Q21)."},
+  {q:"In the Cournot duopoly model with demand P = a − b(q₁ + q₂) and marginal cost c, firm 1's best-response function is:", o:["q₁ = (a − c)/(2b) − ½·q₂", "q₁ = a − c − q₂", "q₁ = (a − c)/b − q₂", "q₁ = (a + c)/(2b) + ½·q₂"], a:0, w:2,
+   why:"Maximise π₁ = [a − b(q₁ + q₂)]q₁ − c·q₁: dπ₁/dq₁ = a − 2bq₁ − bq₂ − c = 0 → q₁ = (a − c)/(2b) − ½q₂."},
+  {q:"In the dynamic Cournot duopoly, each firm produces the best response to the rival's output in:", o:["the same period", "the previous period", "two periods ahead", "the long-run equilibrium"], a:1, w:2,
+   why:"q₁,ₜ = (a − c)/(2b) − ½·q₂,ₜ₋₁ (naïve / Cournot expectations) — this lag turns the reaction functions into a difference equation."},
+  {q:"The dynamic Cournot duopoly adjustment process converges to the Cournot equilibrium because:", o:["marginal cost is constant", "demand is linear", "the per-step adjustment coefficient has magnitude ½ < 1", "the firms collude"], a:2, w:2,
+   why:"Combining the two lagged reaction functions gives a difference equation with |b| = ¼ (or −½ per single step), so |b| < 1 and outputs converge."},
+  {q:"In the Cournot duopoly with P = a − b(q₁ + q₂) and cost c per unit, the equilibrium output of each firm is:", o:["(a − c)/(2b)", "(a − c)/b", "(a + c)/(3b)", "(a − c)/(3b)"], a:3, w:2,
+   why:"By symmetry q₁* = q₂* = q*. Substitute into a reaction function: q* = (a − c)/(2b) − ½q* → (3/2)q* = (a − c)/(2b) → q* = (a − c)/(3b)."}
+];
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — WRITTEN EXAM-MODE BANK
    Section A = brief (2), B = short (5), C = long (10). Subject-level Section-D
@@ -14759,6 +15076,65 @@ window.SUBJECT_EXAM["bmath2"].units["4"] = {
      pts:["(a) Unlimited: dy/dt = ry → y = A e^(rt), no upper bound (r > 0). Limited: dy/dt = r(A − y) → y = A(1 − e^(−rt)) (with y = 0 at t = 0), approaches the ceiling A","(b) Separate: (1/(20000 − N)) dN = 0.5 dt → 20000 − N = B e^(−0.5t); N(0) = 0 → B = 20000","N(t) = 20000(1 − e^(−0.5t))","N(4) = 20000(1 − 0.135) = 20000(0.865) ≈ 17 300 adopters; ceiling = 20 000","(c) Starts at 0, rises steeply at first, then flattens as N nears 20 000 — a bounded curve asymptotic to N = 20 000"]},
     {q:"(a) State the test for exactness of M dx + N dy = 0 and outline the method of solution. (b) Solve (2xy + 3) dx + (x² + 4y) dy = 0. (c) Solve (3x² + 2y) dx + (2x + 3y²) dy = 0. (d) For 2t dy + y dt = 0, show it is not exact and solve it by first multiplying by a suitable factor.",
      pts:["(a) Exact iff ∂M/∂y = ∂N/∂x. Then set F = ∫ M dx + ψ(y); differentiate w.r.t. y and equate to N to find ψ′(y); integrate for ψ(y); solution F(x, y) = c","(b) ∂M/∂y = 2x = ∂N/∂x → exact. F = x²y + 3x + ψ(y); ∂F/∂y = x² + ψ′ = x² + 4y → ψ = 2y². Solution x²y + 3x + 2y² = c","(c) ∂M/∂y = 2 = ∂N/∂x → exact. F = x³ + 2xy + ψ(y); ∂F/∂y = 2x + ψ′ = 2x + 3y² → ψ = y³. Solution x³ + 2xy + y³ = c","(d) M = y, N = 2t: ∂M/∂y = 1, ∂N/∂t = 2 → not exact. Multiply by y: 2ty dy + y² dt = 0; now ∂(y²)/∂y = 2y = ∂(2ty)/∂t → exact. F = ty² = c → y² = c/t"]}
+  ]
+};
+
+window.SUBJECT_EXAM["bmath2"].units["5"] = {
+  brief: [
+    {q:"Solve the difference equation Yₜ = 3Yₜ₋₁ when Y₀ = 3.", real:"2023 model paper",
+     pts:["Homogeneous first-order: Yₜ = Y₀·bᵗ with b = 3","Yₜ = 3·3ᵗ = 3ᵗ⁺¹","(Y₁ = 9, Y₂ = 27, … — explosive growth, since b = 3 > 1)"]},
+    {q:"Solve the difference equation Yₜ = 2Yₜ₋₁ when Y₀ = 5.", real:"2023 model paper",
+     pts:["Homogeneous first-order: Yₜ = Y₀·bᵗ with b = 2","Yₜ = 5·2ᵗ","Divergent, since b = 2 > 1"]},
+    {q:"Define a difference equation and state what is meant by its order.",
+     pts:["A difference equation relates the values of a variable in different (discrete) time periods — e.g. yₜ = b·yₜ₋₁ + c","Order = the length of the longest time lag it contains: first order → a one-period lag (yₜ, yₜ₋₁); second order → a two-period lag"]},
+    {q:"Distinguish a homogeneous from a non-homogeneous first-order difference equation, with an example of each.",
+     pts:["Homogeneous: the constant term is zero, e.g. yₜ = 0.5yₜ₋₁","Non-homogeneous: a non-zero constant term, e.g. yₜ = 0.5yₜ₋₁ + 4","Both are still linear and first order"]},
+    {q:"Write the general solution of yₜ = b·yₜ₋₁ + c (b ≠ 1) and identify the equilibrium.",
+     pts:["yₜ = A·bᵗ + c/(1 − b) — complementary function A·bᵗ plus particular solution c/(1 − b)","The equilibrium (stationary level) is yₑ = c/(1 − b)","A is fixed by the initial condition: A = y₀ − yₑ"]},
+    {q:"State the stability condition for yₜ = b·yₜ₋₁ + c and say what the sign of b controls.",
+     pts:["Stable (yₜ → yₑ) if and only if |b| < 1; unstable if |b| > 1","Sign of b: b > 0 → monotonic path (stays one side of yₑ); b < 0 → oscillatory path (alternates above and below yₑ)"]},
+    {q:"Solve yₜ = yₜ₋₁ + 5 with y₀ = 2.",
+     pts:["Here b = 1, so c/(1 − b) is undefined — there is no finite equilibrium","Iterating: y₁ = 7, y₂ = 12, … → yₜ = y₀ + 5t = 2 + 5t (a straight-line time path)"]},
+    {q:"Find the equilibrium of Yₜ = 0.25Yₜ₋₁ + 30 and state whether it is stable.",
+     pts:["Yₑ = 30 / (1 − 0.25) = 30 / 0.75 = 40","b = 0.25: |b| < 1 → stable; b > 0 → approached monotonically"]},
+    {q:"In the cobweb model, why does the price path always oscillate?",
+     pts:["Market clearing gives Pₜ = −(δ/β)·Pₜ₋₁ + (α + γ)/β","The coefficient b = −δ/β is always negative (δ, β > 0), so Pₜ alternates above and below equilibrium each period","Whether it converges or diverges depends on |δ/β|"]},
+    {q:"From Qdₜ = α − βPₜ and Qsₜ = −γ + δPₜ₋₁, write the cobweb price equation and give the equilibrium price.",
+     pts:["Set Qdₜ = Qsₜ: α − βPₜ = −γ + δPₜ₋₁ → Pₜ = −(δ/β)·Pₜ₋₁ + (α + γ)/β","Equilibrium: P* = (α + γ)/(β + δ)"]},
+    {q:"State the condition under which the cobweb model converges to equilibrium.",
+     pts:["Converges iff |b| = δ/β < 1, i.e. δ < β","Supply's quantity response is smaller than demand's — the supply curve is steeper on the P-vertical diagram","δ > β → divergent; δ = β → perpetual oscillation"]},
+    {q:"Write the difference equation for the lagged Keynesian model and give the equilibrium income.",
+     pts:["Yₜ = Cₜ + Iₜ with Cₜ = a + b·Yₜ₋₁, Iₜ = I₀ → Yₜ = b·Yₜ₋₁ + (a + I₀)","Equilibrium Yₑ = (a + I₀)/(1 − b) — autonomous spending times the multiplier 1/(1 − b)"]},
+    {q:"For yₜ = −0.5yₜ₋₁ + 9, find the equilibrium and describe the time path.",
+     pts:["yₑ = 9 / (1 − (−0.5)) = 9 / 1.5 = 6","b = −0.5: b < 0 → oscillatory; |b| < 1 → convergent → a damped oscillation settling on yₑ = 6"]}
+  ],
+  short: [
+    {q:"Solve the difference equation Yₜ = 0.2Yₜ₋₁ + 10, given Y₀ = 6, and find Y₄.", real:"2023 model paper",
+     pts:["Equilibrium Yₑ = 10 / (1 − 0.2) = 12.5","A = Y₀ − Yₑ = 6 − 12.5 = −6.5 → Yₜ = −6.5·(0.2)ᵗ + 12.5","By iteration: Y₁ = 0.2(6) + 10 = 11.2; Y₂ = 12.24; Y₃ = 12.448","Y₄ = 0.2(12.448) + 10 = 12.4896 ≈ 12.49 (check: −6.5(0.2)⁴ + 12.5 = 12.4896 ✓)","b = 0.2: stable and monotonic — income settles quickly on 12.5"]},
+    {q:"Solve yₜ₊₁ = 0.5yₜ + 8 with y₀ = 20. State the equilibrium and the nature of the time path.",
+     pts:["yₑ = 8 / (1 − 0.5) = 16","A = y₀ − yₑ = 20 − 16 = 4 → yₜ = 4·(0.5)ᵗ + 16","b = 0.5: 0 < b < 1 → the path is monotonic and convergent","y₁ = 18, y₂ = 17, y₃ = 16.5, … → 16"]},
+    {q:"Solve yₜ = −0.8yₜ₋₁ + 18 with y₀ = 20. Comment on the type of path and its stability.",
+     pts:["yₑ = 18 / (1 − (−0.8)) = 18 / 1.8 = 10","A = 20 − 10 = 10 → yₜ = 10·(−0.8)ᵗ + 10","b = −0.8: b < 0 → oscillatory; |b| = 0.8 < 1 → convergent → damped oscillation","y₁ = 2, y₂ = 16.4, y₃ = 4.88, … alternating around and closing in on 10"]},
+    {q:"For the cobweb model Qdₜ = 24 − 3Pₜ and Qsₜ = −6 + 2Pₜ₋₁: (a) derive the price difference equation; (b) find P* and say whether the cobweb converges; (c) with P₀ = 10, find P₁, P₂ and P₃.",
+     pts:["(a) 24 − 3Pₜ = −6 + 2Pₜ₋₁ → 3Pₜ = 30 − 2Pₜ₋₁ → Pₜ = 10 − (2/3)Pₜ₋₁","(b) P* = (24 + 6)/(3 + 2) = 30/5 = 6; b = −2/3, |b| < 1 → converges (δ = 2 < β = 3); the path oscillates","(c) P₁ = 10 − (2/3)(10) = 3.33; P₂ = 10 − (2/3)(3.33) = 7.78; P₃ = 10 − (2/3)(7.78) = 4.81 — closing in on 6"]},
+    {q:"A market has Qdₜ = 30 − 2Pₜ and Qsₜ = −6 + 4Pₜ₋₁. Find the equilibrium price and show that the cobweb diverges.",
+     pts:["30 − 2Pₜ = −6 + 4Pₜ₋₁ → 2Pₜ = 36 − 4Pₜ₋₁ → Pₜ = 18 − 2Pₜ₋₁","P* = (30 + 6)/(2 + 4) = 36/6 = 6","b = −2, |b| = 2 > 1 (δ = 4 > β = 2) → divergent oscillation: any P₀ ≠ 6 gives ever-widening price swings"]},
+    {q:"State the cobweb theorem and explain, with reference to a supply–demand diagram, how the relative price-responsiveness of supply and demand decides whether the price converges.",
+     pts:["Cobweb theorem: with a one-period supply lag, Pₜ = −(δ/β)Pₜ₋₁ + (α + γ)/β; the price path is always oscillatory, and converges iff δ < β","On a P-vertical diagram: convergence (δ < β) shows as a supply line steeper than the demand line; the stepped path (horizontal to S, vertical to D, …) then spirals inward to P*","If supply is flatter (δ > β) the web spirals outward (divergent); if equally steep (δ = β) it traces a fixed rectangle"]},
+    {q:"In a lagged Keynesian model Cₜ = 0.6Yₜ₋₁ + 200, Iₜ = 400, Y₀ = 1200. Find the equilibrium income, the time path, and Y₃.",
+     pts:["Yₜ = 0.6Yₜ₋₁ + (200 + 400) = 0.6Yₜ₋₁ + 600","Yₑ = 600 / (1 − 0.6) = 1500 (multiplier 1/0.4 = 2.5 on autonomous spending 600)","A = Y₀ − Yₑ = 1200 − 1500 = −300 → Yₜ = −300·(0.6)ᵗ + 1500","Y₃ = −300(0.216) + 1500 = −64.8 + 1500 = Rs 1435.2 (rising monotonically toward 1500)"]},
+    {q:"For a dynamic Cournot duopoly with market demand P = 120 − (q₁ + q₂) and constant marginal cost 30 for each firm, find the reaction functions and the Cournot equilibrium output, then trace two iterations from q₂,₀ = 0.",
+     pts:["Firm i maximises πᵢ = [120 − (qᵢ + qⱼ)]qᵢ − 30qᵢ → 120 − 2qᵢ − qⱼ − 30 = 0 → qᵢ = 45 − ½qⱼ","Symmetric equilibrium: q* = 45 − ½q* → (3/2)q* = 45 → q₁* = q₂* = 30; P* = 120 − 60 = 60","Iterations from q₂,₀ = 0: q₁,₁ = 45; q₂,₂ = 45 − 22.5 = 22.5; q₁,₃ = 45 − 11.25 = 33.75; q₂,₄ = 45 − 16.875 = 28.125 → converging to 30"]}
+  ],
+  long: [
+    {q:"A lagged Keynesian national-income model has Yₜ = Cₜ + Iₜ, with Cₜ = 0.7Yₜ₋₁ + 100 and Iₜ = 500. (a) Derive the difference equation for Yₜ. (b) Find the equilibrium income. (c) Solve for Yₜ given Y₀ = Rs 2400. (d) Find Y₅ and Y₁₀ (0.7⁵ ≈ 0.168, 0.7¹⁰ ≈ 0.0282). (e) Comment on the stability of the equilibrium.", real:"2023 model paper",
+     pts:["(a) Yₜ = 0.7Yₜ₋₁ + 100 + 500 = 0.7Yₜ₋₁ + 600","(b) Yₑ = 600 / (1 − 0.7) = 600 / 0.3 = Rs 2000 (autonomous spending 600 × multiplier 1/0.3 ≈ 3.33)","(c) A = Y₀ − Yₑ = 2400 − 2000 = 400 → Yₜ = 400(0.7)ᵗ + 2000","(d) Y₅ = 400(0.168) + 2000 = 67.2 + 2000 ≈ Rs 2067.2;  Y₁₀ = 400(0.0282) + 2000 = 11.3 + 2000 ≈ Rs 2011.3","(e) b = 0.7: |b| < 1 → the equilibrium is dynamically stable; b > 0 → income approaches Rs 2000 smoothly (monotonically), no oscillation"]},
+    {q:"A lagged Keynesian model has Yₜ = Cₜ + Iₜ, Cₜ = 0.7Yₜ₋₁ + 100, Iₜ = 500. (a) Solve for Yₜ when Y₀ = Rs 2300. (b) Find Y₁₀ and Y₁₅ (0.7¹⁰ ≈ 0.0282, 0.7¹⁵ ≈ 0.0047). (c) Sketch/describe the time path and state whether the equilibrium is stable.", real:"2023 model paper",
+     pts:["Yₜ = 0.7Yₜ₋₁ + 600; equilibrium Yₑ = 600/0.3 = 2000","(a) A = Y₀ − Yₑ = 2300 − 2000 = 300 → Yₜ = 300(0.7)ᵗ + 2000","(b) Y₁₀ = 300(0.0282) + 2000 ≈ Rs 2008.5;  Y₁₅ = 300(0.0047) + 2000 ≈ Rs 2001.4","(c) Income falls smoothly from 2300 toward 2000; since 0 < b = 0.7 < 1 the equilibrium is stable and the approach is monotonic (no overshoot)"]},
+    {q:"Consider the first-order linear difference equation yₜ = b·yₜ₋₁ + c. (a) Derive its complete solution as a complementary function plus a particular solution. (b) Obtain the definite solution given y₀. (c) Classify the time path for every possible value of b. (d) Apply the results to yₜ = −2yₜ₋₁ + 9 with y₀ = 5, and state the nature of the path.",
+     pts:["(a) Reduced equation yₜ = b·yₜ₋₁ has general solution yc = A·bᵗ. Try yₜ = k constant for a particular solution: k = bk + c → yp = c/(1 − b). Complete: yₜ = A·bᵗ + c/(1 − b)","(b) t = 0: y₀ = A + yₑ → A = y₀ − yₑ. Definite solution yₜ = (y₀ − yₑ)·bᵗ + yₑ, yₑ = c/(1 − b)","(c) b > 1: divergent, monotonic. b = 1: yₜ = y₀ + ct (no equilibrium). 0 < b < 1: convergent, monotonic. b = 0: jumps to yₑ. −1 < b < 0: convergent, oscillatory (damped). b = −1: uniform oscillation. b < −1: divergent, oscillatory (explosive)","(d) yₑ = 9/(1 − (−2)) = 3; A = 5 − 3 = 2 → yₜ = 2(−2)ᵗ + 3. b = −2 → |b| > 1 and b < 0 → explosive oscillation (y₁ = −1, y₂ = 11, y₃ = −13, …)"]},
+    {q:"The cobweb model. (a) Set up linear demand and lagged supply, and derive the difference equation for Pₜ together with the equilibrium price P*. (b) State and justify the condition for the price to converge to P*. (c) Describe the three cases (δ < β, δ = β, δ > β) and the shape of the cobweb in each. (d) Work the example Qdₜ = 20 − 2Pₜ, Qsₜ = −4 + Pₜ₋₁ with P₀ = 10: find P* and P₁ to P₄.",
+     pts:["(a) Qdₜ = α − βPₜ, Qsₜ = −γ + δPₜ₋₁; market clearing Qdₜ = Qsₜ → Pₜ = −(δ/β)Pₜ₋₁ + (α + γ)/β. Setting Pₜ = Pₜ₋₁ = P*: P* = (α + γ)/(β + δ)","(b) The coefficient is b = −δ/β; the deviation from P* behaves like (−δ/β)ᵗ, which → 0 iff |−δ/β| < 1, i.e. δ < β. So the price converges iff supply's quantity response is smaller than demand's","(c) δ < β: |b| < 1 → inward spiral, price converges (oscillating). δ = β: |b| = 1 → closed rectangle, constant-amplitude oscillation. δ > β: |b| > 1 → outward spiral, price diverges","(d) 20 − 2Pₜ = −4 + Pₜ₋₁ → Pₜ = 12 − 0.5Pₜ₋₁; P* = 24/3 = 8; b = −0.5 (δ = 1 < β = 2) → converges. P₁ = 7, P₂ = 8.5, P₃ = 7.75, P₄ = 8.125 → homing in on 8, alternating sides"]}
   ]
 };
 
