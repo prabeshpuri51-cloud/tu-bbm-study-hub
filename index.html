@@ -173,10 +173,20 @@
   /* Tall enough that a full page plus the footer below it is never clipped.
      (A 560px cap used to cut the page counter off entirely.) */
   .pdf-expand.open{max-height:6000px;}
-  .pdf-canvas-wrap{position:relative;margin-top:2px;touch-action:pan-y;}
-  .pdf-canvas-wrap.zoomed{overflow:auto;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;}
-  .pdf-canvas-wrap canvas{width:100%;border-radius:10px;background:#fff;display:block;}
-  .pdf-canvas-wrap.zoomed canvas{width:auto;max-width:none;}
+  /* The reader is a fixed-size window with ONE scroller inside it. Every
+     control (arrows, page pill, highlight bar, toasts) is a sibling of that
+     scroller — not a child — so nothing drifts when you scroll or zoom. */
+  .pdf-viewport{position:relative;margin-top:2px;height:min(70vh,560px);
+    border-radius:10px;overflow:hidden;background:#0a0910;}
+  /* `scrollbar-gutter:stable` keeps a desktop scrollbar from changing the
+     usable width when it appears — which would otherwise re-trigger a resize
+     and re-render on a loop. */
+  .pdf-scroll{position:absolute;inset:0;overflow:auto;-webkit-overflow-scrolling:touch;
+    touch-action:pan-x pan-y;scrollbar-gutter:stable;overscroll-behavior:contain;}
+  /* While two fingers are down we drive the zoom ourselves. */
+  .pdf-scroll.pinching{overflow:hidden;touch-action:none;}
+  #pdf-stage{position:relative;margin:0 auto;transform-origin:0 0;}
+  #pdf-stage canvas{display:block;width:100%;height:100%;background:#fff;border-radius:6px;}
   .pdf-toolbar{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
   .pdf-tool-btn{background:var(--card);border:1px solid var(--line);color:var(--ink);width:34px;height:34px;
     border-radius:9px;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -236,13 +246,15 @@
   .pdf-hl-layer{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;
     pointer-events:none;z-index:1;}
   .pdf-hl-rect{position:absolute;background:rgba(255,196,0,.42);border-radius:2px;}
-  .hl-bar{position:absolute;z-index:6;display:none;gap:6px;background:#26242f;
-    border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:6px;
-    box-shadow:0 6px 18px rgba(0,0,0,.5);}
+  .hl-bar{position:absolute;z-index:9;display:none;gap:7px;background:#26242f;
+    border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:7px;
+    box-shadow:0 8px 22px rgba(0,0,0,.6);}
   .hl-bar.show{display:flex;}
-  .hl-bar button{background:var(--accent);color:#1a1608;border:none;border-radius:7px;
-    padding:7px 12px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .hl-bar button{background:var(--accent);color:#1a1608;border:none;border-radius:8px;
+    padding:9px 14px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;}
   .hl-bar button.sec{background:rgba(255,255,255,.1);color:var(--ink);}
+  .hl-bar button.del{background:var(--micro);color:#fff;display:none;}
+  .hl-bar.has-hl button.del{display:inline-block;}
 
   /* ---- Fullscreen reading mode ----
      A CSS overlay rather than the browser Fullscreen API, because iOS Safari
@@ -255,11 +267,14 @@
   #pdf-section.fullscreen .pdf-row{display:none;}
   #pdf-section.fullscreen .pdf-expand{max-height:none;flex:1;display:flex;flex-direction:column;min-height:0;}
   #pdf-section.fullscreen .pdf-toolbar{flex-shrink:0;}
-  #pdf-section.fullscreen .pdf-canvas-wrap{flex:1;min-height:0;overflow:auto;}
-  #pdf-section.fullscreen .pdf-footer{flex-shrink:0;}
+  #pdf-section.fullscreen .pdf-viewport{flex:1;min-height:0;height:auto;border-radius:0;background:transparent;}
+  /* Fullscreen is for reading: the Add PDF / Remove links have no business
+     there (and are easy to hit by accident). The book switcher and the unit's
+     page-range banner stay — they're information you still want while reading. */
+  #pdf-section.fullscreen .pdf-footer{display:none;}
   /* Keep the floating note pencil reachable above the fullscreen overlay. */
   body.pdf-fullscreen #fab-pencil{z-index:2100;}
-  .pdf-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:.76rem;color:var(--ink-dim);}
+  .pdf-footer{display:flex;align-items:center;justify-content:flex-end;margin-top:10px;font-size:.76rem;color:var(--ink-dim);}
   .pdf-footer .pdf-links{display:flex;gap:14px;}
   .pdf-footer a{color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none;}
   .pdf-loading{text-align:center;padding:14px;color:var(--ink-dim);font-size:.8rem;}
@@ -355,11 +370,11 @@
   .nt-body mark.nt-hl{background:rgba(240,200,60,.34);color:inherit;border-radius:3px;
     padding:1px 0;box-shadow:0 0 0 1px rgba(240,200,60,.25);cursor:pointer;}
   .nt-diagrams mark.nt-hl{background:rgba(240,200,60,.5);}
-  /* Docked bottom-centre rather than floating next to the selection: on iOS the
-     native "Copy / Look Up" callout sits right on top of the selection and would
-     hide a floating pill. A fixed bar well clear of it always works. */
-  #nt-hl-pill{position:fixed;left:50%;transform:translateX(-50%);
-    bottom:calc(20px + env(safe-area-inset-bottom));z-index:2600;display:none;gap:8px;
+  /* Floats just under (or over) the end of the selection. `position:fixed` +
+     viewport coords from getClientRects(), so it lands in the right place even
+     though the notes body is its own scroller. JS picks the side that fits and
+     keeps it clear of iOS's own Copy/Look-Up callout. */
+  #nt-hl-pill{position:fixed;left:0;top:0;z-index:2600;display:none;gap:8px;
     background:#1f1e2b;border:1px solid var(--line);border-radius:13px;
     padding:8px;box-shadow:0 8px 26px rgba(0,0,0,.6);}
   #nt-hl-pill.active{display:flex;}
@@ -16087,17 +16102,25 @@ function ntShowPill(){
   const sel = window.getSelection();
   if(!sel || sel.isCollapsed || !sel.toString().trim()){ ntHidePill(); return; }
   const body = document.getElementById('nt-body');
-  if(!body.contains(sel.anchorNode)){ ntHidePill(); return; }
+  if(!body || !body.contains(sel.anchorNode)){ ntHidePill(); return; }
   /* Remember the range NOW. On iOS Safari, the moment you tap a pill button the
      text selection collapses, so by the time the handler runs the live selection
      is gone — everything below falls back to this stored range. */
   const range = sel.getRangeAt(0).cloneRange();
   window.__ntHlRange = range;
   window.__ntHlTap = false;   // this is a hand selection → "Remove" clips, doesn't nuke
+  const pill = document.getElementById('nt-hl-pill');
   // show "Remove" only when the selection actually covers a highlight
-  const touchesHl = [...body.querySelectorAll('mark.nt-hl')].some(m => range.intersectsNode(m));
-  document.getElementById('nt-hl-pill').classList.toggle('has-hl', touchesHl);
-  document.getElementById('nt-hl-pill').classList.add('active');   // CSS docks it bottom-centre
+  pill.classList.toggle('has-hl', [...body.querySelectorAll('mark.nt-hl')].some(m => range.intersectsNode(m)));
+  pill.classList.add('active');
+  positionFloatingBar(pill, range, null);   // fixed → viewport coords
+}
+/* Keep the pill glued to the selection if the notes scroll underneath it. */
+function ntRepositionPill(){
+  const pill = document.getElementById('nt-hl-pill');
+  if(!pill || !pill.classList.contains('active')) return;
+  const r = window.__ntHlRange;
+  if(r) positionFloatingBar(pill, r, null);
 }
 function ntHighlightSelection(){
   clearTimeout(window.__ntSelT);
@@ -16144,13 +16167,25 @@ function ntRemoveSelection(){
   ntRebuildHl();
   ntHidePill();
 }
-/* Tapping an existing highlight selects it, which brings up the pill with both
-   "Highlight" and "Remove" — same flow as selecting text by hand. */
+/* Selection in the notes:
+     · double-tap  → select the word under your finger, pill appears
+     · long-press  → the phone's own selection, with draggable handles
+     · tap a highlight → offers to remove that whole highlight
+   Wired once; #nt-body is reused across every unit's notes. */
 function ntWireHighlightRemoval(){
   const body = document.getElementById('nt-body');
+  if(!body || body.dataset.hlWired === '1') return;
+  body.dataset.hlWired = '1';
+
   body.addEventListener('click', ev => {
     const m = ev.target.closest && ev.target.closest('mark.nt-hl');
     if(!m) return;
+    // A double-tap that landed on a highlight means "select this word", not
+    // "select the whole highlight" — leave it to the double-tap handler.
+    if(Date.now() - (window.__ntDT || 0) < 500) return;
+    // Likewise, don't hijack a drag-selection that happens to end on a highlight.
+    const sel = window.getSelection();
+    if(sel && !sel.isCollapsed && sel.toString().trim()) return;
     /* Show the pill directly — no dependence on window.getSelection(), which
        iOS collapses the instant the tap ends. The stashed range covers just
        this highlight, so "Remove" clears exactly it. */
@@ -16160,9 +16195,42 @@ function ntWireHighlightRemoval(){
     window.__ntHlTap = true;   // tapped a highlight → "Remove" nukes the whole highlight
     clearTimeout(window.__ntSelT);
     const pill = document.getElementById('nt-hl-pill');
-    pill.classList.add('has-hl');
-    pill.classList.add('active');
+    pill.classList.add('has-hl', 'active');
+    positionFloatingBar(pill, r, null);
   });
+
+  // --- double-tap to select a word -------------------------------------
+  let lastTap = 0, lastX = 0, lastY = 0;
+  body.addEventListener('touchend', e => {
+    if(e.changedTouches.length !== 1) return;
+    const t = e.changedTouches[0], now = Date.now();
+    const near = Math.abs(t.clientX - lastX) < 30 && Math.abs(t.clientY - lastY) < 30;
+    if(now - lastTap < 350 && near){
+      if(selectWordAtPoint(t.clientX, t.clientY)){
+        e.preventDefault();               // stop iOS turning it into a zoom
+        window.__ntDT = now;
+        clearTimeout(window.__ntSelT);
+        window.__ntSelT = setTimeout(ntShowPill, 20);
+      }
+      lastTap = 0;
+    } else {
+      lastTap = now; lastX = t.clientX; lastY = t.clientY;
+    }
+  }, {passive:false});
+
+  body.addEventListener('dblclick', e => {
+    if(selectWordAtPoint(e.clientX, e.clientY)){
+      window.__ntDT = Date.now();
+      clearTimeout(window.__ntSelT);
+      window.__ntSelT = setTimeout(ntShowPill, 20);
+    }
+  });
+
+  body.addEventListener('scroll', () => {
+    clearTimeout(window.__ntScrollT);
+    window.__ntScrollT = setTimeout(ntRepositionPill, 60);
+  }, {passive:true});
+
   document.addEventListener('selectionchange', () => {
     if(!document.body.classList.contains('notes-open')) return;
     // Don't fight a caret inside a VISIBLE editable field (the exam textarea) —
@@ -16343,8 +16411,10 @@ async function pdfDelete(key){
 }
 
 let pdfDoc = null, pdfPageNum = 1, pdfSubjectKey = null, pdfPendingJumpPage = null;
-const PDF_BASE_SCALE = 1.5;
-let pdfZoom = PDF_BASE_SCALE;
+const PDF_MAX_ZOOM = 6;
+let pdfZoomFactor = 1;      // 1 = page fits the window; a pure display multiplier
+let pdfPageAspect = 1.414;  // height / width of the current page
+let pdfLastRenderW = 0;     // display width of the last render (loop guard)
 let pdfFullscreen = false;
 let pdfRange = null;        // {start,end,label} when opened from a unit; null = whole book
 let pdfRangeUnlocked = false; // set by double-tapping a boundary arrow
@@ -16533,22 +16603,24 @@ async function renderPdfSection(subjectKey, forceOpen){
         <div style="flex:1;"></div>
         <button class="pdf-tool-btn" id="pdf-fullscreen-toggle" title="Fullscreen">⛶</button>
       </div>
-      <div class="pdf-canvas-wrap" id="pdf-canvas-wrap">
-        <button class="pdf-nav-btn left" id="pdf-btn-prev">‹</button>
-        <div id="pdf-stage" style="position:relative;display:block;margin:0 auto;">
-          <canvas id="pdf-canvas"></canvas>
-          <div class="pdf-hl-layer" id="pdf-hl-layer"></div>
-          <div class="pdf-text-layer" id="pdf-text-layer"></div>
+      <div class="pdf-viewport" id="pdf-viewport">
+        <div class="pdf-scroll" id="pdf-scroll">
+          <div id="pdf-stage">
+            <canvas id="pdf-canvas"></canvas>
+            <div class="pdf-hl-layer" id="pdf-hl-layer"></div>
+            <div class="pdf-text-layer" id="pdf-text-layer"></div>
+          </div>
         </div>
+        <button class="pdf-nav-btn left" id="pdf-btn-prev">‹</button>
         <button class="pdf-nav-btn right" id="pdf-btn-next">›</button>
         <div class="pdf-page-pill" id="pdf-page-pill" onclick="promptJumpToPage()">Page ${targetPage}</div>
         <div class="hl-bar" id="hl-bar">
-          <button onclick="highlightSelection()">🖍 Highlight</button>
-          <button class="sec" onclick="clearSelection()">Cancel</button>
+          <button onmousedown="event.preventDefault()" ontouchstart="" onclick="highlightSelection()">🖍 Highlight</button>
+          <button class="del" onmousedown="event.preventDefault()" ontouchstart="" onclick="removeHighlightSelection()">🗑 Remove</button>
+          <button class="sec" onmousedown="event.preventDefault()" onclick="clearSelection()">✕</button>
         </div>
       </div>
       <div class="pdf-footer">
-        <span>Page <span id="pdf-page-num">${targetPage}</span> of <span id="pdf-page-total">–</span></span>
         <div class="pdf-links">
           <a onclick="addAnotherPDF()">+ Add PDF</a>
           <a onclick="removePDF()">Remove</a>
@@ -16565,15 +16637,13 @@ async function renderPdfSection(subjectKey, forceOpen){
     if(!opening && pdfFullscreen) togglePdfFullscreen(false);
     if(opening){
       if(pdfDoc && pdfSubjectKey === subjectKey){
-        document.getElementById('pdf-page-total').textContent = pdfDoc.numPages;
-        document.getElementById('pdf-btn-prev').onclick = () => pdfGoToPage(pdfPageNum-1);
-        document.getElementById('pdf-btn-next').onclick = () => pdfGoToPage(pdfPageNum+1);
         pdfPageNum = Math.min(Math.max(targetPage,1), pdfDoc.numPages);
+        pdfZoomFactor = 1;
         await pdfRenderPage(pdfPageNum);
         wireZoomButtons();
         wireRangeArrows();
-        wireSwipe(document.getElementById('pdf-canvas-wrap'));
-        wirePinch(document.getElementById('pdf-canvas-wrap'));
+        wirePdfGestures();
+        watchPdfViewportSize();
       }
       else { await openStoredPdf(record, targetPage); }
     }
@@ -16590,12 +16660,12 @@ function showPdfError(wrap, message){
 
 async function openStoredPdf(record, startPage){
   pdfSubjectKey = currentSubjectKey;
-  const wrap = document.getElementById('pdf-canvas-wrap');
-  wrap.insertAdjacentHTML('afterbegin', '<div class="pdf-loading" id="pdf-inline-loading">Opening PDF…</div>');
+  const viewport = document.getElementById('pdf-viewport');
+  viewport.insertAdjacentHTML('afterbegin', '<div class="pdf-loading" id="pdf-inline-loading">Opening PDF…</div>');
 
   const pdfjsLib = window['pdfjs-dist/build/pdf'];
   if(!pdfjsLib){
-    showPdfError(wrap, "The PDF viewer engine didn't load. Check your connection and reload the page.");
+    showPdfError(viewport, "The PDF viewer engine didn't load. Check your connection and reload the page.");
     return;
   }
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
@@ -16603,40 +16673,144 @@ async function openStoredPdf(record, startPage){
   try{
     pdfDoc = await pdfjsLib.getDocument(record.data.slice(0)).promise;
   } catch(e){
-    showPdfError(wrap, "This PDF couldn't be opened. Try Replace with another file.");
+    showPdfError(viewport, "This PDF couldn't be opened. Try Replace with another file.");
     return;
   }
 
   document.getElementById('pdf-inline-loading')?.remove();
-  document.getElementById('pdf-page-total').textContent = pdfDoc.numPages;
   pdfPageNum = Math.min(Math.max(startPage,1), pdfDoc.numPages);
-  pdfZoom = PDF_BASE_SCALE;
+  pdfZoomFactor = 1;
   await pdfRenderPage(pdfPageNum);
   wireZoomButtons();
   wireRangeArrows();
-  wireSwipe(wrap);
-  wirePinch(wrap);
+  wirePdfGestures();
+  watchPdfViewportSize();
 }
 
-async function pdfRenderPage(pageNum){
+/* ---- Sizing model ----------------------------------------------------
+   Two independent numbers, which the old code conflated (and that's why
+   letters came out stretched):
+     · DISPLAY size  — how big the page looks. Always width × width*aspect,
+       so the proportions can never drift.
+     · RENDER size   — how many real pixels we rasterise, = display size ×
+       device pixel ratio, capped so a big zoom can't blow up iOS's canvas
+       limit. This is what keeps text crisp instead of blurry-scaled.
+   `pdfZoomFactor` is a pure multiplier on the fit-to-window size, so 1
+   always means "the whole width (or page, fullscreen) fits". */
+function pdfFitWidth(){
+  const sc = document.getElementById('pdf-scroll');
+  if(!sc) return 0;
+  const availW = sc.clientWidth, availH = sc.clientHeight;
+  if(!availW) return 0;
+  // Fullscreen fits the WHOLE page; inline fits the width and scrolls down.
+  if(pdfFullscreen && availH > 0) return Math.max(40, Math.min(availW, availH / pdfPageAspect));
+  return Math.max(40, availW);
+}
+
+/* The reader can be laid out while its view is still display:none (opening a
+   subject renders the section before the view is shown), and it also has to
+   survive a rotation or entering fullscreen. Re-render whenever the window it
+   lives in actually changes size — otherwise the page would stay stuck at
+   whatever size it happened to have when it was first drawn. */
+let pdfSizeObserver = null;
+function watchPdfViewportSize(){
+  const sc = document.getElementById('pdf-scroll');
+  if(!sc || sc.dataset.roWired === '1' || typeof ResizeObserver === 'undefined') return;
+  sc.dataset.roWired = '1';
+  // The section's HTML is rebuilt per subject; drop the observer on the old one.
+  if(pdfSizeObserver){ try{ pdfSizeObserver.disconnect(); }catch(e){} }
+  const ro = new ResizeObserver(() => {
+    clearTimeout(window.__pdfRoT);
+    window.__pdfRoT = setTimeout(() => {
+      if(!pdfDoc || document.getElementById('pdf-scroll') !== sc) return;
+      /* Compare against the width we actually last DREW at, not against the
+         previous observation. Resizing the page can make a scrollbar appear,
+         which resizes the scroller, which would re-trigger this forever —
+         a couple of pixels of difference is never worth a re-render. */
+      const want = pdfFitWidth() * pdfZoomFactor;
+      if(!want || Math.abs(want - pdfLastRenderW) < 6) return;
+      pdfRenderPage(pdfPageNum);
+    }, 120);
+  });
+  ro.observe(sc);
+  pdfSizeObserver = ro;
+}
+
+/* A pinch, a resize and a page turn can all ask for a render within the same
+   few frames. Each render draws into its OWN canvas (see below), so they can
+   safely overlap — we just need the newest one to be the one that lands. A
+   sequence number does that; deliberately NOT a promise chain, because one
+   render that never settles would then wedge the viewer for good. */
+let pdfRenderSeq = 0, pdfRenderTask = null;
+function pdfRenderPage(pageNum){
+  if(pdfRenderTask){ try{ pdfRenderTask.cancel(); }catch(e){} pdfRenderTask = null; }
+  const mine = ++pdfRenderSeq;
+  return pdfRenderPageNow(pageNum, mine)
+    .catch(err => { if(!err || err.name !== 'RenderingCancelledException') console.warn('pdf render', err); });
+}
+
+async function pdfRenderPageNow(pageNum, seq){
   const page = await pdfDoc.getPage(pageNum);
-  const canvas = document.getElementById('pdf-canvas');
-  if(!canvas) return;
-  const context = canvas.getContext('2d');
-  const viewport = page.getViewport({scale: pdfZoom});
-  canvas.height = viewport.height; canvas.width = viewport.width;
+  const old   = document.getElementById('pdf-canvas');
+  const stage = document.getElementById('pdf-stage');
+  if(!old || !stage) return;
+  if(seq !== undefined && seq !== pdfRenderSeq) return;   // superseded already
+
+  const v1 = page.getViewport({scale: 1});
+  pdfPageAspect = v1.height / v1.width;
+
+  const dispW = Math.max(40, pdfFitWidth() * pdfZoomFactor);
+  const dispH = dispW * pdfPageAspect;
+  pdfLastRenderW = dispW;
+
+  // Rasterise at device resolution, but never beyond what a phone canvas can hold.
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let renderScale = (dispW / v1.width) * dpr;
+  const area = (v1.width * renderScale) * (v1.height * renderScale);
+  const MAX_AREA = 10e6;                       // ~10 MP: safely under iOS's cap
+  if(area > MAX_AREA) renderScale *= Math.sqrt(MAX_AREA / area);
+
+  const viewport = page.getViewport({scale: renderScale});
+
+  /* Draw into a brand-new canvas and swap it in only once it's finished.
+     Two wins: pdf.js can never hit its "same canvas in two renders" error
+     (which used to leave the page blank and selection dead), and turning a
+     page no longer flashes white halfway through. */
+  const canvas = document.createElement('canvas');
+  canvas.id = 'pdf-canvas';
+  canvas.width  = Math.max(1, Math.round(viewport.width));
+  canvas.height = Math.max(1, Math.round(viewport.height));
+
   clearSelection();
-  await page.render({canvasContext:context, viewport:viewport}).promise;
+  const task = page.render({canvasContext: canvas.getContext('2d'), viewport});
+  pdfRenderTask = task;
+  try{
+    await task.promise;
+  } finally {
+    if(pdfRenderTask === task) pdfRenderTask = null;
+  }
+  // Drop it on the floor if the viewer went away, or a newer render has started.
+  if(!document.getElementById('pdf-stage') || !old.isConnected) return;
+  if(seq !== undefined && seq !== pdfRenderSeq) return;
+  old.replaceWith(canvas);
+
+  stage.style.width  = dispW + 'px';
+  stage.style.height = dispH + 'px';
+  stage.style.transform = '';
+  stage.style.transformOrigin = '0 0';
+
   await buildTextLayer(page, viewport);
-  document.getElementById('pdf-page-num').textContent = pageNum;
-  document.getElementById('pdf-page-total').textContent = pdfDoc.numPages;
+
+  /* Whatever is on screen IS the current page — keep the global, the saved
+     position and the page pill from drifting apart (they could, because
+     pdfRenderPage can be called directly as well as via pdfGoToPage). */
+  pdfPageNum = pageNum;
   updateRangeUI();
+  updateZoomLabel();
   localStorage.setItem(`pdfpage_${pdfKey(currentSubjectKey, pdfActiveId)}`, String(pageNum));
-  applyZoomDisplay();
   syncStageSize();
   drawHighlights(pageNum);
   wireDoubleTapSelect();
-  wireClearHighlights();
 }
 
 /* Tapping the page pill lets you jump straight to a page number — handy in
@@ -16645,7 +16819,7 @@ async function pdfRenderPage(pageNum){
    visible field makes it obvious where to type. */
 function promptJumpToPage(){
   if(!pdfDoc) return;
-  const wrap = document.getElementById('pdf-canvas-wrap');
+  const wrap = document.getElementById('pdf-viewport');
   if(!wrap) return;
   document.getElementById('pdf-jump-box')?.remove();
 
@@ -16698,24 +16872,19 @@ async function buildTextLayer(page, viewport){
   }
 }
 
-/* Keep the stage (canvas + overlays) exactly the size the canvas is shown at,
-   so highlights and text line up at any zoom. */
+/* The text layer is laid out in RENDER pixels; the stage is sized in DISPLAY
+   pixels. Scale the layer between the two so selection lines up with what you
+   see at any zoom. (The stage itself is sized in pdfRenderPage.) */
 function syncStageSize(){
   const canvas = document.getElementById('pdf-canvas');
   const stage = document.getElementById('pdf-stage');
-  if(!canvas || !stage) return;
-  const r = canvas.getBoundingClientRect();
-  stage.style.width = r.width + 'px';
-  stage.style.height = r.height + 'px';
   const layer = document.getElementById('pdf-text-layer');
-  if(layer){
-    // The text layer is built at render scale; scale it to displayed size.
-    const scale = r.width / (canvas.width || 1);
-    layer.style.transform = `scale(${scale})`;
-    layer.style.transformOrigin = '0 0';
-    layer.style.width = (canvas.width) + 'px';
-    layer.style.height = (canvas.height) + 'px';
-  }
+  if(!canvas || !stage || !layer) return;
+  const scale = stage.clientWidth / (canvas.width || 1);
+  layer.style.transformOrigin = '0 0';
+  layer.style.transform = `scale(${scale})`;
+  layer.style.width  = canvas.width + 'px';
+  layer.style.height = canvas.height + 'px';
 }
 
 function hlKey(pageNum){ return `hl_${pdfKey(currentSubjectKey, pdfActiveId)}_p${pageNum}`; }
@@ -16749,35 +16918,70 @@ function drawHighlights(pageNum){
 function clearSelection(){
   const sel = window.getSelection();
   if(sel) sel.removeAllRanges();
-  document.getElementById('hl-bar')?.classList.remove('show');
+  const bar = document.getElementById('hl-bar');
+  if(bar) bar.classList.remove('show', 'has-hl');
+  window.__pdfHlRange = null;
+}
+
+/* The selection as page fractions (0..1), one rect per line. Stored that way so
+   a highlight lands in the right place at any zoom or screen size. */
+function pdfSelectionRects(){
+  const range = (() => {
+    const sel = window.getSelection();
+    if(sel && !sel.isCollapsed && sel.rangeCount) return sel.getRangeAt(0);
+    return window.__pdfHlRange || null;     // iOS drops the selection on button tap
+  })();
+  const stage = document.getElementById('pdf-stage');
+  if(!range || !stage) return [];
+  const sr = stage.getBoundingClientRect();
+  if(!sr.width || !sr.height) return [];
+  return Array.from(range.getClientRects())
+    .filter(r => r.width > 1 && r.height > 1)
+    .map(r => ({
+      x: (r.left - sr.left) / sr.width,
+      y: (r.top  - sr.top ) / sr.height,
+      w: r.width  / sr.width,
+      h: r.height / sr.height
+    }));
 }
 
 function highlightSelection(){
-  const sel = window.getSelection();
-  const stage = document.getElementById('pdf-stage');
-  if(!sel || sel.isCollapsed || !stage){ clearSelection(); return; }
-
-  const stageRect = stage.getBoundingClientRect();
-  const rects = Array.from(sel.getRangeAt(0).getClientRects())
-    .filter(r => r.width > 1 && r.height > 1)
-    .map(r => ({
-      x: (r.left - stageRect.left) / stageRect.width,
-      y: (r.top  - stageRect.top)  / stageRect.height,
-      w: r.width  / stageRect.width,
-      h: r.height / stageRect.height
-    }));
-
+  const rects = pdfSelectionRects();
   if(rects.length){
-    const existing = loadHighlights(pdfPageNum);
-    saveHighlights(pdfPageNum, existing.concat(rects));
+    saveHighlights(pdfPageNum, loadHighlights(pdfPageNum).concat(rects));
     drawHighlights(pdfPageNum);
   }
   clearSelection();
 }
 
-/* Double-tap selects the word under your finger. Done explicitly rather than
-   relying on the browser's own double-tap, which on phones is usually bound
-   to zoom instead of selection. */
+/* Un-highlight whatever the selection covers — the mirror image of adding one,
+   so you can clear a single word without losing the rest of the sentence. */
+function removeHighlightSelection(){
+  const sel = pdfSelectionRects();
+  if(sel.length){
+    const overlaps = (a, b) =>
+      a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    const kept = loadHighlights(pdfPageNum).filter(h => !sel.some(s => overlaps(h, s)));
+    saveHighlights(pdfPageNum, kept);
+    drawHighlights(pdfPageNum);
+  }
+  clearSelection();
+}
+
+/* Does the current selection sit on top of a saved highlight? Decides whether
+   the red Remove button is offered. */
+function pdfSelectionHitsHighlight(){
+  const sel = pdfSelectionRects();
+  if(!sel.length) return false;
+  const saved = loadHighlights(pdfPageNum);
+  return saved.some(h => sel.some(s =>
+    h.x < s.x + s.w && h.x + h.w > s.x && h.y < s.y + s.h && h.y + h.h > s.y));
+}
+
+/* Selection in the PDF works exactly like selection in the notes:
+     · double-tap  → pick the word under your finger
+     · long-press  → the phone's own selection, with draggable handles
+   and either way the highlight bar appears beside what you selected. */
 function wireDoubleTapSelect(){
   const layer = document.getElementById('pdf-text-layer');
   const bar = document.getElementById('hl-bar');
@@ -16786,54 +16990,28 @@ function wireDoubleTapSelect(){
 
   let lastTap = 0, lastX = 0, lastY = 0;
 
-  const selectWordAt = (clientX, clientY) => {
-    let range = null;
-    if(document.caretRangeFromPoint){
-      range = document.caretRangeFromPoint(clientX, clientY);
-    } else if(document.caretPositionFromPoint){
-      const p = document.caretPositionFromPoint(clientX, clientY);
-      if(p){ range = document.createRange(); range.setStart(p.offsetNode, p.offset); range.collapse(true); }
+  const showBar = () => {
+    const sel = window.getSelection();
+    const vp = document.getElementById('pdf-viewport');
+    if(!sel || sel.isCollapsed || !bar || !vp || !layer.contains(sel.anchorNode)){
+      bar?.classList.remove('show', 'has-hl');
+      return;
     }
-    if(!range || !range.startContainer || range.startContainer.nodeType !== 3) return false;
-
-    const text = range.startContainer.textContent || '';
-    let s = range.startOffset, e = range.startOffset;
-    const isWord = ch => /[^\s.,;:!?()\[\]"']/.test(ch);
-    while(s > 0 && isWord(text[s-1])) s--;
-    while(e < text.length && isWord(text[e])) e++;
-    if(s === e) return false;
-
-    const wordRange = document.createRange();
-    wordRange.setStart(range.startContainer, s);
-    wordRange.setEnd(range.startContainer, e);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(wordRange);
-    return true;
-  };
-
-  const showBarForSelection = () => {
-    const sel = window.getSelection();
-    const wrap = document.getElementById('pdf-canvas-wrap');
-    if(!sel || sel.isCollapsed || !bar || !wrap){ bar?.classList.remove('show'); return; }
-    const r = sel.getRangeAt(0).getBoundingClientRect();
-    const wr = wrap.getBoundingClientRect();
-    bar.style.left = Math.max(6, Math.min(r.left - wr.left, Math.max(6, wr.width - 200))) + 'px';
-    // Always below the selection: above would collide with the sticky header.
-    bar.style.top = Math.max(6, r.bottom - wr.top + 10) + 'px';
+    // Stash it: iOS collapses the selection the instant a button is tapped.
+    window.__pdfHlRange = sel.getRangeAt(0).cloneRange();
+    bar.classList.toggle('has-hl', pdfSelectionHitsHighlight());
     bar.classList.add('show');
+    positionFloatingBar(bar, sel.getRangeAt(0), vp);
   };
 
   layer.addEventListener('touchend', e => {
-    const now = Date.now();
-    const t = e.changedTouches[0];
+    if(e.changedTouches.length !== 1) return;
+    const now = Date.now(), t = e.changedTouches[0];
     const near = Math.abs(t.clientX - lastX) < 30 && Math.abs(t.clientY - lastY) < 30;
     if(now - lastTap < 350 && near){
-      const sel = window.getSelection();
-      const already = sel && !sel.isCollapsed && sel.toString().trim().length > 0;
-      if(already || selectWordAt(t.clientX, t.clientY)){
+      if(selectWordAtPoint(t.clientX, t.clientY)){
         e.preventDefault();
-        setTimeout(showBarForSelection, 10);
+        setTimeout(showBar, 10);
       }
       lastTap = 0;
     } else {
@@ -16841,108 +17019,125 @@ function wireDoubleTapSelect(){
     }
   }, {passive:false});
 
-  // desktop / trackpad
   layer.addEventListener('dblclick', e => {
-    const sel = window.getSelection();
-    const already = sel && !sel.isCollapsed && sel.toString().trim().length > 0;
-    if(already || selectWordAt(e.clientX, e.clientY)) setTimeout(showBarForSelection, 10);
+    if(selectWordAtPoint(e.clientX, e.clientY)) setTimeout(showBar, 10);
   });
 
-  // dragging the selection handles updates the bar position
-  document.addEventListener('selectionchange', () => {
-    const sel = window.getSelection();
-    if(!sel || sel.isCollapsed){ bar?.classList.remove('show'); return; }
-    if(layer.contains(sel.anchorNode) || layer.contains(sel.focusNode)) showBarForSelection();
-  });
-}
-
-/* Long-press the page to clear highlights on it. */
-function wireClearHighlights(){
-  const layer = document.getElementById('pdf-hl-layer');
-  const wrap = document.getElementById('pdf-canvas-wrap');
-  if(!wrap || wrap.dataset.clearWired === '1') return;
-  wrap.dataset.clearWired = '1';
-  let timer = null;
-  wrap.addEventListener('touchstart', e => {
-    if(e.touches.length !== 1) return;
-    timer = setTimeout(() => {
-      if(!loadHighlights(pdfPageNum).length) return;
-      uiConfirm('Remove all highlights on this page?', {danger:true, okText:'Remove'}).then(ok => {
-        if(!ok) return;
-        saveHighlights(pdfPageNum, []);
-        drawHighlights(pdfPageNum);
-      });
-    }, 700);
-  }, {passive:true});
-  const cancel = () => { if(timer){ clearTimeout(timer); timer = null; } };
-  wrap.addEventListener('touchmove', cancel, {passive:true});
-  wrap.addEventListener('touchend', cancel, {passive:true});
-}
-
-/* Zoom. Two separate things matter here:
-   - canvas.width  = how many pixels we render (sharpness)
-   - canvas.style.width = how big it LOOKS on screen
-   Only changing the first does nothing visible, since the canvas is styled
-   to fill the container. So we set the displayed width too, and let the
-   wrapper scroll once the page is wider than the screen. */
-function applyZoomDisplay(){
-  const canvas = document.getElementById('pdf-canvas');
-  const wrap = document.getElementById('pdf-canvas-wrap');
-  if(!canvas || !wrap) return;
-  const factor = pdfZoom / PDF_BASE_SCALE;
-  const aspect = canvas.height / canvas.width; // page proportions
-
-  if(pdfFullscreen){
-    // Fill the tall fullscreen area: fit the page to the available height
-    // (that's the whole point of going fullscreen), then let zoom scale up
-    // from there, scrolling when it overflows.
-    const availH = wrap.clientHeight;
-    const availW = wrap.clientWidth;
-    if(availH > 0 && availW > 0){
-      let dispH = availH * factor;
-      let dispW = dispH / aspect;
-      if(factor <= 1.001 && dispW > availW){ // don't overflow sideways at 100%
-        dispW = availW; dispH = dispW * aspect;
+  /* Dragging the selection handles keeps the bar with it. Attached to `document`
+     ONCE for the life of the page — the PDF section's HTML is rebuilt every time
+     a subject is opened, so binding it per-layer would stack up a new listener
+     (holding a detached layer) on every visit. It looks the elements up by id
+     each time instead. */
+  if(!window.__pdfSelWired){
+    window.__pdfSelWired = true;
+    document.addEventListener('selectionchange', () => {
+      const lay = document.getElementById('pdf-text-layer');
+      const b   = document.getElementById('hl-bar');
+      if(!lay || !b) return;
+      const sel = window.getSelection();
+      if(!sel || sel.isCollapsed){ b.classList.remove('show', 'has-hl'); return; }
+      if(lay.contains(sel.anchorNode) || lay.contains(sel.focusNode)){
+        clearTimeout(window.__pdfSelT);
+        window.__pdfSelT = setTimeout(() => {
+          const fn = document.getElementById('pdf-text-layer');
+          if(fn && fn.__showBar) fn.__showBar();
+        }, 120);
       }
-      canvas.style.width = dispW + 'px';
-      canvas.style.height = dispH + 'px';
-      wrap.classList.toggle('zoomed', factor > 1.001);
-      syncStageSize();
-      drawHighlights(pdfPageNum);
-      return;
-    }
+    });
   }
+  layer.__showBar = showBar;
+}
 
-  canvas.style.height = '';
-  if(factor > 1.001){
-    wrap.classList.add('zoomed');
-    canvas.style.width = (wrap.clientWidth * factor) + 'px';
-  } else {
-    wrap.classList.remove('zoomed');
-    canvas.style.width = '';
+/* Select the whole word under a point. Shared by the notes and the PDF. */
+function selectWordAtPoint(clientX, clientY){
+  let range = null;
+  if(document.caretRangeFromPoint){
+    range = document.caretRangeFromPoint(clientX, clientY);
+  } else if(document.caretPositionFromPoint){
+    const p = document.caretPositionFromPoint(clientX, clientY);
+    if(p){ range = document.createRange(); range.setStart(p.offsetNode, p.offset); range.collapse(true); }
   }
-  syncStageSize();
-  drawHighlights(pdfPageNum);
+  if(!range || !range.startContainer || range.startContainer.nodeType !== 3) return false;
+
+  const text = range.startContainer.textContent || '';
+  let s = range.startOffset, e = range.startOffset;
+  const isWord = ch => ch !== undefined && /[^\s.,;:!?()\[\]"'—–]/.test(ch);
+  while(s > 0 && isWord(text[s-1])) s--;
+  while(e < text.length && isWord(text[e])) e++;
+  if(s === e) return false;
+
+  const wordRange = document.createRange();
+  wordRange.setStart(range.startContainer, s);
+  wordRange.setEnd(range.startContainer, e);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(wordRange);
+  return true;
+}
+
+/* Park a floating bar just past the END of a selection — below it if there's
+   room (iOS puts its own Copy/Look-Up callout above), otherwise on top. `host`
+   is the positioned ancestor the bar is absolutely placed in; pass null for a
+   position:fixed bar. */
+function positionFloatingBar(bar, range, host){
+  const rects = range.getClientRects();
+  const r = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
+  const bw = bar.offsetWidth || 220, bh = bar.offsetHeight || 46, pad = 8;
+  const box = host
+    ? host.getBoundingClientRect()
+    : {left:0, top:0, width:window.innerWidth, height:window.innerHeight};
+
+  let left = r.left + r.width/2 - bw/2 - box.left;
+  left = Math.max(pad, Math.min(left, box.width - bw - pad));
+
+  let top = r.bottom - box.top + 10;                 // below the selection
+  if(top + bh > box.height - pad) top = r.top - box.top - bh - 10;   // no room → above
+  top = Math.max(pad, Math.min(top, box.height - bh - pad));
+
+  bar.style.left = left + 'px';
+  bar.style.top  = top + 'px';
 }
 
 function updateZoomLabel(){
   const el = document.getElementById('pdf-zoom-reset');
-  if(el) el.textContent = Math.round((pdfZoom / PDF_BASE_SCALE) * 100) + '%';
+  if(el) el.textContent = Math.round(pdfZoomFactor * 100) + '%';
 }
 
-async function setPdfZoom(newZoom){
-  pdfZoom = Math.min(Math.max(newZoom, 1.0), 4.5);
-  updateZoomLabel();
+/* Zoom to `factor`, keeping the point under (focalX, focalY) — client
+   coordinates — pinned to the same spot on screen. That's what makes it feel
+   like zooming a photo instead of the page jumping to a new place. */
+async function setPdfZoom(factor, focalX, focalY){
+  const target = Math.min(Math.max(factor, 1), PDF_MAX_ZOOM);
+  const sc = document.getElementById('pdf-scroll');
+  const stage = document.getElementById('pdf-stage');
+  if(!sc || !stage || !pdfDoc) return;
+  if(Math.abs(target - pdfZoomFactor) < 0.002) return;
+
+  const scRect = sc.getBoundingClientRect();
+  const stRect = stage.getBoundingClientRect();
+  const fx = (focalX === undefined) ? scRect.left + scRect.width/2  : focalX;
+  const fy = (focalY === undefined) ? scRect.top  + scRect.height/2 : focalY;
+  // where the focal point sits inside the page, 0..1
+  const px = stRect.width  ? (fx - stRect.left) / stRect.width  : 0.5;
+  const py = stRect.height ? (fy - stRect.top ) / stRect.height : 0.5;
+
+  pdfZoomFactor = target;
   await pdfRenderPage(pdfPageNum);
+
+  // Put that same fraction of the page back under the same finger/cursor.
+  const newW = stage.offsetWidth, newH = stage.offsetHeight;
+  const scR2 = sc.getBoundingClientRect();
+  sc.scrollLeft = scR2.left + stage.offsetLeft - (fx - px * newW);
+  sc.scrollTop  = scR2.top  + stage.offsetTop  - (fy - py * newH);
 }
 
 function wireZoomButtons(){
   const out = document.getElementById('pdf-zoom-out');
   const inn = document.getElementById('pdf-zoom-in');
   const reset = document.getElementById('pdf-zoom-reset');
-  if(out) out.onclick = () => setPdfZoom(pdfZoom - PDF_BASE_SCALE*0.25);
-  if(inn) inn.onclick = () => setPdfZoom(pdfZoom + PDF_BASE_SCALE*0.25);
-  if(reset) reset.onclick = () => setPdfZoom(PDF_BASE_SCALE);
+  if(out) out.onclick = () => setPdfZoom(pdfZoomFactor - 0.25);
+  if(inn) inn.onclick = () => setPdfZoom(pdfZoomFactor + 0.25);
+  if(reset) reset.onclick = () => setPdfZoom(1);
   const fs = document.getElementById('pdf-fullscreen-toggle');
   if(fs){
     fs.onclick = () => togglePdfFullscreen();
@@ -16951,8 +17146,8 @@ function wireZoomButtons(){
   updateZoomLabel();
 }
 
-/* Fullscreen reading mode. Keeps the current page and zoom, and leaves both
-   the toolbar and the floating note pencil reachable. */
+/* Fullscreen reading mode. Keeps the current page; resets zoom to "whole page
+   fits", which is what going fullscreen is for. */
 async function togglePdfFullscreen(force){
   pdfFullscreen = (force === undefined) ? !pdfFullscreen : force;
   const section = document.getElementById('pdf-section');
@@ -16962,75 +17157,102 @@ async function togglePdfFullscreen(force){
 
   const fs = document.getElementById('pdf-fullscreen-toggle');
   if(fs) fs.textContent = pdfFullscreen ? '✕' : '⛶';
+  clearSelection();
 
-  // Re-measure: the wrapper's width changes when it goes edge-to-edge, and
-  // the zoom display is calculated from that width.
-  requestAnimationFrame(() => applyZoomDisplay());
+  /* The window changes size, so the fit baseline changes: re-render. Deliberately
+     a timeout rather than requestAnimationFrame — rAF is suspended in a
+     backgrounded tab, and the reader must not be left at the wrong size if the
+     toggle happened just before the user switched away. Reading clientWidth
+     inside flushes layout, so the new size is already correct here. */
+  pdfZoomFactor = 1;
+  setTimeout(async () => {
+    if(pdfDoc) await pdfRenderPage(pdfPageNum);
+    const sc = document.getElementById('pdf-scroll');
+    if(sc){ sc.scrollTop = 0; sc.scrollLeft = 0; }
+  }, 0);
   if(!pdfFullscreen) window.scrollTo(0, 0);
 }
 
-/* Pinch-to-zoom on the page itself. */
-function wirePinch(wrap){
-  if(!wrap || wrap.dataset.pinchWired === '1') return;
-  wrap.dataset.pinchWired = '1';
-  let startDist = null, startZoom = null;
-  const dist = (a,b) => Math.hypot(b.clientX-a.clientX, b.clientY-a.clientY);
+/* All touch gestures on the page live here so they can't fight each other:
+   two fingers = pinch zoom, one finger = swipe pages (only when not zoomed in,
+   otherwise the finger pans the zoomed page as you'd expect). */
+function wirePdfGestures(){
+  const sc = document.getElementById('pdf-scroll');
+  if(!sc || sc.dataset.gestWired === '1') return;
+  sc.dataset.gestWired = '1';
 
-  wrap.addEventListener('touchstart', e => {
+  const dist = (a,b) => Math.hypot(b.clientX-a.clientX, b.clientY-a.clientY);
+  let pinching = false, startDist = 0, startFactor = 1, liveK = 1;
+  let midX = 0, midY = 0, swipeX = null, swipeY = null, swipeT = 0;
+
+  sc.addEventListener('touchstart', e => {
     if(e.touches.length === 2){
-      startDist = dist(e.touches[0], e.touches[1]);
-      startZoom = pdfZoom;
+      const stage = document.getElementById('pdf-stage');
+      if(!stage) return;
+      pinching = true; liveK = 1; swipeX = null;
+      startDist = dist(e.touches[0], e.touches[1]) || 1;
+      startFactor = pdfZoomFactor;
+      midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      const r = stage.getBoundingClientRect();
+      // Scale about the pinch point, so the page grows out from your fingers.
+      stage.style.transformOrigin = (midX - r.left) + 'px ' + (midY - r.top) + 'px';
+      sc.classList.add('pinching');
+      clearSelection();
+    } else if(e.touches.length === 1 && !pinching){
+      swipeX = e.touches[0].clientX; swipeY = e.touches[0].clientY; swipeT = Date.now();
     }
   }, {passive:true});
 
-  wrap.addEventListener('touchmove', e => {
-    if(e.touches.length === 2 && startDist){
-      e.preventDefault(); // stop the whole page from pinch-zooming instead
-      const ratio = dist(e.touches[0], e.touches[1]) / startDist;
-      const canvas = document.getElementById('pdf-canvas');
-      const w = document.getElementById('pdf-canvas-wrap');
-      if(canvas && w){ // live preview while fingers are down
-        const live = Math.min(Math.max(startZoom * ratio, 1.0), 4.5);
-        canvas.style.width = (w.clientWidth * (live / PDF_BASE_SCALE)) + 'px';
-        w.classList.toggle('zoomed', live / PDF_BASE_SCALE > 1.001);
-      }
-    }
+  sc.addEventListener('touchmove', e => {
+    if(!pinching || e.touches.length !== 2) return;
+    e.preventDefault();                       // never let the OS zoom the whole app
+    const stage = document.getElementById('pdf-stage');
+    if(!stage) return;
+    const want = Math.min(Math.max(startFactor * (dist(e.touches[0], e.touches[1]) / startDist), 1), PDF_MAX_ZOOM);
+    liveK = want / startFactor;
+    // Pure CSS transform while the fingers are down: smooth, no re-render,
+    // and — because it scales BOTH axes — never distorted.
+    stage.style.transform = 'scale(' + liveK + ')';
   }, {passive:false});
 
-  wrap.addEventListener('touchend', async e => {
-    if(startDist && e.touches.length < 2){
-      const canvas = document.getElementById('pdf-canvas');
-      const w = document.getElementById('pdf-canvas-wrap');
-      let finalZoom = startZoom;
-      if(canvas && w && canvas.style.width){
-        finalZoom = (parseFloat(canvas.style.width) / w.clientWidth) * PDF_BASE_SCALE;
-      }
-      startDist = null; startZoom = null;
-      await setPdfZoom(finalZoom); // re-render sharp at the new size
-    }
-  }, {passive:true});
-}
+  const endPinch = async () => {
+    if(!pinching) return;
+    pinching = false;
+    sc.classList.remove('pinching');
+    const stage = document.getElementById('pdf-stage');
+    if(stage){ stage.style.transform = ''; stage.style.transformOrigin = '0 0'; }
+    const target = Math.min(Math.max(startFactor * liveK, 1), PDF_MAX_ZOOM);
+    await setPdfZoom(target, midX, midY);     // re-render crisp at the new size
+  };
 
-/* swipe left/right to change page */
-function wireSwipe(wrap){
-  if(!wrap || wrap.dataset.swipeWired === '1') return;
-  wrap.dataset.swipeWired = '1';
-  let touchStartX = null;
-  wrap.addEventListener('touchstart', e => {
-    touchStartX = (e.touches.length === 1) ? e.touches[0].clientX : null;
-  }, {passive:true});
-  wrap.addEventListener('touchend', e => {
-    if(touchStartX === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const zoomedIn = pdfZoom > PDF_BASE_SCALE + 0.01;
-    if(!zoomedIn && Math.abs(dx) > 45){
-      const want = dx < 0 ? pdfPageNum+1 : pdfPageNum-1;
-      if(rangeActive() && (want < pdfRange.start || want > pdfRange.end)){
-        toast(`Edge of ${pdfRange.label ? '"'+pdfRange.label+'"' : 'this unit'} (p.${pdfRange.start}–${pdfRange.end}). Double-tap the arrow to go further.`);
-      } else { pdfGoToPage(want); }
+  sc.addEventListener('touchend', async e => {
+    if(pinching){
+      if(e.touches.length < 2) await endPinch();
+      return;
     }
-    touchStartX = null;
+    if(swipeX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - swipeX, dy = t.clientY - swipeY;
+    swipeX = null;
+    // A page turn is a deliberate, mostly-horizontal, reasonably quick flick.
+    if(pdfZoomFactor > 1.02) return;                       // zoomed in: panning, not paging
+    if(Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.6) return;
+    if(Date.now() - swipeT > 800) return;
+    const want = dx < 0 ? pdfPageNum + 1 : pdfPageNum - 1;
+    if(rangeActive() && (want < pdfRange.start || want > pdfRange.end)){
+      toast(`Edge of ${pdfRange.label ? '"'+pdfRange.label+'"' : 'this unit'} (p.${pdfRange.start}–${pdfRange.end}). Double-tap the arrow to go further.`);
+    } else { pdfGoToPage(want); }
   }, {passive:true});
+
+  sc.addEventListener('touchcancel', endPinch, {passive:true});
+
+  // Desktop: ctrl/⌘ + wheel zooms, like every other viewer.
+  sc.addEventListener('wheel', e => {
+    if(!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    setPdfZoom(pdfZoomFactor * (e.deltaY < 0 ? 1.12 : 1/1.12), e.clientX, e.clientY);
+  }, {passive:false});
 }
 
 /* Page navigation. When the reader was opened from a unit, movement is
@@ -17086,7 +17308,7 @@ function wireRangeArrows(){
 /* Small transient message, used for the range hints. */
 function toast(msg){
   let el = document.getElementById('pdf-toast');
-  const wrap = document.getElementById('pdf-canvas-wrap');
+  const wrap = document.getElementById('pdf-viewport');
   if(!wrap) return;
   if(!el){
     el = document.createElement('div');
