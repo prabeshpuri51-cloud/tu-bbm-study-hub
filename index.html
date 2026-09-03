@@ -358,14 +358,15 @@
   /* Docked bottom-centre rather than floating next to the selection: on iOS the
      native "Copy / Look Up" callout sits right on top of the selection and would
      hide a floating pill. A fixed bar well clear of it always works. */
-  #nt-hl-pill{position:fixed;left:50%;transform:translateX(-50%);
+  #nt-hl-pill,#nt-hl-remove{position:fixed;left:50%;transform:translateX(-50%);
     bottom:calc(20px + env(safe-area-inset-bottom));z-index:2600;display:none;gap:8px;
     background:#1f1e2b;border:1px solid var(--line);border-radius:13px;
     padding:8px;box-shadow:0 8px 26px rgba(0,0,0,.6);}
-  #nt-hl-pill.active{display:flex;}
-  #nt-hl-pill button{background:var(--accent);color:#1a1608;border:none;border-radius:9px;
+  #nt-hl-pill.active,#nt-hl-remove.active{display:flex;}
+  #nt-hl-pill button,#nt-hl-remove button{background:var(--accent);color:#1a1608;border:none;border-radius:9px;
     padding:10px 16px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
-  #nt-hl-pill button.clear{background:rgba(255,255,255,.12);color:#fff;}
+  #nt-hl-pill button.clear,#nt-hl-remove button.clear{background:rgba(255,255,255,.12);color:#fff;}
+  #nt-hl-remove button:not(.clear){background:var(--micro);color:#fff;}
   .nt-hl-count{font-size:.7rem;color:var(--ink-dim);font-weight:600;}
   /* The pencil FAB lives at z-index 999, below the notes reader, so lift it
      while the reader is open — otherwise it disappears exactly when you want
@@ -835,6 +836,10 @@
 <div id="nt-hl-pill">
   <button onmousedown="event.preventDefault()" ontouchstart="" onclick="ntHighlightSelection()">✏️ Highlight</button>
   <button class="clear" onmousedown="event.preventDefault()" onclick="ntHidePill()">✕</button>
+</div>
+<div id="nt-hl-remove">
+  <button onmousedown="event.preventDefault()" ontouchstart="" onclick="ntRemoveTappedHl()">🗑 Remove highlight</button>
+  <button class="clear" onmousedown="event.preventDefault()" onclick="ntHideRemove()">✕</button>
 </div>
 
 
@@ -16034,7 +16039,36 @@ function ntShowPill(){
      button the text selection collapses, so by the time ntHighlightSelection()
      runs window.getSelection() is empty. It falls back to this stored range. */
   window.__ntHlRange = sel.getRangeAt(0).cloneRange();
+  ntHideRemove();
   document.getElementById('nt-hl-pill').classList.add('active');  // CSS docks it bottom-centre
+}
+/* Shown when you tap an existing highlight — gives a clear way to undo it. */
+function ntShowRemove(mark){
+  window.__ntRemoveMark = mark;
+  ntHidePill();
+  document.getElementById('nt-hl-remove').classList.add('active');
+}
+function ntHideRemove(){
+  document.getElementById('nt-hl-remove').classList.remove('active');
+  window.__ntRemoveMark = null;
+}
+function ntRemoveTappedHl(){
+  const m = window.__ntRemoveMark;
+  if(m && m.parentNode){
+    let block = m;
+    while(block && !(block.nodeType === 1 && block.hasAttribute('data-nb'))) block = block.parentNode;
+    if(block){
+      const bi = Number(block.getAttribute('data-nb'));
+      const start = ntOffsetIn(block, m.firstChild || m, 0);
+      ntSaveHl(ntLoadHl().filter(h => !(h.b === bi && Math.abs(h.s - start) < 2)));
+    }
+    const parent = m.parentNode;
+    while(m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+    ntUpdateHlCount(ntLoadHl());
+  }
+  ntHideRemove();
 }
 function ntHighlightSelection(){
   clearTimeout(window.__ntSelT);
@@ -16053,25 +16087,16 @@ function ntHighlightSelection(){
   arr.push({b: Number(bi), s, e});
   ntSaveHl(arr);
   ntWrapRange(block, s, e);
+  ntUpdateHlCount(arr);
   ntHidePill();
 }
-/* Tapping an existing highlight removes it. */
+/* Tapping an existing highlight offers a "Remove highlight" button. */
 function ntWireHighlightRemoval(){
   const body = document.getElementById('nt-body');
   body.addEventListener('click', ev => {
     const m = ev.target.closest && ev.target.closest('mark.nt-hl');
-    if(!m) return;
-    let block = m;
-    while(block && !(block.nodeType === 1 && block.hasAttribute('data-nb'))) block = block.parentNode;
-    if(!block) return;
-    const bi = Number(block.getAttribute('data-nb'));
-    const start = ntOffsetIn(block, m.firstChild || m, 0);
-    const arr = ntLoadHl().filter(h => !(h.b === bi && Math.abs(h.s - start) < 2));
-    ntSaveHl(arr);
-    const parent = m.parentNode;
-    while(m.firstChild) parent.insertBefore(m.firstChild, m);
-    parent.removeChild(m);
-    parent.normalize();
+    if(!m){ ntHideRemove(); return; }
+    ntShowRemove(m);
   });
   document.addEventListener('selectionchange', () => {
     if(!document.body.classList.contains('notes-open')) return;
@@ -16125,6 +16150,7 @@ function ntRenderBody(html){
     el.setAttribute('data-nb', nb++);
   });
   ntApplyStoredHl();
+  ntHidePill(); ntHideRemove();
   /* Clear any lingering focus (e.g. the exam answer box) — otherwise the
      `selectionchange` handler below bails on a focused INPUT/TEXTAREA and the
      highlight pill never appears when you select text in the notes. */
@@ -16144,7 +16170,7 @@ function openUnitNotes(){
   ntRenderBody(UNIT_NOTES[currentSubjectKey][currentUnitIdx]);
 }
 function closeUnitNotes(){
-  ntHidePill();
+  ntHidePill(); ntHideRemove();
   document.body.classList.remove('notes-open');
   document.getElementById('view-notes-reader').classList.remove('active');
   if(currentChapterIdx !== null){
