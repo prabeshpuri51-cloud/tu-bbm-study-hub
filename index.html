@@ -1,6 +1,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
 <title>TU BBM Study Hub</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="theme-color" content="#14131b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Study Hub">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
   :root{
@@ -707,6 +715,11 @@
   .ui-btn-cancel{background:rgba(255,255,255,.1);color:var(--ink);}
   .ui-btn-ok{background:var(--accent);color:#1a1608;}
   .ui-btn-ok.danger{background:var(--micro);color:#fff;}
+  #sw-update{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);z-index:12000;background:var(--accent);color:#1a1608;
+    border:none;border-radius:22px;padding:11px 20px;font:700 .85rem/1 inherit;
+    box-shadow:0 8px 28px rgba(0,0,0,.45);cursor:pointer;max-width:calc(100vw - 32px);}
+  #sw-update:active{transform:translateX(-50%) scale(.96);}
 </style>
 <button id="btn-back" class="btn-back" onclick="showDashboard()">← Dashboard</button>
   <div id="header-title" class="header-title">BBM Study Hub</div>
@@ -17745,4 +17758,27 @@ if(navigator.storage && navigator.storage.persist){
 }
 renderSemStrip();
 renderDashboard();
+</script>
+<script>
+/* Offline support. Registers the service worker (sw.js) so the app loads with no
+   internet after the first online visit, and shows a small chip when a newer
+   version has been downloaded in the background. */
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){ /* offline first run, or unsupported */ });
+  });
+  navigator.serviceWorker.addEventListener('message', function(e){
+    if(e.data === 'sw-update-ready') showSwUpdate();
+  });
+  function showSwUpdate(){
+    if(document.getElementById('sw-update')) return;
+    var b = document.createElement('button');
+    b.id = 'sw-update';
+    b.type = 'button';
+    b.textContent = '↻  New version ready — tap to reload';
+    b.addEventListener('click', function(){ location.reload(); });
+    document.body.appendChild(b);
+  }
+})();
 </script>

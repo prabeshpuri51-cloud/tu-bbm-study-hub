@@ -1,0 +1,16 @@
+{
+  "name": "TU BBM Study Hub",
+  "short_name": "Study Hub",
+  "description": "Notes, quizzes and written-exam practice for the TU BBM course. Works offline.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14131b",
+  "theme_color": "#14131b",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
