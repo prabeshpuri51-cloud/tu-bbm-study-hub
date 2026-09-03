@@ -12644,12 +12644,16 @@ window.SUBJECT_DATA_S2["bmath2"] = {
       ]},
 
     {title:"Unit 5: First-order Differential Equations and Applications",
-      primaryBook:"Chiang Ch 15 + Rosser Ch 14",
-      primaryWeak:"NOT YET BUILT. First-order differential equations, dynamics of market price, exact and variable-coefficient equations — Chiang Ch 15 (Spanish 4th ed); Rosser Ch 14.6–14.9.",
-      pages:"Chiang Ch 15 · Rosser Ch 14", startPage:0, endPage:0, lh:9,
-      desc:"Introduction to differential equations; order and degree; solution of differential equations; first-order linear equations with constant coefficient and term; equations for limited and unlimited growth; dynamics of market price; variable-coefficient and variable-term equations; exact equations; non-linear first-order first-degree equations.",
-      subtopics:"Order & degree, first-order linear ODEs, growth, dynamics of market price, exact equations",
-      notBuilt:true, refs:[]},
+      primaryBook:"Bradley (& Patton), Essential Mathematics for Economics and Business (2nd ed), Ch 8.7–8.8 + Chiang Ch 15",
+      primaryWeak:"Introduction, order/degree, solution of dy/dx = f(x), separable equations, and limited/unlimited growth: Bradley Ch 8.7–8.8 (book p.422–438) — a good level match. First-order linear dy/dt + ay = b, dynamics of market price, the integrating factor (variable coefficient), and exact equations are NOT in Bradley's print edition — taken from Chiang Ch 15.1–15.4 (Spanish 4th ed, book p.475–491) and Rosser Ch 14.6–14.9 (book p.506–516). Non-linear first-order first-degree = the separable and exact cases.",
+      pages:"Bradley Ch 8.7–8.8 · Chiang Ch 15.1–15.4 · Rosser Ch 14.6–14.9", startPage:441, endPage:457, lh:9,
+      desc:"Introduction to differential equations; order and degree; solution of differential equations; first-order linear equations with constant coefficient and term; equations for limited and unlimited growth; dynamics of market price; variable-coefficient and variable-term equations (the integrating factor); exact equations; non-linear first-order first-degree equations.",
+      subtopics:"Order & degree, general vs particular solution, separable equations, first-order linear ODEs (constant coefficient), limited & unlimited growth, dynamics of market price, integrating factor, exact equations",
+      primaryMatch:"bradley|essential mathematics for economics",
+      refs:[
+        {book:"Chiang & Wainwright, Fundamental Methods of Mathematical Economics (4th ed — Spanish: Métodos Fundamentales de Economía Matemática)", pages:"Ch 15.1–15.4, book p.475–491", note:"First-order linear DE with constant coefficient and term (Ch 15.1), dynamics of market price (Ch 15.2), variable coefficient / integrating factor (Ch 15.3), exact differential equations (Ch 15.4) — the parts Bradley's print edition omits. Uses t as the independent variable.", match:"chiang|metodos fundamentales|economia matematica", start:500},
+        {book:"Rosser & Lis, Basic Mathematics for Economists (3rd ed, Routledge)", pages:"Ch 14.6–14.9, book p.506–516", note:"Introduction to integration and differential equations, first-order linear DEs, the dynamics of a market price, and the stability condition — a gentler treatment than Chiang.", match:"rosser|basic mathematics for economists|annas arch", start:520}
+      ]},
 
     {title:"Unit 6: Dynamic Economic Analysis and Difference Equations",
       primaryBook:"Chiang Ch 17 & 19 + Rosser Ch 13",
@@ -13727,6 +13731,203 @@ window.SUBJECT_NOTES["bmath2"]["3"] = `<p><strong>Syllabus scope (9 lecture hour
 </ol>
 <p>Also expect: a Section-A brief on defining a partial derivative or writing ∂F/∂x, ∂F/∂y for a given F; a Section-B Lagrange-multiplier utility/output maximisation; a Section-B or C two-good profit maximisation.</p>`;
 
+window.SUBJECT_NOTES["bmath2"]["4"] = `<p><strong>Syllabus scope (9 lecture hours):</strong> Introduction to differential equations; order and degree of a differential equation; solution of differential equations; first-order linear differential equations with constant coefficient and constant term; differential equations for limited and unlimited growth; dynamics of market price; first-order differential equations with variable coefficient and variable term; exact differential equations; non-linear differential equations of the first order and first degree.</p>
+<p><em>Notation:</em> the independent variable is written x or t depending on the source (Bradley uses x, Chiang uses t); read the derivative — dy/dx or dy/dt — to see which.</p>
+<hr>
+
+<h2>5.1 Introduction — Order and Degree</h2>
+<p>A <strong>differential equation (DE)</strong> is an equation that contains one or more <strong>derivatives</strong> of an unknown function. Examples: dy/dx = 10x, or dP/dt + 0.325P = 9.75. <strong>Solving</strong> a DE means finding the function y that satisfies it.</p>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><strong>Order</strong></td><td>the order of the <strong>highest</strong> derivative in the equation</td></tr>
+<tr><td><strong>Degree</strong></td><td>the <strong>power</strong> of the highest-order derivative, after the equation has been made a polynomial in the derivatives (clear any roots or fractions of derivatives first)</td></tr>
+</tbody></table></div>
+<p><strong>Worked example — the real 2023 Model Question, Section A Q1.</strong> State the order and degree of (d²y/dx²)² − 2(dy/dx)³ + 3y = 0.</p>
+<ul>
+<li>Highest derivative present is d²y/dx² → <strong>order 2</strong>.</li>
+<li>It appears to the power 2 (the equation is already polynomial in the derivatives) → <strong>degree 2</strong>.</li>
+</ul>
+<p>The (dy/dx)³ term does <em>not</em> affect the degree — degree looks only at the highest-<strong>order</strong> derivative.</p>
+<p>A DE is <strong>linear</strong> if the dependent variable y and all its derivatives appear only to the first power and are not multiplied together (e.g. dy/dt + ay = b). Otherwise it is <strong>non-linear</strong> (e.g. dy/dx = xy², or y·dy/dx = 1).</p>
+
+<h2>5.2 Solution of a Differential Equation</h2>
+<ul>
+<li>The <strong>general solution</strong> contains an <strong>arbitrary constant</strong> (c or A) — it is a whole <em>family</em> of curves.</li>
+<li>A <strong>particular solution</strong> has the constant pinned down by a given <strong>initial / boundary condition</strong> (e.g. "y = 10 when x = 2").</li>
+<li>Always <strong>check</strong> a solution by differentiating it and substituting back into the original equation.</li>
+</ul>
+<h3>The simplest case — dy/dx = f(x)</h3>
+<p>The right side is a function of x only, so integrate both sides: <strong>y = ∫ f(x) dx + c</strong>.</p>
+<p><strong>Worked example — the real 2023 Model Question, Section A Q6.</strong> Solve dy/dt = 2t². &nbsp;y = ∫ 2t² dt = <strong>(2/3)t³ + c</strong>.</p>
+<p><strong>Worked example (marginal → total).</strong> MC = 10/Q means d(TC)/dQ = 10/Q, so TC = ∫ (10/Q) dQ = 10 ln Q + c, where c = total fixed cost. If TC = 500 when Q = 10: 500 = 10 ln 10 + c → c = 476.97, so <strong>TC = 10 ln Q + 476.97</strong>.</p>
+
+<h2>5.3 Non-linear Equations of the First Order and First Degree — Separable</h2>
+<p>If the DE can be written <strong>dy/dx = f(x)·g(y)</strong> — the right side factors into a function of x times a function of y — <strong>separate the variables</strong> and integrate each side:</p>
+<blockquote><p>(1/g(y)) dy = f(x) dx &nbsp;⟹&nbsp; ∫ (1/g(y)) dy = ∫ f(x) dx + c</p></blockquote>
+<p><strong>Worked example.</strong> dy/dx = 0.5y. Separate: (1/y) dy = 0.5 dx. Integrate: ln y = 0.5x + c → y = e^(0.5x + c) = A e^(0.5x). If y = 10 when x = 2: 10 = A e¹ → A = 3.68, so <strong>y = 3.68 e^(0.5x)</strong>.</p>
+<p><strong>Worked example.</strong> dP/dQ = P(Q + 1). Separate: (1/P) dP = (Q + 1) dQ. Integrate: ln P = Q²/2 + Q + c → <strong>P = A e^(0.5Q² + Q)</strong>.</p>
+<p>An exact equation (§5.8) can also be non-linear but first-order, first-degree.</p>
+
+<h2>5.4 First-order Linear DE with Constant Coefficient and Constant Term</h2>
+<p>The equation <strong>dy/dt + a·y = b</strong>, where a and b are constants.</p>
+<p><strong>Solution structure:</strong> y(t) = y_c + y_p, where</p>
+<ul>
+<li><strong>y_c</strong> (the <em>complementary function</em>) is the general solution of the reduced (homogeneous) equation dy/dt + ay = 0 → <strong>y_c = A e^(−at)</strong>;</li>
+<li><strong>y_p</strong> (the <em>particular integral</em>) is any one solution of the full equation — try a constant y = k: then dy/dt = 0, so ak = b → <strong>y_p = b/a</strong> (provided a ≠ 0).</li>
+</ul>
+<blockquote><p><strong>General solution (a ≠ 0):</strong>&nbsp; y(t) = A e^(−at) + b/a<br>
+<strong>Definite solution</strong> (y = y₀ at t = 0):&nbsp; y(t) = (y₀ − b/a) e^(−at) + b/a</p></blockquote>
+<p>Here <strong>b/a is the intertemporal (long-run) equilibrium</strong> level of y, and A e^(−at) is the deviation from it. If <strong>a &gt; 0</strong> the deviation dies away and y → b/a — the equilibrium is <strong>dynamically stable</strong>.</p>
+<p><strong>Special case a = 0:</strong> dy/dt = b integrates directly to <strong>y(t) = bt + c</strong>.</p>
+<p><strong>Worked example.</strong> Solve dy/dt + 2y = 6, given y(0) = 10. Here a = 2, b = 6 → b/a = 3. y(t) = (10 − 3)e^(−2t) + 3 = <strong>7e^(−2t) + 3</strong>. (Check: dy/dt = −14e^(−2t); dy/dt + 2y = −14e^(−2t) + 14e^(−2t) + 6 = 6 ✓; y(0) = 7 + 3 = 10 ✓.)</p>
+
+<h2>5.5 Differential Equations for Limited and Unlimited Growth</h2>
+<div class="nt-table-wrap"><table>
+<thead><tr><th>Model</th><th>Equation</th><th>Solution</th><th>Behaviour</th></tr></thead>
+<tbody>
+<tr><td><strong>Unlimited growth / decay</strong></td><td>dy/dt = r·y</td><td>y = A e^(rt)</td><td>grows without limit (r &gt; 0) or decays to 0 (r &lt; 0). r = (dy/dt)/y is the <strong>constant proportional rate of growth</strong>.</td></tr>
+<tr><td><strong>Limited growth</strong></td><td>dy/dt = r·(A − y)</td><td>y = A(1 − e^(−rt)) with y = 0 at t = 0; or y = A − Be^(−rt) generally</td><td>rises fast at first, then levels off just short of the <strong>ceiling A</strong></td></tr>
+</tbody></table></div>
+<p><strong>Worked example (limited growth).</strong> The rate of sales of a new printer is dQ/dt = 0.04(700 − Q), with Q = 0 at t = 0. Separate: (1/(700 − Q)) dQ = 0.04 dt. Integrate: −ln(700 − Q) = 0.04t + c → 700 − Q = Be^(−0.04t). At t = 0, Q = 0 → B = 700. So <strong>Q = 700(1 − e^(−0.04t))</strong> — sales rise toward a ceiling of 700 units.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u5-growth">
+  <h3>Unlimited growth, decay, and limited growth</h3>
+  <p class="dgm-sub">The three standard first-order growth models</p>
+  <svg viewBox="0 0 360 250" role="img" aria-label="Three curves from a common start: an exponential rising steeply (unlimited growth), an exponential falling toward zero (decay), and a curve rising and levelling off toward a horizontal ceiling line (limited growth)">
+    <line class="ax" x1="45" y1="215" x2="345" y2="215"/>
+    <line class="ax" x1="45" y1="215" x2="45" y2="18"/>
+    <text class="t" x="336" y="232">t</text><text class="t" x="30" y="22">y</text>
+    <line class="gd" x1="45" y1="52" x2="345" y2="52"/>
+    <text class="ts" x="52" y="47">ceiling A (limited growth)</text>
+    <path class="cd" d="M 45 200 Q 170 190 240 120 T 325 25" fill="none"/>
+    <text class="td" x="150" y="185">unlimited: y = Aeʳᵗ</text>
+    <path class="cc" d="M 45 95 Q 120 190 220 205 T 340 211" fill="none"/>
+    <text class="tc" x="235" y="175">decay: y = Ae⁻ʳᵗ</text>
+    <path class="ck" d="M 45 200 Q 135 58 230 55 T 340 52" fill="none"/>
+    <text class="tb" x="120" y="90">limited: y = A(1 − e⁻ʳᵗ)</text>
+    <circle class="dot" cx="45" cy="200" r="3"/>
+    <circle class="dot" cx="45" cy="95" r="3"/>
+  </svg>
+  <figcaption>
+    <p>Unlimited growth (blue): dy/dt = ry, r &gt; 0 — the curve steepens forever. Decay (grey): r &lt; 0 — the curve falls toward zero. Limited growth (dark): dy/dt = r(A − y) — fast at first, then flattening asymptotically toward the ceiling A.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>All three curves starting on the y-axis; the ceiling line A for limited growth; the DE that generates each; that unlimited growth has no upper bound while limited growth approaches A.</div>
+  </figcaption>
+</figure></div>
+
+<h2>5.6 Dynamics of Market Price</h2>
+<p><strong>Set-up.</strong> Linear demand and supply, both functions of price P:</p>
+<blockquote><p>Q_d = α − βP,&nbsp;&nbsp; Q_s = −γ + δP&nbsp;&nbsp;(α, β, γ, δ &gt; 0)</p></blockquote>
+<p>The static <strong>equilibrium price</strong> is P* = (α + γ) / (β + δ).</p>
+<p><strong>The dynamic assumption.</strong> Price changes in proportion to <strong>excess demand</strong>:</p>
+<blockquote><p>dP/dt = j·(Q_d − Q_s),&nbsp;&nbsp; j &gt; 0 (the <em>adjustment coefficient</em>)</p></blockquote>
+<p>Substituting the demand/supply functions: dP/dt = j(α − βP + γ − δP) = j(α + γ) − j(β + δ)P, i.e.</p>
+<blockquote><p><strong>dP/dt + j(β + δ)·P = j(α + γ)</strong></p></blockquote>
+<p>This is a first-order linear DE with constant coefficient (§5.4), so with <strong>k = j(β + δ)</strong>:</p>
+<blockquote><p><strong>P(t) = [P(0) − P*]·e^(−kt) + P*</strong></p></blockquote>
+<p><strong>Dynamic stability.</strong> Since k = j(β + δ) &gt; 0, the exponential term dies away and <strong>P(t) → P*</strong> as t → ∞ — the market is <strong>dynamically stable</strong>: whatever the starting price, it converges to equilibrium.</p>
+<p><strong>Worked example — the real 2023 Model Question, Section C Q18.</strong> Under perfect competition Q_d = 35 − 0.5P and Q_s = −4 + 0.8P, with price Rs 37 at t = 0 and dP/dt = 0.25(Q_d − Q_s) (Rs per week).</p>
+<p><strong>(a) Derive and solve.</strong> Q_d − Q_s = (35 − 0.5P) − (−4 + 0.8P) = 39 − 1.3P. dP/dt = 0.25(39 − 1.3P) = 9.75 − 0.325P ⟹ <strong>dP/dt + 0.325P = 9.75</strong>. Equilibrium: P* = 9.75 / 0.325 = <strong>30</strong> (or directly, (35 + 4)/(0.5 + 0.8) = 39/1.3 = 30). Solution: P(t) = [37 − 30]·e^(−0.325t) + 30 = <strong>30 + 7e^(−0.325t)</strong>.</p>
+<p><strong>(b) Price after 5 and 9 weeks.</strong> P(5) = 30 + 7e^(−1.625) = 30 + 7(0.1969) = <strong>Rs 31.38</strong>; P(9) = 30 + 7e^(−2.925) = 30 + 7(0.0537) = <strong>Rs 30.38</strong>. The price falls steadily from 37 toward the equilibrium 30.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u5-market">
+  <h3>Dynamics of market price — convergence to equilibrium</h3>
+  <p class="dgm-sub">P(t) = [P(0) − P*]e⁻ᵏᵗ + P*, with k = j(β + δ) &gt; 0</p>
+  <svg viewBox="0 0 360 250" role="img" aria-label="A horizontal line at the equilibrium price P-star; one price path starts above it and curves down toward it, another starts below and curves up toward it">
+    <line class="ax" x1="45" y1="215" x2="345" y2="215"/>
+    <line class="ax" x1="45" y1="215" x2="45" y2="18"/>
+    <text class="t" x="336" y="232">t</text><text class="t" x="28" y="22">P</text>
+    <line class="gd" x1="45" y1="120" x2="345" y2="120"/>
+    <text class="ts" x="300" y="115">P* = 30</text>
+    <path class="cd" d="M 45 45 Q 130 95 220 113 T 340 119" fill="none"/>
+    <circle class="dot" cx="45" cy="45" r="3"/><text class="ts" x="50" y="42">P(0) = 37</text>
+    <path class="cc" d="M 45 195 Q 130 145 220 127 T 340 121" fill="none"/>
+    <circle class="dot" cx="45" cy="195" r="3"/><text class="ts" x="50" y="205">P(0) &lt; P* (other case)</text>
+    <text class="tm" x="150" y="70">converges to P* (stable, since k &gt; 0)</text>
+  </svg>
+  <figcaption>
+    <p>Whatever the starting price, the exponential deviation term [P(0) − P*]e⁻ᵏᵗ shrinks to zero (because k &gt; 0), so the price path homes in on the equilibrium P*. In Q18 the path starts at 37 and settles toward 30. If k were negative the price would move away from P* (unstable).</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The equilibrium line P*; a path from above and one from below, both approaching P*; that stability needs k = j(β + δ) &gt; 0; the split into equilibrium level P* + deviation term.</div>
+  </figcaption>
+</figure></div>
+
+<h2>5.7 Variable Coefficient and Variable Term — the Integrating Factor</h2>
+<p>The general first-order <strong>linear</strong> DE is <strong>dy/dx + P(x)·y = Q(x)</strong>, where P and Q may be functions of x (not just constants). Solve with the <strong>integrating factor</strong>:</p>
+<blockquote><p><strong>IF = e^∫P(x) dx</strong></p></blockquote>
+<p>Multiply the whole equation by the IF. The left side then becomes exactly d/dx [y·IF], so:</p>
+<blockquote><p><strong>y · IF = ∫ (Q(x) · IF) dx + c</strong></p></blockquote>
+<p><strong>Worked example — the real 2023 Model Question, Section B Q12</strong> (the scan prints "dy/dt" with x-terms and drops part of the numerator; the standard reading is dy/dx + 2xy/(1 + x²) = 4x²/(1 + x²)): Here P(x) = 2x/(1 + x²), Q(x) = 4x²/(1 + x²). IF = e^∫[2x/(1 + x²)] dx = e^ln(1 + x²) = <strong>1 + x²</strong>. So (1 + x²)·y = ∫ (1 + x²) · 4x²/(1 + x²) dx = ∫ 4x² dx = (4/3)x³ + c. <strong>y = [(4/3)x³ + c] / (1 + x²).</strong></p>
+<p><strong>Worked example.</strong> dy/dx + y/x = 5/x. Here P = 1/x, Q = 5/x. IF = e^∫(1/x) dx = e^ln x = x. x·y = ∫ x·(5/x) dx = ∫ 5 dx = 5x + c → <strong>y = 5 + c/x</strong>. If y = 3 when x = 1: 3 = 5 + c → c = −2, so y = 5 − 2/x.</p>
+<p>Chiang's compact form: dy/dt + u(t)y = w(t) has the general solution y(t) = e^(−∫u dt)·[A + ∫ w·e^(∫u dt) dt] — the same thing, with the IF written explicitly.</p>
+
+<h2>5.8 Exact Differential Equations</h2>
+<p>Write the DE in the form <strong>M dx + N dy = 0</strong> (M and N functions of x and y). It is <strong>exact</strong> if and only if</p>
+<blockquote><p><strong>∂M/∂y = ∂N/∂x</strong></p></blockquote>
+<p>When it is exact, there is a function F(x, y) with ∂F/∂x = M and ∂F/∂y = N, and the <strong>solution is F(x, y) = c</strong>.</p>
+<p><strong>Method (4 steps):</strong></p>
+<ol>
+<li>Write F(x, y) = ∫ M dx + ψ(y) &nbsp;(integrate M w.r.t. x, treating y as constant; ψ(y) is an unknown "constant" that may depend on y).</li>
+<li>Differentiate this F partially w.r.t. y and set it equal to N. This gives ψ′(y).</li>
+<li>Integrate ψ′(y) to find ψ(y).</li>
+<li>Combine: the solution is F(x, y) = c.</li>
+</ol>
+<p><strong>Worked example.</strong> (t + 2y) dy + (y + 3t²) dt = 0. Matching M dt + N dy = 0: M = y + 3t², N = t + 2y. Test: ∂M/∂y = 1, ∂N/∂t = 1 — <strong>equal, so exact.</strong> Step 1: F = ∫ (t + 2y) dy + ψ(t) = ty + y² + ψ(t). Step 2: ∂F/∂t = y + ψ′(t); set equal to M = y + 3t² → ψ′(t) = 3t². Step 3: ψ(t) = ∫ 3t² dt = t³. Step 4: F = ty + y² + t³, so the solution is <strong>ty + y² + t³ = c</strong>.</p>
+<p><strong>Integrating factor for an inexact equation.</strong> If ∂M/∂y ≠ ∂N/∂x, sometimes multiplying the whole equation by a well-chosen factor (a function of x only, or of y only) makes it exact — then solve as above. Example: 2t dy + y dt = 0 is not exact, but multiplying by y gives 2ty dy + y² dt = 0, which is.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mth2-u5-solve">
+  <h3>Which method for a first-order differential equation?</h3>
+  <p class="dgm-sub">Match the form, then apply the matching technique</p>
+  <div class="dgm-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px"><svg style="min-width:560px" viewBox="0 0 560 250" role="img" aria-label="A decision list: dy/dx equals f of x is solved by direct integration; dy/dx equals f of x times g of y is separable; dy/dx plus P of x times y equals Q of x is linear, use the integrating factor; M dx plus N dy equals 0 with dM/dy equal to dN/dx is exact">
+    <rect x="12" y="14" width="200" height="42" rx="6" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="tb" x="112" y="32" text-anchor="middle" style="font-size:10px">dy/dx = f(x)</text>
+    <text class="ts" x="112" y="46" text-anchor="middle">integrate both sides directly</text>
+    <rect x="12" y="66" width="200" height="42" rx="6" class="ck" style="fill:rgba(31,95,168,.10)"/>
+    <text class="tb" x="112" y="84" text-anchor="middle" style="font-size:10px">dy/dx = f(x)·g(y)</text>
+    <text class="ts" x="112" y="98" text-anchor="middle">SEPARABLE — split &amp; integrate</text>
+    <rect x="12" y="118" width="200" height="46" rx="6" class="ck" style="fill:rgba(240,180,60,.14)"/>
+    <text class="tb" x="112" y="136" text-anchor="middle" style="font-size:10px">dy/dx + P(x)·y = Q(x)</text>
+    <text class="ts" x="112" y="150" text-anchor="middle">LINEAR — integrating factor e^∫P dx</text>
+    <text class="ts" x="112" y="161" text-anchor="middle">(constant P: y = Ae⁻ᵃᵗ + b/a)</text>
+    <rect x="12" y="174" width="200" height="46" rx="6" class="ck" style="fill:rgba(70,160,90,.16)"/>
+    <text class="tb" x="112" y="192" text-anchor="middle" style="font-size:10px">M dx + N dy = 0</text>
+    <text class="ts" x="112" y="206" text-anchor="middle">if ∂M/∂y = ∂N/∂x → EXACT</text>
+    <text class="ts" x="112" y="217" text-anchor="middle">F(x,y) = c</text>
+    <text class="ts" x="270" y="40">order = highest derivative;</text>
+    <text class="ts" x="270" y="56">degree = power of that derivative</text>
+    <text class="ts" x="270" y="86">general solution → arbitrary constant;</text>
+    <text class="ts" x="270" y="102">particular solution → constant fixed by</text>
+    <text class="ts" x="270" y="118">an initial condition</text>
+    <text class="ts" x="270" y="150">applications: marginal → total,</text>
+    <text class="ts" x="270" y="166">unlimited / limited growth,</text>
+    <text class="ts" x="270" y="182">dynamics of market price (→ P*)</text>
+    <text class="ts" x="270" y="210">always check by differentiating</text>
+  </svg></div>
+  <figcaption>
+    <p>Identify which of the four forms the equation matches, then use the matching method. A linear equation with a <em>constant</em> coefficient (dy/dt + ay = b) has the ready-made formula y(t) = Ae⁻ᵃᵗ + b/a. The market-price model (§5.6) is exactly this form.</p>
+    <div class="dgm-marks"><b>Label to earn marks</b>The four forms and their methods; order vs degree; general vs particular solution; the exactness test ∂M/∂y = ∂N/∂x.</div>
+  </figcaption>
+</figure></div>
+
+<hr>
+<h2>Exam checklist</h2>
+<p><strong>Definitions / formulas to know cold:</strong></p>
+<ul>
+<li><strong>Order</strong> = highest derivative; <strong>degree</strong> = power of the highest-order derivative (polynomial form)</li>
+<li>General solution (arbitrary constant) vs particular solution (constant fixed by an initial condition); always check by differentiating</li>
+<li>dy/dx = f(x) → y = ∫ f(x) dx + c</li>
+<li>Separable dy/dx = f(x)g(y) → ∫ dy/g(y) = ∫ f(x) dx + c</li>
+<li><strong>Constant-coefficient linear:</strong> dy/dt + ay = b → y(t) = (y₀ − b/a)e^(−at) + b/a; equilibrium b/a; stable if a &gt; 0 (a = 0 → y = bt + c)</li>
+<li>Unlimited growth dy/dt = ry → y = Ae^(rt); limited growth dy/dt = r(A − y) → y = A − Be^(−rt)</li>
+<li><strong>Dynamics of market price:</strong> dP/dt = j(Q_d − Q_s) → dP/dt + j(β+δ)P = j(α+γ); P(t) = [P(0) − P*]e^(−kt) + P*, k = j(β+δ); stable since k &gt; 0; P* = (α+γ)/(β+δ)</li>
+<li><strong>Variable coefficient linear:</strong> dy/dx + P(x)y = Q(x) → IF = e^∫P dx; y·IF = ∫ Q·IF dx + c</li>
+<li><strong>Exact:</strong> M dx + N dy = 0 is exact iff ∂M/∂y = ∂N/∂x; then F(x,y) = c with F = ∫M dx + ψ(y)</li>
+</ul>
+<p><strong>Confirmed real past-paper questions</strong> (TU FOM Model Question 2023, BBM Business Mathematics II):</p>
+<ol>
+<li><strong>Section A Q1</strong> — order and degree of (d²y/dx²)² − 2(dy/dx)³ + 3y = 0 (2 marks) — §5.1, answer <strong>order 2, degree 2</strong></li>
+<li><strong>Section A Q6</strong> — solve dy/dt = 2t² (2 marks) — §5.2, answer <strong>y = (2/3)t³ + c</strong></li>
+<li><strong>Section B Q12</strong> — solve dy/dx + 2xy/(1 + x²) = 4x²/(1 + x²) (5 marks) — §5.7, IF = 1 + x², answer <strong>y = [(4/3)x³ + c]/(1 + x²)</strong></li>
+<li><strong>Section C Q18</strong> — perfect-competition price adjustment: Q_d = 35 − 0.5P, Q_s = −4 + 0.8P, P(0) = 37, dP/dt = 0.25(Q_d − Q_s). (a) derive and solve for P(t); (b) price after 5 and 9 weeks (10 marks) — §5.6, answer <strong>P(t) = 30 + 7e^(−0.325t); P(5) ≈ Rs 31.38, P(9) ≈ Rs 30.38</strong></li>
+</ol>
+<p>Also expect: a Section-A brief defining "differential equation" or stating order and degree of a given equation; a Section-B linear DE by integrating factor or a separable DE; a Section-B or C limited-growth (sales / advertising / resource) model.</p>`;
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — MCQ QUIZ BANK   {q, o:[4], a, why, w}
    w:3 = confirmed past-paper idea or guaranteed-core; w:2 core; w:1 finer point.
@@ -14150,6 +14351,113 @@ window.SUBJECT_QUIZ["bmath2"]["3"] = [
    why:"Formal second-order conditions are complex, but for the standard business/economics problems the method safely yields the intended max or min."}
 ];
 
+window.SUBJECT_QUIZ["bmath2"]["4"] = [
+  {q:"A differential equation is an equation that contains:", o:["one or more derivatives of an unknown function", "only constants", "only integrals", "no variables"], a:0, w:2,
+   why:"e.g. dy/dx = 10x or dP/dt + 0.325P = 9.75. Solving it means finding the function y that satisfies it."},
+  {q:"The ORDER of a differential equation is:", o:["the number of terms", "the highest power of the dependent variable", "the order of the highest derivative present", "the number of arbitrary constants"], a:2, w:3,
+   why:"e.g. d²y/dx² + 3y = 0 is second order; dy/dx + y = x is first order."},
+  {q:"The DEGREE of a differential equation is:", o:["the highest derivative present", "the number of boundary conditions", "the coefficient of the highest derivative", "the power of the highest-order derivative, once the equation is polynomial in the derivatives"], a:3, w:3,
+   why:"Clear any roots or fractions of derivatives first, then read the power of the highest-order derivative."},
+  {q:"For (d²y/dx²)² − 2(dy/dx)³ + 3y = 0, the order and degree are:", o:["order 2, degree 3", "order 2, degree 2", "order 1, degree 2", "order 3, degree 2"], a:1, w:3,
+   why:"Highest derivative is d²y/dx² → order 2. It appears to the power 2 → degree 2. The (dy/dx)³ term does not affect the degree. This is the real 2023 model paper Section A Q1."},
+  {q:"For the differential equation (dy/dx)³ + 5y = x, the order and degree are:", o:["order 3, degree 1", "order 1, degree 1", "order 3, degree 3", "order 1, degree 3"], a:3, w:2,
+   why:"Only a first derivative appears → order 1. It is raised to the power 3 → degree 3."},
+  {q:"A differential equation is LINEAR if:", o:["the dependent variable and all its derivatives appear only to the first power and are not multiplied together", "it has degree 1", "it contains only one derivative", "it can be solved by integration"], a:0, w:2,
+   why:"e.g. dy/dt + ay = b is linear; dy/dx = xy² or y·(dy/dx) = 1 are non-linear."},
+  {q:"The GENERAL solution of a differential equation:", o:["is a single number", "contains no unknowns", "contains an arbitrary constant (a family of curves)", "is always y = 0"], a:2, w:3,
+   why:"A first-order DE's general solution has one arbitrary constant; a boundary/initial condition fixes it to give a particular solution."},
+  {q:"A PARTICULAR solution is obtained from the general solution by:", o:["differentiating it", "using an initial/boundary condition to find the value of the arbitrary constant", "integrating it again", "setting all variables to zero"], a:1, w:3,
+   why:"E.g. 'y = 10 when x = 2' lets you solve for the constant, picking one curve from the family."},
+  {q:"To solve dy/dx = f(x) you:", o:["integrate both sides: y = ∫ f(x) dx + c", "separate the variables", "use an integrating factor", "test for exactness"], a:0, w:3,
+   why:"The right side is a function of x only, so direct integration works."},
+  {q:"The solution of dy/dt = 2t² is:", o:["4t + c", "2t³ + c", "t² + c", "(2/3)t³ + c"], a:3, w:3,
+   why:"y = ∫ 2t² dt = 2t³/3 + c. This is the real 2023 model paper Section A Q6."},
+  {q:"The solution of dy/dx = 3x² − 4x is:", o:["6x − 4 + c", "x³ − 2x² + c", "3x³ − 4x² + c", "x³ − 4x² + c"], a:1, w:2,
+   why:"Integrate term by term: 3x² → x³, −4x → −2x²."},
+  {q:"The best way to check a solution of a differential equation is to:", o:["substitute x = 1", "integrate it again", "differentiate it and see whether it satisfies the original equation", "check that it has an arbitrary constant"], a:2, w:2,
+   why:"If differentiating your y(x) reproduces the differential equation (and any initial condition is met), the solution is correct."},
+  {q:"A differential equation of the form dy/dx = f(x)·g(y) is solved by:", o:["an integrating factor", "testing for exactness", "the quadratic formula", "the method of separation of variables"], a:3, w:3,
+   why:"Write (1/g(y)) dy = f(x) dx, then integrate each side separately."},
+  {q:"Separating the variables of dy/dx = 0.5y gives:", o:["(1/y) dy = 0.5 dx", "y dy = 0.5 dx", "dy = 0.5y dx (no change)", "0.5 dy = y dx"], a:0, w:3,
+   why:"Move the y-terms to the left with dy and the x-terms to the right with dx: (1/y) dy = 0.5 dx. Integrating: ln y = 0.5x + c → y = Ae^(0.5x)."},
+  {q:"The general solution of dy/dx = 0.5y is:", o:["y = 0.5x + c", "y = 0.5x² + c", "y = A e^(0.5x)", "y = A x^0.5"], a:2, w:3,
+   why:"Separate, integrate: ln y = 0.5x + c → y = e^(0.5x)·e^c = A e^(0.5x)."},
+  {q:"For dP/dQ = P(Q + 1), separation of variables gives ∫ (1/P) dP = ∫ (Q + 1) dQ, so the general solution is:", o:["P = 0.5Q² + Q + c", "P = A e^(0.5Q² + Q)", "P = A(Q + 1)", "P = e^(Q + 1)"], a:1, w:2,
+   why:"ln P = Q²/2 + Q + c → P = e^(0.5Q² + Q)·e^c = A e^(0.5Q² + Q)."},
+  {q:"An exact differential equation is also a first-order equation of degree:", o:["0", "2", "3", "1"], a:3, w:1,
+   why:"An exact equation is always first order and first degree, though it may be non-linear in y."},
+  {q:"The equation dy/dt + a·y = b (a, b constants) is a first-order linear differential equation with:", o:["constant coefficient and constant term", "variable coefficient", "no solution", "degree 2"], a:0, w:3,
+   why:"a is the (constant) coefficient of y and b is the (constant) term. Its solution has a ready-made formula."},
+  {q:"The general solution of dy/dt + a·y = b (a ≠ 0) is:", o:["y = A e^(at) − b", "y = A e^(−at) + b/a", "y = b·t + A", "y = A e^(−at) − b/a"], a:1, w:3,
+   why:"y = y_c + y_p = A e^(−at) (complementary function) + b/a (particular integral). b/a is the equilibrium level."},
+  {q:"In the solution y(t) = A e^(−at) + b/a of dy/dt + ay = b, the term b/a represents:", o:["the initial value", "the rate of growth", "the intertemporal (long-run) equilibrium level of y", "the arbitrary constant"], a:2, w:3,
+   why:"As t → ∞ (with a > 0), A e^(−at) → 0 and y → b/a — the equilibrium. A e^(−at) is the deviation from it."},
+  {q:"The equilibrium in dy/dt + ay = b is DYNAMICALLY STABLE when:", o:["a = 0", "b > 0", "b < 0", "a > 0"], a:3, w:3,
+   why:"a > 0 makes e^(−at) → 0, so any deviation dies away and y converges to b/a. If a < 0 the deviation grows (unstable)."},
+  {q:"The definite solution of dy/dt + ay = b with y = y₀ at t = 0 is:", o:["y(t) = y₀ e^(−at)", "y(t) = (y₀ − b/a) e^(−at) + b/a", "y(t) = b/a for all t", "y(t) = y₀ + bt"], a:1, w:3,
+   why:"Put t = 0 in the general solution: y₀ = A + b/a → A = y₀ − b/a."},
+  {q:"When a = 0, the equation dy/dt = b has solution:", o:["y = b·t + c", "y = A e^(−bt)", "y = b/0 (undefined)", "y = b"], a:0, w:2,
+   why:"With no y-term, integrate directly: y = ∫ b dt = bt + c."},
+  {q:"Solving dy/dt + 2y = 6 with y(0) = 10 gives:", o:["y = 10 e^(−2t)", "y = 3 e^(−2t) + 7", "y = 7 e^(−2t) + 3", "y = 6 − 2t"], a:2, w:3,
+   why:"a = 2, b = 6 → b/a = 3; A = y₀ − b/a = 10 − 3 = 7. So y(t) = 7 e^(−2t) + 3."},
+  {q:"The differential equation for UNLIMITED growth is:", o:["dy/dt = r·(A − y)", "dy/dt = r", "dy/dt = −r·y²", "dy/dt = r·y"], a:3, w:3,
+   why:"dy/dt = ry says the rate of growth is proportional to the current size; its solution y = A e^(rt) has no upper bound (for r > 0)."},
+  {q:"The solution of dy/dt = r·y is:", o:["y = A e^(rt)", "y = r·t + A", "y = A(1 − e^(−rt))", "y = A/r"], a:0, w:3,
+   why:"Separable: (1/y) dy = r dt → ln y = rt + c → y = A e^(rt). Growth if r > 0, decay if r < 0."},
+  {q:"The differential equation for LIMITED growth is:", o:["dy/dt = r·y", "dy/dt = r·(A − y), where A is the ceiling", "dy/dt = r·t", "dy/dt = A − r"], a:1, w:3,
+   why:"The rate slows as y approaches the ceiling A. Solution (with y = 0 at t = 0): y = A(1 − e^(−rt))."},
+  {q:"For limited growth y = A(1 − e^(−rt)), as t → ∞ the value of y approaches:", o:["0", "infinity", "r", "A (the ceiling)"], a:3, w:2,
+   why:"e^(−rt) → 0, so y → A. Sales / adoption / resource-use models approach but never exceed the ceiling."},
+  {q:"In dy/dt = r·y, the quantity r = (dy/dt)/y is called the:", o:["absolute growth", "carrying capacity", "constant proportional (relative) rate of growth", "half-life"], a:2, w:2,
+   why:"It is the growth of y per unit of y — constant for exponential growth, and generally variable for other functions."},
+  {q:"Solving dQ/dt = 0.04(700 − Q) with Q = 0 at t = 0 gives:", o:["Q = 700(1 − e^(−0.04t))", "Q = 700 e^(−0.04t)", "Q = 0.04(700 − Q)t", "Q = 28t"], a:0, w:3,
+   why:"Separate: (1/(700 − Q)) dQ = 0.04 dt → 700 − Q = B e^(−0.04t); Q = 0 at t = 0 → B = 700, so Q = 700(1 − e^(−0.04t)) — sales approach a ceiling of 700."},
+  {q:"A capital investment that depreciates continuously at 5% per year satisfies dI/dt = −0.05I. Its solution is:", o:["I = A e^(0.05t)", "I = A e^(−0.05t)", "I = A − 0.05t", "I = 0.05At"], a:1, w:2,
+   why:"Unlimited decay: I = A e^(−0.05t), with A the initial value. This is exponential decay."},
+  {q:"In the dynamics of market price, price is assumed to change in proportion to:", o:["total supply", "total revenue", "excess demand (Q_d − Q_s)", "the interest rate"], a:2, w:3,
+   why:"dP/dt = j(Q_d − Q_s), j > 0 — a positive excess demand pushes the price up, a negative one pushes it down."},
+  {q:"For Q_d = α − βP and Q_s = −γ + δP, the equilibrium price P* is:", o:["(α − γ)/(β − δ)", "α + γ", "β + δ", "(α + γ)/(β + δ)"], a:3, w:3,
+   why:"Set Q_d = Q_s: α − βP = −γ + δP → α + γ = (β + δ)P → P* = (α + γ)/(β + δ)."},
+  {q:"Substituting the demand and supply functions into dP/dt = j(Q_d − Q_s) gives a differential equation of the form:", o:["dP/dt = constant", "dP/dt + j(β + δ)P = j(α + γ) — linear, constant coefficient", "dP/dt = jP²", "dP/dt − P = 0"], a:1, w:3,
+   why:"dP/dt = j(α − βP + γ − δP) = j(α + γ) − j(β + δ)P, i.e. dP/dt + j(β + δ)P = j(α + γ)."},
+  {q:"The time path of price is P(t) = [P(0) − P*] e^(−kt) + P*, where k = j(β + δ). This market is dynamically stable because:", o:["k = j(β + δ) > 0, so the deviation term dies away and P → P*", "k = 0", "P(0) = P*", "j < 0"], a:0, w:3,
+   why:"With j, β, δ all positive, k > 0 and e^(−kt) → 0, so the price converges to equilibrium P* regardless of the starting price."},
+  {q:"For Q_d = 35 − 0.5P, Q_s = −4 + 0.8P, the equilibrium price P* is:", o:["39", "13", "35", "30"], a:3, w:3,
+   why:"P* = (35 + 4)/(0.5 + 0.8) = 39/1.3 = 30. (This is the real 2023 model paper Section C Q18.)"},
+  {q:"For the Q18 model (Q_d = 35 − 0.5P, Q_s = −4 + 0.8P, dP/dt = 0.25(Q_d − Q_s), P(0) = 37), the time path of price is:", o:["P(t) = 37 e^(−0.325t)", "P(t) = 30 − 7 e^(0.325t)", "P(t) = 30 + 7 e^(−0.325t)", "P(t) = 7 + 30 e^(−0.325t)"], a:2, w:3,
+   why:"k = 0.25(0.5 + 0.8) = 0.325; P* = 30; P(0) − P* = 7. So P(t) = 7 e^(−0.325t) + 30. Real 2023 model paper Section C Q18."},
+  {q:"For P(t) = 30 + 7 e^(−0.325t), the price after 5 weeks (e^(−1.625) ≈ 0.197) is approximately:", o:["Rs 37.00", "Rs 31.38", "Rs 30.00", "Rs 35.20"], a:1, w:2,
+   why:"P(5) = 30 + 7(0.197) = 30 + 1.38 = 31.38. (After 9 weeks it is ≈ 30.38 — the price is settling toward the equilibrium 30.)"},
+  {q:"The general first-order LINEAR differential equation is written:", o:["dy/dx + P(x)·y = Q(x)", "dy/dx · y = Q(x)", "dy/dx = P(x) + Q(x)", "y² dy/dx = Q(x)"], a:0, w:3,
+   why:"P(x) and Q(x) may be functions of x (not just constants). It is solved with an integrating factor."},
+  {q:"The integrating factor for dy/dx + P(x)·y = Q(x) is:", o:["∫P(x) dx", "e^Q(x)", "1/P(x)", "e^∫P(x) dx"], a:3, w:3,
+   why:"Multiplying by IF = e^∫P dx makes the left side d/dx[y·IF], so y·IF = ∫ Q·IF dx + c."},
+  {q:"After multiplying dy/dx + P(x)·y = Q(x) by the integrating factor IF, the left side becomes:", o:["y + IF", "d/dx [y · IF]", "IF²", "∫ y dx"], a:1, w:2,
+   why:"That is the whole point of the integrating factor — the LHS collapses to the derivative of a product, which can then be integrated directly."},
+  {q:"For dy/dx + y/x = 5/x, the integrating factor is:", o:["e^x", "1/x", "x", "ln x"], a:2, w:3,
+   why:"P(x) = 1/x, so IF = e^∫(1/x) dx = e^(ln x) = x. Then x·y = ∫ x·(5/x) dx = 5x + c → y = 5 + c/x."},
+  {q:"For dy/dx + 2xy/(1 + x²) = 4x²/(1 + x²), the integrating factor is:", o:["1 + x²", "e^(2x)", "x²", "e^x"], a:0, w:3,
+   why:"P(x) = 2x/(1 + x²), so ∫ P dx = ln(1 + x²) and IF = e^(ln(1 + x²)) = 1 + x². The solution is y = [(4/3)x³ + c]/(1 + x²). This is the real 2023 model paper Section B Q12."},
+  {q:"For dy/dx + 3y = e^(2x), the integrating factor is:", o:["e^(2x)", "3x", "e^(5x)", "e^(3x)"], a:3, w:2,
+   why:"P(x) = 3 (constant), so IF = e^∫3 dx = e^(3x)."},
+  {q:"Chiang's compact solution formula for dy/dt + u(t)y = w(t) is:", o:["y = ∫ w dt + c", "y(t) = e^(−∫u dt) · [A + ∫ w·e^(∫u dt) dt]", "y = w/u", "y = A e^(u·t)"], a:1, w:1,
+   why:"This is just the integrating-factor method written out: the factor e^(∫u dt) is applied, integrated against w, and A is the arbitrary constant."},
+  {q:"A differential equation written M dx + N dy = 0 is EXACT if and only if:", o:["M = N", "M + N = 0", "∂M/∂y = ∂N/∂x", "∂M/∂x = ∂N/∂y"], a:2, w:3,
+   why:"Then there is a function F(x, y) with ∂F/∂x = M and ∂F/∂y = N, and the solution is F(x, y) = c."},
+  {q:"The solution of an exact differential equation M dx + N dy = 0 has the form:", o:["y = M/N", "M = c and N = c", "y = ∫ M dx", "F(x, y) = c, where dF = M dx + N dy"], a:3, w:3,
+   why:"Since the left side is exactly the total differential of some F, the equation says dF = 0, so F = constant."},
+  {q:"For (2xy + 3) dx + (x² + 4y) dy = 0, checking exactness: ∂M/∂y and ∂N/∂x are:", o:["both equal to 2x → exact", "2x and 4y → not exact", "both zero", "2y and 2x → not exact"], a:0, w:3,
+   why:"M = 2xy + 3 → ∂M/∂y = 2x. N = x² + 4y → ∂N/∂x = 2x. Equal, so the equation is exact."},
+  {q:"For the exact equation (2xy + 3) dx + (x² + 4y) dy = 0, the solution F(x, y) = c is:", o:["2xy + x² + 4y = c", "x²y² = c", "x²y + 3x + 2y² = c", "xy + 3x + 4y = c"], a:2, w:2,
+   why:"F = ∫ (2xy + 3) dx + ψ(y) = x²y + 3x + ψ(y); ∂F/∂y = x² + ψ′(y) = x² + 4y → ψ′ = 4y → ψ = 2y². So F = x²y + 3x + 2y² = c."},
+  {q:"In the 4-step method for an exact equation, after writing F = ∫ M dx + ψ(y), the function ψ(y) is found by:", o:["setting ψ(y) = 0", "differentiating F partially w.r.t. y and equating to N, then integrating ψ′(y)", "integrating M again", "differentiating N w.r.t. x"], a:1, w:2,
+   why:"∂F/∂y = (something) + ψ′(y) must equal N; solve for ψ′(y) and integrate to get ψ(y)."},
+  {q:"If M dx + N dy = 0 is NOT exact, one may still be able to solve it by:", o:["multiplying through by an integrating factor that makes it exact", "ignoring the inexactness", "setting M = N", "differentiating both sides"], a:0, w:2,
+   why:"e.g. 2t dy + y dt = 0 is not exact, but multiplying by y gives 2ty dy + y² dt = 0, which is exact."},
+  {q:"The concept behind an exact equation is that the left side M dx + N dy is:", o:["always zero", "a second derivative", "the total differential dF of some function F(x, y)", "a definite integral"], a:2, w:1,
+   why:"dF = (∂F/∂x) dx + (∂F/∂y) dy. If M = ∂F/∂x and N = ∂F/∂y, then M dx + N dy = dF, and dF = 0 gives F = c."}
+];
+
 /* ---------------------------------------------------------------------------
    UNIT 2 — WRITTEN EXAM-MODE BANK
    Section A = brief (2), B = short (5), C = long (10). Subject-level Section-D
@@ -14393,6 +14701,65 @@ window.SUBJECT_EXAM["bmath2"].units["3"] = {
     {q:"Find and classify ALL of the stationary points of F(x, y) = x³ + y³ − 3xy. Give the coordinates, the type (maximum / minimum / saddle), and the value of F at each point.",
      pts:["F_x = 3x² − 3y = 0 → y = x²;  F_y = 3y² − 3x = 0 → x = y²","Substitute: x = (x²)² = x⁴ → x⁴ − x = 0 → x(x³ − 1) = 0 → x = 0 or x = 1. So (0, 0) and (1, 1)","F_xx = 6x, F_yy = 6y, F_xy = −3 → Δ = 36xy − 9","At (0, 0): Δ = −9 < 0 → SADDLE POINT; F(0, 0) = 0","At (1, 1): Δ = 36 − 9 = 27 > 0 and F_xx = 6 > 0 → RELATIVE MINIMUM; F(1, 1) = 1 + 1 − 3 = −1","(There is no maximum: F → +∞ as x, y → +∞ and → −∞ as x, y → −∞)"]}
   ],
+};
+
+window.SUBJECT_EXAM["bmath2"].units["4"] = {
+  brief: [
+    {q:"Write down the order and degree of the differential equation (d²y/dx²)² − 2(dy/dx)³ + 3y = 0.", real:"2023 model paper",
+     pts:["Highest derivative present is d²y/dx² → order = 2","It occurs to the power 2 (equation is already polynomial in the derivatives) → degree = 2","The (dy/dx)³ term does not affect the degree"]},
+    {q:"Solve the differential equation dy/dt = 2t².", real:"2023 model paper",
+     pts:["Right side is a function of t only → integrate both sides","y = ∫ 2t² dt = 2t³/3 + c","General solution y = (2/3)t³ + c"]},
+    {q:"Define the order and the degree of a differential equation.",
+     pts:["Order = the order of the highest derivative appearing in the equation","Degree = the power of that highest-order derivative, after the equation has been made polynomial (rational and integral) in all its derivatives"]},
+    {q:"Distinguish between the general solution and a particular solution of a differential equation.",
+     pts:["General solution contains arbitrary constant(s) — one for each order — and represents a whole family of curves","Particular solution: the constants have been given definite values using initial/boundary conditions, picking one member of the family"]},
+    {q:"What is a linear first-order differential equation? Give one example.",
+     pts:["The dependent variable y and its derivative dy/dx appear only to the first power and are not multiplied together; it can be written dy/dx + P(x)y = Q(x)","Example: dy/dx + 3y = e^(2x) (or dy/dt + ay = b). Non-example: dy/dx = xy²"]},
+    {q:"Solve dy/dx = 3x² − 4x.",
+     pts:["Integrate the right side w.r.t. x","y = x³ − 2x² + c"]},
+    {q:"State the method of separation of variables and the form of equation it applies to.",
+     pts:["Applies to dy/dx = f(x)·g(y) (the right side factorises into an x-part and a y-part)","Rearrange to (1/g(y)) dy = f(x) dx, then integrate each side separately and add one constant"]},
+    {q:"Write the differential equation for unlimited (exponential) growth and give its general solution.",
+     pts:["dy/dt = r·y — the rate of growth is proportional to the current size","Solution y = A e^(rt); A is the value at t = 0, r the constant proportional growth rate"]},
+    {q:"Write the differential equation for limited growth (growth to a ceiling A) and its solution.",
+     pts:["dy/dt = r·(A − y) — the growth rate falls as y approaches the ceiling A","Solution (with y = 0 at t = 0): y = A(1 − e^(−rt)); y → A as t → ∞"]},
+    {q:"What is the integrating factor of dy/dx + P(x)·y = Q(x), and why does it work?",
+     pts:["IF = e^(∫P(x) dx)","After multiplying through by IF, the left side becomes exactly d/dx[y·IF], which can be integrated directly to give y·IF = ∫ Q·IF dx + c"]},
+    {q:"State the condition for the differential equation M(x, y) dx + N(x, y) dy = 0 to be exact, and the form of its solution.",
+     pts:["Exact iff ∂M/∂y = ∂N/∂x","Then there is a function F(x, y) with dF = M dx + N dy, and the solution is F(x, y) = c"]},
+    {q:"In the dynamics of market price, state the price-adjustment rule and the meaning of its sign.",
+     pts:["dP/dt = j·(Q_d − Q_s), with j > 0","Positive excess demand (Q_d > Q_s) pushes the price up; negative excess demand pushes it down; the price is stationary only at Q_d = Q_s"]},
+    {q:"For dy/dt + a·y = b with a > 0, state the equilibrium level of y and why it is dynamically stable.",
+     pts:["Equilibrium (particular integral) y* = b/a","General solution y(t) = (y₀ − b/a) e^(−at) + b/a; since a > 0, e^(−at) → 0, so any deviation dies away and y → b/a — stable"]}
+  ],
+  short: [
+    {q:"Solve the differential equation dy/dx + 2xy/(1 + x²) = 4x²/(1 + x²).", real:"2023 model paper",
+     pts:["Linear form with P(x) = 2x/(1 + x²), Q(x) = 4x²/(1 + x²)","∫ P dx = ln(1 + x²) → integrating factor IF = e^(ln(1 + x²)) = 1 + x²","d/dx[y(1 + x²)] = (1 + x²)·4x²/(1 + x²) = 4x²","y(1 + x²) = ∫ 4x² dx = (4/3)x³ + c","General solution y = [(4/3)x³ + c] / (1 + x²)"]},
+    {q:"Solve the differential equation dy/dt = 5ty, given that y = y₀ when t = 0.",
+     pts:["Separable: (1/y) dy = 5t dt","Integrate: ln y = (5/2)t² + c","y = A e^(2.5t²); at t = 0, y = y₀ → A = y₀","Particular solution y = y₀ e^(2.5t²)"]},
+    {q:"Solve the linear differential equation dy/dx + y/x = 5/x, given y = 3 when x = 1.",
+     pts:["P(x) = 1/x → IF = e^(∫(1/x) dx) = e^(ln x) = x","d/dx[xy] = x·(5/x) = 5 → xy = 5x + c → y = 5 + c/x","y = 3 at x = 1: 3 = 5 + c → c = −2","Particular solution y = 5 − 2/x"]},
+    {q:"Solve dy/dt + 2y = 6 with y(0) = 10. State the equilibrium level and comment on stability.",
+     pts:["Constant-coefficient linear: a = 2, b = 6 → particular integral y* = b/a = 3","Complementary function A e^(−2t); general solution y = A e^(−2t) + 3","y(0) = 10 → A = 7, so y(t) = 7 e^(−2t) + 3","Equilibrium y* = 3; a = 2 > 0 so e^(−2t) → 0 and y → 3 — dynamically stable"]},
+    {q:"A firm's sales S(t) follow dS/dt = 0.04(700 − S) with S(0) = 0. Find S(t) and the sales level when t = 10 (e^(−0.4) ≈ 0.670).",
+     pts:["Limited-growth form. Separate: (1/(700 − S)) dS = 0.04 dt","−ln(700 − S) = 0.04t + c → 700 − S = B e^(−0.04t)","S(0) = 0 → B = 700, so S(t) = 700(1 − e^(−0.04t))","S(10) = 700(1 − 0.670) = 700(0.330) ≈ 231 units; the ceiling is 700"]},
+    {q:"Test whether (2xy + 3) dx + (x² + 4y) dy = 0 is exact, and solve it.",
+     pts:["M = 2xy + 3 → ∂M/∂y = 2x;  N = x² + 4y → ∂N/∂x = 2x;  equal → exact","F = ∫ M dx + ψ(y) = x²y + 3x + ψ(y)","∂F/∂y = x² + ψ′(y) = N = x² + 4y → ψ′(y) = 4y → ψ(y) = 2y²","Solution: F(x, y) = x²y + 3x + 2y² = c"]},
+    {q:"Solve the separable equation dP/dQ = P(Q + 1), giving the general solution.",
+     pts:["Separate: (1/P) dP = (Q + 1) dQ","Integrate: ln P = Q²/2 + Q + c","P = e^(0.5Q² + Q)·e^c = A e^(0.5Q² + Q)"]},
+    {q:"A quantity grows continuously so that dy/dt = 0.05y, with y = 200 at t = 0. Find y(t), and the time for y to double (ln 2 ≈ 0.693).",
+     pts:["Separable / unlimited growth: (1/y) dy = 0.05 dt → ln y = 0.05t + c","y = A e^(0.05t); y(0) = 200 → A = 200, so y(t) = 200 e^(0.05t)","Doubling: 2 = e^(0.05t) → t = ln 2 / 0.05 ≈ 13.86 time units"]}
+  ],
+  long: [
+    {q:"Under perfect competition Q_d = 35 − 0.5P and Q_s = −4 + 0.8P (P = price, Q = quantity). The price is Rs 37 at t = 0 and the price-adjustment rule is dP/dt = 0.25(Q_d − Q_s) (Rs per week). (a) Derive and solve the differential equation for P(t). (b) Find the price after 5 and 9 weeks (e^(−1.625) ≈ 0.197, e^(−2.925) ≈ 0.054). (c) Is the market dynamically stable? Give the equilibrium price.", real:"2023 model paper",
+     pts:["(a) Q_d − Q_s = (35 − 0.5P) − (−4 + 0.8P) = 39 − 1.3P","dP/dt = 0.25(39 − 1.3P) = 9.75 − 0.325P → dP/dt + 0.325P = 9.75","Particular integral P* = 9.75/0.325 = 30; complementary function A e^(−0.325t)","P(t) = A e^(−0.325t) + 30; P(0) = 37 → A = 7, so P(t) = 7 e^(−0.325t) + 30","(b) P(5) = 30 + 7(0.197) ≈ Rs 31.38;  P(9) = 30 + 7(0.054) ≈ Rs 30.38","(c) The coefficient 0.325 > 0, so e^(−0.325t) → 0 and P → 30 — the market is dynamically stable; equilibrium price P* = Rs 30 (also = (35 + 4)/(0.5 + 0.8))"]},
+    {q:"Consider the constant-coefficient linear differential equation dy/dt + a·y = b (a ≠ 0). (a) Derive its complete solution as the sum of a complementary function and a particular integral. (b) Impose y = y₀ at t = 0 to obtain the definite solution. (c) State the condition for dynamic stability and interpret b/a. (d) Apply your results to dy/dt + 4y = 8 with y(0) = 3, and find y when t is large.",
+     pts:["(a) Homogeneous part dy/dt + ay = 0 → y_c = A e^(−at). Try constant y_p = k: 0 + a·k = b → k = b/a. Complete solution y = A e^(−at) + b/a","(b) t = 0: y₀ = A + b/a → A = y₀ − b/a. Definite solution y(t) = (y₀ − b/a) e^(−at) + b/a","(c) Stable iff a > 0 (then e^(−at) → 0 and y → b/a). b/a is the intertemporal equilibrium level of y; A e^(−at) is the deviation from it","(d) a = 4, b = 8 → b/a = 2; A = 3 − 2 = 1, so y(t) = e^(−4t) + 2. As t → ∞, y → 2 (stable, since a = 4 > 0)"]},
+    {q:"(a) Distinguish unlimited growth from limited growth, giving the differential equation and the solution of each. (b) The adoption of a new product follows dN/dt = 0.5(20000 − N) with N(0) = 0, where N is the number of adopters. Find N(t), the number of adopters when t = 4 (e^(−2) ≈ 0.135), and the ultimate ceiling. (c) Describe the shape of the time path of N.",
+     pts:["(a) Unlimited: dy/dt = ry → y = A e^(rt), no upper bound (r > 0). Limited: dy/dt = r(A − y) → y = A(1 − e^(−rt)) (with y = 0 at t = 0), approaches the ceiling A","(b) Separate: (1/(20000 − N)) dN = 0.5 dt → 20000 − N = B e^(−0.5t); N(0) = 0 → B = 20000","N(t) = 20000(1 − e^(−0.5t))","N(4) = 20000(1 − 0.135) = 20000(0.865) ≈ 17 300 adopters; ceiling = 20 000","(c) Starts at 0, rises steeply at first, then flattens as N nears 20 000 — a bounded curve asymptotic to N = 20 000"]},
+    {q:"(a) State the test for exactness of M dx + N dy = 0 and outline the method of solution. (b) Solve (2xy + 3) dx + (x² + 4y) dy = 0. (c) Solve (3x² + 2y) dx + (2x + 3y²) dy = 0. (d) For 2t dy + y dt = 0, show it is not exact and solve it by first multiplying by a suitable factor.",
+     pts:["(a) Exact iff ∂M/∂y = ∂N/∂x. Then set F = ∫ M dx + ψ(y); differentiate w.r.t. y and equate to N to find ψ′(y); integrate for ψ(y); solution F(x, y) = c","(b) ∂M/∂y = 2x = ∂N/∂x → exact. F = x²y + 3x + ψ(y); ∂F/∂y = x² + ψ′ = x² + 4y → ψ = 2y². Solution x²y + 3x + 2y² = c","(c) ∂M/∂y = 2 = ∂N/∂x → exact. F = x³ + 2xy + ψ(y); ∂F/∂y = 2x + ψ′ = 2x + 3y² → ψ = y³. Solution x³ + 2xy + y³ = c","(d) M = y, N = 2t: ∂M/∂y = 1, ∂N/∂t = 2 → not exact. Multiply by y: 2ty dy + y² dt = 0; now ∂(y²)/∂y = 2y = ∂(2ty)/∂t → exact. F = ty² = c → y² = c/t"]}
+  ]
 };
 
 window.SUBJECT_EXAM["bmath2"].cases = [
