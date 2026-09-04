@@ -215,10 +215,13 @@
   .pdf-toast.show{opacity:1;}
   /* Floating page indicator — sits on the page itself so it's always in
      view while reading, no scrolling to the footer to find your place. */
+  /* max-width + ellipsis so this can never again grow wider than the phone and
+     clip the page number off both ends. */
   .pdf-page-pill{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
     background:rgba(0,0,0,.72);color:#fff;font-size:.78rem;font-weight:700;
     padding:6px 14px;border-radius:999px;z-index:5;cursor:pointer;
-    backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);white-space:nowrap;}
+    backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);white-space:nowrap;
+    max-width:calc(100% - 96px);overflow:hidden;text-overflow:ellipsis;}
   .pdf-page-pill:active{background:rgba(0,0,0,.9);}
   .pdf-jump-box{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);z-index:8;
     display:flex;align-items:center;gap:7px;background:#26242f;border:1px solid rgba(255,255,255,.2);
@@ -261,6 +264,12 @@
      only grants true fullscreen to <video> elements — the API route would
      silently do nothing on an iPhone. */
   body.pdf-fullscreen{overflow:hidden;}
+  /* A transformed ancestor becomes the containing block for position:fixed, so
+     while the view's fade animation is mid-flight (transform:translateY(6px))
+     the "fullscreen" reader was pinned inside the view instead of the screen —
+     it started ~140px down and lost that much height. Kill the transform while
+     a PDF is fullscreen so `inset:0` means the actual viewport. */
+  body.pdf-fullscreen .view{animation:none !important;transform:none !important;}
   #pdf-section.fullscreen{position:fixed;inset:0;z-index:2000;background:#0d0c12;margin:0;
     padding:calc(env(safe-area-inset-top,0px) + 8px) 8px calc(env(safe-area-inset-bottom,0px) + 8px);
     display:flex;flex-direction:column;overflow:hidden;}
@@ -270,8 +279,19 @@
   #pdf-section.fullscreen .pdf-viewport{flex:1;min-height:0;height:auto;border-radius:0;background:transparent;}
   /* Fullscreen is for reading: the Add PDF / Remove links have no business
      there (and are easy to hit by accident). The book switcher and the unit's
-     page-range banner stay — they're information you still want while reading. */
+     page-range banner stay — they're information you still want while reading —
+     but slimmed down, because between them they were eating a quarter of the
+     screen. The "double-tap the arrow" hint is dropped here only: the toast says
+     exactly that at the moment you actually hit the edge. */
   #pdf-section.fullscreen .pdf-footer{display:none;}
+  #pdf-section.fullscreen .pdf-range-banner{padding:5px 10px;font-size:.7rem;margin-bottom:5px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  #pdf-section.fullscreen .pdf-range-banner .rb-hint{display:none;}
+  #pdf-section.fullscreen .pdf-file-tabs{margin-bottom:5px;}
+  #pdf-section.fullscreen .pdf-file-tab{padding:4px 10px;font-size:.7rem;}
+  #pdf-section.fullscreen .pdf-toolbar{margin-bottom:5px;}
+  #pdf-section.fullscreen .pdf-tool-btn{height:30px;width:30px;}
+  #pdf-section.fullscreen .pdf-tool-btn.wide{width:auto;}
   /* Keep the floating note pencil reachable above the fullscreen overlay. */
   body.pdf-fullscreen #fab-pencil{z-index:2100;}
   .pdf-footer{display:flex;align-items:center;justify-content:flex-end;margin-top:10px;font-size:.76rem;color:var(--ink-dim);}
@@ -16697,14 +16717,16 @@ async function openStoredPdf(record, startPage){
        limit. This is what keeps text crisp instead of blurry-scaled.
    `pdfZoomFactor` is a pure multiplier on the fit-to-window size, so 1
    always means "the whole width (or page, fullscreen) fits". */
+/* 100% == the page fits the WIDTH of the window, in every mode. Deliberately not
+   "fit the whole page" in fullscreen: that makes the size depend on the available
+   HEIGHT, and on a phone the height changes constantly (Safari's toolbars hide and
+   show, the banner rewraps) — so the page would visibly jump to a different size
+   mid-read while the zoom % never changed. Width is stable, and fitting it makes
+   the text readable at 100% instead of shrinking a whole page onto a phone. */
 function pdfFitWidth(){
   const sc = document.getElementById('pdf-scroll');
   if(!sc) return 0;
-  const availW = sc.clientWidth, availH = sc.clientHeight;
-  if(!availW) return 0;
-  // Fullscreen fits the WHOLE page; inline fits the width and scrolls down.
-  if(pdfFullscreen && availH > 0) return Math.max(40, Math.min(availW, availH / pdfPageAspect));
-  return Math.max(40, availW);
+  return sc.clientWidth ? Math.max(40, sc.clientWidth) : 0;
 }
 
 /* The reader can be laid out while its view is still display:none (opening a
@@ -16712,26 +16734,41 @@ function pdfFitWidth(){
    survive a rotation or entering fullscreen. Re-render whenever the window it
    lives in actually changes size — otherwise the page would stay stuck at
    whatever size it happened to have when it was first drawn. */
+/* Re-fit when the window the reader lives in actually changes width. Two
+   independent triggers on purpose: a ResizeObserver (catches layout-only changes
+   like opening the panel or entering fullscreen) AND plain resize/orientation
+   events (a rotation must never leave the page at the old width, and those fire
+   even when the rendering pipeline is throttled). Both funnel through the same
+   guarded refit. */
 let pdfSizeObserver = null;
+function pdfRefitIfWidthChanged(){
+  const sc = document.getElementById('pdf-scroll');
+  if(!pdfDoc || !sc) return;
+  /* Compare against the width we actually last DREW at, not the previous
+     observation: resizing the page can make a scrollbar appear, which resizes
+     the scroller, which would re-trigger this forever. A few px is never worth
+     a re-render. */
+  const want = pdfFitWidth() * pdfZoomFactor;
+  if(!want || Math.abs(want - pdfLastRenderW) < 6) return;
+  pdfRenderPage(pdfPageNum);
+}
+function schedulePdfRefit(){
+  clearTimeout(window.__pdfRoT);
+  window.__pdfRoT = setTimeout(pdfRefitIfWidthChanged, 140);
+}
 function watchPdfViewportSize(){
   const sc = document.getElementById('pdf-scroll');
-  if(!sc || sc.dataset.roWired === '1' || typeof ResizeObserver === 'undefined') return;
+  if(!sc) return;
+  if(!window.__pdfResizeWired){
+    window.__pdfResizeWired = true;
+    window.addEventListener('resize', schedulePdfRefit);
+    window.addEventListener('orientationchange', () => setTimeout(schedulePdfRefit, 250));
+  }
+  if(sc.dataset.roWired === '1' || typeof ResizeObserver === 'undefined') return;
   sc.dataset.roWired = '1';
   // The section's HTML is rebuilt per subject; drop the observer on the old one.
   if(pdfSizeObserver){ try{ pdfSizeObserver.disconnect(); }catch(e){} }
-  const ro = new ResizeObserver(() => {
-    clearTimeout(window.__pdfRoT);
-    window.__pdfRoT = setTimeout(() => {
-      if(!pdfDoc || document.getElementById('pdf-scroll') !== sc) return;
-      /* Compare against the width we actually last DREW at, not against the
-         previous observation. Resizing the page can make a scrollbar appear,
-         which resizes the scroller, which would re-trigger this forever —
-         a couple of pixels of difference is never worth a re-render. */
-      const want = pdfFitWidth() * pdfZoomFactor;
-      if(!want || Math.abs(want - pdfLastRenderW) < 6) return;
-      pdfRenderPage(pdfPageNum);
-    }, 120);
-  });
+  const ro = new ResizeObserver(schedulePdfRefit);
   ro.observe(sc);
   pdfSizeObserver = ro;
 }
@@ -17328,7 +17365,12 @@ function updateRangeUI(){
   const next = document.getElementById('pdf-btn-next');
   if(!pill || !pdfDoc) return;
   if(rangeActive()){
-    pill.textContent = `Page ${pdfPageNum} · ${pdfRange.label || 'unit'} (${pdfRange.start}–${pdfRange.end})`;
+    /* Short on purpose. This used to include the unit's title, which for a real
+       chapter name ("Analysis of Demand, Supply and Market Efficiency") made the
+       pill wider than the phone — clipped at BOTH ends, so the one thing it
+       exists to tell you, the page number, was the part you couldn't read. The
+       unit name and range are already on the banner above. */
+    pill.textContent = `Page ${pdfPageNum} · ${pdfRange.start}–${pdfRange.end}`;
     if(prev) prev.disabled = false; // stay tappable so double-tap can unlock
     if(next) next.disabled = false;
     if(prev) prev.classList.toggle('at-edge', pdfPageNum <= pdfRange.start);
