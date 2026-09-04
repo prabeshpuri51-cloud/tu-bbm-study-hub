@@ -22,6 +22,7 @@
     --eng:#e08a3f; --eng-d:#8a4a12;
     --facc:#2f8fa8; --facc-d:#164e5c;
     --bmath2:#4a5bd0; --bmath2-d:#2b3080;
+    --eng2:#cf5a86; --eng2-d:#7c2b4c;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -65,6 +66,7 @@
   .c-eng{background:linear-gradient(135deg,var(--eng),var(--eng-d));}
   .c-facc{background:linear-gradient(135deg,var(--facc),var(--facc-d));}
   .c-bmath2{background:linear-gradient(135deg,var(--bmath2),var(--bmath2-d));}
+  .c-eng2{background:linear-gradient(135deg,var(--eng2),var(--eng2-d));}
   .c-notes{background:linear-gradient(135deg,#5a4a8a,#2c2050);grid-column:span 2;height:92px;}
 
   /* ---- Subject view ---- */
@@ -15230,6 +15232,709 @@ window.SUBJECT_EXAM["bmath2"].cases = [
 
 </script>
 <script>
+/* ===== ENG 202 English II — Semester 2 =====
+   Edit this file alone; the shell and the other subjects are untouched.
+   Loaded by index.html after data-bmath2.js.
+
+   Sem-2 metadata namespace: window.SUBJECT_DATA_S2, unique subject key "eng2".
+   Notes / quiz / exam live in the shared window.SUBJECT_* objects, keyed "eng2".
+
+   Build order: Unit 1 (Core English — Globalization/Education/Medicine) built first as the
+   schema / UI checkpoint. Units array carries all 8 real titles; unbuilt units flagged
+   notBuilt (inert marker — the app never reads it). Source of truth for the notes:
+   book/eng202/eng202-unit1-notes.md.
+
+   Two halves (syllabus: "two main components of equal weightage"):
+     I.  Core English (Units 1–4)        — Sowton, Unlock Reading & Writing Skills 4 (Cambridge 2014)
+     II. Genres and Disciplines (Units 5–8) — Lohani, Voices: A Reader (Buddha Publications 2021)
+                                              — NO digital copy; built text-by-text, ⚠-flagged.
+   Exam format = the standard TU FoM A/B/C/D = 100 (verified vs the real 2023 ENG 202 board paper
+   + the 2022 TU model question). examSectionLabel "Section".
+   ===== */
+window.SUBJECT_DATA_S2 = window.SUBJECT_DATA_S2 || {};
+window.SUBJECT_QUIZ  = window.SUBJECT_QUIZ  || {};
+window.SUBJECT_NOTES = window.SUBJECT_NOTES || {};
+window.SUBJECT_EXAM  = window.SUBJECT_EXAM  || {};
+
+/* ---------------------------------------------------------------------------
+   SUBJECT METADATA
+--------------------------------------------------------------------------- */
+window.SUBJECT_DATA_S2["eng2"] = {
+  title: "English II",
+  code: "ENG 202 • 3 Credits • 48 LHs • Tribhuvan University",
+  examSectionLabel: "Section",
+  colorClass: "c-eng2", hex:"#cf5a86", hexD:"#7c2b4c",
+  banner: "linear-gradient(135deg,#cf5a86,#7c2b4c)",
+  book: "Unlock Reading & Writing Skills 4 (Sowton) · Voices: A Reader (Lohani)",
+  bookMatch: "unlock|sowton|reading.{0,6}writing skills.{0,4}4|reading and writing 4|voices.{0,6}a reader|lohani",
+  units: [
+    {title:"Unit 1: Core English — Globalization, Education, Medicine",
+      primaryBook:"Chris Sowton, Unlock Reading & Writing Skills 4 (Cambridge UP, 2014), Units 1–3",
+      pages:"Unlock 4, Units 1–3 · printed p.14–67",
+      startPage:16, endPage:69, lh:6,
+      desc:"Core English, texts 1–3. Globalization (food & the global economy; predicting from text type; academic alternatives to phrasal verbs; noun & time phrases; essay types & structure). Education (academic vs vocational; distance vs face-to-face learning; making inferences; comparison & contrast language; analysing a question; writing an introduction). Medicine (the homeopathy debate; healthcare-funding models; skimming for key words; medical vocabulary & adjective forms; articles; language of concession; body paragraphs). Fully book-backed. Answers to a few exercises are inferred (the Teacher's Book was not available).",
+      subtopics:"Globalization & food · distance vs face-to-face learning · the homeopathy debate · healthcare-funding models · essay structure · noun/time phrases · comparison & contrast · articles · language of concession · academic vocabulary",
+      primaryMatch:"unlock|sowton|reading and writing 4",
+      refs:[
+        {book:"Chris Sowton, Unlock Reading & Writing Skills 4 — Student's Book (Cambridge UP, 2014)", pages:"Units 1–3, printed p.14–67 (PDF p.16–69); Glossary p.194–201", note:"The prescribed Core English text. Unit 1 = Globalization (p.14), Unit 2 = Education (p.32), Unit 3 = Medicine (p.50). The 2023 Section C food-habits essay is Unit 1's own writing task.", match:"unlock|sowton|reading.{0,6}writing skills.{0,4}4|reading and writing 4", start:16},
+        {book:"Johanna Stirling, Unlock Reading & Writing Skills 4 — Teacher's Book (Cambridge UP, 2014)", pages:"answer keys + reading-passage sources", note:"Syllabus-listed supplementary. Not obtained — a few exercise answers in the notes are inferred from the Student's Book. Add here if you get it.", match:"unlock.{0,20}teacher|stirling", start:1},
+        {book:"Cambridge Advanced Learner's Dictionary (4th ed., Cambridge UP, 2020)", pages:"—", note:"Syllabus-listed supplementary. A lookup reference for the 'define / give a definition' items (architect, efficiency, infringe, authenticity…). Not a source of exam content.", match:"cambridge advanced learner|learners dictionary|mcintosh", start:1}
+      ]},
+
+    {title:"Unit 2: Core English — Risk, Manufacturing, Environment", notBuilt:true,
+      primaryBook:"Chris Sowton, Unlock Reading & Writing Skills 4 (Cambridge UP, 2014), Units 4–6",
+      pages:"Unlock 4, Units 4–6 · printed p.68–121", startPage:70, endPage:123, lh:6,
+      desc:"Core English, texts 4–6. Risk (risk-taking psychology; government & personal risk; previewing a topic; the language of freedom — allow/ban/limit; academic nouns; cause & effect; conditionals; topic sentences; 'for and against' essays). Manufacturing (history of silk; how paper is made; activating prior knowledge; academic verb synonyms; nominalization; the passive; sequencing; describing a process). Environment (disaster mitigation; drought in rural Africa; cohesive devices; academic noun phrases; 'ecology and economy should go together').",
+      subtopics:"risk & freedom vocabulary (allow/ban/limit/restrict) · regulations/legislation/prevention · cause & effect · conditionals · nominalization · the passive · describing a process · ecology & economy",
+      primaryMatch:"unlock|sowton|reading and writing 4",
+      refs:[
+        {book:"Chris Sowton, Unlock Reading & Writing Skills 4 — Student's Book (Cambridge UP, 2014)", pages:"Units 4–6, printed p.68–121 (PDF p.70–123)", note:"Risk = p.68, Manufacturing = p.86, Environment = p.104. 2023 A10 (ban/restrict/authorize), B16 (regulations/legislation/prevention), C19 (ecology & economy) come from here.", match:"unlock|sowton|reading.{0,6}writing skills.{0,4}4|reading and writing 4", start:70}
+      ]},
+
+    {title:"Unit 3: Core English — Architecture, Energy, Art & Design, Ageing", notBuilt:true,
+      primaryBook:"Chris Sowton, Unlock Reading & Writing Skills 4 (Cambridge UP, 2014), Units 7–10",
+      pages:"Unlock 4, Units 7–10 · printed p.122–193", startPage:124, endPage:195, lh:8,
+      desc:"Core English, texts 7–10. Architecture (are green buildings too costly?; beauty vs function; skimming; academic word families; conservation/skyscrapers/outskirts). Energy (a presentation on energy; running out of natural resources; working out meaning from context; energy collocations; formal & informal academic verbs). Art & Design (art for art's sake?; is photography a fine art?; scanning; quotations & reporting; describing art; paraphrasing). Ageing (the impact of an ageing population; the effects of a young population; academic collocations with prepositions).",
+      subtopics:"green buildings & eco-design · beauty vs function · defining 'an architect' / 'efficiency' · energy & natural resources · describing & quoting art · paraphrasing · ageing vs young populations",
+      primaryMatch:"unlock|sowton|reading and writing 4",
+      refs:[
+        {book:"Chris Sowton, Unlock Reading & Writing Skills 4 — Student's Book (Cambridge UP, 2014)", pages:"Units 7–10, printed p.122–193 (PDF p.124–195)", note:"Architecture = p.122, Energy = p.140, Art & design = p.158, Ageing = p.176. 2023 A3–A4 (eco-friendly buildings), model A(e) (architect / efficiency), model C(a) (renewable energy) come from here.", match:"unlock|sowton|reading.{0,6}writing skills.{0,4}4|reading and writing 4", start:124}
+      ]},
+
+    {title:"Unit 4: Core English — Writing Guide & Grammar Reference", notBuilt:true,
+      primaryBook:"Chris Sowton, Unlock Reading & Writing Skills 4 (Cambridge UP, 2014) — the Academic Writing Skills & Grammar-for-writing strands across Units 1–10",
+      pages:"Unlock 4 — Writing & Grammar strands · consolidation", startPage:16, endPage:195, lh:4,
+      desc:"Consolidation of the academic-writing toolkit examined across the whole Core English half: analysing an essay question; essay types (defending an argument / for and against / problem–solution / cause and effect); essay structure (introduction, body paragraphs, conclusion); writing introductions; topic sentences; supporting examples; adding detail; paraphrasing. Plus the grammar-for-writing points: noun phrases, time phrases, comparison & contrast, articles, the language of concession, cause & effect, conditionals, the passive, sequencing, nominalization.",
+      subtopics:"analysing a question · essay types & structure · introductions · topic sentences · supporting examples · noun/time phrases · articles · concession · conditionals · the passive · nominalization",
+      primaryMatch:"unlock|sowton|reading and writing 4",
+      refs:[
+        {book:"Chris Sowton, Unlock Reading & Writing Skills 4 — Student's Book (Cambridge UP, 2014)", pages:"the 'Academic writing skills', 'Grammar for writing' and 'Critical thinking' boxes in every unit", note:"There is no single 'Writing guide' / 'Grammar reference' section in this Student's Book — the syllabus's Unit 4 is the cumulative writing & grammar strand taught across Units 1–10.", match:"unlock|sowton|reading.{0,6}writing skills.{0,4}4|reading and writing 4", start:16}
+      ]},
+
+    {title:"Unit 5: Genres — Short Stories", notBuilt:true,
+      primaryBook:"Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021) — Short Stories",
+      primaryWeak:"Voices: A Reader has NO digital edition (small Kathmandu press). The five set stories — The Empty Drum (Tolstoy, p.3), A Tale (B.P. Koirala, p.20), Amina (Shirley Saad, p.32), The Andhi Khola (Daulat Bikram Bista, p.37), The Dog of Titwal (Manto, p.49) — are covered by original analysis built from independent research + the real 2023 board paper + the 2022 model question. The Empty Drum is off Tolstoy's public-domain text; the other four are ⚠. Source of truth: book/eng202/eng202-unit5-notes.md.",
+      pages:"Voices: A Reader — Short Stories, p.3–60", startPage:0, endPage:0, lh:6,
+      desc:"Five short stories: The Empty Drum (Tolstoy) — the empty drum as hollow military authority; A Tale (B.P. Koirala) — desire overcoming asceticism; Amina (Shirley Saad) — son-preference and patriarchy; The Andhi Khola (Daulat Bikram Bista) — the women left behind by Gurkha recruitment; The Dog of Titwal (Manto) — the futility of war and the cruelty of Partition. ⚠ No digital copy of the anthology; original analysis.",
+      subtopics:"The Empty Drum · A Tale · Amina · The Andhi Khola · The Dog of Titwal · futility of war · patriarchy · asceticism vs desire",
+      refs:[
+        {book:"⚠ Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, Kathmandu, 2021), ISBN 978-9937-30388-0", pages:"Short Stories, p.3–60 — NO digital copy exists", note:"Prescribed anthology. Notes are written from research + the real papers, not this book. Your own scan loaded in the PDF reader is the sanctioned full-text route.", match:"voices.{0,6}a reader|lohani|buddha publication", start:1},
+        {book:"Leo Tolstoy, 'The Empty Drum' (Twenty-Three Tales, 1891, tr. L. & A. Maude)", pages:"public domain — free online (marxists.org, Wikisource, americanliterature.com)", note:"The one set story with a legal full text.", match:"tolstoy|twenty.three tales|empty drum", start:1}
+      ]},
+
+    {title:"Unit 6: Genres — Poems", notBuilt:true,
+      primaryBook:"Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021) — Poems",
+      primaryWeak:"Voices: A Reader has NO digital edition. Six set poems: New Year (Parijat, p.61), In Just- (E.E. Cummings, p.65), Dream Variations (Langston Hughes, p.68), The Brook (Laxmi Prasad Devkota — NOT Tennyson — p.82), The Song (Balkrishna Sama, p.94), Now Light Has Come / 'Jyotir agat' (The Rigveda, p.99). Original analysis from research + the real papers; ⚠ (the Rigveda hymn is public domain).",
+      pages:"Voices: A Reader — Poems, p.61–110", startPage:0, endPage:0, lh:6,
+      desc:"Six poems. Attribution traps: 'The Brook' is by Devkota, not Tennyson (the 2022 model paper confirms 'Devkota's The Brook'); 'The Song' is by Balkrishna Sama, not Devkota. Real questions: 2023 A6 (dream in 'Dream Variations'), A7 ('The Song' — Krishna's flute); model A(i) (Krishna's flute), A(j) (Usha in the Rigveda hymn), B(b) (African-American dream in 'Dream Variations'), C(d) ('The Brook' as a romantic poem).",
+      subtopics:"New Year · In Just- · Dream Variations · The Brook · The Song · Now Light Has Come · the Devkota/Tennyson trap",
+      refs:[
+        {book:"⚠ Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021)", pages:"Poems, p.61–110 — NO digital copy", note:"Notes from research + the real papers.", match:"voices.{0,6}a reader|lohani|buddha publication", start:1}
+      ]},
+
+    {title:"Unit 7: Genres — Plays", notBuilt:true,
+      primaryBook:"Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021) — The Sandbox (Edward Albee, p.111)",
+      primaryWeak:"Voices: A Reader has NO digital edition. One set play: 'The Sandbox' by Edward Albee (p.111). Original analysis from research + the real papers; ⚠.",
+      pages:"Voices: A Reader — Plays, The Sandbox p.111–120", startPage:0, endPage:0, lh:3,
+      desc:"Edward Albee's 'The Sandbox' — a short absurdist one-act satirising the emptiness and cruelty of modern American (and by extension modern) family life. Real questions: 2023 C20 ('The Sandbox is a criticism of modern family life. Discuss.'), model B(a) ('The Sandbox as a satire against modern American family').",
+      subtopics:"The Sandbox · absurdist theatre · Grandma, Mommy, Daddy, the Young Man · satire of modern family life",
+      refs:[
+        {book:"⚠ Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021)", pages:"Plays, The Sandbox p.111–120 — NO digital copy", note:"Notes from research + the real papers.", match:"voices.{0,6}a reader|lohani|buddha publication", start:1}
+      ]},
+
+    {title:"Unit 8: Genres — Essays", notBuilt:true,
+      primaryBook:"Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021) — Essays",
+      primaryWeak:"Voices: A Reader has NO digital edition. Eight set essays: On Natural Death (Lewis Thomas, p.137), A Change of Worlds (Chief Seattle, p.142), Hearts of Sorrow (James M. Freeman, p.153), Fundamentals of Scientific Management (F.W. Taylor, p.162), The Green Frog Skin (John Lame Deer, p.177), The Right to Control One's Learning (John Holt, p.200), The Myth of Sisyphus (Albert Camus, p.215), The Enlightened Mind (The Buddha, p.222). Original analysis from research + the real papers; ⚠ (Chief Seattle & the Buddha texts are public domain).",
+      pages:"Voices: A Reader — Essays, p.137–228", startPage:0, endPage:0, lh:9,
+      desc:"Eight essays. Real questions: 2023 A8 (white men in 'The Green Frog Skin'), B11 (power & the school in 'The Right to Control One's Learning'), B13 (refugee experience in 'Hearts of Sorrow'), C21 (scientific management); model A(f) ('Hearts of Sorrow'), A(g) (the Buddha's last advice), C(c) (Chief Seattle's attitudes).",
+      subtopics:"On Natural Death · A Change of Worlds · Hearts of Sorrow · Fundamentals of Scientific Management · The Green Frog Skin · The Right to Control One's Learning · The Myth of Sisyphus · The Enlightened Mind",
+      refs:[
+        {book:"⚠ Shreedhar Lohani (ed.), Voices: A Reader (Buddha Publications, 2021)", pages:"Essays, p.137–228 — NO digital copy", note:"Notes from research + the real papers.", match:"voices.{0,6}a reader|lohani|buddha publication", start:1}
+      ]}
+  ]
+};
+
+/* ---------------------------------------------------------------------------
+   WRITTEN NOTES  (source of truth: book/eng202/eng202-unit1-notes.md)
+--------------------------------------------------------------------------- */
+window.SUBJECT_NOTES["eng2"] = window.SUBJECT_NOTES["eng2"] || {};
+
+window.SUBJECT_NOTES["eng2"]["0"] = `<h2>Unit 1 · Core English — Globalization, Education, Medicine</h2>
+<p><em>Source: Chris Sowton,</em> Unlock Reading &amp; Writing Skills 4 <em>(Cambridge UP, 2014), Units 1–3 (printed p.14–67) — the real prescribed Core English text. Fully book-backed.</em></p>
+<p><strong>Why this unit carries so much of the paper.</strong> Almost every Core-English item on the real 2023 ENG&nbsp;202 board paper and the 2022 TU model comes straight from these three units:</p>
+<table><thead><tr><th>Real question</th><th>Unlock source</th></tr></thead><tbody>
+<tr><td>2023 A1 — "Will distance learning become the most common… mode in the future?"</td><td>Unit 2, Reading 2 (and its own discussion question)</td></tr>
+<tr><td>2023 A2 — "two reasons why alternative medicines like homeopathy are popular"</td><td>Unit 3, Reading 1</td></tr>
+<tr><td>2023 A9 — "What three aspects should the introduction of an essay include?"</td><td>Unit 3, "Writing an introduction (2)"</td></tr>
+<tr><td>2023 C18 — "…have your food and eating habits changed…? …reasons"</td><td><strong>Unit 1's own end-of-unit Writing Task, word for word</strong></td></tr>
+<tr><td>2022 model A(a) — "Define the term 'globalization'"</td><td>Unit 1</td></tr>
+<tr><td>2022 model A(d) — "Why is development of ideas in a body paragraph important?"</td><td>Unit 1, "Providing supporting examples"</td></tr>
+<tr><td>2022 model B(e) — academic words for <em>kick off / work out / leave out</em>…</td><td>Unit 1, "Academic alternatives to phrasal verbs"</td></tr>
+<tr><td>2022 model B(f) — sentences with <em>even though / despite the fact that</em></td><td><strong>Unit 3, "Language of concession", exact prompts</strong></td></tr>
+<tr><td>2022 model B(d) — match <em>authenticity / virtual / homeopathy</em> to definitions</td><td>Units 1 / 2 / 3 key vocabulary</td></tr>
+</tbody></table>
+<hr>
+
+<h2>Part A — Globalization <span style="opacity:.6">(Unlock Unit 1, p.14–31)</span></h2>
+
+<h3>A.1 What "globalization" means <span style="opacity:.6">(2022 model A(a): "Define the term")</span></h3>
+<p><strong>Globalization</strong> is the process by which countries, economies and cultures become increasingly <strong>connected and interdependent</strong> — through international <strong>trade</strong>, the movement of <strong>people</strong> (migration; "the flow of labour" = economic migration), <strong>IT communication</strong> (email, social media) and <strong>international media</strong> (CNN, the BBC, Al Jazeera). Goods, money, information and ideas move across borders more freely, so a "flow of goods" means <strong>more imported and exported products</strong>.</p>
+<p><em>Exam definition:</em> globalization is the growing integration of the world's economies and societies, so that trade, people, money, technology and culture move across national borders more and more freely. (Add one example — imported food, a multinational company — for full marks.)</p>
+
+<h3>A.2 Reading 1 — "Turkish treats" (a food blog)</h3>
+<p>A London food blogger reviews two restaurants. <strong>Moda</strong> (Turkish, in Soho) prides itself on the <strong>freshness and authenticity</strong> of its ingredients — the chef <strong>insists</strong> the fruit and vegetables are flown from his home region in Turkey every day (a <strong>perfectionist</strong>; expensive but "worth every penny"). <strong>Chez Fitz</strong> has the opposite <strong>selling point</strong>: its food is all <strong>locally sourced</strong>, grown within 30&nbsp;km — low <strong>food miles</strong>. The blogger ends by asking why his weekly shop cost so much more (answer, from the comments: bad weather has pushed prices up). Commenters argue: <strong>Ecovore</strong> says flying ingredients from Turkey creates <strong>carbon emissions</strong>; <strong>Anonymous</strong> replies that heating UK greenhouses may use even more energy.</p>
+<ul>
+<li><strong>Text type:</strong> an <strong>informal blog</strong> — personal opinions, casual language ("kicking off", "yummy", "pricey", "hols"), up-to-date, <strong>not</strong> an academic source.</li>
+<li><strong>Reading skill — "Making predictions from a text type":</strong> before reading, use the <strong>source, title and pictures</strong> to predict the content and style, and whether the text suits academic study.</li>
+</ul>
+
+<h3>A.3 Reading 2 — "What impact has globalization had on food and eating habits in Italy?" (an essay)</h3>
+<p>A model <strong>"for and against" essay</strong>, five paragraphs:</p>
+<ol>
+<li><strong>Introduction</strong> — globalization has influenced food worldwide; Italy is a good example, because its food has long been globalized and its own eating habits have changed.</li>
+<li><strong>Historical background</strong> — food has always mattered to Italian families; until recently pasta and sauces were made <strong>at home</strong>, locally; foreign food was limited to pizza and pasta.</li>
+<li><strong>The changes now</strong> — Italians spend less time cooking; <strong>frozen / takeaway</strong> meals are popular; <strong>dried pasta is mass-produced</strong> and cheap; ready-made sauces have <strong>doubled</strong> in sales in five years; foreign cuisine (Indian, Chinese, Japanese) is increasingly popular, especially in cities.</li>
+<li><strong>Effects — advantages and disadvantages</strong> — <em>plus:</em> more <strong>choice</strong>, less time cooking. <em>Minus:</em> large restaurant chains grow powerful and <strong>destroy local and national specialities</strong>; many Italians fear they are <strong>losing their sense of nationality</strong>.</li>
+<li><strong>Conclusion</strong> — globalization has significantly changed how Italians eat; convenience food has replaced many home-cooked meals; some welcome the choice, others fear the damage to tradition.</li>
+</ol>
+<p><strong>Purpose and audience:</strong> for <strong>people with a general interest in food</strong> (not experts, not tourists); the author's intention is that globalization has <strong>fundamentally changed</strong> Italian food — a balanced view.</p>
+
+<h3>A.4 Vocabulary — Globalization</h3>
+<p><strong>multinational</strong> (operates in many countries) · <strong>monopoly</strong> (one seller can set any price) · <strong>outlet</strong> (a point of sale) · <strong>consumption</strong> (the amount used or eaten) · obesity · diet · poverty · supermarket · farm. Also: ingredient, goods, trade, labour, ethnic group, industrialized, prepared food, IT communication, <strong>food miles</strong>, <strong>authenticity</strong> (real / true / genuine — 2022 model B(d)), freshness, discount, <strong>selling point</strong>, situated (= located), to insist, a perfectionist.</p>
+
+<h3>A.5 Vocabulary skill — Academic alternatives to phrasal verbs <span style="opacity:.6">(2022 model B(e))</span></h3>
+<table><thead><tr><th>phrasal verb</th><th>academic verb</th></tr></thead><tbody>
+<tr><td>go on</td><td>continue</td></tr><tr><td>go up</td><td>increase</td></tr><tr><td>turn down</td><td>refuse</td></tr>
+<tr><td>look into</td><td>investigate / study</td></tr><tr><td>use up</td><td>exhaust</td></tr><tr><td>mix up</td><td>confuse</td></tr>
+<tr><td>leave out</td><td>exclude / omit</td></tr><tr><td>take away</td><td>remove</td></tr><tr><td>move apart</td><td>separate</td></tr>
+</tbody></table>
+<p>Model B(e) prompts: <em>kick off</em> → begin / start; <em>work out</em> → calculate / resolve; <em>disagree with</em> → oppose / differ from; <em>leave out</em> → exclude / omit; <em>have a go at</em> → attempt (or "criticize" in the other sense).</p>
+
+<h3>A.6 Grammar for writing — Noun phrases and time phrases</h3>
+<p><strong>Noun phrases</strong> pack a specific idea into a noun + extra words:</p>
+<ul>
+<li><strong>noun + noun:</strong> building regulations, world cuisine, pasta sauces</li>
+<li><strong>adjective + noun:</strong> the tall, white building; ready-made pasta sauces</li>
+<li><strong>noun + prepositional phrase:</strong> the building at the back; pride in the preparation of food</li>
+<li><strong>noun + relative clause:</strong> a building which is very old; the range of food which is available</li>
+<li><strong>quantity phrases with <em>of</em>:</strong> a range of, a number of, a variety of, a great deal of</li>
+</ul>
+<p>Word order matters — the exam sets "rearrange to make a noun phrase" items (2023 B14): <em>local specialities · a list of traditional dishes · a variety of new fruits · the number of international chefs · the impact of different cultures · a great deal of preparation time.</em></p>
+<p><strong>Time phrases</strong> — be precise about <em>when</em>:</p>
+<ul>
+<li><strong>general past:</strong> in the past, historically, formerly, around ten years ago, before the war</li>
+<li><strong>specific past:</strong> in the 1970s, in the eighteenth century, around 20 years ago</li>
+<li><strong>present:</strong> currently, presently, nowadays, these days, at the present time, in recent years</li>
+</ul>
+
+<h3>A.7 Academic writing — Essay types and essay structure</h3>
+<p><strong>Essay types:</strong></p>
+<ul>
+<li><strong>Defending an argument</strong> — give an opinion at the start and support it throughout; opposing views may be mentioned but the aim is to persuade.</li>
+<li><strong>For and against</strong> — balanced; set out advantages <em>and</em> disadvantages, then give an opinion.</li>
+<li><strong>Problem–solution</strong> — outline a problem, describe one or more solutions, justify the best one.</li>
+<li><strong>Cause and effect</strong> — describe a situation and its causes, or describe the effects of something.</li>
+</ul>
+<p><strong>Essay structure</strong> (same for every type):</p>
+<ul>
+<li><strong>Introduction</strong> — a general overview + important background; often an initial response and a <em>map</em> of the essay ("First… Next… Finally…").</li>
+<li><strong>Body paragraphs</strong> — each develops one main idea, opens with a <strong>topic sentence</strong>, gives <strong>evidence and supporting examples</strong>.</li>
+<li><strong>Conclusion</strong> — a short summary + the writer's conclusion or recommendation. No new information.</li>
+</ul>
+<p><strong>"Providing supporting examples" (2022 model A(d)):</strong> every statement or opinion must be <strong>justified with an example</strong> to show it is true — this is what makes a body paragraph convincing rather than a list of assertions.</p>
+
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+  <h3>The shape of an academic essay</h3>
+  <p class="dgm-sub">what goes in each part</p>
+  <svg viewBox="0 0 380 250" role="img" aria-label="A stacked diagram: an introduction block, three body-paragraph blocks, and a conclusion block, with the contents of each labelled">
+    <rect x="14" y="14" width="352" height="44" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.6"/>
+    <text class="t" x="190" y="31" text-anchor="middle" font-weight="700">INTRODUCTION</text>
+    <text class="ts" x="190" y="46" text-anchor="middle">background · aim of the essay · map of the essay</text>
+    <rect x="14" y="66" width="352" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="190" y="86" text-anchor="middle">BODY &#182; 1 — topic sentence · evidence · example · concession</text>
+    <rect x="14" y="104" width="352" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="190" y="124" text-anchor="middle">BODY &#182; 2 — topic sentence · evidence · example · concession</text>
+    <rect x="14" y="142" width="352" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="190" y="162" text-anchor="middle">BODY &#182; 3 — topic sentence · evidence · example · concession</text>
+    <rect x="14" y="184" width="352" height="44" rx="6" fill="rgba(184,68,42,.13)" stroke="#B8442A" stroke-width="1.6"/>
+    <text class="t" x="190" y="201" text-anchor="middle" font-weight="700">CONCLUSION</text>
+    <text class="ts" x="190" y="216" text-anchor="middle">summary of the argument · your conclusion or recommendation</text>
+  </svg>
+  <figcaption><p>The same structure fits every essay type; only the job of the body paragraphs changes (all supporting one thesis, vs. one side each).</p></figcaption>
+</figure></div>
+
+<h3>A.8 The Unit 1 Writing Task = 2023 Section C, Q18 / 2022 model Section C(b)</h3>
+<p><em>"How have food and eating habits changed in your country? Suggest some reasons for the changes."</em> (2023 wording: "Do you think that your food and eating habits have changed over the years? Briefly discuss the changes and reasons for the changes.")</p>
+<p><strong>Plan — five paragraphs, 250–300 words</strong>, mirroring the Italy essay:</p>
+<table><thead><tr><th>¶</th><th>Function</th><th>What to put in it</th></tr></thead><tbody>
+<tr><td>1</td><td>Introduction</td><td>globalization / urban life / rising incomes have changed how people eat; this essay describes the changes in your country and their reasons</td></tr>
+<tr><td>2</td><td>Historical background</td><td>what people ate and how they cooked in the past — home-cooked meals from local produce, limited variety, food tied to season and region, family meals</td></tr>
+<tr><td>3</td><td>The changes now</td><td>more processed / packaged / frozen / instant food; supermarkets and fast-food outlets; foreign cuisines widely available; eating out and delivery common; less time cooking</td></tr>
+<tr><td>4</td><td>Reasons / effects</td><td><em>reasons:</em> both parents working, longer commutes, urban migration, higher incomes, advertising, global media. <em>effects:</em> more choice and convenience <strong>but</strong> rising obesity / diabetes, loss of traditional dishes, weaker family mealtimes</td></tr>
+<tr><td>5</td><td>Conclusion</td><td>eating habits have changed significantly, driven mainly by economic and social change; the gains in choice come with real costs to health and tradition</td></tr>
+</tbody></table>
+<p><strong>Language to show off:</strong> time phrases (<em>until recently, nowadays, in the past</em>), comparison / contrast (<em>whereas, in contrast, however</em>), noun phrases, academic verbs (<em>increase, replace, decline</em>), and at least one <strong>supporting example</strong> per body paragraph.</p>
+
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+  <h3>The "food &amp; eating habits" essay — paragraph plan</h3>
+  <p class="dgm-sub">2023 Section C, Q18 · 2022 model C(b)</p>
+  <svg viewBox="0 0 380 120" role="img" aria-label="Five linked boxes: Introduction, The past, The changes now, Reasons and effects, Conclusion">
+    <rect x="6" y="40" width="66" height="40" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.5"/>
+    <text class="ts" x="39" y="63" text-anchor="middle">Intro</text>
+    <rect x="80" y="40" width="66" height="40" rx="5" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="113" y="58" text-anchor="middle">The</text><text class="ts" x="113" y="70" text-anchor="middle">past</text>
+    <rect x="154" y="40" width="66" height="40" rx="5" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="187" y="58" text-anchor="middle">Changes</text><text class="ts" x="187" y="70" text-anchor="middle">now</text>
+    <rect x="228" y="40" width="70" height="40" rx="5" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="263" y="58" text-anchor="middle">Reasons</text><text class="ts" x="263" y="70" text-anchor="middle">/ effects</text>
+    <rect x="306" y="40" width="68" height="40" rx="5" fill="rgba(184,68,42,.13)" stroke="#B8442A" stroke-width="1.5"/>
+    <text class="ts" x="340" y="63" text-anchor="middle">Conclusion</text>
+    <path class="gd" d="M72 60 H80 M146 60 H154 M220 60 H228 M298 60 H306" stroke="#5A6577" stroke-width="1.4" stroke-dasharray="0"/>
+  </svg>
+</figure></div>
+
+<hr>
+
+<h2>Part B — Education <span style="opacity:.6">(Unlock Unit 2, p.32–49)</span></h2>
+
+<h3>B.1 Reading 1 — "Middletown University" web page</h3>
+<ul>
+<li><strong>Academic vs vocational.</strong> Academic courses build <strong>knowledge and theory</strong> (English literature, history, mathematics); vocational courses train you for a <strong>specific job</strong> (engineering, nursing, accounting, plumbing, catering). Some subjects are <strong>both</strong> (medicine, teaching).</li>
+<li><strong>Ways to deliver:</strong> <strong>face-to-face</strong> (lectures, seminars, tutorials) and <strong>distance learning</strong> (online).</li>
+<li><strong>Elements of a course:</strong> <strong>lecture</strong> (formal talk to a large group), <strong>seminar</strong> (small-group theory discussion), <strong>tutorial</strong> (one-to-one with a teacher), <strong>module</strong> (one part of a course).</li>
+<li><strong>Ways to pay:</strong> <strong>tuition fees</strong>, <strong>scholarship</strong> / bursary (usually for academic achievement, or for science and education subjects).</li>
+<li>Sample courses: a <strong>BA in English Language and Literature</strong> (3 years, 12 of 20 modules, assessed by essays, exams and an 8,000-word <strong>dissertation</strong>); a <strong>Diploma in Teaching</strong> (1 year, 6 of 10 modules, assessed by essays + classroom observation, <strong>no exams</strong>, needs a first degree). <strong>Apprenticeships</strong> with local businesses are also offered.</li>
+<li><strong>Inference:</strong> costs vary because courses need different resources; state scholarships go to <strong>science and education</strong> because they serve national need; the Diploma has no exams because teaching ability is best judged by <strong>observed practice</strong>.</li>
+<li><strong>Reading skill — "Making inferences from a text":</strong> writers imply meaning without stating it; use reasoning, logic and world knowledge to work out the <strong>inferred</strong> meaning.</li>
+</ul>
+
+<h3>B.2 Reading 2 — "Distance or face-to-face learning – what's the difference?" (an essay, ¶A–E)</h3>
+<ul>
+<li><strong>A — Background:</strong> distance learning is <strong>not new</strong> — lessons by post <strong>200 years ago</strong>. Technology of the last ~20 years has made it a <strong>credible alternative</strong>. <strong>1996</strong> — the world's first <strong>"virtual university"</strong>, in the USA.</li>
+<li><strong>B — Delivery:</strong> distance learning is <strong>heavily dependent on technology</strong>; it is <strong>flexible</strong> (own pace, own timetable) <strong>but</strong> demands <strong>self-discipline and motivation</strong>.</li>
+<li><strong>C — Teacher–student relationship:</strong> the <strong>core principle is the same</strong> (the teacher is the "knower"), but face-to-face allows a <strong>personal relationship</strong>; a distance teacher <strong>may never meet the student</strong>.</li>
+<li><strong>D — Peer interaction:</strong> meeting other students is <strong>one of the best parts</strong> of university. Distance courses offer only <strong>online forums</strong> — a <strong>significant difference between virtual and real interaction</strong>. Face-to-face = real time, one place; distance = any time, any place.</li>
+<li><strong>E — Conclusion:</strong> it is <strong>difficult to say one is better</strong> — they suit <strong>different audiences</strong>; both can produce positive results.</li>
+</ul>
+
+<h3>B.3 → 2023 Section A, Q1 — "Will distance learning become the most common kind of teaching learning mode in the future?"</h3>
+<p>A good brief answer from Reading 2: <em>Distance learning has grown very fast — from letters by post to the first virtual university in 1996 — and now rivals face-to-face learning as a credible option because it is flexible and not limited by time or place. It will keep growing and may become the most common mode for some groups (working adults, remote learners). But it is unlikely to fully replace face-to-face learning, because many students value the personal teacher relationship and real peer interaction that online forums cannot fully reproduce, and it demands self-discipline not everyone has.</em></p>
+
+<h3>B.4 Vocabulary — Education</h3>
+<p><strong>assignment</strong> (a written essay set at university) · <strong>examination</strong> (timed assessment, silent conditions) · <strong>term</strong> (one of three parts of a year) · <strong>semester</strong> (one of two) · <strong>plagiarism</strong> (copying, or not acknowledging, sources) · <strong>journal</strong> (a quarterly peer-reviewed collection of research papers) · <strong>dissertation</strong> (a long essay, 8,000–12,000 words) · <strong>lecturer</strong> (holds a research post and also teaches) · <strong>tutor</strong> (responsible for students' academic and personal welfare) · plus lecture, seminar, tutorial, module, scholarship, tuition fee, licence, apprentice, vocational course, face-to-face, distance learning.</p>
+
+<h3>B.5 Academic words (Unit 2)</h3>
+<p><strong>alternative</strong> (different from something else) · <strong>establishment</strong> (the founding of an organization) · <strong>virtual</strong> (existing in a technological environment — 2022 model B(d)) · <strong>significant</strong> (important or noticeable) · <strong>core</strong> (the most important part) · <strong>principle</strong> (a basic idea or rule) · <strong>component</strong> (a part that makes up something bigger) · <strong>interaction</strong> (communication between people or things) · <strong>motivation</strong> (enthusiasm for doing something) · <strong>aspect</strong> (a part or feature) · <strong>specific</strong> (particular or exact).</p>
+
+<h3>B.6 Grammar for writing — Comparison and contrast language</h3>
+<ul>
+<li><strong>Comparison (similar ideas):</strong> similarly · in the same way · likewise · <em>X, like Y, …</em></li>
+<li><strong>Contrast (different ideas):</strong> however · in contrast · conversely · <em>X, unlike Y, …</em></li>
+<li><strong>In topic sentences:</strong> <em>A and B are <strong>similar in that</strong> they both…</em> · <em>A and B are <strong>different in that</strong> they…</em> · <em>A, <strong>like</strong> B, …</em> / <em>A, <strong>unlike</strong> B, …</em> · <em>The <strong>main difference</strong> between A and B is that…, <strong>whereas</strong>…</em> · <em>The <strong>main similarity</strong> between A and B is that…</em></li>
+</ul>
+
+<h3>B.7 Academic writing — Analysing a question · Writing an introduction (1)</h3>
+<p><strong>Analyse the question</strong> by highlighting three kinds of word: <strong>key content words</strong> (what it's about — <em>influence, technology, education</em>); <strong>limiting words</strong> (what to restrict yourself to — <em>in the past 20 years</em>); <strong>task words</strong> (what to do — <em>discuss, outline, evaluate, to what extent</em>). Two questions can mean the same thing in different words.</p>
+<p><strong>An essay introduction</strong> contains some of: <strong>background / context / why it matters</strong> ("The birth of many new forms of technology in the past two decades has…"); <strong>the aim</strong> ("This essay will discuss / examine / outline…"); <strong>a map</strong> ("First… Next… Finally…"). It is written <strong>in your own words</strong>, stays <strong>general</strong>, <strong>refers to all parts</strong> of the question, and adds <strong>no unnecessary information</strong>.</p>
+
+<hr>
+
+<h2>Part C — Medicine <span style="opacity:.6">(Unlock Unit 3, p.50–67)</span></h2>
+
+<h3>C.1 Reading 1 — "The homeopathy debate" (a proponent and a critic)</h3>
+<p>Homeopathy = a system of treatment giving patients <strong>very highly diluted</strong> amounts of natural substances. The article presents <strong>two opposing cases</strong> on whether the state (the British NHS) should <strong>fund</strong> it.</p>
+<p><strong>"Should be state funded" — Abigail Hayes (a professional homeopath):</strong></p>
+<ul>
+<li>The NHS exists to provide free healthcare; homeopathy has been available since 1948.</li>
+<li>It is <strong>cheap</strong> — an estimated £4–10 million a year, a <strong>fraction</strong> of what conventional drug companies are paid.</li>
+<li>Over <strong>400 doctors</strong> regularly recommend it; there is research showing benefits; it is "<strong>more than a placebo effect</strong>"; "<strong>belief is just as powerful</strong>".</li>
+<li>People have <strong>freedom of choice</strong> elsewhere (e.g. choosing a school) — why not in healthcare?</li>
+</ul>
+<p><strong>"Should NOT be state funded" — Dr. Piers Wehner (an NHS GP):</strong></p>
+<ul>
+<li>We don't know whether it helps because of the <strong>remedies</strong> or because patients <strong>believe</strong> it will (or enjoy the <strong>personal care and attention</strong>).</li>
+<li>The government's chief scientist said there is <strong>"no real evidence"</strong>; <strong>75% of British doctors</strong> oppose state funding.</li>
+<li>The "it does no harm" argument is dangerous: patients who rely on homeopathy <strong>alone</strong> for serious illness (e.g. cancer) risk fatal <strong>delay</strong>. "<strong>This can cost lives.</strong>"</li>
+</ul>
+
+<h3>C.2 → 2023 Section A, Q2 — "two reasons why alternative medicines like homeopathy are popular"</h3>
+<p>Any <strong>two</strong> of: freedom of <strong>choice</strong> over one's healthcare; fear of the <strong>side effects</strong> of conventional drugs; the <strong>personal care and attention</strong> a homeopath gives; <strong>belief / the placebo effect</strong>; it is seen as <strong>natural</strong> and harmless; <strong>distrust of large pharmaceutical companies</strong>; it is <strong>cheap</strong>.</p>
+
+<h3>C.3 Reading 2 — "Should healthcare be free?" (three funding models)</h3>
+<p>A balanced essay that <strong>outlines</strong> three models (it does not argue for one):</p>
+<ol>
+<li><strong>Free / public healthcare</strong> — consultations, treatment and medicines free to all; paid for <strong>directly by the government</strong> (sometimes from state-owned natural resources) or from <strong>income-based taxes and employer contributions</strong>. <em>Advantage:</em> free basic care for all, regardless of income. <em>Disadvantage:</em> very <strong>expensive</strong> — an <strong>unsustainable burden</strong> as costs and life expectancy rise, or a drop in quality.</li>
+<li><strong>Private healthcare</strong> — care only for those who <strong>pay</strong>; most take out <strong>health insurance</strong>; some governments run a <strong>safety net</strong>. <em>Disadvantage:</em> the poor are <strong>deprived</strong> of care; weak preventative medicine lets <strong>disease spread</strong>. <em>Advantage:</em> commercial providers can sometimes maintain higher quality than struggling state ones.</li>
+<li><strong>Mixed system</strong> — compulsory <strong>insurance deducted from salaries</strong>; choice of <strong>public or private</strong> provider. <em>Advantage:</em> more <strong>flexibility</strong>, access for all. <em>Disadvantage:</em> criticised for <strong>driving up labour costs</strong>, which can lead to unemployment.</li>
+</ol>
+<p><strong>Country examples:</strong> UK = mixed/public (National Insurance → free NHS, except prescriptions); DR Congo = effectively private / no safety net; Qatar = free public; USA = private (~40% uninsured); Germany = mixed.</p>
+<p><strong>Reading skill — "Skimming for key words":</strong> skim the <strong>title and introduction</strong> for unknown words; decide from context whether each matters, then guess or look it up.</p>
+
+<h3>C.4 Vocabulary — Medical &amp; academic</h3>
+<p><strong>Medical:</strong> <strong>disease epidemic</strong> (an illness affecting large numbers at once) · <strong>sedentary lifestyle</strong> (little activity or exercise) · <strong>patent</strong> (the legal right to be the only maker/seller of an invention for a set number of years) · <strong>underfunding</strong> · <strong>preventable illness</strong> (one that can be avoided by looking after yourself) · <strong>cosmetic surgery</strong> · <strong>drug dependency</strong>. Also remedy, treatment, disease, illness, natural, synthetic.</p>
+<p><strong>Adjective forms of academic nouns</strong> (the exam tests the right word choice):</p>
+<table><thead><tr><th>noun</th><th>adjective</th><th>meaning</th></tr></thead><tbody>
+<tr><td>adversity</td><td><strong>adverse</strong></td><td>having a negative / harmful effect</td></tr>
+<tr><td>profession</td><td><strong>professional</strong></td><td>having the qualities of trained, skilled people</td></tr>
+<tr><td>illegality</td><td><strong>illegal</strong></td><td>against the law</td></tr>
+<tr><td>physicality</td><td><strong>physical</strong></td><td>connected with the body</td></tr>
+<tr><td>complexity</td><td><strong>complex</strong></td><td>hard to understand — many different parts</td></tr>
+<tr><td>adequacy</td><td><strong>adequate</strong></td><td>enough or satisfactory for a purpose</td></tr>
+<tr><td>convention</td><td><strong>conventional</strong></td><td>traditional and ordinary</td></tr>
+<tr><td>precision</td><td><strong>precise</strong></td><td>exact and accurate</td></tr>
+<tr><td>medicine</td><td><strong>medical</strong></td><td>related to the treatment of illness and injuries</td></tr>
+</tbody></table>
+
+<h3>C.5 Grammar for writing — Articles · Language of concession</h3>
+<p><strong>Articles:</strong> <strong>the</strong> — something specific already mentioned (<em>the rules</em>); the only one of its kind (<em>the moon</em>); ordinals (<em>the second</em>); superlatives (<em>the biggest</em>). <strong>a / an</strong> — a single countable noun mentioned for the first time (<em>a book</em>). <strong>zero article</strong> — uncountable nouns in general (<em>Water is vital for life</em>); countable nouns in general / plural (<em>Doctors work hard</em>); most proper nouns (<em>Ali is from Jordan</em>).</p>
+<p><strong>Language of concession</strong> — introduce an opposing view before answering it:</p>
+<ul>
+<li><strong>simple:</strong> <em>Homeopathy seems to be ineffective, <strong>but / however</strong>, people claim that it works.</em></li>
+<li><strong>complex:</strong> <em>…<strong>Nevertheless</strong>, people still use it.</em> · <em><strong>Even though / Despite the fact that / In spite of the fact that</strong> homeopathy seems ineffective, people still use it.</em> · <em><strong>Despite / In spite of</strong> the ineffectiveness of homeopathy, people still use it.</em></li>
+<li><strong>2022 model B(f) prompts</strong> use exactly this: <em>"Conventional medicine is effective <strong>even though</strong> it has unpleasant side effects."</em> · <em>"Ayurveda is still commonly practised in the twenty-first century <strong>despite the fact that</strong> it is nearly 3,500 years old."</em></li>
+</ul>
+
+<h3>C.6 Academic writing — Writing an introduction (2) · Body paragraphs</h3>
+<p><strong>An introduction may include:</strong> a general introduction to the topic; the main aim/purpose; limited background; an <strong>initial response</strong> to the question; a definition of the topic; the <strong>organization</strong> of the essay; an overview.</p>
+<p><strong>→ 2023 Section A, Q9 — "What three aspects should the introduction of an essay include?"</strong> A safe three: <strong>(1) a general overview / background of the topic, (2) the aim or purpose of the essay, (3) a map of how the essay is organized</strong> (an argument essay also gives an initial response). Example: Reading 2's intro — a hook question → background ("in some nations… in others…") → the aim ("This essay will identify three main models… noting some advantages and disadvantages of each").</p>
+<p><strong>Body paragraphs:</strong> one main idea each, opening <strong>topic sentence</strong>, then <strong>evidence + supporting examples</strong>, and — for an argument essay — <strong>concession</strong> (mention the opposing view) before refuting it.</p>
+
+<hr>
+
+<h2>Consolidated — the academic-writing toolkit (examined across the whole Core English half)</h2>
+<ol>
+<li><strong>Analyse the question</strong> — key words / limiting words / task words.</li>
+<li><strong>Choose the essay type</strong> — defending an argument · for and against · problem–solution · cause and effect.</li>
+<li><strong>Introduction</strong> — background + aim + map (+ initial response for an argument essay); own words, general, covers all parts of the question.</li>
+<li><strong>Body paragraphs</strong> — topic sentence → evidence → <strong>supporting example</strong> → (concession → refutation).</li>
+<li><strong>Conclusion</strong> — summary + your conclusion / recommendation; nothing new.</li>
+<li><strong>Language</strong> — noun phrases in the right order; precise time phrases; comparison / contrast markers; concession markers; academic verbs not phrasal verbs; correct articles; 250–300 words.</li>
+</ol>
+
+<hr>
+
+<h2>Exam checklist — Core English Unit 1</h2>
+<p><strong>Content to summarise in 2–3 sentences each:</strong> what globalization is and how it has changed food (the Italy essay's five stages); academic vs vocational education, distance vs face-to-face learning (the five A–E points); the case for and against state-funded homeopathy; the three healthcare-funding models.</p>
+<p><strong>Definitions to memorise:</strong> globalization · monopoly · multinational · food miles · authenticity · plagiarism · dissertation · seminar · tutorial · lecture · module · scholarship · virtual · distance learning · homeopathy · preventable illness · sedentary lifestyle · patent · cosmetic surgery · disease epidemic · conventional medicine.</p>
+<p><strong>Grammar / skill terms to hold ready:</strong> noun phrase · time phrase · comparison vs contrast markers · language of concession (<em>even though, despite, in spite of, nevertheless, however</em>) · articles (<em>the / a / an / zero</em>) · topic sentence · essay types · essay structure · supporting examples · analysing a question.</p>
+<p><strong>Confirmed real past questions this unit answers:</strong> 2023 A1 (distance learning), A2 (alternative medicine popularity), A9 (essay introduction), C18 / model C(b) (food &amp; eating habits — worked plan in §A.8); 2022 model A(a) (define globalization), A(d) (body-paragraph development), B(d) (authenticity / virtual / homeopathy), B(e) (phrasal verbs → academic), B(f) (concession sentences).</p>`;
+
+/* ---------------------------------------------------------------------------
+   QUIZ  (MCQ practice)  — source: book/eng202/eng202-unit1-quiz.js
+   No real TU MCQ bank exists (TU English is written); these drill the content,
+   vocab, grammar and writing rules the written Sections A/B/C reuse from Unlock 4
+   Units 1–3. w:3 = confirmed real-paper item or guaranteed-core.
+   Answer-index tally: 0→14  1→16  2→20  3→17  (longest run 1).
+--------------------------------------------------------------------------- */
+window.SUBJECT_QUIZ["eng2"] = window.SUBJECT_QUIZ["eng2"] || {};
+window.SUBJECT_QUIZ["eng2"][0] = [
+{q:"Which is the best short definition of 'globalization'?",
+ o:["The growing integration of the world's economies and societies, so that trade, people, money, technology and culture move across borders more freely","The replacement of local languages by English worldwide","A government policy of taxing all imported goods","The movement of factories from cities to the countryside"],
+ a:0, w:3, why:"Model paper Section A: 'Define the term globalization.' It is the increasing connection and interdependence of countries through trade, migration, IT communication and international media."},
+{q:"In the readings, 'a flow of goods' between countries means:",
+ o:["an increase in migration","more imported and exported products","more trade routes being built","an increase of skilled immigrants"],
+ a:1, w:2, why:"Globalization moves goods (as well as money and ideas) across borders; a 'flow of goods' = more importing and exporting."},
+{q:"Another phrase for 'economic migration' used in Unit 1 is:",
+ o:["the flow of goods","international cuisine","the flow of labour","IT communication"],
+ a:2, w:2, why:"Workers moving between countries for economic reasons = 'the flow of labour'."},
+{q:"CNN, the BBC and Al Jazeera are given as examples of:",
+ o:["multinational manufacturers","ethnic groups","IT communication","international media"],
+ a:3, w:1, why:"They are international media organisations — one of the channels through which globalization spreads culture and information."},
+{q:"In 'Turkish treats', the restaurant Moda prides itself mainly on:",
+ o:["having the lowest prices in Soho","the freshness and authenticity of its ingredients","its locally sourced food","serving only vegetarian dishes"],
+ a:1, w:2, why:"The chef insists on ingredients flown daily from his home region in Turkey — freshness and authenticity are Moda's selling point (Chez Fitz is the one with locally sourced food)."},
+{q:"Chez Fitz's main selling point is that its food:",
+ o:["is all locally sourced, within about 30 km","is imported from all over the world","is prepared by celebrity chefs","is completely free of additives"],
+ a:0, w:2, why:"Chez Fitz keeps 'food miles' low — everything is grown within roughly 30 kilometres of the restaurant."},
+{q:"'Food miles' refers to:",
+ o:["how far a restaurant is from the city centre","how many calories a meal contains","the cost of transporting a weekly shop","the distance between where food is grown and where it is sold"],
+ a:3, w:2, why:"Long food miles (e.g. flying vegetables from Turkey) raise carbon emissions — a point argued in the blog's comments."},
+{q:"'Authenticity' most nearly means:",
+ o:["a reduction in the usual price","the quality of being recently made","when something is real, true or genuine","the main reason for buying something"],
+ a:2, w:3, why:"Model paper Section B match item. 'Freshness' is 'recently made'; 'discount' is a price reduction; 'selling point' is the main reason to buy."},
+{q:"'Turkish treats' is an example of which text type?",
+ o:["an informal blog","an academic essay","a scientific report","a newspaper editorial"],
+ a:0, w:2, why:"Personal opinions, casual language ('kicking off', 'yummy', 'hols'), up-to-date — a blog, not suitable as an academic source."},
+{q:"The reading skill 'making predictions from a text type' says you should predict content mainly from:",
+ o:["the number of pages","the writer's nationality","the difficulty of the vocabulary","the source, the title and any pictures"],
+ a:3, w:2, why:"Before reading, use the source, title and images to predict both the information and the style, and whether the text suits academic study."},
+{q:"A company that can 'effectively set whatever price it likes' for its goods has:",
+ o:["a subsidy","a monopoly","a patent","a discount"],
+ a:1, w:2, why:"In the Globalization vocabulary text, big fast-food companies are criticised for having a monopoly and pricing goods below healthier local products."},
+{q:"'Multinational' describes a company that:",
+ o:["is owned by a government","only trades within one country","operates in several countries","makes only one product"],
+ a:2, w:1, why:"Multinational companies operating across borders are a defining feature of economic globalization."},
+{q:"According to the essay on Italy, until recently pasta and its sauces were usually:",
+ o:["made by people in their local area, at home","imported from other European countries","bought frozen from supermarkets","eaten only on special occasions"],
+ a:0, w:2, why:"The 'historical background' paragraph: families made pasta and sauces themselves, locally; foreign food was limited to pizza and pasta."},
+{q:"Which is given as a DISADVANTAGE of the globalization of food in Italy?",
+ o:["Italians now have far more choice of what to eat","dried pasta has become cheaper in supermarkets","people spend less time preparing meals","large restaurant chains grow powerful and destroy local specialities"],
+ a:3, w:2, why:"The 'effects' paragraph: powerful chains threaten local and national specialities, and many Italians fear losing their sense of nationality. The other options are the advantages."},
+{q:"The author's main intention in 'What impact has globalization had on food… in Italy?' is to argue that globalization has:",
+ o:["had a largely positive impact on Italian food","completely destroyed Italian food culture","fundamentally changed the way Italians eat","had no real effect on Italian eating habits"],
+ a:2, w:2, why:"It is a balanced 'for and against' essay; the overall claim is that globalization has significantly and fundamentally changed Italian eating habits."},
+{q:"In academic writing, the phrasal verb 'go up' is best replaced by:",
+ o:["increase","continue","refuse","exhaust"],
+ a:0, w:3, why:"Model paper Section B tests exactly this skill. 'go on'→continue, 'turn down'→refuse, 'use up'→exhaust."},
+{q:"The academic verb for 'look into' (a problem) is:",
+ o:["confuse","separate","exclude","investigate"],
+ a:3, w:2, why:"'look into'→investigate/study; 'mix up'→confuse; 'leave out'→exclude; 'move apart'→separate."},
+{q:"In formal writing, 'kick off' (a report or section) should become:",
+ o:["remove","begin","criticize","increase"],
+ a:1, w:3, why:"Model paper B(e). 'work out'→calculate/resolve; 'disagree with'→oppose; 'leave out'→omit; 'have a go at'→attempt (or 'criticize' in the other sense)."},
+{q:"Which is the correctly ordered noun phrase?",
+ o:["fruits new variety of a","new a of variety fruits","a variety of new fruits","of a new variety fruits"],
+ a:2, w:2, why:"Quantity phrases with 'of' follow: [a variety of] + [adjective + noun]. The exam sets 'rearrange to make a noun phrase' items (2023 B14)."},
+{q:"Which time phrase refers to the PRESENT?",
+ o:["in the eighteenth century","before the war","formerly","nowadays"],
+ a:3, w:1, why:"'nowadays / currently / presently / these days / at present' = present time; 'formerly / historically / before the war' = past."},
+{q:"'Historically' and 'formerly' are examples of:",
+ o:["general past time phrases","specific past time phrases","present time phrases","future time phrases"],
+ a:0, w:1, why:"General past = historically, formerly, in the past, around ten years ago. Specific past = 'in the 1970s', 'in the eighteenth century'."},
+{q:"An essay that sets out both advantages and disadvantages before giving an opinion is a:",
+ o:["'defending an argument' essay","'for and against' essay","'problem–solution' essay","'cause and effect' essay"],
+ a:1, w:2, why:"'For and against' is balanced. 'Defending an argument' gives an opinion at the start and supports it throughout."},
+{q:"An essay that outlines a difficulty and then describes and justifies the best way to fix it is a:",
+ o:["'for and against' essay","narrative essay","'problem–solution' essay","descriptive essay"],
+ a:2, w:2, why:"Problem–solution: state the problem, describe one or more solutions, justify which is most appropriate."},
+{q:"The conclusion of an academic essay should:",
+ o:["introduce the strongest new evidence","repeat the introduction word for word","list every source used","summarise the essay and give the writer's conclusion or recommendation"],
+ a:3, w:2, why:"The conclusion is a short summary plus the writer's overall judgement — no new information."},
+{q:"Why is developing your ideas with supporting examples important in a body paragraph?",
+ o:["It justifies your statements and shows they are true","It makes the essay longer","It shows the reader you have done wider reading","It replaces the need for a conclusion"],
+ a:0, w:3, why:"Model paper A(d). In academic writing every statement or opinion must be justified with a supporting example to be convincing."},
+{q:"The 2023 essay 'How have your food and eating habits changed…? Discuss the changes and reasons' is best planned as:",
+ o:["two paragraphs: for and against","five paragraphs: introduction, the past, the present changes, reasons/effects, conclusion","one long descriptive paragraph","a list of bullet points with no paragraphs"],
+ a:1, w:3, why:"This is Unlock Unit 1's own writing task. Mirror the Italy essay: intro → historical background → description of the changes now → reasons and effects → conclusion (250–300 words)."},
+{q:"In the 'food and eating habits' essay, the second paragraph should mainly cover:",
+ o:["your personal opinion","statistics about global trade","the historical background — what and how people ate in the past","a conclusion"],
+ a:2, w:2, why:"¶2 = historical background (home cooking, local produce, limited variety); ¶3 then describes the present changes."},
+{q:"An 'academic' course differs from a 'vocational' course in that it:",
+ o:["focuses on knowledge and theory rather than training for a specific job","is always cheaper","is only available online","cannot lead to a degree"],
+ a:0, w:2, why:"Academic = theory/knowledge (English literature, history, maths); vocational = skills for a particular job (nursing, plumbing, catering). Some subjects, e.g. medicine and teaching, are both."},
+{q:"A 'seminar' is:",
+ o:["a formal talk given to a large group of students","a one-to-one meeting with a tutor","a small-group meeting to discuss the theory of a subject","a timed written assessment"],
+ a:2, w:2, why:"Lecture = large-group talk; seminar = small-group discussion of theory; tutorial = one-to-one or very small group with a teacher."},
+{q:"A meeting where a teacher and student discuss a topic in detail on a one-to-one basis is a:",
+ o:["lecture","tutorial","module","dissertation"],
+ a:1, w:2, why:"Tutorial = one-to-one (or very small group). A module is one part of a whole course."},
+{q:"A 'lecture' is best defined as:",
+ o:["a written essay set for homework","an award that helps pay tuition fees","a discussion between two students","a formal talk on an academic subject given to a large group"],
+ a:3, w:1, why:"Basic university vocabulary from Unit 2."},
+{q:"A 'dissertation' is:",
+ o:["a long essay, typically 8,000–12,000 words","a short weekly assignment","a spoken presentation","a peer-reviewed journal"],
+ a:0, w:2, why:"On the sample BA course it is written at the end of the final year; a 'journal' is a quarterly peer-reviewed collection of research papers."},
+{q:"'Plagiarism' means:",
+ o:["failing an examination","copying from sources, or not acknowledging them, when writing","studying two subjects at once","choosing the wrong module"],
+ a:1, w:2, why:"A serious academic offence — presenting others' words or ideas as your own."},
+{q:"An academic year split into THREE periods uses the word 'term'; split into TWO it uses:",
+ o:["module","tutorial","semester","seminar"],
+ a:2, w:1, why:"Term = one of three; semester = one of two."},
+{q:"According to 'Distance or face-to-face learning', distance learning has existed for:",
+ o:["only since the internet","at least 200 years, e.g. lessons sent by post","about 10 years","about 50 years"],
+ a:1, w:2, why:"Paragraph A: it is not a modern phenomenon — students received weekly lessons by post 200 years ago; technology has only recently made it a credible alternative."},
+{q:"The world's first 'virtual university' was established in:",
+ o:["the United Kingdom, in 1980","Australia, in 2005","the United States, in 1996","Germany, in 1990"],
+ a:2, w:1, why:"1996, USA — the essay uses it to show how fast distance learning has developed."},
+{q:"Compared with face-to-face learning, distance learning particularly demands that the student has:",
+ o:["a large amount of money","previous teaching experience","a personal tutor on campus","strong self-discipline and motivation"],
+ a:3, w:2, why:"Flexibility (own pace, own timetable) comes at the cost of needing to be well-organised, self-disciplined and highly motivated."},
+{q:"On whether distance or face-to-face learning is better, the essay concludes that:",
+ o:["face-to-face learning is always better","it is difficult to say — they suit different audiences and both can produce positive results","distance learning is always better","neither works well without the other"],
+ a:1, w:3, why:"Paragraph E. This balanced conclusion is the basis for answering 2023 Section A Q1."},
+{q:"Best brief answer to 'Will distance learning become the most common mode of teaching in the future?'",
+ o:["Yes — it will completely replace classrooms within ten years","No — it is a passing fashion that will disappear","It is impossible to learn anything at a distance","It will keep growing and may dominate for some groups, but is unlikely to fully replace face-to-face learning, which offers a personal teacher relationship and real peer contact"],
+ a:3, w:3, why:"2023 Section A Q1. A balanced answer: distance learning is a fast-growing, credible alternative (flexible, not limited by time or place) but face-to-face keeps real advantages, and distance study needs self-discipline not everyone has."},
+{q:"The academic word 'significant' means:",
+ o:["important or noticeable","cheap","technological","optional"],
+ a:0, w:2, why:"Unit 2 academic words. 'virtual' = existing in a technological environment; 'core' = the most important part; 'component' = a part of something bigger."},
+{q:"The academic word 'core' means:",
+ o:["a basic rule","enthusiasm for doing something","the most important part of something","a part that makes up something bigger"],
+ a:2, w:2, why:"'principle' = a basic idea or rule; 'motivation' = enthusiasm; 'component' = a constituent part."},
+{q:"Which phrase introduces a COMPARISON between two similar ideas?",
+ o:["In contrast, …","Conversely, …","However, …","Similarly, …"],
+ a:3, w:2, why:"Comparison: similarly, likewise, in the same way. Contrast: however, in contrast, conversely."},
+{q:"Which phrase introduces a CONTRAST between two different ideas?",
+ o:["Conversely, …","Likewise, …","In the same way, …","Similarly, …"],
+ a:0, w:2, why:"Conversely / however / in contrast signal contrast; likewise / similarly / in the same way signal comparison."},
+{q:"In the essay question 'Discuss the influence of technology on education in the past 20 years', the words 'in the past 20 years' are:",
+ o:["the task words","the key content words","limiting words that restrict what you write about","unnecessary and can be ignored"],
+ a:2, w:2, why:"Analyse a question as key content words (influence, technology, education) + limiting words (in the past 20 years) + task words (discuss)."},
+{q:"A good essay introduction should:",
+ o:["repeat the words of the essay title","focus mainly on your personal experience","include your strongest example in full","be written in your own words, stay general, and refer to all parts of the question"],
+ a:3, w:2, why:"Introduction (1): own words, general (not about yourself unless asked), covers every part of the question, no unnecessary detail; it gives background + aim + a map of the essay."},
+{q:"Homeopathy is a system of treatment in which patients are given:",
+ o:["strong doses of synthetic drugs","very highly diluted amounts of natural substances","only surgery, never medicine","large amounts of vitamins"],
+ a:1, w:2, why:"'The homeopathy debate' — remedies are highly diluted mixtures of natural substances; supporters and critics disagree on whether it works."},
+{q:"Give TWO reasons the readings offer for why alternative medicines like homeopathy are popular:",
+ o:["they are scientifically proven and government-approved","they act faster than any other treatment","freedom of choice, and fear of the side effects of conventional drugs","they are only available on prescription"],
+ a:2, w:3, why:"2023 Section A Q2. Also valid: the personal care and attention of the practitioner; belief/placebo; distrust of drug companies; low cost; seen as natural and harmless."},
+{q:"The critic Dr Wehner's most serious argument against homeopathy is that:",
+ o:["it is too expensive for the state to fund","homeopaths are not friendly to patients","it uses too many chemicals","patients who rely on it alone for a serious illness may delay real treatment until it is too late — 'this can cost lives'"],
+ a:3, w:2, why:"He accepts it 'does no harm' directly, but argues the real danger is delay: a treatable disease such as cancer can become untreatable."},
+{q:"The proponent Abigail Hayes argues that homeopathy:",
+ o:["is expensive but worth it","should replace all conventional medicine","is cheap (an estimated £4–10 million a year) and 'more than a placebo effect'","only works for children"],
+ a:2, w:2, why:"She stresses low cost versus drug-company spending, patient choice, 400 doctors who recommend it, and that 'belief is just as powerful'."},
+{q:"According to the article, about 75% of British doctors are:",
+ o:["in favour of state funding for homeopathy","against the state funding of homeopathy","trained in homeopathy","unsure about homeopathy"],
+ a:1, w:1, why:"Dr Wehner cites this to argue public money should not fund it."},
+{q:"In 'Should healthcare be free?', the FREE / public model is typically paid for by:",
+ o:["patients paying at the point of use","international aid","the government directly, or income-based taxes plus employer contributions","charitable donations only"],
+ a:2, w:2, why:"Some states fund it directly (sometimes from state-owned natural resources); others collect income-based taxes and employer contributions. Hospitals are government-run."},
+{q:"A disadvantage of the PRIVATE healthcare model is that:",
+ o:["it drives up labour costs","quality of care is always poor","citizens cannot choose their provider","people who cannot pay are deprived of care, and a lack of preventative medicine lets disease spread"],
+ a:3, w:2, why:"Without a safety net the poor go untreated; the essay does note one advantage — commercial providers can sometimes maintain higher quality than struggling state ones."},
+{q:"The MIXED healthcare system is mainly criticised for:",
+ o:["driving up labour costs, which can lead to unemployment","providing no choice of provider","being illegal in most countries","excluding wealthy citizens"],
+ a:0, w:2, why:"Insurance deducted from salaries raises the cost of employing people. Its advantages are flexibility and access for all."},
+{q:"Which country does the essay use as an example of a mainly PRIVATE healthcare system?",
+ o:["the United Kingdom","Germany","the United States (about 40% with no health insurance)","Qatar"],
+ a:2, w:1, why:"UK and Germany = mixed/public; Qatar = free public; DR Congo = effectively private with no safety net; USA = private."},
+{q:"The reading skill taught with the homeopathy article is:",
+ o:["reading every word aloud","skimming the title and introduction for key/unknown words","memorising the first sentence of each paragraph","translating the text into your own language"],
+ a:1, w:2, why:"Skim the title and intro for unfamiliar words, decide from context if they matter, then guess the meaning or check a dictionary."},
+{q:"A 'preventable illness' is one that:",
+ o:["can never be cured","only affects older people","is caused by a virus","can be avoided, often by a person looking after themselves better"],
+ a:3, w:2, why:"Unit 3 medical vocabulary — linked to the writing task on personal vs government responsibility for health."},
+{q:"A 'sedentary lifestyle' is one that:",
+ o:["involves frequent travel","is very stressful","does not involve much activity or exercise","involves a strict diet"],
+ a:2, w:2, why:"A sedentary lifestyle plus poor diet can lead to preventable illnesses such as diabetes."},
+{q:"A 'patent' gives a company:",
+ o:["the official legal right to be the only maker or seller of an invention for a set number of years","a tax exemption on medicines","permission to run a hospital","a government research grant"],
+ a:0, w:2, why:"Once a drug patent expires, other companies can manufacture and market the medicine."},
+{q:"Choose the correct word: 'Conventional / Professional medicine involves the use of drugs, unlike alternative forms of medicine.'",
+ o:["Professional","Conventional","Precise","Adequate"],
+ a:1, w:2, why:"Conventional = traditional and ordinary (drug-and-surgery medicine). 'Professional' would describe the practitioners, not the type of medicine."},
+{q:"The adjective formed from the noun 'adversity' is:",
+ o:["adventurous","adversarial","advisory","adverse"],
+ a:3, w:2, why:"'adverse' = having a negative or harmful effect (e.g. 'hospitals can suffer adverse conditions such as underfunding')."},
+{q:"Choose the correct word: 'People have the right to expect an ___ service from doctors and nurses.'",
+ o:["illegal","complex","adequate","adverse"],
+ a:2, w:2, why:"'adequate' = enough or satisfactory for the purpose. This is the exact right-word-choice type used in 2023 Section B."},
+{q:"'Water is vital for life' has no article before 'water' because:",
+ o:["'water' is a proper noun","it is an uncountable noun used to talk about the thing in general","the sentence is in the past tense","'vital' already acts as an article"],
+ a:1, w:2, why:"Zero article: uncountable nouns in general (water), and countable nouns in general plural (doctors work hard)."},
+{q:"Which sentence uses articles correctly?",
+ o:["The moon orbits a Earth","Moon orbits the Earth","The moon orbits the Earth","A moon orbits an Earth"],
+ a:2, w:1, why:"'the moon' / 'the Earth' — there is only one of each, so both take 'the'."},
+{q:"Complete with the language of concession: 'Ayurveda is still commonly practised in the twenty-first century ___ it is nearly 3,500 years old.'",
+ o:["because of the fact that","despite the fact that","so that","in order that"],
+ a:1, w:3, why:"Model paper B(f), exact prompt. 'despite the fact that / even though / in spite of the fact that' introduce an opposing idea."},
+{q:"Which word most formally means 'but' when introducing an opposing point in an essay?",
+ o:["Meanwhile","Furthermore","Nevertheless","Therefore"],
+ a:2, w:2, why:"Concession markers: nevertheless, however, even though, despite, in spite of. 'Furthermore' adds; 'therefore' concludes."},
+{q:"2023 Section A: 'What three aspects should the introduction of an essay include?' A good answer is:",
+ o:["the writer's name, the date, and the word count","three quotations from experts","the introduction, the body and the conclusion","a general overview/background of the topic, the aim or purpose of the essay, and a map of how the essay is organised"],
+ a:3, w:3, why:"From 'Writing an introduction (2)': background/overview + aim/purpose + organisation of the essay (an argument essay also gives an initial response to the question)."},
+{q:"A well-structured body paragraph in an argument essay follows the order:",
+ o:["topic sentence → evidence and supporting example → (concession → refutation)","example → conclusion → topic sentence","concession → topic sentence → nothing else","a single long sentence with no structure"],
+ a:0, w:2, why:"Open with a topic sentence naming the idea, support it with evidence and a concrete example, and — in an argument essay — acknowledge the opposing view before answering it."}
+];
+
+/* ---------------------------------------------------------------------------
+   WRITTEN-EXAM BANK  — source: book/eng202/eng202-unit1-exam.js
+   Tiers match the real sections: brief=A (2m), short=B (5m), long=C (10m).
+   real tags: "2023" = the March–April 2023 ENG 202 board paper; "2022 model
+   paper" = the TU FoM model question (headed "Model Question 2022").
+--------------------------------------------------------------------------- */
+window.SUBJECT_EXAM["eng2"] = window.SUBJECT_EXAM["eng2"] || {units:{}, cases:[]};
+
+window.SUBJECT_EXAM["eng2"].units[0] = {
+  brief: [
+    {q:"Define the term 'globalization'.",
+     real:"2022 model paper",
+     pts:["The growing integration and interdependence of the world's economies and societies","Driven by international trade, the movement of people (migration / the flow of labour), IT communication, and international media","Result: goods, money, technology, information and culture move across national borders more and more freely","A one-sentence definition plus one concrete example (e.g. imported food, multinational companies) earns full marks"]},
+    {q:"Will distance learning become the most common kind of teaching–learning mode in the future?",
+     real:"2023",
+     pts:["Recognise it is a balanced-judgement question, not yes/no","For growth: distance learning has developed fast (lessons by post 200 years ago → first 'virtual university', USA 1996) and is now a credible alternative — flexible, not limited by time or place","Against full dominance: face-to-face keeps real advantages — a personal teacher relationship, real (not virtual) peer interaction; distance study needs self-discipline and motivation that not everyone has","Conclusion: likely to keep growing and may dominate for some groups (working adults, remote learners), but unlikely to fully replace face-to-face learning"]},
+    {q:"Offer two reasons why alternative medicines like homeopathy are popular with some people.",
+     real:"2023",
+     pts:["Any TWO of: patients want freedom of choice over their own healthcare","fear of the side effects of conventional drugs","the personal care and attention a homeopath gives (time, listening) — often more than a rushed GP visit","belief / the placebo effect — expecting it to work makes people feel better","seen as natural and as doing no harm; distrust of large pharmaceutical companies; low cost"]},
+    {q:"What three aspects should the introduction of an essay include?",
+     real:"2023",
+     pts:["A general overview / background of the topic (why it matters)","The aim or purpose of the essay ('This essay will discuss / examine / outline…')","A map of how the essay is organised (First… Next… Finally…)","For an argument essay, an initial response to the question is also expected","Also creditable: written in your own words, general, refers to all parts of the question"]},
+    {q:"Why is the development of ideas in a body paragraph important in composing an academic essay?",
+     real:"2022 model paper",
+     pts:["Every statement or opinion must be justified with supporting examples to show it is true","Undeveloped assertions are unconvincing; evidence and examples are what persuade the reader","A developed paragraph = topic sentence → explanation → supporting example(s) → link","Development also keeps each paragraph focused on one main idea"]},
+    {q:"What is the difference between an academic course and a vocational course? Give one example of each.",
+     pts:["Academic = builds knowledge and theory (e.g. English literature, history, mathematics)","Vocational = trains you for a specific job (e.g. nursing, plumbing, accounting, catering)","Some subjects are both — e.g. medicine, teaching","One clear example on each side earns full marks"]},
+    {q:"Explain the terms 'lecture', 'seminar' and 'tutorial'.",
+     pts:["Lecture = a formal talk on an academic subject given to a large group of students","Seminar = a small-group meeting to discuss the theory of a subject","Tutorial = a one-to-one (or very small group) meeting with a teacher to discuss a topic in detail","Award marks for the size of group and the purpose of each"]},
+    {q:"Write short definitions: (a) plagiarism (b) dissertation.",
+     pts:["(a) plagiarism = copying from sources, or not acknowledging them, when writing — presenting others' words/ideas as your own","(b) dissertation = a long essay, typically 8,000–12,000 words, usually at the end of a course","(a) must include the 'not acknowledging sources' element; (b) must include the 'long / extended' element"]},
+    {q:"According to 'The homeopathy debate', give one argument FOR and one argument AGAINST the state funding of homeopathy.",
+     pts:["FOR (Abigail Hayes): it is cheap (an estimated £4–10 million a year, a fraction of drug-company costs); patient freedom of choice; 400 doctors recommend it; 'more than a placebo effect'","AGAINST (Dr Wehner): 'no real evidence' it works; 75% of British doctors oppose funding it; patients who rely on it alone for serious illness may delay real treatment — 'this can cost lives'","One clear point on each side earns full marks"]},
+    {q:"Complete with the language of concession: (a) 'Conventional medicine is effective ___ it has unpleasant side effects.' (b) 'Ayurveda is still commonly practised in the twenty-first century ___ it is nearly 3,500 years old.'",
+     pts:["(a) even though / although (a clause of concession before a full clause)","(b) despite the fact that / in spite of the fact that (before a clause) — or 'despite / in spite of' + a noun phrase ('its age')","Both introduce an idea that contrasts with the main clause","No credit for 'because' / 'so that' — those are not concession"]},
+    {q:"Replace each phrasal verb with a single academic verb: go on, go up, look into, use up, leave out.",
+     pts:["go on → continue; go up → increase; look into → investigate / study; use up → exhaust; leave out → exclude / omit","Spelling must be correct; the verb must fit an academic register"]},
+    {q:"Give the adjective form and meaning of each noun: adversity, convention, precision.",
+     pts:["adversity → adverse = having a negative or harmful effect","convention → conventional = traditional and ordinary","precision → precise = exact and accurate","Both the correct spelling of the adjective and a correct short meaning are required"]},
+    {q:"State two things a good essay introduction should NOT do.",
+     pts:["Should not repeat the words of the essay title (write in your own words)","Should not write about yourself / your personal experience (unless the question asks for it)","Should not include unnecessary information, or leave out any part of the question","Any two, clearly stated"]}
+  ],
+  short: [
+    {q:"Summarise the changes that globalization has brought to food and eating habits in Italy, as described in the essay 'What impact has globalization had on food and eating habits in Italy?'",
+     pts:["Historical background: pasta and sauces were made at home, in the local area; foreign food was limited to pizza and pasta","Present changes: less time spent cooking; frozen/takeaway meals popular; dried pasta mass-produced and cheap in supermarkets; ready-made sauces doubled in sales in five years; foreign cuisine (Indian, Chinese, Japanese) increasingly popular, especially in cities","Advantages: much more choice; less time preparing food","Disadvantages: powerful restaurant chains destroy local and national specialities; many Italians fear losing their sense of nationality","A balanced summary covering past → present → effects earns full marks"]},
+    {q:"Compare distance learning and face-to-face learning under three headings: how learning is delivered, the teacher–student relationship, and interaction with other students.",
+     pts:["Delivery: distance learning is heavily dependent on technology (the internet is the main channel); face-to-face may need a computer only to type an essay; distance learning is flexible (own pace, own timetable) but needs self-discipline","Teacher–student relationship: the core principle is the same (the teacher is the 'knower'), but face-to-face allows a personal relationship through lectures/seminars/tutorials, while a distance teacher may never meet the student","Peer interaction: face-to-face gives real-time, one-place contact; distance learning offers only forums/messageboards — a significant difference between virtual and real interaction","Conclusion point: the two suit different audiences; both can produce positive results"]},
+    {q:"Outline the three models of healthcare provision described in 'Should healthcare be free?', giving one advantage and one disadvantage of each.",
+     pts:["Free / public: consultations, treatment and medicines free to all, paid by government directly or by income-based taxes + employer contributions. Advantage: free basic care for all regardless of income. Disadvantage: very expensive — an unsustainable burden as costs and life expectancy rise, or a drop in quality","Private: care only for those who pay; most take out health insurance; some states run a safety net. Advantage: commercial providers can sometimes maintain higher quality. Disadvantage: the poor are deprived of care; weak preventative medicine lets disease spread","Mixed: compulsory insurance deducted from salaries; choice of public or private provider. Advantage: flexibility and access for all. Disadvantage: drives up labour costs, which can lead to unemployment"]},
+    {q:"Write the academic (formal) equivalent of each informal expression, then use two of them in a sentence: kick off, work out, disagree with, leave out, have a go at.",
+     real:"2022 model paper",
+     pts:["kick off → begin / start; work out → calculate / resolve; disagree with → oppose / differ from; leave out → omit / exclude; have a go at → attempt (or 'criticize' in the other sense)","Two correct sentences in an academic register, each using one of the formal verbs correctly","The marker is checking both the vocabulary knowledge and control of formal style"]},
+    {q:"Match the words to their definitions and use each in a sentence: authenticity, virtual, homeopathy.",
+     real:"2022 model paper",
+     pts:["authenticity = when something is real, true or genuine","virtual = existing in a technological environment","homeopathy = a system of treatment in which ill people are given very highly diluted amounts of natural substances","Three correct sentences that show the meaning, not just repeat the definition"]},
+    {q:"Make sentences using the prompts, adding words as needed: (a) Conventional medicine / effective / even though / unpleasant side effects. (b) Ayurveda / still commonly practised in the twenty-first century / despite the fact that / nearly 3,500 years old.",
+     real:"2022 model paper",
+     pts:["(a) e.g. 'Conventional medicine is effective even though it can have unpleasant side effects.' — concession clause with 'even though / although' + a full clause","(b) e.g. 'Ayurveda is still commonly practised in the twenty-first century despite the fact that it is nearly 3,500 years old.' — 'despite the fact that / in spite of the fact that' + clause (or 'despite / in spite of' + noun phrase)","Both sentences must be grammatical and keep the concession relationship (the two ideas contrast)","Correct subject–verb agreement and tense; the added words must not change the meaning of the prompt"]},
+    {q:"Analyse the essay question 'Discuss the extent and nature of the influence that technology has had on education in the past 20 years.' Identify the key content words, the limiting words and the task words, and explain what each tells you.",
+     pts:["Key content words: influence, technology, education — what the essay is about","Limiting words: 'in the past 20 years' — restricts the time period you may write about","Task words: 'discuss the extent and nature of' — tells you to weigh how much and in what ways, not just describe","Conclusion: analysing the question this way prevents you writing off-topic or unbalanced"]},
+    {q:"Explain, with examples, the difference between a 'defending an argument' essay and a 'for and against' essay, and how the structure of each differs.",
+     pts:["Defending an argument: the writer states an opinion at the start and supports it throughout; opposing views may be mentioned only to be answered; the aim is to persuade","For and against: balanced — sets out advantages and disadvantages before giving an opinion (often only in the conclusion)","Structure difference: an argument essay's body paragraphs all support one thesis; a for-and-against essay devotes paragraphs (or halves) to each side","One suitable example title for each type"]},
+    {q:"Using the language of comparison and contrast, write four topic sentences about academic courses and vocational courses — two showing similarity and two showing difference.",
+     pts:["Similarity forms: 'A and B are similar in that they both…'; 'A, like B, …'; 'The main similarity between A and B is that…'","Difference forms: 'A and B are different in that…'; 'A, unlike B, …'; 'The main difference between A and B is that…, whereas…'","Content must be accurate (e.g. both charge tuition fees / both teach skills; academic is theoretical whereas vocational is practical)","Correct punctuation and linking words in each sentence"]},
+    {q:"Explain the reasons a person might give for choosing distance learning over face-to-face study, and the difficulties they should expect.",
+     pts:["Reasons: flexibility — study at your own pace and timetable; not limited by geography; can fit study around work or family; access to courses not available locally","Difficulties: heavy reliance on technology and good internet; little or no personal contact with the teacher; only virtual interaction with peers; requires strong self-discipline, organisation and motivation","A balanced answer covering both sides earns full marks"]}
+  ],
+  long: [
+    {q:"Do you think that your food and eating habits have changed over the years? Briefly discuss the changes and the reasons for the changes. (Write a five-paragraph essay, 250–300 words.)",
+     real:"2023",
+     pts:["This is also the 2022 model paper's Section C task ('How have food and eating habits changed in your country? Suggest some reasons.') — plan it the same way","Introduction: eating habits have changed under globalization / urban life / rising incomes; state that the essay describes the changes in your country and their reasons","¶2 Historical background: home-cooked meals from local, seasonal produce; limited variety; eating together as a family","¶3 Description of the changes now: more processed / packaged / frozen / instant food; supermarkets and fast-food outlets; foreign cuisines widely available; eating out, takeaway and delivery common; less time spent cooking","¶4 Reasons and effects: reasons — both parents working, longer commutes, urban migration, higher incomes, advertising, global media. Effects — more choice and convenience, but rising obesity/diabetes, loss of traditional dishes, weaker family mealtimes","¶5 Conclusion: habits have changed significantly, driven mainly by economic and social change; the gains in choice carry real costs to health and tradition","Marks also for: at least one concrete supporting example per body paragraph (a named dish, a statistic, an observation); time phrases (until recently, nowadays, in the past); contrast markers (whereas, however); 250–300 words"]},
+    {q:"'Alternative medicine such as homeopathy should not be funded by the state.' Discuss the arguments for and against this statement and give your own opinion.",
+     pts:["Introduce the debate: homeopathy = highly diluted natural remedies; the question is whether public money should pay for it","For state funding: freedom of patient choice; it is cheap relative to conventional drugs; some doctors recommend it; low risk of direct harm; personal care/attention that patients value","Against state funding: no scientific evidence of effectiveness beyond placebo; the government's chief scientist found 'no real evidence'; most doctors oppose it; the real danger is delay — relying on it alone for a serious illness can cost lives; public money should not be wasted","Use the language of concession to present the opposing view before answering it","A clear personal opinion, justified, in the conclusion","Structure: introduction (background + aim + response) → for → against → opinion; own words; 250–300 words"]},
+    {q:"'It is better to study an academic subject than to follow a vocational course.' To what extent do you agree? Give reasons and examples.",
+     pts:["Analyse the question: task = 'to what extent do you agree' (a judgement, not a description); content = academic vs vocational study","For academic study: builds transferable knowledge and thinking skills; keeps career options open; a good grounding for many careers; some employers value a degree in any subject","For vocational study: teaches real-world, job-ready skills; work experience; often more directly employable; cheaper and shorter","Nuance: many subjects (medicine, teaching) are both; the 'best' choice depends on the individual's goals; a mixture of theory and practice often produces the best outcome","A clear position, supported with examples, in the conclusion; comparison/contrast language throughout; 250–300 words"]},
+    {q:"'Avoiding preventable illnesses is the responsibility of individuals and their families, not governments.' Do you agree? Structure your answer as a for-and-against essay with your own opinion.",
+     pts:["For individual responsibility: lifestyle is a major indicator of health; people should be free to choose their own lifestyle; different people have different situations and needs; if people don't take responsibility they lose the ability to make good choices","For government responsibility: healthcare is extremely expensive for the state, so prevention serves the public interest; many people are tempted by junk-food advertising; not everyone can afford gyms or healthy food; health advice is confusing; the easiest thing is to do nothing; health education is needed","Use the language of concession to acknowledge the other side; correct use of articles and academic vocabulary","A justified personal opinion — most well-argued answers conclude that responsibility is shared","Structure: introduction → arguments for → arguments against → conclusion; 250–300 words"]},
+    {q:"Write an essay outlining the differences between studying a language and studying mathematics. In what ways may they in fact be similar?",
+     real:"2022 model paper",
+     pts:["Analyse: two tasks — (1) outline the differences, (2) identify the similarities ('in what ways may they in fact be similar')","Differences: language study is largely about communication, culture and interpretation, with less single 'right answer'; maths is abstract, rule-governed, with definite right/wrong answers; different assessment (essays/speaking vs problem-solving); different skills (memory + fluency vs logic + reasoning)","Similarities: both are cumulative (later work builds on earlier); both need regular practice; both have their own 'grammar' / system of rules; both develop precise thinking; both can be studied academically or applied vocationally","Structure: introduction → body ¶ (differences) → body ¶ (similarities) → conclusion; comparison/contrast language (whereas, unlike, similarly, in the same way); 250–300 words"]}
+  ]
+};
+
+window.SUBJECT_EXAM["eng2"].cases.push(
+  {title:"Globalization and the local high street",
+   scenario:"Twenty years ago, the main street of a typical mid-sized town was a row of independent shops: a family grocer, a butcher, a baker, a hardware shop, a bookseller, two or three cafés. Most of what they sold was produced within the region, and the people behind the counter usually owned the business. Today the same street looks very different. Several international chains — a coffee company, two fast-food outlets, a global clothing brand, a phone-network store — occupy the largest and best-located units. A single supermarket at the edge of town now sells groceries, medicines, clothes, electronics and fuel under one roof, often more cheaply than the old specialist shops could. Shoppers benefit from lower prices, longer opening hours, familiar brands and a far wider choice: mangoes in winter, Korean noodles, Italian coffee, all available every day. Yet the independent grocer and the bookseller have closed, unable to match the chains on price or range. Money spent in the chain stores largely leaves the town, returning as profit to distant shareholders rather than circulating among local families. Some residents say the street has simply become more convenient and more connected to the wider world; others say it now looks exactly like a hundred other high streets and has lost the character that made it a place rather than just a location.",
+   qs:[
+     {q:"According to the passage, what are the main benefits that globalization has brought to the town's shoppers?",
+      m:5,
+      pts:["Lower prices than the old specialist shops could offer","Longer opening hours and the convenience of one shop for many needs","Familiar international brands","A much wider choice, including out-of-season and foreign products available every day"]},
+     {q:"What have been the negative effects on the town, as described in the passage?",
+      m:5,
+      pts:["Independent shops (the grocer, the bookseller) have closed, unable to compete on price or range","Money spent locally now leaves the town as profit to distant shareholders instead of circulating among local families","The street has lost its individual character and now resembles many other high streets","Loss of locally produced goods and of locally owned businesses / local employment of that kind"]},
+     {q:"The passage says the street has become 'a location' rather than 'a place'. Explain what this distinction means.",
+      m:5,
+      pts:["A 'location' is just a point on a map — interchangeable, defined only by the chains it contains","A 'place' has a distinct identity, history and community — shaped by independent, locally owned businesses and local products","The contrast captures the loss of local distinctiveness ('sense of nationality' / local character) that critics of globalization point to","Accept any answer that draws the identity-vs-anonymity contrast clearly"]},
+     {q:"In your opinion, should local governments act to protect independent shops from international chains? Give reasons for your view.",
+      m:5,
+      pts:["A clear position (yes / no / a qualified position)","Reasons for protection: preserving local character, keeping money in the local economy, protecting local jobs and choice, avoiding total dependence on a few large firms","Reasons against: consumers benefit from lower prices and wider choice; chains create jobs and pay taxes; protectionism can raise prices and reduce competition; hard to enforce fairly","Marks for a reasoned, balanced answer with at least two supporting points, not for which side is chosen"]}
+   ]}
+);
+
+</script>
+<script>
 /* ============ ICONOGRAPHY ============
    Small inline SVGs per subject, used as card decoration, banner watermark,
    and unit-tile pattern tint — no external images, so everything still
@@ -15259,6 +15964,9 @@ const ICONS = {
     <path d="M32 16 H18 V84 H32 M68 16 H82 V84 H68" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="40" cy="36" r="5" fill="#fff"/><circle cx="60" cy="36" r="5" fill="#fff"/>
     <circle cx="40" cy="64" r="5" fill="#fff"/><circle cx="60" cy="64" r="5" fill="#fff"/></svg>`,
+  eng2: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 24 C41 16 24 15 15 19 V77 C24 73 41 74 50 82 C59 74 76 73 85 77 V19 C76 15 59 16 50 24Z" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M50 24 V82" stroke="#fff" stroke-width="4"/></svg>`,
   notes: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 85 L20 20 Q20 15 25 15 H75 Q80 15 80 20 V85 L65 75 L50 85 L35 75 Z" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></svg>`
 };
