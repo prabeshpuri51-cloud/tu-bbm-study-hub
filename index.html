@@ -16435,6 +16435,7 @@ const PDF_MAX_ZOOM = 6;
 let pdfZoomFactor = 1;      // 1 = page fits the window; a pure display multiplier
 let pdfPageAspect = 1.414;  // height / width of the current page
 let pdfLastRenderW = 0;     // display width of the last render (loop guard)
+let pdfPinching = false;    // two fingers are down; hands off the canvas
 let pdfFullscreen = false;
 let pdfRange = null;        // {start,end,label} when opened from a unit; null = whole book
 let pdfRangeUnlocked = false; // set by double-tapping a boundary arrow
@@ -16744,6 +16745,10 @@ let pdfSizeObserver = null;
 function pdfRefitIfWidthChanged(){
   const sc = document.getElementById('pdf-scroll');
   if(!pdfDoc || !sc) return;
+  // Never re-render mid-pinch: toggling the scroller's overflow can itself fire
+  // the observer, and a canvas swap under moving fingers is exactly the flash
+  // this whole rework is about.
+  if(pdfPinching) return;
   /* Compare against the width we actually last DREW at, not the previous
      observation: resizing the page can make a scrollbar appear, which resizes
      the scroller, which would re-trigger this forever. A few px is never worth
@@ -16829,12 +16834,24 @@ async function pdfRenderPageNow(pageNum, seq){
   // Drop it on the floor if the viewer went away, or a newer render has started.
   if(!document.getElementById('pdf-stage') || !old.isConnected) return;
   if(seq !== undefined && seq !== pdfRenderSeq) return;
-  old.replaceWith(canvas);
 
+  /* ---- The swap, in ONE synchronous block ----
+     New canvas in, new layout size on, live pinch transform off, scroll
+     re-anchored. All of it before the browser gets a chance to paint, so the
+     page never appears at a stale size or a stale scroll position. Splitting
+     any of this across an await is exactly what made zooming flash. */
+  old.replaceWith(canvas);
   stage.style.width  = dispW + 'px';
   stage.style.height = dispH + 'px';
   stage.style.transform = '';
   stage.style.transformOrigin = '0 0';
+  const sc = document.getElementById('pdf-scroll');
+  if(sc && pdfPendingAnchor){
+    const a = pdfPendingAnchor; pdfPendingAnchor = null;
+    const scRect = sc.getBoundingClientRect();
+    sc.scrollLeft = scRect.left + stage.offsetLeft - (a.fx - a.px * dispW);
+    sc.scrollTop  = scRect.top  + stage.offsetTop  - (a.fy - a.py * dispH);
+  }
 
   await buildTextLayer(page, viewport);
 
@@ -17141,31 +17158,34 @@ function updateZoomLabel(){
 }
 
 /* Zoom to `factor`, keeping the point under (focalX, focalY) — client
-   coordinates — pinned to the same spot on screen. That's what makes it feel
-   like zooming a photo instead of the page jumping to a new place. */
+   coordinates — pinned to the same spot on screen.
+
+   The anchoring is handed to the renderer as `pdfPendingAnchor` rather than
+   applied here after the await. It has to land in the SAME synchronous block
+   that resizes the page: anything applied after an await gets a paint in
+   between, and that paint — new size, old scroll position — is a visible jump. */
+let pdfPendingAnchor = null;
 async function setPdfZoom(factor, focalX, focalY){
   const target = Math.min(Math.max(factor, 1), PDF_MAX_ZOOM);
   const sc = document.getElementById('pdf-scroll');
   const stage = document.getElementById('pdf-stage');
-  if(!sc || !stage || !pdfDoc) return;
-  if(Math.abs(target - pdfZoomFactor) < 0.002) return;
+  if(!sc || !stage || !pdfDoc) return false;
+  if(Math.abs(target - pdfZoomFactor) < 0.002) return false;
 
   const scRect = sc.getBoundingClientRect();
+  // Includes any live pinch transform, i.e. what you can actually see right now.
   const stRect = stage.getBoundingClientRect();
   const fx = (focalX === undefined) ? scRect.left + scRect.width/2  : focalX;
   const fy = (focalY === undefined) ? scRect.top  + scRect.height/2 : focalY;
-  // where the focal point sits inside the page, 0..1
-  const px = stRect.width  ? (fx - stRect.left) / stRect.width  : 0.5;
-  const py = stRect.height ? (fy - stRect.top ) / stRect.height : 0.5;
+  pdfPendingAnchor = {
+    fx, fy,
+    px: stRect.width  ? (fx - stRect.left) / stRect.width  : 0.5,   // 0..1 across the page
+    py: stRect.height ? (fy - stRect.top ) / stRect.height : 0.5
+  };
 
   pdfZoomFactor = target;
   await pdfRenderPage(pdfPageNum);
-
-  // Put that same fraction of the page back under the same finger/cursor.
-  const newW = stage.offsetWidth, newH = stage.offsetHeight;
-  const scR2 = sc.getBoundingClientRect();
-  sc.scrollLeft = scR2.left + stage.offsetLeft - (fx - px * newW);
-  sc.scrollTop  = scR2.top  + stage.offsetTop  - (fy - py * newH);
+  return true;
 }
 
 function wireZoomButtons(){
@@ -17219,21 +17239,22 @@ function wirePdfGestures(){
   sc.dataset.gestWired = '1';
 
   const dist = (a,b) => Math.hypot(b.clientX-a.clientX, b.clientY-a.clientY);
+  const mid  = (a,b) => ({x:(a.clientX+b.clientX)/2, y:(a.clientY+b.clientY)/2});
   let pinching = false, startDist = 0, startFactor = 1, liveK = 1;
-  let midX = 0, midY = 0, swipeX = null, swipeY = null, swipeT = 0;
+  let startMid = {x:0,y:0}, curMid = {x:0,y:0};
+  let swipeX = null, swipeY = null, swipeT = 0;
 
   sc.addEventListener('touchstart', e => {
     if(e.touches.length === 2){
       const stage = document.getElementById('pdf-stage');
       if(!stage) return;
-      pinching = true; liveK = 1; swipeX = null;
+      pinching = true; pdfPinching = true; liveK = 1; swipeX = null;
       startDist = dist(e.touches[0], e.touches[1]) || 1;
       startFactor = pdfZoomFactor;
-      midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-      midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      startMid = curMid = mid(e.touches[0], e.touches[1]);
       const r = stage.getBoundingClientRect();
-      // Scale about the pinch point, so the page grows out from your fingers.
-      stage.style.transformOrigin = (midX - r.left) + 'px ' + (midY - r.top) + 'px';
+      // Grow the page out from between your fingers, like a photo.
+      stage.style.transformOrigin = (startMid.x - r.left) + 'px ' + (startMid.y - r.top) + 'px';
       sc.classList.add('pinching');
       clearSelection();
     } else if(e.touches.length === 1 && !pinching){
@@ -17248,19 +17269,30 @@ function wirePdfGestures(){
     if(!stage) return;
     const want = Math.min(Math.max(startFactor * (dist(e.touches[0], e.touches[1]) / startDist), 1), PDF_MAX_ZOOM);
     liveK = want / startFactor;
-    // Pure CSS transform while the fingers are down: smooth, no re-render,
-    // and — because it scales BOTH axes — never distorted.
-    stage.style.transform = 'scale(' + liveK + ')';
+    curMid = mid(e.touches[0], e.touches[1]);
+    /* Pure CSS transform while the fingers are down: smooth, no re-render, and —
+       because it scales both axes — never distorted. The translate is what makes
+       it feel like the photo app: moving your fingers drags the page too,
+       instead of it staying pinned while only the scale changes. */
+    stage.style.transform =
+      'translate(' + (curMid.x - startMid.x) + 'px,' + (curMid.y - startMid.y) + 'px) scale(' + liveK + ')';
   }, {passive:false});
 
   const endPinch = async () => {
     if(!pinching) return;
-    pinching = false;
+    pinching = false; pdfPinching = false;
     sc.classList.remove('pinching');
-    const stage = document.getElementById('pdf-stage');
-    if(stage){ stage.style.transform = ''; stage.style.transformOrigin = '0 0'; }
     const target = Math.min(Math.max(startFactor * liveK, 1), PDF_MAX_ZOOM);
-    await setPdfZoom(target, midX, midY);     // re-render crisp at the new size
+    /* Deliberately do NOT clear the transform here. The re-render is async, so
+       clearing it now would snap the page back to its pre-pinch size for the
+       whole render and then jump to the new one — that was the "flash".
+       pdfRenderPageNow drops the transform at the exact moment it applies the
+       new size, so the visible size never changes; only the sharpness does. */
+    const rendering = await setPdfZoom(target, curMid.x, curMid.y);
+    if(!rendering){                            // no re-render needed: undo it here
+      const stage = document.getElementById('pdf-stage');
+      if(stage){ stage.style.transform = ''; stage.style.transformOrigin = '0 0'; }
+    }
   };
 
   sc.addEventListener('touchend', async e => {
