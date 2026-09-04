@@ -16849,8 +16849,16 @@ async function pdfRenderPageNow(pageNum, seq){
   if(sc && pdfPendingAnchor){
     const a = pdfPendingAnchor; pdfPendingAnchor = null;
     const scRect = sc.getBoundingClientRect();
-    sc.scrollLeft = scRect.left + stage.offsetLeft - (a.fx - a.px * dispW);
-    sc.scrollTop  = scRect.top  + stage.offsetTop  - (a.fy - a.py * dispH);
+    /* Clamp explicitly rather than letting the browser do it silently: if the
+       requested offset were out of range the page would land somewhere other than
+       where the gesture left it, which reads as a jump. The pinch clamp keeps this
+       in range already — this is the backstop for the button and wheel paths. */
+    const maxL = Math.max(0, sc.scrollWidth  - sc.clientWidth);
+    const maxT = Math.max(0, sc.scrollHeight - sc.clientHeight);
+    const wantL = scRect.left + stage.offsetLeft - (a.fx - a.px * dispW);
+    const wantT = scRect.top  + stage.offsetTop  - (a.fy - a.py * dispH);
+    sc.scrollLeft = Math.min(maxL, Math.max(0, wantL));
+    sc.scrollTop  = Math.min(maxT, Math.max(0, wantT));
   }
 
   await buildTextLayer(page, viewport);
@@ -17243,6 +17251,8 @@ function wirePdfGestures(){
   let pinching = false, startDist = 0, startFactor = 1, liveK = 1;
   let startMid = {x:0,y:0}, curMid = {x:0,y:0};
   let swipeX = null, swipeY = null, swipeT = 0;
+  let pinchGeo = null;      // measurements taken once, at the start of a pinch
+  let pinchTail = false;    // a pinch is over but fingers are still on the glass
 
   sc.addEventListener('touchstart', e => {
     if(e.touches.length === 2){
@@ -17252,12 +17262,21 @@ function wirePdfGestures(){
       startDist = dist(e.touches[0], e.touches[1]) || 1;
       startFactor = pdfZoomFactor;
       startMid = curMid = mid(e.touches[0], e.touches[1]);
-      const r = stage.getBoundingClientRect();
+      const r = stage.getBoundingClientRect(), scR = sc.getBoundingClientRect();
+      /* Everything the clamp in touchmove needs, measured once while nothing is
+         moving. The scroller is locked for the whole gesture, so these stay true. */
+      pinchGeo = {
+        W0: r.width, H0: r.height,
+        left0: r.left - scR.left, top0: r.top - scR.top,   // where the page sits right now
+        ox: startMid.x - r.left,  oy: startMid.y - r.top,  // origin, in page coordinates
+        vw: sc.clientWidth, vh: sc.clientHeight
+      };
       // Grow the page out from between your fingers, like a photo.
-      stage.style.transformOrigin = (startMid.x - r.left) + 'px ' + (startMid.y - r.top) + 'px';
+      stage.style.transformOrigin = pinchGeo.ox + 'px ' + pinchGeo.oy + 'px';
       sc.classList.add('pinching');
       clearSelection();
     } else if(e.touches.length === 1 && !pinching){
+      if(pinchTail) releasePinchLock();   // safety: never leave the scroller locked
       swipeX = e.touches[0].clientX; swipeY = e.touches[0].clientY; swipeT = Date.now();
     }
   }, {passive:true});
@@ -17270,18 +17289,41 @@ function wirePdfGestures(){
     const want = Math.min(Math.max(startFactor * (dist(e.touches[0], e.touches[1]) / startDist), 1), PDF_MAX_ZOOM);
     liveK = want / startFactor;
     curMid = mid(e.touches[0], e.touches[1]);
+
     /* Pure CSS transform while the fingers are down: smooth, no re-render, and —
        because it scales both axes — never distorted. The translate is what makes
        it feel like the photo app: moving your fingers drags the page too,
-       instead of it staying pinned while only the scale changes. */
+       instead of it staying pinned while only the scale changes.
+
+       The clamp is what stops the page shifting when you let go. Once the fingers
+       are up the page's position is expressed as a SCROLL offset, and a scroll
+       offset can only put the page between its own edges. A raw translate has no
+       such limit, so you could drag the page past its edge while pinching and the
+       commit would then snap it back — a visible sideways jolt on almost every
+       pinch (measured at ~228 px in Prabesh's recording). Clamping the drag to the
+       range a scroll offset can reproduce means the commit has nothing to correct. */
+    const g = pinchGeo, k = liveK;
+    const Wk = g.W0 * k, Hk = g.H0 * k;
+    const baseL = g.left0 + g.ox * (1 - k), baseT = g.top0 + g.oy * (1 - k);
+    let left = baseL + (curMid.x - startMid.x);
+    let top  = baseT + (curMid.y - startMid.y);
+    // Narrower than the viewport → the page is centred and cannot move sideways.
+    left = (Wk <= g.vw) ? (g.vw - Wk) / 2 : Math.min(0, Math.max(g.vw - Wk, left));
+    top  = (Hk <= g.vh) ? 0               : Math.min(0, Math.max(g.vh - Hk, top));
+
     stage.style.transform =
-      'translate(' + (curMid.x - startMid.x) + 'px,' + (curMid.y - startMid.y) + 'px) scale(' + liveK + ')';
+      'translate(' + (left - baseL) + 'px,' + (top - baseT) + 'px) scale(' + k + ')';
   }, {passive:false});
+
+  /* The scroller stays locked (touch-action:none, overflow:hidden) until the LAST
+     finger leaves. Releasing it when the first finger came up handed the still-down
+     second finger to the scroller as a pan, and iOS then momentum-scrolled it — the
+     page kept drifting for ~200 ms after the zoom had finished. */
+  const releasePinchLock = () => { pinchTail = false; sc.classList.remove('pinching'); };
 
   const endPinch = async () => {
     if(!pinching) return;
     pinching = false; pdfPinching = false;
-    sc.classList.remove('pinching');
     const target = Math.min(Math.max(startFactor * liveK, 1), PDF_MAX_ZOOM);
     /* Deliberately do NOT clear the transform here. The re-render is async, so
        clearing it now would snap the page back to its pre-pinch size for the
@@ -17296,9 +17338,15 @@ function wirePdfGestures(){
   };
 
   sc.addEventListener('touchend', async e => {
+    const remaining = e.touches.length;     // read before any await
     if(pinching){
-      if(e.touches.length < 2) await endPinch();
+      if(remaining < 2){ pinchTail = true; await endPinch(); }
+      if(remaining === 0) releasePinchLock();
       return;
+    }
+    if(pinchTail){                          // leftover finger from a finished pinch
+      if(remaining === 0) releasePinchLock();
+      return;                               // and never mistake it for a page swipe
     }
     if(swipeX === null) return;
     const t = e.changedTouches[0];
@@ -17314,7 +17362,10 @@ function wirePdfGestures(){
     } else { pdfGoToPage(want); }
   }, {passive:true});
 
-  sc.addEventListener('touchcancel', endPinch, {passive:true});
+  sc.addEventListener('touchcancel', async e => {
+    await endPinch();
+    if(!e.touches || e.touches.length === 0) releasePinchLock();
+  }, {passive:true});
 
   // Desktop: ctrl/⌘ + wheel zooms, like every other viewer.
   sc.addEventListener('wheel', e => {
