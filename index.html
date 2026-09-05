@@ -19140,9 +19140,14 @@ window.SUBJECT_DATA_S2["mgt232"] = {
         {book:"Robbins, Organizational Behavior, 11th ed. (Prentice Hall, 2005)", pages:"Ch 1 p.12–13 (Contributing Disciplines), p.15–25 (Challenges and Opportunities for OB); Ch 4 p.112–120 (Emotions)", note:"Covers 'Contributing disciplines to the field of OB' and 'New challenges for manager in OB' under matching real headings, and 'Emotions' in full — all three sub-topics are better sourced here than in the 1986 Arnold & Feldman text.", match:"robbins|organizational behavior", start:40}
       ]},
 
-    {title:"Unit 2: Perception and Learning", notBuilt:true, lh:4,
+    {title:"Unit 2: Perception and Learning",
+      primaryBook:"Organizational Behavior (Robbins, 11th ed. 2005), Ch 5 (Perception) + Ch 2 (Learning)",
+      primaryWeak:"All real Robbins content. 'Cognitive learning' as a literal named theory is not in Robbins (which names classical conditioning, operant conditioning and social learning) — social learning theory is presented as the cognitive one, ⚠-flagged.",
+      pages:"Robbins Ch 5, p.132–144 · Ch 2, p.48–56", startPage:160, endPage:172, lh:4,
       desc:"Concept of perception; perceptual process; factors affecting perception; attribution theory; attribution errors; perception and individual decision making; concept and principles of learning; learning theories (cognitive learning and social learning); behavior modification.",
-      subtopics:"Perception, perceptual process, attribution theory, attribution errors, learning theories, behavior modification"},
+      subtopics:"Perception, factors affecting perception, attribution theory, attribution errors, judgment shortcuts, perception and decision making, learning, learning theories, behavior modification",
+      primaryMatch:"robbins|organizational behavior",
+      refs:[]},
 
     {title:"Unit 3: Personality and Job Satisfaction", notBuilt:true, lh:4,
       desc:"Concept and types of personality; personality traits and characteristics; determinants of personality; emotions and personality; major personality attributes influencing organizational behavior; concept and importance of job satisfaction; measuring job satisfaction; effects of job satisfaction on employees' performance.",
@@ -19435,6 +19440,145 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
 <li><strong>Helping employees balance work/life conflicts</strong> — globalization, always-on communication technology, longer average work hours, and more dual-career couples have blurred the line between work time and personal time; organizations that don't help employees balance this will struggle to attract and keep capable, motivated staff.</li>
 <li><strong>Improving ethical behavior</strong> — employees increasingly face ethical dilemmas (whistleblowing, inflated performance evaluations, organizational politics) in a climate where the line between right and wrong conduct has become blurred; managers need to create an ethically healthy climate for their people.</li>
 </ul>`;
+
+window.SUBJECT_NOTES["mgt232"]["1"] = `<p><strong>Syllabus scope (4 lecture hours):</strong> Concept of perception; perceptual process; factors affecting perception; attribution theory; attribution errors; perception and individual decision making; concept and principles of learning; learning theories — cognitive learning and social learning; behavior modification.</p>
+<hr />
+<h2>2.1 Concept of Perception and the Perceptual Process</h2>
+<p><strong>Perception</strong> is a process by which individuals organize and interpret their sensory impressions in order to give meaning to their environment (Robbins, p.134). What one perceives can be substantially different from objective reality — employees at the same firm can genuinely disagree about whether it's a great place to work, even though the facts (pay, benefits, management) are identical for all of them.</p>
+<p>Perception matters to OB for one simple reason: <strong>people's behavior is based on their perception of what reality is, not on reality itself.</strong> "The world as it is perceived is the world that is behaviorally important" (p.134).</p>
+
+<h2>2.2 Factors Affecting Perception</h2>
+<p>Individuals may look at the same thing yet perceive it differently because factors reside in <strong>the perceiver</strong>, <strong>the target</strong> being perceived, or <strong>the situation</strong> in which perception occurs.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u2-factors">
+  <h3>Factors that influence perception</h3>
+  <p class="dgm-sub">after Exhibit 5-1, Robbins p.135</p>
+  <svg viewBox="0 0 640 260" role="img" aria-label="Factors in the perceiver, the situation and the target all converge on perception">
+    <rect x="230" y="10" width="180" height="80" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="320" y="28" text-anchor="middle">Factors in the perceiver</text>
+    <text class="ts" x="320" y="45" text-anchor="middle">attitudes · motives · interests</text>
+    <text class="ts" x="320" y="60" text-anchor="middle">experience · expectations</text>
+    <rect x="10" y="110" width="170" height="60" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="95" y="128" text-anchor="middle">Factors in the situation</text>
+    <text class="ts" x="95" y="145" text-anchor="middle">time · work setting</text>
+    <text class="ts" x="95" y="160" text-anchor="middle">social setting</text>
+    <rect x="230" y="180" width="180" height="70" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="320" y="198" text-anchor="middle">Factors in the target</text>
+    <text class="ts" x="320" y="215" text-anchor="middle">novelty · motion · sounds · size</text>
+    <text class="ts" x="320" y="230" text-anchor="middle">background · proximity · similarity</text>
+    <circle cx="500" cy="150" r="55" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="tb" x="500" y="146" text-anchor="middle">PERCEPTION</text>
+    <line class="ax" x1="320" y1="90" x2="420" y2="135" marker-end="url(#mgt232u2a)"/>
+    <line class="ax" x1="180" y1="140" x2="445" y2="148" marker-end="url(#mgt232u2a)"/>
+    <line class="ax" x1="320" y1="180" x2="420" y2="165" marker-end="url(#mgt232u2a)"/>
+    <defs><marker id="mgt232u2a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>The same target can be perceived very differently depending on who is perceiving it, what the target itself looks like, and the situation in which the perception happens.</p></figcaption>
+</figure></div>
+<ul>
+<li><strong>Factors in the perceiver:</strong> attitudes, motives, interests, past experience, expectations. If you expect police officers to be authoritative or public officials to be unscrupulous, you may perceive them that way regardless of their actual traits.</li>
+<li><strong>Factors in the target:</strong> novelty, motion, sounds, size, background, proximity, similarity. Loud people are noticed more than quiet ones; things grouped close together or that look similar tend to be perceived together (e.g. people sharing a visible characteristic are often wrongly perceived as alike in unrelated ways too).</li>
+<li><strong>Factors in the situation:</strong> time, work setting, social setting. The same behavior can be perceived completely differently depending on when and where it is observed (Robbins' own example: a 22-year-old in an evening gown at a Saturday-night club draws no attention, but the identical outfit in a Monday-morning class certainly would).</li>
+</ul>
+
+<h2>2.3 Attribution Theory</h2>
+<p><strong>Attribution theory</strong> explains the ways in which we judge people differently depending on what meaning we attribute to a given behavior (Robbins, p.136). We perceive people differently from inanimate objects because people have beliefs, motives and intentions that we try to explain — we attempt to determine whether an observed behavior was <strong>internally caused</strong> (under the person's own control) or <strong>externally caused</strong> (forced by the situation).</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u2-attribution">
+  <h3>Attribution theory</h3>
+  <p class="dgm-sub">after Exhibit 5-2, Robbins p.137</p>
+  <svg viewBox="0 0 640 260" role="img" aria-label="Individual behavior is judged on distinctiveness, consensus and consistency, each leading to an internal or external attribution">
+    <rect x="10" y="115" width="120" height="40" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="70" y="139" text-anchor="middle">Individual behavior</text>
+    <line class="ax" x1="130" y1="130" x2="190" y2="40" marker-end="url(#mgt232u2b)"/>
+    <line class="ax" x1="130" y1="135" x2="190" y2="135" marker-end="url(#mgt232u2b)"/>
+    <line class="ax" x1="130" y1="140" x2="190" y2="230" marker-end="url(#mgt232u2b)"/>
+    <rect x="190" y="15" width="120" height="34" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.2"/><text class="ts" x="250" y="36" text-anchor="middle">Distinctiveness</text>
+    <rect x="190" y="118" width="120" height="34" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.2"/><text class="ts" x="250" y="139" text-anchor="middle">Consensus</text>
+    <rect x="190" y="210" width="120" height="34" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.2"/><text class="ts" x="250" y="231" text-anchor="middle">Consistency</text>
+    <line class="gd" x1="310" y1="24" x2="360" y2="10"/><text class="ts" x="365" y="12">High → External</text>
+    <line class="gd" x1="310" y1="40" x2="360" y2="55"/><text class="ts" x="365" y="58">Low → Internal</text>
+    <line class="gd" x1="310" y1="127" x2="360" y2="112"/><text class="ts" x="365" y="114">High → External</text>
+    <line class="gd" x1="310" y1="143" x2="360" y2="158"/><text class="ts" x="365" y="161">Low → Internal</text>
+    <line class="gd" x1="310" y1="219" x2="360" y2="204"/><text class="ts" x="365" y="206">High → Internal</text>
+    <line class="gd" x1="310" y1="235" x2="360" y2="250"/><text class="ts" x="365" y="253">Low → External</text>
+    <defs><marker id="mgt232u2b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>Note consistency runs the opposite way from the other two: high consistency points to an <em>internal</em> attribution, while high distinctiveness or high consensus point to an <em>external</em> one.</p></figcaption>
+</figure></div>
+<p>That determination rests on three factors:</p>
+<ol>
+<li><strong>Distinctiveness</strong> — does the person behave this way in many different situations, or only this one? High distinctiveness (unusual behavior for this person) → external attribution. Low distinctiveness (this is how they always act) → internal attribution.</li>
+<li><strong>Consensus</strong> — would everyone facing the same situation respond the same way? High consensus (everyone else was late too, on the same traffic-jammed route) → external attribution. Low consensus (only this one employee was late) → internal attribution.</li>
+<li><strong>Consistency</strong> — does the person respond the same way over time? High consistency (they are late constantly) → internal attribution. Low consistency (a one-off) → external attribution.</li>
+</ol>
+<p>Example (Robbins): an employee — Kim — performs at about the same level on related tasks (low distinctiveness), other employees perform differently on the same task (low consensus), and Kim's performance on this task is consistent over time (high consistency) → observers will hold Kim primarily responsible for her performance (an <strong>internal</strong> attribution).</p>
+
+<h2>2.4 Attribution Errors</h2>
+<p>Substantial evidence shows two systematic errors distort attribution judgments (Robbins, p.137–138):</p>
+<ul>
+<li><strong>Fundamental attribution error</strong> — the tendency to <em>underestimate</em> the influence of external factors and <em>overestimate</em> the influence of internal/personal factors when judging <em>others'</em> behavior. A sales manager is prone to blame poor sales on an agent's laziness rather than on a competitor's genuinely better product.</li>
+<li><strong>Self-serving bias</strong> — the tendency for individuals to attribute their <em>own</em> successes to internal factors (ability, effort) while blaming <em>failures</em> on external factors (bad luck, unproductive coworkers). Investors bragged about their own skill during a stock market rally, then blamed analysts and brokers once the market collapsed.</li>
+</ul>
+<p>⚠ Evidence suggests these two biases are not universal across cultures — a study of Korean managers found they tended to accept responsibility for <em>group</em> failure ("because I was not a capable leader") rather than blaming group members, the opposite of the typical self-serving pattern. Attribution theory was developed mainly on American/Western European samples, so its predictions need caution in strongly collectivist societies (p.138).</p>
+<p><strong>Judgment shortcuts</strong> (closely related, real exam-relevant content, p.138–142) — techniques people use to make perceiving and judging others faster, at the cost of occasional serious distortion:</p>
+<table><thead><tr><th>Shortcut</th><th>What it is</th></tr></thead><tbody>
+<tr><td><strong>Selective perception</strong></td><td>People selectively interpret what they see based on their own interests, background, experience and attitudes — lets us "speed-read" others, at the risk of an inaccurate picture.</td></tr>
+<tr><td><strong>Halo effect</strong></td><td>Drawing a general impression of a person from a single characteristic (e.g. an enthusiastic instructor is rated highly overall even if other traits are weak).</td></tr>
+<tr><td><strong>Contrast effects</strong></td><td>Evaluating a person by comparison with others recently encountered, rather than against an absolute standard (a mediocre interview candidate looks great right after two very weak ones).</td></tr>
+<tr><td><strong>Projection</strong></td><td>Attributing one's own characteristics to other people — assuming others want what you want, or are as honest as you are.</td></tr>
+<tr><td><strong>Stereotyping</strong></td><td>Judging someone based on the perceived characteristics of the group they belong to, e.g. "older workers can't learn new skills" — widely held but frequently inaccurate. <strong>Profiling</strong> is a specific, serious form of stereotyping that singles out a group (usually by race or ethnicity) for scrutiny or investigation.</td></tr>
+</tbody></table>
+<p>Two named applications where these perceptual processes have real organizational consequences (p.140–142): the <strong>employment interview</strong> (interviewers form early impressions in the first 4–5 minutes that change little afterward) and <strong>performance expectations</strong> — the <strong>self-fulfilling prophecy</strong> (Pygmalion effect): a manager's expectations of an employee, even if originally inaccurate, can cause the employee to behave in ways that make those expectations come true (demonstrated in a real study of Israeli Defense Forces trainees randomly labelled "high potential," who then significantly outperformed trainees not so labelled).</p>
+
+<h2>2.5 Perception and Individual Decision Making</h2>
+<p>Individual decision making in organizations is <strong>largely influenced by perception</strong> (Robbins, p.143). Decision making occurs as a reaction to a <strong>problem</strong> — a discrepancy between some current state of affairs and some desired state. But problems don't arrive pre-labelled: whether a given situation even <em>counts</em> as a problem requiring a decision is itself a perceptual judgment (a 2% sales decline may alarm one manager and not concern another at all). Once a problem is recognized, every subsequent step — screening and interpreting data, developing alternatives, judging each alternative's strengths and weaknesses — is filtered through the decision maker's own perceptual process, which can introduce the same distortions (selective perception, stereotyping, etc.) described in §2.4.</p>
+
+<h2>2.6 Concept and Principles of Learning</h2>
+<p><strong>Learning</strong> is any relatively permanent change in behavior that occurs as a result of experience (Robbins, p.48). Three components of this definition matter:</p>
+<ol>
+<li><strong>Learning involves change</strong> — for better or worse (people can learn prejudices just as easily as useful skills).</li>
+<li><strong>The change must be relatively permanent</strong> — temporary changes caused by fatigue are not learning.</li>
+<li><strong>Learning is about behavior</strong> — a change in thinking or attitude that is never accompanied by a change in actual behavior isn't learning by this definition. Experience (direct, through observation or practice; or indirect, through reading) is what produces the change.</li>
+</ol>
+
+<h2>2.7 Learning Theories: Cognitive Learning and Social Learning</h2>
+<p>⚠ Robbins names three theories of learning — <strong>classical conditioning</strong>, <strong>operant conditioning</strong>, and <strong>social learning</strong> — rather than a theory literally labelled "cognitive learning." Social learning theory is the one of the three that is explicitly <em>cognitive</em> in character (it depends on attention and memory, not just stimulus-response), so it is presented here as answering both halves of the syllabus wording.</p>
+<ul>
+<li><strong>Classical conditioning</strong> (Pavlov) — a <em>passive</em> form of learning: pairing a neutral (<strong>conditioned</strong>) stimulus with a stimulus that already produces a response (<strong>unconditioned</strong> stimulus) until the neutral stimulus alone triggers the same response (<strong>conditioned response</strong>). Pavlov's dogs learned to salivate at a bell alone after the bell was repeatedly paired with food. Organizational example: staff at a plant learned to "look prim and proper" whenever the windows were cleaned, because cleaning had long been paired with head-office visits — eventually the cleaning alone triggered the behavior. Classical conditioning only explains simple, reflexive, elicited behavior, not the voluntary behavior that dominates work settings.</li>
+<li><strong>Operant conditioning</strong> (Skinner) — behavior is a function of its <strong>consequences</strong>: people learn to behave in ways that get them something they want or avoid something they don't want. Reinforcement strengthens a behavior and increases the likelihood it will be repeated; behavior that is not rewarded, or is punished, is less likely to recur. Voluntary ("emitted") behavior — coming to work on time, asking for help, "goofing off" when unwatched — is explained by operant, not classical, conditioning.</li>
+<li><strong>Social learning theory</strong> (Bandura) — people learn not only through direct experience but also by <strong>observing</strong> models (parents, teachers, peers, media figures, bosses) and being told about things. It is an extension of operant conditioning (behavior is still a function of consequences) but explicitly recognizes the role of <em>perception</em> — people respond to how they perceive and interpret consequences, not to the objective consequences themselves. Four processes determine how much influence a model has:
+<ol>
+<li><strong>Attentional processes</strong> — a model must be noticed; we're most influenced by models who are attractive, important to us, or similar to us.</li>
+<li><strong>Retention processes</strong> — influence depends on how well the observer remembers the model's action after the model is no longer present.</li>
+<li><strong>Motor reproduction processes</strong> — the observer must be able to convert watching into actually doing.</li>
+<li><strong>Reinforcement processes</strong> — a modeled behavior that is positively reinforced gets more attention, is learned better, and is performed more often.</li>
+</ol></li>
+</ul>
+
+<h2>2.8 Behavior Modification</h2>
+<p><strong>Shaping behavior</strong> is systematically reinforcing each successive step that moves an individual closer to a desired response — useful when an employee's actual behavior is far from what management wants, so waiting to reward only the final desired behavior would mean almost no reinforcement ever happens (Robbins, p.52–53). Four methods of shaping:</p>
+<table><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody>
+<tr><td><strong>Positive reinforcement</strong></td><td>Following a response with something pleasant (praising an employee for good work) — strengthens behavior.</td></tr>
+<tr><td><strong>Negative reinforcement</strong></td><td>Following a response by the removal/withdrawal of something unpleasant (an instructor stops calling on a student who looks busy reviewing notes) — strengthens behavior.</td></tr>
+<tr><td><strong>Punishment</strong></td><td>Causing an unpleasant condition to eliminate an undesired behavior (a suspension without pay) — weakens behavior.</td></tr>
+<tr><td><strong>Extinction</strong></td><td>Eliminating whatever reinforcement was maintaining a behavior, so it gradually disappears (ignoring students who raise their hands eventually stops the hand-raising) — weakens behavior.</td></tr>
+</tbody></table>
+<p><strong>Schedules of reinforcement</strong> (Exhibit 2-4, p.54–56) — presented as a table below since the real exhibit is itself tabular, not a flow diagram:</p>
+<table><thead><tr><th>Schedule</th><th>Nature of reinforcement</th><th>Effect on behavior</th><th>Example</th></tr></thead><tbody>
+<tr><td>Continuous</td><td>Reward given after every desired behavior</td><td>Fast learning, but rapid extinction once rewards stop</td><td>Compliments</td></tr>
+<tr><td>Fixed-interval</td><td>Reward given at fixed time intervals</td><td>Average, irregular performance; rapid extinction</td><td>Weekly paychecks</td></tr>
+<tr><td>Variable-interval</td><td>Reward given at variable time intervals</td><td>Moderately high, stable performance; slow extinction</td><td>Pop quizzes</td></tr>
+<tr><td>Fixed-ratio</td><td>Reward given after a fixed amount of output</td><td>High, stable performance reached quickly, but rapid extinction</td><td>Piece-rate pay</td></tr>
+<tr><td>Variable-ratio</td><td>Reward given after a variable amount of output</td><td>Very high performance, slow extinction</td><td>Commissioned sales</td></tr>
+</tbody></table>
+<p>Variable schedules generally produce higher, steadier performance than fixed schedules, because uncertainty about exactly when the next reward is coming keeps the behavior more consistent.</p>
+<p><strong>Behavior modification (OB Mod)</strong> is the systematic application of reinforcement concepts to individuals in the work setting (Robbins, p.56). The classic illustration is Emery Air Freight: freight packers claimed a 90% container-utilization rate, but the true rate was only 45%; introducing a simple daily self-tracking + feedback + positive-reinforcement program pushed real utilization above 90% almost immediately, saving the company roughly $2 million over three years. <strong>OB Mod follows a five-step model:</strong></p>
+<ol>
+<li>Identifying critical behaviors (the 5–10% of behaviors that account for most of an employee's performance).</li>
+<li>Developing baseline data (how often is the critical behavior currently occurring?).</li>
+<li>Identifying behavioral consequences (what is currently reinforcing/maintaining the current level of the behavior?).</li>
+<li>Developing and implementing an intervention strategy (change the consequences to strengthen desired behaviors and weaken undesired ones).</li>
+<li>Evaluating performance improvement.</li>
+</ol>`;
 
 /* ---------------------------------------------------------------------------
    MCQ QUIZ BANK — Unit 1 (46 questions, answer positions A/B/C/D = 12/11/11/12, longest run 1)
