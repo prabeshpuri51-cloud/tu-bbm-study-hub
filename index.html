@@ -19131,12 +19131,14 @@ window.SUBJECT_DATA_S2["mgt232"] = {
   units: [
     {title:"Unit 1: Introduction",
       primaryBook:"Organizational Behavior (Arnold & Feldman, 1986), Ch 1 + Ch 2 (motivation section) + Ch 6 (cognitive dissonance)",
-      primaryWeak:"Nature of OB, systems view, levels of analysis, individual-behavior model and mental process (attitudes/beliefs/values/needs/goals) are all real book content (p.3–31). Cognitive dissonance is real (p.167, in the Communication chapter). 'Emotions' as a separate topic and 'new challenges for managers' are NOT in this 1986 book — written from scratch, ⚠.",
+      primaryWeak:"Nature of OB, systems view, levels of analysis, individual-behavior model and mental process (attitudes/beliefs/values/needs/goals) are real Arnold & Feldman content (p.3–31); cognitive dissonance is real (p.167). Contributing disciplines, emotions, and new challenges for managers are sourced instead from Robbins (2005) — a real, more precise match for those three sub-topics (see refs).",
       pages:"Arnold & Feldman Ch 1, p.3–20 · Ch 2, p.23–31 · Ch 6, p.167", startPage:34, endPage:63, lh:6,
       desc:"Concept of organizational behavior; levels of OB analysis; organizational behavior system; basic assumptions of OB; contributing disciplines to the field of OB; individual behavior as an input-output system; mental process (beliefs, attitudes, values, needs, motives, behavior); emotions and cognitive dissonance; new challenges for manager in OB.",
       subtopics:"Concept of OB, levels of analysis, OB system, basic assumptions, contributing disciplines, individual behavior model, mental process, cognitive dissonance, new challenges",
       primaryMatch:"arnold|feldman|organizational behavior",
-      refs:[]},
+      refs:[
+        {book:"Robbins, Organizational Behavior, 11th ed. (Prentice Hall, 2005)", pages:"Ch 1 p.12–13 (Contributing Disciplines), p.15–25 (Challenges and Opportunities for OB); Ch 4 p.112–120 (Emotions)", note:"Covers 'Contributing disciplines to the field of OB' and 'New challenges for manager in OB' under matching real headings, and 'Emotions' in full — all three sub-topics are better sourced here than in the 1986 Arnold & Feldman text.", match:"robbins|organizational behavior", start:40}
+      ]},
 
     {title:"Unit 2: Perception and Learning", notBuilt:true, lh:4,
       desc:"Concept of perception; perceptual process; factors affecting perception; attribution theory; attribution errors; perception and individual decision making; concept and principles of learning; learning theories (cognitive learning and social learning); behavior modification.",
@@ -19261,13 +19263,51 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
   </svg>
   <figcaption><p>These three perspectives are not in conflict but complementary — a full understanding of organizations requires blending knowledge derived from all three (p.9).</p></figcaption>
 </figure></div>
-<table><thead><tr><th>Level</th><th>Focus</th><th>Contributing discipline</th></tr></thead><tbody>
-<tr><td><strong>The individual</strong></td><td>Individual members working on tasks in pursuit of the organization's goals — attitudes, beliefs, perceptions, personalities and their effect on behavior/performance.</td><td>Psychology</td></tr>
-<tr><td><strong>The group</strong></td><td>Interaction among members as they work in teams, committees, task forces and departments — cohesiveness, productivity, leadership's effect on members.</td><td>Social psychology</td></tr>
-<tr><td><strong>The organization</strong></td><td>The organization as a whole (the <em>macro</em> perspective) — relationship with its environment, how structure/design affect effectiveness, technology, size, age.</td><td>Sociology</td></tr>
+<table><thead><tr><th>Level</th><th>Focus</th></tr></thead><tbody>
+<tr><td><strong>The individual</strong></td><td>Individual members working on tasks in pursuit of the organization's goals — attitudes, beliefs, perceptions, personalities and their effect on behavior/performance.</td></tr>
+<tr><td><strong>The group</strong></td><td>Interaction among members as they work in teams, committees, task forces and departments — cohesiveness, productivity, leadership's effect on members.</td></tr>
+<tr><td><strong>The organization</strong></td><td>The organization as a whole (the <em>macro</em> perspective) — relationship with its environment, how structure/design affect effectiveness, technology, size, age.</td></tr>
 </tbody></table>
 
-<h2>1.4 Basic Assumptions of Organizational Behavior</h2>
+<h2>1.4 Contributing Disciplines to the Field of Organizational Behavior</h2>
+<p>⚠ <em>Revised from the original build</em> — Arnold &amp; Feldman folds this into the levels-of-analysis discussion above with only 3 disciplines (one per level). Robbins' 2005 text (p.12–13) has an entire section under this <strong>exact syllabus heading</strong>, "Contributing Disciplines to the OB Field," naming 5 disciplines with a real named figure (Exhibit 1-3) — a stronger, more precise match, used as the primary source for this sub-topic.</p>
+<p>Organizational behavior is an applied behavioral science built on contributions from five predominant disciplines: <strong>psychology, sociology, social psychology, anthropology, and political science</strong> (Robbins, p.12). Psychology's contributions are mainly at the <strong>individual</strong> (micro) level of analysis; the other four disciplines contribute mainly to <strong>group</strong> and <strong>organization system</strong> (macro) concepts.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-disciplines">
+  <h3>Contributing disciplines to the OB field</h3>
+  <p class="dgm-sub">after Exhibit 1-3, Robbins p.12</p>
+  <svg viewBox="0 0 640 250" role="img" aria-label="Psychology feeds the individual level; sociology, anthropology and political science feed the group and organization system levels; social psychology feeds the group level; all converge into the study of organizational behavior">
+    <rect x="10" y="10" width="130" height="30" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="t" x="75" y="30" text-anchor="middle">Psychology</text>
+    <rect x="10" y="55" width="130" height="30" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="t" x="75" y="75" text-anchor="middle">Sociology</text>
+    <rect x="10" y="100" width="130" height="30" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="t" x="75" y="120" text-anchor="middle">Social psychology</text>
+    <rect x="10" y="145" width="130" height="30" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="t" x="75" y="165" text-anchor="middle">Anthropology</text>
+    <rect x="10" y="190" width="130" height="30" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="t" x="75" y="210" text-anchor="middle">Political science</text>
+    <rect x="260" y="10" width="120" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="t" x="320" y="32" text-anchor="middle">Individual</text>
+    <rect x="260" y="100" width="120" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="t" x="320" y="122" text-anchor="middle">Group</text>
+    <rect x="260" y="185" width="120" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="t" x="320" y="200" text-anchor="middle">Organization</text><text class="ts" x="320" y="213" text-anchor="middle">system</text>
+    <line class="ax" x1="140" y1="25" x2="260" y2="25" marker-end="url(#mgt232u1d1)"/>
+    <path d="M140 70 Q200 70 260 117" class="ax" fill="none" marker-end="url(#mgt232u1d1)"/>
+    <path d="M140 70 Q220 70 260 200" class="ax" fill="none" marker-end="url(#mgt232u1d1)"/>
+    <line class="ax" x1="140" y1="115" x2="260" y2="115" marker-end="url(#mgt232u1d1)"/>
+    <path d="M140 160 Q200 160 260 120" class="ax" fill="none" marker-end="url(#mgt232u1d1)"/>
+    <path d="M140 160 Q220 160 260 200" class="ax" fill="none" marker-end="url(#mgt232u1d1)"/>
+    <line class="ax" x1="140" y1="205" x2="260" y2="205" marker-end="url(#mgt232u1d1)"/>
+    <rect x="470" y="95" width="150" height="46" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="t" x="545" y="115" text-anchor="middle">Study of</text><text class="t" x="545" y="130" text-anchor="middle">organizational behavior</text>
+    <path d="M380 30 Q440 30 470 105" class="gd"/>
+    <line class="gd" x1="380" y1="117" x2="470" y2="117"/>
+    <path d="M380 202 Q440 202 470 135" class="gd"/>
+    <defs><marker id="mgt232u1d1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>Sociology and anthropology each feed both the group level and the organization-system level; the other three disciplines feed a single level.</p></figcaption>
+</figure></div>
+<table><thead><tr><th>Discipline</th><th>Contributes to</th><th>Real topics named in the exhibit</th></tr></thead><tbody>
+<tr><td><strong>Psychology</strong></td><td>Individual</td><td>Learning, motivation, personality, emotions, perception, training, leadership effectiveness, job satisfaction, individual decision making, performance appraisal, attitude measurement, employee selection, work design, work stress</td></tr>
+<tr><td><strong>Sociology</strong></td><td>Group <em>and</em> organization system</td><td>Group dynamics, work teams, communication, power, conflict, intergroup behavior; <em>also:</em> formal organization theory, organizational technology, organizational change, organizational culture</td></tr>
+<tr><td><strong>Social psychology</strong></td><td>Group</td><td>Behavioral change, attitude change, communication, group processes, group decision making</td></tr>
+<tr><td><strong>Anthropology</strong></td><td>Group <em>and</em> organization system</td><td>Comparative values, comparative attitudes, cross-cultural analysis; <em>also:</em> organizational culture, organizational environment</td></tr>
+<tr><td><strong>Political science</strong></td><td>Group</td><td>Conflict, intraorganizational politics, power</td></tr>
+</tbody></table>
+
+<h2>1.5 Basic Assumptions of Organizational Behavior</h2>
 <p>⚠ The syllabus names this as its own sub-topic, but the source book presents the same content as the three characteristics of organizations above (§1.1, p.4–5) rather than under a separate "assumptions" heading. Restated explicitly as assumptions:</p>
 <ol>
 <li><strong>OB assumes organizations exist through their people</strong> — not through buildings, technology or products, which are simply what people use and create.</li>
@@ -19276,7 +19316,7 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
 <li><strong>OB assumes behavior in organizations can be systematically studied and influenced</strong> — the field rests on the premise that individual, group and organizational behavior follow identifiable patterns explainable by theory (psychology, social psychology, sociology), and that managers can use this understanding to improve both employee well-being and organizational effectiveness (p.9, p.13).</li>
 </ol>
 
-<h2>1.5 Individual Behavior as an Input–Output System</h2>
+<h2>1.6 Individual Behavior as an Input–Output System</h2>
 <p>The book models individual behavior itself as the product of a set of "input" factors, with individual performance and effectiveness as further downstream "outputs" (Fig. 2-1, p.24) — this is the "individual behavior as an input-output system" the syllabus names.</p>
 <div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-model">
   <h3>Determinants of individual behavior, performance and effectiveness</h3>
@@ -19303,7 +19343,7 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
   <div class="dgm-marks"><b>Label to earn marks</b>All five determinants named; the behavior→performance→effectiveness chain; that performance needs job requirements and effectiveness needs a standard of comparison.</div></figcaption>
 </figure></div>
 <ol>
-<li><strong>Motivation</strong> — a person's attitudes, beliefs, values, needs and goals (detailed in §1.6 below).</li>
+<li><strong>Motivation</strong> — a person's attitudes, beliefs, values, needs and goals (detailed in §1.7 below).</li>
 <li><strong>Ability</strong> — the actual skills and capacities a person possesses (aptitude + learning opportunities via training/experience).</li>
 <li><strong>Perception</strong> — the way a person receives messages and interprets information; behavior is driven by <em>perceived</em>, not actual, organizational expectations.</li>
 <li><strong>Personality</strong> — a person's traits and characteristics (sociability, dominance, aggressiveness, persistence, etc.).</li>
@@ -19311,8 +19351,8 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
 </ol>
 <p><strong>Key distinction:</strong> <em>behavior</em> is simply what a person does; whether that behavior counts as <em>performance</em> depends on what the organization's job requirements demand of the person; whether that performance counts as <em>effective</em> depends on a standard of comparison. Two people can behave almost identically, yet if their jobs demand different things, one may be performing effectively and the other not (p.23–24).</p>
 
-<h2>1.6 Mental Process: Beliefs, Attitudes, Values, Needs, Motives and Behavior</h2>
-<p>This is the "Motivation" building block from §1.5, expanded (Fig. 2-2, p.27; pp.26–30):</p>
+<h2>1.7 Mental Process: Beliefs, Attitudes, Values, Needs, Motives and Behavior</h2>
+<p>This is the "Motivation" building block from §1.6, expanded (Fig. 2-2, p.27; pp.26–30):</p>
 <ul>
 <li><strong>Attitudes</strong> — the way a person feels about, and is disposed to act towards, some "object" (a physical object, a person, a group, or an abstract entity). An attitude captures both how a person feels about the object and how they are disposed to act toward it. Attitudes and behavior are linked but not perfectly — people sometimes act inconsistently with their stated attitudes.</li>
 <li><strong>Beliefs</strong> — affect motivation in two ways: (1) people must believe they are capable of performing the behaviors the organization expects, and (2) they must believe performing well will have positive personal consequences. Beliefs may be inaccurate, but a person still acts on them as if they were true. Beliefs about one's own effective performance are shaped by self-esteem, communications from others, past experience, personality and the actual situation (Fig. 2-3, p.28).</li>
@@ -19323,8 +19363,8 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
 <li><strong>Behavior</strong> — the observable outcome of all of the above acting together (§1.5's model): motivation combines with ability, perception, personality and organizational systems/resources to produce the behavior a person actually engages in.</li>
 </ul>
 
-<h2>1.7 Emotions and Cognitive Dissonance</h2>
-<p><strong>Cognitive dissonance</strong> (p.167, "Dissonant Information") is the psychological discomfort that arises when a person receives information that is inconsistent — <em>dissonant</em> — with beliefs they already hold. People cope with dissonant information in one of four typical ways:</p>
+<h2>1.8 Emotions and Cognitive Dissonance</h2>
+<p><strong>Cognitive dissonance</strong> (Arnold &amp; Feldman, p.167, "Dissonant Information") is the psychological discomfort that arises when a person receives information that is inconsistent — <em>dissonant</em> — with beliefs they already hold. People cope with dissonant information in one of four typical ways:</p>
 <ol>
 <li><strong>Avoid exposure to it</strong> — e.g. stop reading an article or turn off a broadcast presenting the dissonant information.</li>
 <li><strong>Reject its validity</strong> — question the credibility of the source, or the methodology behind the information.</li>
@@ -19332,17 +19372,68 @@ window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hour
 <li><strong>Distort the information in memory</strong> — over time, people's recollection of dissonant information tends to drift to become less threatening.</li>
 </ol>
 <p>Cognitive dissonance explains a very practical managerial problem: why it is so difficult to get employees to accept negative performance feedback as accurate. Employees may block out the bad news, question the manager's motives, or misremember the criticism afterward — so most negative feedback ends up being discounted by the person who received it (p.167).</p>
-<p>⚠ <strong>Emotions:</strong> this 1986 edition of the primary text does not treat "emotions" as a separate, named topic the way modern OB texts do (affect, mood, emotional labor became prominent in the field from the 1990s onward) — the book folds emotional reactions into attitudes, job satisfaction and communication. For exam completeness: <strong>emotions</strong> are short-term, intense affective states (e.g. anger, joy, frustration) as distinct from the longer-lasting evaluative judgments captured by attitudes; emotions matter for OB because they shape how a message is received (an already-angry person is more likely to react defensively, linking to the causes of defensive communication above), how decisions are made under stress, and how consistently a person behaves from one situation to the next.</p>
-
-<h2>1.8 New Challenges for Manager in OB</h2>
-<p>⚠ Entirely original content — a 1986 textbook cannot describe challenges that didn't yet exist in the modern form the syllabus implies. Current, exam-relevant "new challenges" facing managers of organizational behavior:</p>
+<p>⚠ <em>Revised from the original build:</em> Arnold &amp; Feldman (1986) does not treat "emotions" as a separate topic — the field's emotion research only developed from the 1990s onward. Robbins (2005), p.112–120, has a full real section, used below in place of the earlier from-scratch paragraph.</p>
+<p><strong>Emotions</strong> (Robbins, p.112–120). Three closely related terms:</p>
 <ul>
-<li><strong>Workforce diversity and inclusion</strong> — managing employees who differ by gender, ethnicity, age, ability and cultural background fairly and productively, and building an inclusive culture rather than assuming a single "standard" employee profile.</li>
-<li><strong>Technology, automation and remote/hybrid work</strong> — digital communication tools, automation and AI change <em>how</em> work gets done and how managers observe, coordinate and motivate employees they may rarely see in person.</li>
-<li><strong>Globalization and cross-cultural management</strong> — organizations increasingly operate across national and cultural boundaries, requiring managers to adapt leadership and communication style to different cultural expectations (background relevant to Unit 7's "Introduction to leadership").</li>
-<li><strong>The changing nature of employment</strong> — the rise of contract, gig and flexible work arrangements changes how organizations build commitment and coordinate people who are not full-time, co-located employees.</li>
-<li><strong>Employee well-being and mental health</strong> — rising recognition that stress, burnout and work–life balance directly affect performance and retention (links forward to Unit 5's "Organizational stress").</li>
-<li><strong>Managing a multi-generational workforce</strong> — organizations now often employ four generations side by side, each with different expectations about communication style, authority and career progression.</li>
+<li><strong>Affect</strong> — the broad, umbrella term covering both emotions and moods.</li>
+<li><strong>Emotions</strong> — <em>intense</em> feelings <em>directed at someone or something</em> (object-specific): "happy <strong>about</strong> something, angry <strong>at</strong> someone, afraid <strong>of</strong> something."</li>
+<li><strong>Moods</strong> — feelings that are <em>less intense</em> than emotions and <em>lack a contextual stimulus</em> — emotions can turn into a mood once a person loses focus on the object that first caused the feeling.</li>
+</ul>
+<p><strong>Emotional labor</strong> is when a job requires an employee to express organizationally desired emotions during interpersonal transactions (e.g. a flight attendant expected to stay cheerful, a funeral counsellor expected to appear sad). This creates a split between:</p>
+<ul>
+<li><strong>Felt emotions</strong> — a person's actual, real emotions.</li>
+<li><strong>Displayed emotions</strong> — the emotions a job requires and considers appropriate, whether or not they match what is actually felt (a losing pageant contestant still smiling for the winner).</li>
+</ul>
+<p>When felt and displayed emotions genuinely diverge, the result is <strong>emotional dissonance</strong> — bottled-up frustration that, left untreated, can lead to emotional exhaustion and burnout.</p>
+<p><strong>Emotion dimensions</strong> (p.115–116): there are dozens of named emotions, but research narrows them to <strong>six universal emotions</strong> — anger, fear, sadness, happiness, disgust, and surprise — arranged along a continuum (adjacent emotions like happiness/surprise are easily confused; opposite ends like happiness/disgust are not). Emotions also vary in <strong>intensity</strong> (some people show a much wider emotional range than others) and in <strong>frequency and duration</strong> (how often, and for how long, a display must be sustained) — both shaped partly by personality and partly by job requirements. <strong>External constraints</strong> — organizational norms (most organizations are biased against displays of intense or negative emotion) and cultural norms (a smiling supermarket cashier reads as friendly in the US but as inexperienced in Israel) — further shape which emotions are acceptable to display, and where.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-aet">
+  <h3>Affective Events Theory</h3>
+  <p class="dgm-sub">after Exhibit 4-5, Robbins p.118</p>
+  <svg viewBox="0 0 640 230" role="img" aria-label="Work environment leads to work events, which combine with personal dispositions to produce emotional reactions, which affect job satisfaction and job performance">
+    <rect x="10" y="15" width="150" height="60" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="85" y="33" text-anchor="middle">Work environment</text>
+    <text class="ts" x="85" y="50" text-anchor="middle">job characteristics ·</text>
+    <text class="ts" x="85" y="63" text-anchor="middle">job demands · emotional labor</text>
+    <line class="ax" x1="85" y1="75" x2="85" y2="105" marker-end="url(#mgt232u1e)"/>
+    <rect x="10" y="110" width="150" height="50" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="85" y="128" text-anchor="middle">Work events</text>
+    <text class="ts" x="85" y="145" text-anchor="middle">daily hassles ·</text>
+    <text class="ts" x="85" y="158" text-anchor="middle">daily uplifts</text>
+    <line class="ax" x1="160" y1="135" x2="250" y2="135" marker-end="url(#mgt232u1e)"/>
+    <rect x="250" y="105" width="140" height="60" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="t" x="320" y="128" text-anchor="middle">Emotional</text>
+    <text class="t" x="320" y="143" text-anchor="middle">reactions</text>
+    <text class="ts" x="320" y="157" text-anchor="middle">positive · negative</text>
+    <rect x="120" y="185" width="150" height="40" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="195" y="202" text-anchor="middle">Personal dispositions</text>
+    <text class="ts" x="195" y="216" text-anchor="middle">personality · mood</text>
+    <line class="ax" x1="195" y1="185" x2="195" y2="165" marker-end="url(#mgt232u1e)"/>
+    <line class="ax" x1="390" y1="118" x2="520" y2="118" marker-end="url(#mgt232u1e)"/>
+    <rect x="520" y="90" width="110" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="575" y="112" text-anchor="middle">Job satisfaction</text>
+    <line class="ax" x1="390" y1="150" x2="520" y2="150" marker-end="url(#mgt232u1e)"/>
+    <rect x="520" y="145" width="110" height="34" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="575" y="167" text-anchor="middle">Job performance</text>
+    <defs><marker id="mgt232u1e" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>Employees react emotionally to daily hassles/uplifts at work, moderated by their own personality and mood, which then affects job satisfaction and performance. It is the <em>frequency</em>, not intensity, of these events that matters most.</p></figcaption>
+</figure></div>
+<p><strong>OB applications of emotions</strong> (brief, p.120–122): emotional intelligence (the ability to detect and manage emotional cues — self-awareness, self-management, self-motivation, empathy, social skills) affects selection and job performance; decision making, motivation and leadership are all better explained once emotion (not just cold rationality) is taken into account; interpersonal conflict is almost always intertwined with emotion, so a manager who ignores the emotional element rarely resolves a conflict successfully.</p>
+
+<h2>1.9 New Challenges for Manager in OB</h2>
+<p>⚠ <em>Revised from the original build:</em> Arnold &amp; Feldman (1986) cannot describe challenges that didn't exist in their modern form when it was written. Robbins (2005), p.15–25, has a full real section under the heading <strong>"Challenges and Opportunities for OB,"</strong> used below in place of the earlier from-scratch list — still dated to a 2005 book, but real, citable content rather than invented from scratch:</p>
+<ul>
+<li><strong>Responding to globalization</strong> — increased foreign assignments; working with people from different cultures (what motivates you may not motivate them); coping with anti-capitalism backlash in some countries; overseeing the movement of jobs to countries with lower-cost labor.</li>
+<li><strong>Managing workforce diversity</strong> — organizations becoming a more heterogeneous mix of people by gender, race, national origin, age, disability, and other categories — moving from an old "melting-pot" assumption (minorities assimilate) to one that recognizes and values differences.</li>
+<li><strong>Improving quality and productivity</strong> — via quality management (QM: intense focus on the customer, continuous improvement, improving everything the organization does, accurate measurement, empowerment of employees) and process reengineering (asking "how would we do things if we were starting from scratch?").</li>
+<li><strong>Responding to the coming labor shortage</strong> — demographic trends (fewer Gen-Xers than retiring Baby Boomers, a tapped-out pool of women entering the workforce, declining interest among older workers in staying employed) point to a skilled-labor shortage; managers need sophisticated recruitment/retention strategies and ways to motivate an ageing workforce.</li>
+<li><strong>Improving customer service</strong> — most of the workforce in developed economies is now in service jobs requiring substantial customer interaction; OB helps managers build a customer-responsive culture (friendly, accessible, prompt, willing to please).</li>
+<li><strong>Improving people skills and empowering employees</strong> — pushing decision-making down to the operating level (self-managed teams, employees put in charge of what they do) requires managers to give up control while employees learn to take responsibility.</li>
+<li><strong>Stimulating innovation and change</strong> — organizations that fail to innovate and adapt (e.g. Woolworth, TWA) go out of business; today's managers must foster innovation and master change.</li>
+<li><strong>Coping with "temporariness"</strong> — jobs, work groups and even organizations themselves are constantly redesigned/reorganized; managers and employees must learn to work with flexibility, spontaneity and unpredictability rather than a stable, permanent assignment.</li>
+<li><strong>Working in networked organizations</strong> — computerization and the internet let people collaborate while physically far apart (telecommuting, independent contractors); this changes how a manager motivates and makes collaborative decisions with people who are never physically present.</li>
+<li><strong>Helping employees balance work/life conflicts</strong> — globalization, always-on communication technology, longer average work hours, and more dual-career couples have blurred the line between work time and personal time; organizations that don't help employees balance this will struggle to attract and keep capable, motivated staff.</li>
+<li><strong>Improving ethical behavior</strong> — employees increasingly face ethical dilemmas (whistleblowing, inflated performance evaluations, organizational politics) in a climate where the line between right and wrong conduct has become blurred; managers need to create an ethically healthy climate for their people.</li>
 </ul>`;
 
 /* ---------------------------------------------------------------------------
@@ -19430,18 +19521,18 @@ window.SUBJECT_QUIZ["mgt232"]["0"] = [
    why:"Rejecting validity means the receiver questions the credibility of the source or research methodology behind dissonant information (p.167)."},
   {q:"Over time, a person's memory of dissonant information tends to:", o:["distort to become less threatening","become more accurate","stay perfectly unchanged","transfer automatically to co-workers"], a:0, w:1,
    why:"'Distort the information in memory' — over time recollection tends to drift to become less threatening (p.167)."},
-  {q:"Emotions, as distinguished from attitudes in this course's framing, are best described as:", o:["identical in meaning to personality traits","long-lasting evaluative judgments","short-term, intense affective states such as anger or frustration","irrelevant to how messages are received"], a:2, w:2,
-   why:"⚠ Original framing (not in the 1986 source book, which doesn't treat emotion as a separate topic): emotions are short-term intense affective states, distinct from the longer-lasting evaluative judgments captured by attitudes."},
-  {q:"An employee who is already angry is more likely to react to a message:", o:["with improved long-term memory of it","by immediately accepting it as true","with complete objectivity","defensively"], a:3, w:1,
-   why:"⚠ Emotional state affects how a message is received — an already-angry person is more prone to a defensive reaction."},
-  {q:"Which of the following is a genuine 'new challenge' facing managers of organizational behavior today?", o:["Managing workforce diversity, remote/hybrid work, and a multi-generational workforce","Managing a workforce that is entirely co-located and single-generation","The complete disappearance of organizational structure","The irrelevance of employee well-being to performance"], a:0, w:2,
-   why:"⚠ Original content (not in the 1986 book): real new challenges include diversity & inclusion, remote/hybrid and gig work, globalization, and managing multiple generations at once."},
-  {q:"The rise of contract, gig and flexible work arrangements is described in this course as a challenge because it:", o:["makes commitment and coordination easier for managers","changes how organizations build commitment and coordinate people who aren't full-time co-located employees","has no effect on organizational behavior","only affects government organizations"], a:1, w:1,
-   why:"⚠ Flexible/gig work changes how commitment and coordination are managed when people are not traditional full-time, co-located employees."},
-  {q:"Globalization is a relevant 'new challenge' for OB because it requires managers to:", o:["only hire employees from one country","ignore cultural differences entirely","eliminate cross-cultural teams","adapt leadership and communication style to different cultural expectations"], a:3, w:1,
-   why:"⚠ Cross-cultural management requires adapting style to different cultural expectations — background relevant to leadership (Unit 7)."},
-  {q:"Employee well-being and mental health are increasingly recognized as important managerial concerns because:", o:["stress and burnout directly affect performance and retention","only senior managers experience stress","they have no measurable effect on work outcomes","organizations cannot influence employee stress levels"], a:0, w:2,
-   why:"⚠ Recognition that stress/burnout affect performance and retention links forward to organizational stress (Unit 5)."}
+  {q:"Emotions, as distinguished from moods in Robbins' framing, are best described as:", o:["identical in meaning to personality traits","feelings that lack a contextual stimulus","intense feelings directed at someone or something (object-specific)","irrelevant to how messages are received"], a:2, w:2,
+   why:"Robbins (p.113): emotions are intense feelings directed at someone or something ('happy about X, angry at Y'); moods, by contrast, are less intense and lack a contextual stimulus."},
+  {q:"A flight attendant who feels annoyed but is required to stay cheerful with passengers is displaying:", o:["improved long-term memory of the interaction","emotional labor, creating a gap between felt and displayed emotion","complete objectivity","cognitive dissonance only"], a:1, w:2,
+   why:"Robbins (p.113–114): emotional labor is expressing organizationally desired emotions during interpersonal transactions; when felt emotions differ from displayed emotions, the result is emotional dissonance."},
+  {q:"Which of the following is a genuine 'new challenge' facing managers, per Robbins' 'Challenges and Opportunities for OB'?", o:["Managing workforce diversity and responding to globalization","Managing a workforce that is entirely co-located and single-generation","The complete disappearance of organizational structure","The irrelevance of employee well-being to performance"], a:0, w:2,
+   why:"Robbins (p.15–25): real named challenges include globalization, managing workforce diversity, improving quality/productivity, the coming labor shortage, customer service, empowering people, innovation and change, temporariness, networked organizations, work/life balance, and ethical behavior."},
+  {q:"'Working in networked organizations' is a challenge for OB because it:", o:["makes commitment and coordination easier for managers","changes how a manager motivates and makes collaborative decisions with people who are rarely physically present","has no effect on organizational behavior","only affects government organizations"], a:1, w:1,
+   why:"Robbins (p.24): computerization and the internet let people collaborate while physically far apart (telecommuting, independent contractors) — the manager's job changes when it comes to leading and motivating people online."},
+  {q:"Responding to globalization is a relevant 'new challenge' for OB because it requires managers to:", o:["only hire employees from one country","ignore cultural differences entirely","eliminate cross-cultural teams","adapt their management style to work with people from different cultures"], a:3, w:1,
+   why:"Robbins (p.15–16): managers increasingly work with bosses, peers and employees from different cultures — what motivates one person may not motivate another, so style must adapt."},
+  {q:"'Helping employees balance work/life conflicts' is listed as a new challenge because:", o:["stress and burnout have no effect on performance or retention","organizations cannot influence how employees manage their time","technology, longer work hours, and dual-career couples have blurred the line between work and personal time","only senior managers experience work/life conflict"], a:2, w:2,
+   why:"Robbins (p.24–25): always-on communication technology, longer average work hours, and more dual-career couples make it harder for employees to separate work from personal life; organizations that don't help will struggle to retain capable staff."}
 ];
 
 /* ---------------------------------------------------------------------------
@@ -19473,8 +19564,8 @@ window.SUBJECT_EXAM["mgt232"].units["0"] = {
      pts:["The psychological discomfort that arises when a person receives information inconsistent (dissonant) with beliefs they already hold"]},
     {q:"List the four typical reactions people have to dissonant information.",
      pts:["Avoid exposure to it","Reject its validity","Forget it quickly","Distort it in memory over time"]},
-    {q:"Give any two 'new challenges' facing managers of organizational behavior today.",
-     pts:["Any two of: workforce diversity & inclusion; technology/remote-hybrid work; globalization & cross-cultural management; gig/flexible work arrangements; employee well-being & mental health; multi-generational workforce"]}
+    {q:"Give any two of Robbins' 'challenges and opportunities for OB' facing managers today.",
+     pts:["Any two of: responding to globalization; managing workforce diversity; improving quality and productivity; responding to the coming labor shortage; improving customer service; improving people skills / empowering employees; stimulating innovation and change; coping with 'temporariness'; working in networked organizations; helping employees balance work/life conflicts; improving ethical behavior"]}
   ],
   short: [
     {q:"Explain the systems view of organizations, distinguishing inputs, transformation processes and outputs.",
@@ -19491,8 +19582,8 @@ window.SUBJECT_EXAM["mgt232"].units["0"] = {
      pts:["Avoid exposure (e.g. stop reading/watching the source)","Reject its validity (question the source's credibility or methodology)","Forget it quickly (dissonant information is more easily forgotten soon after receipt)","Distort it in memory over time (recollection drifts to become less threatening)","Example: an employee receiving critical performance feedback may use any of these four responses to avoid accepting it"]},
     {q:"Why is cognitive dissonance a practical problem for managers giving performance feedback?",
      pts:["Negative feedback is dissonant with most employees' self-image","Employees may block out the bad news, question the manager's motives, or misremember the criticism afterward","As a result, most negative feedback ends up being discounted or distorted by the employee who received it","This makes it harder for feedback to actually change behavior unless managers understand and work around this tendency"]},
-    {q:"Describe any three 'new challenges' facing managers of organizational behavior today and explain why each matters.",
-     pts:["Workforce diversity & inclusion — managing a workforce that differs by gender, ethnicity, age, culture fairly and productively","Technology & remote/hybrid work — changes how managers coordinate, observe and motivate employees they may rarely see in person","Globalization — requires adapting leadership/communication style across cultures","Gig/flexible work — changes how commitment and coordination are managed for non-traditional employees","Employee well-being — stress and burnout directly affect performance and retention","(any three, each with its 'why it matters' reasoning)"]}
+    {q:"Describe any three of Robbins' 'challenges and opportunities for OB' and explain why each matters.",
+     pts:["Globalization — increased foreign assignments and working with people from different cultures require managers to adapt their style","Managing workforce diversity — organizations are a more heterogeneous mix of people (gender, race, age, disability); the old melting-pot assumption is replaced by recognizing and valuing differences","Working in networked organizations — computerization/internet let people collaborate while physically apart, changing how a manager motivates and makes decisions with people rarely present in person","Coping with 'temporariness' — jobs, work groups and organizations are constantly redesigned, so managers and employees must work with flexibility and unpredictability rather than stable assignments","Helping employees balance work/life conflicts — always-on technology and longer hours blur work/personal time, and organizations that don't help will struggle to retain staff","(any three, each with its 'why it matters' reasoning; source: Robbins p.15–25)"]}
   ],
   long: [
     {q:"Explain the concept of organizational behavior and describe, with a diagram, the systems view of organizations.", dia:"mgt232-u1-systems",
