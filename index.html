@@ -23,6 +23,7 @@
     --facc:#2f8fa8; --facc-d:#164e5c;
     --bmath2:#4a5bd0; --bmath2-d:#2b3080;
     --eng2:#cf5a86; --eng2-d:#7c2b4c;
+    --mgt232:#c9762f; --mgt232-d:#7a3f16;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -67,6 +68,7 @@
   .c-facc{background:linear-gradient(135deg,var(--facc),var(--facc-d));}
   .c-bmath2{background:linear-gradient(135deg,var(--bmath2),var(--bmath2-d));}
   .c-eng2{background:linear-gradient(135deg,var(--eng2),var(--eng2-d));}
+  .c-mgt232{background:linear-gradient(135deg,var(--mgt232),var(--mgt232-d));}
   .c-notes{background:linear-gradient(135deg,#5a4a8a,#2c2050);grid-column:span 2;height:92px;}
 
   /* ---- Subject view ---- */
@@ -19072,6 +19074,440 @@ window.SUBJECT_EXAM["eng2"].cases.push(
 
 </script>
 <script>
+/* ===== MGT 232 Leadership and Organizational Behavior — Semester 2 =====
+   Edit this file alone; the shell and the other subjects are untouched.
+   Loaded by index.html after the other Sem-2 data files.
+
+   Sem-2 metadata namespace: window.SUBJECT_DATA_S2, unique subject key "mgt232".
+   Notes / quiz / exam live in the shared window.SUBJECT_* objects, keyed "mgt232".
+
+   Course code confirmed current: MGT 232 (2 credits, 32 LHs), against the official
+   "BBM Curriculum, Effective from Academic Batch 2021 AD" course-cycle table AND the
+   detailed FOMECD "BBM 2nd Sem, Aug 2022" syllabus PDF (same document used for
+   ACC 201 / MTH 202 / ENG 202). MGT 233 "Seminar on Leadership & OB" (1 cr) is a
+   paper/presentation course with NO written exam — not built separately, per the
+   standing Sem-2 rule that the two 1-credit seminars fold into their parent subject.
+
+   Real past papers: no usable BBM-specific paper exists yet (the 2020 BBM paper page
+   on tupapers.com is a server-side stub with an empty <article>, confirmed by raw
+   fetch). The parallel BBA course "Leadership Organizational Behavior" (same syllabus
+   family, shared across BBA/BIM/BBM per the Sem-1 precedent) has two real, FULL board
+   papers (2024, 2026) confirming the identical Section A/B/C/D = 20/30/30/20 format
+   (now 10 TU FoM subjects) and giving real question content that maps closely onto
+   this course's own units. `real:` tags below cite these as "BBA 2024"/"BBA 2026".
+
+   Primary book: Arnold, H.J. & Feldman, D.C., Organizational Behavior, McGraw-Hill,
+   1986 (1st ed.) — matches the syllabus reference "Arnold, H.J. &Fieldman, D.C." (a
+   syllabus typo on the surname, same book). This is a 1986 edition, so several
+   syllabus sub-topics of more recent origin (contemporary leadership styles,
+   360-degree appraisal, current "new challenges") are NOT in this book — written
+   from scratch and ⚠-flagged per unit. The syllabus also cites Chalise, M. & Gautam,
+   P., Leadership and Organizational Behavior (KEC Publication, Kathmandu) — same
+   Nepali author pair as MGT 231's KEC book — not yet supplied; flagged as
+   `primaryWeak` per unit pending a PDF.
+
+   Build order: Unit 1 built first as the schema / UI checkpoint (source for Units
+   2-8 not yet processed). `units` array carries all 8 real titles (syllabus numbers
+   them 1,2,3,5,6,7,8,9 — the source document itself skips "Unit 4"; the 32 LH sum
+   across the 8 real units confirms this is a genuine gap in the official syllabus,
+   not a transcription error); unbuilt units flagged notBuilt (inert marker only).
+   ===== */
+window.SUBJECT_DATA_S2 = window.SUBJECT_DATA_S2 || {};
+window.SUBJECT_QUIZ  = window.SUBJECT_QUIZ  || {};
+window.SUBJECT_NOTES = window.SUBJECT_NOTES || {};
+window.SUBJECT_EXAM  = window.SUBJECT_EXAM  || {};
+
+/* ---------------------------------------------------------------------------
+   SUBJECT METADATA
+--------------------------------------------------------------------------- */
+window.SUBJECT_DATA_S2["mgt232"] = {
+  title: "Leadership and Organizational Behavior",
+  code: "MGT 232 • 2 Credits • 32 LHs • Tribhuvan University",
+  examSectionLabel: "Section",
+  colorClass: "c-mgt232", hex:"#c9762f", hexD:"#7a3f16",
+  banner: "linear-gradient(135deg,#c9762f,#7a3f16)",
+  book: "Organizational Behavior (Arnold & Feldman, McGraw-Hill 1986)",
+  bookMatch: "arnold|feldman|organizational behavior",
+  units: [
+    {title:"Unit 1: Introduction",
+      primaryBook:"Organizational Behavior (Arnold & Feldman, 1986), Ch 1 + Ch 2 (motivation section) + Ch 6 (cognitive dissonance)",
+      primaryWeak:"Nature of OB, systems view, levels of analysis, individual-behavior model and mental process (attitudes/beliefs/values/needs/goals) are all real book content (p.3–31). Cognitive dissonance is real (p.167, in the Communication chapter). 'Emotions' as a separate topic and 'new challenges for managers' are NOT in this 1986 book — written from scratch, ⚠.",
+      pages:"Arnold & Feldman Ch 1, p.3–20 · Ch 2, p.23–31 · Ch 6, p.167", startPage:34, endPage:63, lh:6,
+      desc:"Concept of organizational behavior; levels of OB analysis; organizational behavior system; basic assumptions of OB; contributing disciplines to the field of OB; individual behavior as an input-output system; mental process (beliefs, attitudes, values, needs, motives, behavior); emotions and cognitive dissonance; new challenges for manager in OB.",
+      subtopics:"Concept of OB, levels of analysis, OB system, basic assumptions, contributing disciplines, individual behavior model, mental process, cognitive dissonance, new challenges",
+      primaryMatch:"arnold|feldman|organizational behavior",
+      refs:[]},
+
+    {title:"Unit 2: Perception and Learning", notBuilt:true, lh:4,
+      desc:"Concept of perception; perceptual process; factors affecting perception; attribution theory; attribution errors; perception and individual decision making; concept and principles of learning; learning theories (cognitive learning and social learning); behavior modification.",
+      subtopics:"Perception, perceptual process, attribution theory, attribution errors, learning theories, behavior modification"},
+
+    {title:"Unit 3: Personality and Job Satisfaction", notBuilt:true, lh:4,
+      desc:"Concept and types of personality; personality traits and characteristics; determinants of personality; emotions and personality; major personality attributes influencing organizational behavior; concept and importance of job satisfaction; measuring job satisfaction; effects of job satisfaction on employees' performance.",
+      subtopics:"Personality traits, determinants of personality, job satisfaction, measuring job satisfaction"},
+
+    {title:"Unit 5: Organizational Conflict and Stress", notBuilt:true, lh:3,
+      desc:"Conflict: concept, nature and types; sources of conflict; approaches to conflict management; resolving conflict through negotiation; functional and dysfunctional conflicts; organizational stress: concept, causes and managing stress.",
+      subtopics:"Conflict types, sources of conflict, conflict management, negotiation, organizational stress"},
+
+    {title:"Unit 6: Organizational Change and Development", notBuilt:true, lh:3,
+      desc:"Concept and forces of change; resistance to change; approaches to managing organizational change (Lewin's three-steps model); organizational development (OD): concept and features of OD.",
+      subtopics:"Forces of change, resistance to change, Lewin's model, organization development"},
+
+    {title:"Unit 7: Introduction to Leadership", notBuilt:true, lh:4,
+      desc:"Understanding leaders and leadership; leaders and managers; leadership effectiveness; attributes of effective leaders; developing leadership skills; pre-requisites of organizational leaders; leadership taxonomy; current issues in leadership.",
+      subtopics:"Leaders vs managers, leadership effectiveness, attributes of effective leaders, current issues in leadership"},
+
+    {title:"Unit 8: Theories of Effective Leadership & Contemporary Leadership Styles", notBuilt:true, lh:6,
+      desc:"Contingency theories: Fiedler's contingency theory, cognitive resource theory, path goal theory, situational leadership theory and multiple linkage model; contemporary leadership styles: transactional leadership, transformational leadership, charismatic leadership, value-based leadership, spiritual and servant leadership, boundary spanning & team leadership.",
+      subtopics:"Fiedler's contingency theory, path-goal theory, situational leadership, transactional/transformational leadership, charismatic leadership, servant leadership"},
+
+    {title:"Unit 9: Leadership Behavior and Leadership Development", notBuilt:true, lh:2,
+      desc:"Concept of leader behaviors: supportive, directive, participative; professional development to leaders: coaching, mentoring, counselling; leadership development mechanisms: recruitment, training & learning, delegation, mentoring, experiential learning, 360-degree appraisal.",
+      subtopics:"Leader behaviors, coaching/mentoring, leadership development mechanisms, 360-degree appraisal"}
+  ]
+};
+
+/* ---------------------------------------------------------------------------
+   NOTES — Unit 1
+--------------------------------------------------------------------------- */
+window.SUBJECT_NOTES["mgt232"] = window.SUBJECT_NOTES["mgt232"] || {};
+window.SUBJECT_NOTES["mgt232"]["0"] = `<p><strong>Syllabus scope (6 lecture hours):</strong> Concept of organizational behavior; levels of OB analysis; organizational behavior system; basic assumptions of organizational behavior; contributing disciplines to the field of organizational behavior; individual behavior as an input-output system; mental process — beliefs, attitudes, values, needs, motives and behavior; emotions and cognitive dissonance; new challenges for manager in OB.</p>
+<hr />
+<h2>1.1 Concept of Organizational Behavior</h2>
+<p>Organizational behavior (OB) is concerned with two basic issues (Arnold &amp; Feldman, p.3–4):</p>
+<ol>
+<li><strong>How organizations influence their members</strong> — the way an organization is set up and managed shapes how its members see the world, how they feel about their jobs and themselves, and how they behave in carrying out their duties.</li>
+<li><strong>How members influence organizations</strong> — the behavior and performance of individual members in turn determines whether the organization succeeds in meeting its goals.</li>
+</ol>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-issues">
+  <h3>Two basic issues of organizational behavior</h3>
+  <p class="dgm-sub">a two-way relationship, not a one-way effect</p>
+  <svg viewBox="0 0 380 170" role="img" aria-label="Organizations influence members, and members influence organizations back">
+    <rect x="10" y="16" width="150" height="44" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.6"/>
+    <text class="tb" x="85" y="43" text-anchor="middle">ORGANIZATIONS</text>
+    <text class="ts" x="220" y="30" text-anchor="middle">how do they influence…</text>
+    <line class="ax" x1="160" y1="38" x2="270" y2="38" marker-end="url(#mgt232u1a)"/>
+    <rect x="270" y="16" width="100" height="44" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="tb" x="320" y="43" text-anchor="middle">MEMBERS?</text>
+    <rect x="10" y="110" width="150" height="44" rx="6" fill="rgba(184,68,42,.13)" stroke="#B8442A" stroke-width="1.6"/>
+    <text class="tb" x="85" y="137" text-anchor="middle">MEMBERS</text>
+    <text class="ts" x="220" y="124" text-anchor="middle">how do they influence…</text>
+    <line class="ax" x1="160" y1="132" x2="270" y2="132" marker-end="url(#mgt232u1a)"/>
+    <rect x="270" y="110" width="100" height="44" rx="6" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="tb" x="320" y="137" text-anchor="middle">ORGANIZATIONS?</text>
+    <defs><marker id="mgt232u1a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>OB studies both directions at once: how the organization shapes its members' thoughts, feelings and actions, and how members' behavior/performance in turn shapes whether the organization succeeds.</p></figcaption>
+</figure></div>
+<p><strong>Three characteristics shared by all organizations</strong> (p.4–5) — private firms, schools, hospitals, government agencies and voluntary organizations alike:</p>
+<ol>
+<li><strong>Composed of individuals and groups.</strong> It is people, not buildings or technology, who <em>are</em> the organization.</li>
+<li><strong>Oriented toward the achievement of goals.</strong> A group of people shares a goal they cannot accomplish alone — creating products, providing services, educating, healing.</li>
+<li><strong>Employ specialization and coordination to accomplish their goals.</strong> No single person can perform every function, so work is divided among specialists — but the organization then needs some means of coordinating those specialized activities, or the result is chaos rather than a working whole.</li>
+</ol>
+
+<h2>1.2 Organizational Behavior System</h2>
+<p>Beyond the definition above, it helps to think of an organization as a <strong>system of interdependent parts</strong> that interact with one another and with the wider environment — the <em>systems view</em> (p.5–7).</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-systems">
+  <h3>Systems view of organizations</h3>
+  <p class="dgm-sub">people · technology · tasks · structure, all interdependent</p>
+  <svg viewBox="0 0 380 210" role="img" aria-label="Inputs flow into a transformation process containing people, technology, tasks and structure, which produces outputs">
+    <text class="tb" x="35" y="40" text-anchor="middle">INPUTS</text>
+    <line class="ax" x1="60" y1="46" x2="95" y2="46" marker-end="url(#mgt232u1b)"/>
+    <rect x="95" y="10" width="190" height="150" rx="10" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/>
+    <text class="ts" x="190" y="26" text-anchor="middle">TRANSFORMATION PROCESS</text>
+    <rect x="150" y="36" width="80" height="26" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="190" y="53" text-anchor="middle">People</text>
+    <rect x="108" y="76" width="80" height="26" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="148" y="93" text-anchor="middle">Technology</text>
+    <rect x="192" y="76" width="80" height="26" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="232" y="93" text-anchor="middle">Tasks</text>
+    <rect x="150" y="116" width="80" height="26" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/>
+    <text class="t" x="190" y="133" text-anchor="middle">Structure</text>
+    <line class="gd" x1="190" y1="62" x2="190" y2="76"/><line class="gd" x1="190" y1="102" x2="190" y2="116"/>
+    <line class="gd" x1="148" y1="89" x2="188" y2="60"/><line class="gd" x1="232" y1="89" x2="192" y2="60"/>
+    <line class="ax" x1="285" y1="85" x2="320" y2="85" marker-end="url(#mgt232u1b)"/>
+    <text class="tb" x="352" y="90" text-anchor="middle">OUTPUTS</text>
+    <defs><marker id="mgt232u1b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>People employ technology in performing the tasks they are responsible for, while structure coordinates all their activities — each element depends on all the others. The organization draws inputs (people, raw materials, money, ideas) from its environment and transforms them into outputs (products/services) the environment must be willing to accept.</p>
+  <div class="dgm-marks"><b>Label to earn marks</b>Inputs and outputs as arrows crossing the organizational boundary; the four interdependent internal elements; the two-way dependence on the environment.</div></figcaption>
+</figure></div>
+<p>An organization that cannot attract the inputs it needs, or whose outputs nobody wants, declines rapidly — the book's own example is Chrysler in the early 1980s, which nearly went out of existence because people no longer wanted the types of cars it was making (p.6–7). <strong>Take-away for managers:</strong> interdependencies must be actively managed both <em>within</em> the organization and <em>between</em> the organization and its environment.</p>
+
+<h2>1.3 Levels of OB Analysis and Contributing Disciplines</h2>
+<p>Organizational behavior can be studied from three distinct — but complementary — levels of analysis (p.7–9), each drawing on its own parent discipline:</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-levels">
+  <h3>Three levels of analysis in OB</h3>
+  <p class="dgm-sub">each level draws on a different contributing discipline</p>
+  <svg viewBox="0 0 380 200" role="img" aria-label="Individual level draws on psychology, group level draws on social psychology, organization level draws on sociology">
+    <rect x="10" y="8" width="150" height="46" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.5"/>
+    <text class="tb" x="85" y="30" text-anchor="middle">THE INDIVIDUAL</text>
+    <text class="ts" x="85" y="46" text-anchor="middle">tasks in pursuit of goals</text>
+    <line class="ax" x1="160" y1="31" x2="250" y2="31" marker-end="url(#mgt232u1c)"/>
+    <text class="tb" x="310" y="35" text-anchor="middle">Psychology</text>
+    <rect x="10" y="76" width="150" height="46" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.5"/>
+    <text class="tb" x="85" y="98" text-anchor="middle">THE GROUP</text>
+    <text class="ts" x="85" y="114" text-anchor="middle">teams, committees, depts.</text>
+    <line class="ax" x1="160" y1="99" x2="250" y2="99" marker-end="url(#mgt232u1c)"/>
+    <text class="tb" x="310" y="103" text-anchor="middle">Social psychology</text>
+    <rect x="10" y="144" width="150" height="46" rx="6" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.5"/>
+    <text class="tb" x="85" y="166" text-anchor="middle">THE ORGANIZATION</text>
+    <text class="ts" x="85" y="182" text-anchor="middle">the whole organization (macro)</text>
+    <line class="ax" x1="160" y1="167" x2="250" y2="167" marker-end="url(#mgt232u1c)"/>
+    <text class="tb" x="310" y="171" text-anchor="middle">Sociology</text>
+    <defs><marker id="mgt232u1c" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>These three perspectives are not in conflict but complementary — a full understanding of organizations requires blending knowledge derived from all three (p.9).</p></figcaption>
+</figure></div>
+<table><thead><tr><th>Level</th><th>Focus</th><th>Contributing discipline</th></tr></thead><tbody>
+<tr><td><strong>The individual</strong></td><td>Individual members working on tasks in pursuit of the organization's goals — attitudes, beliefs, perceptions, personalities and their effect on behavior/performance.</td><td>Psychology</td></tr>
+<tr><td><strong>The group</strong></td><td>Interaction among members as they work in teams, committees, task forces and departments — cohesiveness, productivity, leadership's effect on members.</td><td>Social psychology</td></tr>
+<tr><td><strong>The organization</strong></td><td>The organization as a whole (the <em>macro</em> perspective) — relationship with its environment, how structure/design affect effectiveness, technology, size, age.</td><td>Sociology</td></tr>
+</tbody></table>
+
+<h2>1.4 Basic Assumptions of Organizational Behavior</h2>
+<p>⚠ The syllabus names this as its own sub-topic, but the source book presents the same content as the three characteristics of organizations above (§1.1, p.4–5) rather than under a separate "assumptions" heading. Restated explicitly as assumptions:</p>
+<ol>
+<li><strong>OB assumes organizations exist through their people</strong> — not through buildings, technology or products, which are simply what people use and create.</li>
+<li><strong>OB assumes all organizational activity is goal-directed</strong> — behavior in an organization is never random; it happens in the service of some shared goal the organization was created to pursue.</li>
+<li><strong>OB assumes coordinated specialization, not isolated individual effort, produces organizational outcomes</strong> — which is exactly why understanding how individuals, groups and the organization as a whole <em>behave</em> matters to effective management, not just what tasks are assigned on paper.</li>
+<li><strong>OB assumes behavior in organizations can be systematically studied and influenced</strong> — the field rests on the premise that individual, group and organizational behavior follow identifiable patterns explainable by theory (psychology, social psychology, sociology), and that managers can use this understanding to improve both employee well-being and organizational effectiveness (p.9, p.13).</li>
+</ol>
+
+<h2>1.5 Individual Behavior as an Input–Output System</h2>
+<p>The book models individual behavior itself as the product of a set of "input" factors, with individual performance and effectiveness as further downstream "outputs" (Fig. 2-1, p.24) — this is the "individual behavior as an input-output system" the syllabus names.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm" data-dgm="mgt232-u1-model">
+  <h3>Determinants of individual behavior, performance and effectiveness</h3>
+  <p class="dgm-sub">five inputs → behavior → performance → effectiveness</p>
+  <svg viewBox="0 0 380 260" role="img" aria-label="Five factors combine to form individual behavior, which becomes performance when judged against job requirements, which becomes effectiveness when judged against standards">
+    <rect x="4" y="6" width="86" height="30" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="ts" x="47" y="25" text-anchor="middle">Motivation</text>
+    <rect x="4" y="42" width="86" height="30" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="ts" x="47" y="61" text-anchor="middle">Ability</text>
+    <rect x="4" y="78" width="86" height="30" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="ts" x="47" y="97" text-anchor="middle">Perception</text>
+    <rect x="4" y="114" width="86" height="30" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="ts" x="47" y="133" text-anchor="middle">Personality</text>
+    <rect x="4" y="150" width="86" height="40" rx="5" fill="rgba(31,95,168,.13)" stroke="#1F5FA8" stroke-width="1.4"/><text class="ts" x="47" y="167" text-anchor="middle">Org. systems</text><text class="ts" x="47" y="180" text-anchor="middle">&amp; resources</text>
+    <circle cx="155" cy="98" r="38" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="t" x="155" y="94" text-anchor="middle">Individual</text><text class="t" x="155" y="108" text-anchor="middle">Behavior</text>
+    <line class="gd" x1="90" y1="21" x2="122" y2="80"/><line class="gd" x1="90" y1="57" x2="128" y2="90"/><line class="gd" x1="90" y1="93" x2="120" y2="98"/><line class="gd" x1="90" y1="129" x2="128" y2="106"/><line class="gd" x1="90" y1="170" x2="122" y2="116"/>
+    <rect x="220" y="30" width="66" height="30" rx="5" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.2"/><text class="ts" x="253" y="49" text-anchor="middle">Job reqts</text>
+    <line class="ax" x1="253" y1="60" x2="253" y2="88"/>
+    <circle cx="253" cy="118" r="30" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="ts" x="253" y="114" text-anchor="middle">Individual</text><text class="ts" x="253" y="126" text-anchor="middle">Performance</text>
+    <line class="ax" x1="193" y1="103" x2="224" y2="112" marker-end="url(#mgt232u1d)"/>
+    <rect x="316" y="30" width="60" height="30" rx="5" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.2"/><text class="ts" x="346" y="49" text-anchor="middle">Standards</text>
+    <line class="ax" x1="346" y1="60" x2="346" y2="88"/>
+    <circle cx="346" cy="118" r="28" fill="#fbfbf9" stroke="#d6d4cc" stroke-width="1.4"/><text class="ts" x="346" y="114" text-anchor="middle">Individual</text><text class="ts" x="346" y="126" text-anchor="middle">Effectiveness</text>
+    <line class="ax" x1="283" y1="118" x2="316" y2="118" marker-end="url(#mgt232u1d)"/>
+    <defs><marker id="mgt232u1d" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5A6577"/></marker></defs>
+  </svg>
+  <figcaption><p>Five sets of "input" factors combine to produce individual behavior, which becomes individual performance once judged against job requirements, which becomes individual effectiveness once judged against standards of performance (p.24–25).</p>
+  <div class="dgm-marks"><b>Label to earn marks</b>All five determinants named; the behavior→performance→effectiveness chain; that performance needs job requirements and effectiveness needs a standard of comparison.</div></figcaption>
+</figure></div>
+<ol>
+<li><strong>Motivation</strong> — a person's attitudes, beliefs, values, needs and goals (detailed in §1.6 below).</li>
+<li><strong>Ability</strong> — the actual skills and capacities a person possesses (aptitude + learning opportunities via training/experience).</li>
+<li><strong>Perception</strong> — the way a person receives messages and interprets information; behavior is driven by <em>perceived</em>, not actual, organizational expectations.</li>
+<li><strong>Personality</strong> — a person's traits and characteristics (sociability, dominance, aggressiveness, persistence, etc.).</li>
+<li><strong>Organizational systems and resources</strong> — leadership, reward systems, facilities and structure supplied by the organization itself.</li>
+</ol>
+<p><strong>Key distinction:</strong> <em>behavior</em> is simply what a person does; whether that behavior counts as <em>performance</em> depends on what the organization's job requirements demand of the person; whether that performance counts as <em>effective</em> depends on a standard of comparison. Two people can behave almost identically, yet if their jobs demand different things, one may be performing effectively and the other not (p.23–24).</p>
+
+<h2>1.6 Mental Process: Beliefs, Attitudes, Values, Needs, Motives and Behavior</h2>
+<p>This is the "Motivation" building block from §1.5, expanded (Fig. 2-2, p.27; pp.26–30):</p>
+<ul>
+<li><strong>Attitudes</strong> — the way a person feels about, and is disposed to act towards, some "object" (a physical object, a person, a group, or an abstract entity). An attitude captures both how a person feels about the object and how they are disposed to act toward it. Attitudes and behavior are linked but not perfectly — people sometimes act inconsistently with their stated attitudes.</li>
+<li><strong>Beliefs</strong> — affect motivation in two ways: (1) people must believe they are capable of performing the behaviors the organization expects, and (2) they must believe performing well will have positive personal consequences. Beliefs may be inaccurate, but a person still acts on them as if they were true. Beliefs about one's own effective performance are shaped by self-esteem, communications from others, past experience, personality and the actual situation (Fig. 2-3, p.28).</li>
+<li><strong>Values</strong> — influence motivation in two ways: (1) the general types of activities a person finds appealing, and (2) motivation to obtain specific outcomes (money, promotion, prestige). Value patterns differ across occupational groups, across departments within one organization (sales vs. manufacturing vs. research), and across hierarchical levels.</li>
+<li><strong>Needs</strong> — a person's motivation is driven by the need to satisfy various wants, from basic physiological needs to complex needs for friendship, self-esteem and personal achievement. A sample of specific needs studied in OB (Table 2-1, p.30–31): <em>achievement, affiliation, aggression, autonomy, endurance, exhibition, harm avoidance, impulsivity, nurturance, order, power, succorance, understanding.</em></li>
+<li><strong>Motives</strong> — the term the syllabus uses alongside "needs"; a <em>motive</em> is the internal drive generated by an unmet need that pushes a person toward the behavior expected to satisfy it. Needs and motives are two sides of the same coin: a need is the underlying state of deficiency or desire, a motive is the resulting impulse to act.</li>
+<li><strong>Goals</strong> — influence motivation in two ways: (1) a goal gives a person a target to aim for, generating motivation to close the gap; (2) a goal provides the standard against which a person can judge how well they are doing. Research shows goals only influence motivation when they are <strong>specific</strong>, <strong>sufficiently difficult</strong> to be challenging, and <strong>accepted</strong> by the person as their own (p.29–30).</li>
+<li><strong>Behavior</strong> — the observable outcome of all of the above acting together (§1.5's model): motivation combines with ability, perception, personality and organizational systems/resources to produce the behavior a person actually engages in.</li>
+</ul>
+
+<h2>1.7 Emotions and Cognitive Dissonance</h2>
+<p><strong>Cognitive dissonance</strong> (p.167, "Dissonant Information") is the psychological discomfort that arises when a person receives information that is inconsistent — <em>dissonant</em> — with beliefs they already hold. People cope with dissonant information in one of four typical ways:</p>
+<ol>
+<li><strong>Avoid exposure to it</strong> — e.g. stop reading an article or turn off a broadcast presenting the dissonant information.</li>
+<li><strong>Reject its validity</strong> — question the credibility of the source, or the methodology behind the information.</li>
+<li><strong>Forget it quickly</strong> — dissonant messages are more easily forgotten soon after being received than consonant ones.</li>
+<li><strong>Distort the information in memory</strong> — over time, people's recollection of dissonant information tends to drift to become less threatening.</li>
+</ol>
+<p>Cognitive dissonance explains a very practical managerial problem: why it is so difficult to get employees to accept negative performance feedback as accurate. Employees may block out the bad news, question the manager's motives, or misremember the criticism afterward — so most negative feedback ends up being discounted by the person who received it (p.167).</p>
+<p>⚠ <strong>Emotions:</strong> this 1986 edition of the primary text does not treat "emotions" as a separate, named topic the way modern OB texts do (affect, mood, emotional labor became prominent in the field from the 1990s onward) — the book folds emotional reactions into attitudes, job satisfaction and communication. For exam completeness: <strong>emotions</strong> are short-term, intense affective states (e.g. anger, joy, frustration) as distinct from the longer-lasting evaluative judgments captured by attitudes; emotions matter for OB because they shape how a message is received (an already-angry person is more likely to react defensively, linking to the causes of defensive communication above), how decisions are made under stress, and how consistently a person behaves from one situation to the next.</p>
+
+<h2>1.8 New Challenges for Manager in OB</h2>
+<p>⚠ Entirely original content — a 1986 textbook cannot describe challenges that didn't yet exist in the modern form the syllabus implies. Current, exam-relevant "new challenges" facing managers of organizational behavior:</p>
+<ul>
+<li><strong>Workforce diversity and inclusion</strong> — managing employees who differ by gender, ethnicity, age, ability and cultural background fairly and productively, and building an inclusive culture rather than assuming a single "standard" employee profile.</li>
+<li><strong>Technology, automation and remote/hybrid work</strong> — digital communication tools, automation and AI change <em>how</em> work gets done and how managers observe, coordinate and motivate employees they may rarely see in person.</li>
+<li><strong>Globalization and cross-cultural management</strong> — organizations increasingly operate across national and cultural boundaries, requiring managers to adapt leadership and communication style to different cultural expectations (background relevant to Unit 7's "Introduction to leadership").</li>
+<li><strong>The changing nature of employment</strong> — the rise of contract, gig and flexible work arrangements changes how organizations build commitment and coordinate people who are not full-time, co-located employees.</li>
+<li><strong>Employee well-being and mental health</strong> — rising recognition that stress, burnout and work–life balance directly affect performance and retention (links forward to Unit 5's "Organizational stress").</li>
+<li><strong>Managing a multi-generational workforce</strong> — organizations now often employ four generations side by side, each with different expectations about communication style, authority and career progression.</li>
+</ul>`;
+
+/* ---------------------------------------------------------------------------
+   MCQ QUIZ BANK — Unit 1 (46 questions, answer positions A/B/C/D = 12/11/11/12, longest run 1)
+--------------------------------------------------------------------------- */
+window.SUBJECT_QUIZ["mgt232"] = window.SUBJECT_QUIZ["mgt232"] || {};
+window.SUBJECT_QUIZ["mgt232"]["0"] = [
+  {q:"Organizational behavior is concerned with two basic issues: how organizations influence their members, and:", o:["how members in turn influence organizations","how organizations influence government policy","how organizations influence their competitors","how organizations influence their environment"], a:0, w:3,
+   why:"OB's two basic issues (Arnold & Feldman, p.3–4) are: how organizations influence members, and how members' behavior and performance influence the organization."},
+  {q:"Which of the following is NOT one of the three characteristics shared by all organizations?", o:["Composed of individuals and groups","Guaranteed lifetime employment for members","Oriented toward the achievement of goals","Employ specialization and coordination"], a:1, w:2,
+   why:"The three characteristics (p.4–5) are: composed of individuals/groups; goal-oriented; use specialization and coordination. Lifetime employment is not one of them."},
+  {q:"\"It is people who are the organization, not the building it occupies\" illustrates which characteristic of organizations?", o:["Systems interdependence","Specialization and coordination","Composed of individuals and groups","Goal orientation"], a:2, w:2,
+   why:"This illustrates 'composed of individuals and groups' (p.4) — people are the organization; buildings and technology are simply what people use."},
+  {q:"Educational institutions, hospitals and private firms are all organizations because each:", o:["earns a profit","is legally registered as a company","has a formal HR department","exists to pursue some shared goal"], a:3, w:2,
+   why:"All organizations are goal-oriented (p.4) — schools educate, hospitals heal, firms create products/services. Profit and legal form are not universal."},
+  {q:"Why do organizations need coordination once work has been divided among specialists?", o:["To reduce total headcount","Without it, specialized activities would be uncoordinated and potentially chaotic","To eliminate the need for a manager","To increase employee turnover"], a:1, w:2,
+   why:"Specialization requires some coordinating mechanism, or the organization would just be individuals/groups performing separate functions chaotically (p.5)."},
+  {q:"In the systems view of organizations, people, technology, tasks and structure are best described as:", o:["outputs of the organization","components of the external environment","interdependent elements within the transformation process","standards of performance"], a:2, w:3,
+   why:"Fig. 1-2 (p.6) places people/technology/tasks/structure inside the transformation process, all interdependent with one another."},
+  {q:"In the systems view, an automobile manufacturer taking in labor, steel and production techniques is an example of the organization receiving:", o:["feedback loops","standards of performance","outputs","inputs"], a:3, w:2,
+   why:"Raw materials, labor and techniques are drawn from the environment — these are inputs (p.6), transformed into outputs (finished cars)."},
+  {q:"According to the systems view, what happens to an organization whose outputs nobody wants?", o:["It rapidly declines and may go out of existence","It automatically restructures itself","Its inputs increase to compensate","Nothing, since outputs don't affect survival"], a:0, w:3,
+   why:"The book's own example is Chrysler in the early 1980s, which nearly failed because people no longer wanted the cars it made (p.6–7)."},
+  {q:"The systems view emphasizes that organizations must manage interdependencies:", o:["only within the organization, not with the environment","only with the environment, not within the organization","both within the organization and with its broader environment","only at the individual level of analysis"], a:2, w:2,
+   why:"Systems view stresses interdependence both among internal elements and between the organization and its environment (p.7)."},
+  {q:"Which level of analysis in OB focuses on individual organization members working on tasks in pursuit of goals?", o:["The industry level","The organization level","The group level","The individual level"], a:3, w:2,
+   why:"The individual level of analysis (p.7) looks at individuals working toward the organization's goals."},
+  {q:"The individual level of analysis in OB draws most heavily on which discipline?", o:["Psychology","Sociology","Anthropology","Economics"], a:0, w:3,
+   why:"Psychologically based theories of learning, motivation, satisfaction and leadership underpin the individual level of analysis (p.7)."},
+  {q:"The group level of analysis in OB (teams, committees, task forces) draws most heavily on:", o:["Financial accounting","Social psychology","Political science","Operations research"], a:1, w:3,
+   why:"The group level draws on knowledge and theories from social psychology (p.7–8)."},
+  {q:"A 'macro' perspective that studies the organization as a whole and its relationship with its environment draws most heavily on:", o:["Marketing","Psychology","Engineering","Sociology"], a:3, w:3,
+   why:"The organization level of analysis is a macro perspective drawing heavily on sociology (p.9)."},
+  {q:"The three levels of analysis in OB (individual, group, organization) are best described as:", o:["complementary, each contributing unique insights","mutually exclusive and in conflict","irrelevant to management practice","only applicable to large multinational firms"], a:0, w:2,
+   why:"The book stresses these perspectives are complementary, not in conflict — a full understanding blends all three (p.9)."},
+  {q:"Which is a basic assumption of organizational behavior, according to the way the field is framed?", o:["Behavior in organizations is random and cannot be studied","Organizational activity is goal-directed and can be systematically studied and influenced","Only top managers' behavior matters for effectiveness","Individual behavior has no effect on organizational outcomes"], a:1, w:2,
+   why:"OB rests on the assumption that individual, group and organizational behavior follow identifiable, studiable patterns that managers can use to improve effectiveness."},
+  {q:"An assumption underlying OB is that organizations exist through:", o:["their advertising budget","their legal registration","their people, not buildings or technology","their physical assets"], a:2, w:1,
+   why:"Buildings and technology are simply what people use; it is people who constitute the organization (p.4)."},
+  {q:"In the model of individual behavior determinants (Fig. 2-1), which factor concerns the way a person receives messages and interprets information?", o:["Perception","Ability","Personality","Organizational systems and resources"], a:0, w:3,
+   why:"Perception (p.24–25) concerns receiving and interpreting messages/information; behavior depends on perceived, not actual, expectations."},
+  {q:"Which factor in the model of individual behavior refers to a person's skills and capacities required for effective job performance?", o:["Motivation","Ability","Perception","Personality"], a:1, w:2,
+   why:"Ability (p.25) is the actual skills and capacities a person possesses and that are required for effective performance."},
+  {q:"'Organizational systems and resources' as a determinant of individual behavior includes:", o:["a person's perceptual accuracy","a person's attitudes toward the job","leadership, rewards, facilities and structure","a person's aptitude for music"], a:2, w:2,
+   why:"Organizational systems and resources (p.25) covers leadership, reward systems, facilities and structure supplied by the organization."},
+  {q:"'Behavior' becomes 'performance' when it is judged against:", o:["the person's personality traits","the person's personal goals only","industry-wide averages","the organization's job requirements"], a:3, w:3,
+   why:"Whether behavior counts as performance depends on what the organization's job requires or demands of the person (p.23–24)."},
+  {q:"'Performance' becomes 'effectiveness' only when compared against:", o:["the size of the organization","a standard of performance","a competitor's performance","the person's own past behavior only"], a:1, w:2,
+   why:"Effective performance requires some standard of comparison (p.24) — Fig. 2-1 shows 'standards of performance' feeding into individual effectiveness."},
+  {q:"Two employees behave almost identically, but only one is judged to be performing effectively. The most likely explanation is:", o:["their perceptions were identical","one of them has a better personality","their jobs demand different types of behavior","one of them has higher ability only"], a:2, w:3,
+   why:"Whether behavior is 'performance' depends on what each person's specific job requires — identical behavior can be effective for one job and not another (p.23–24)."},
+  {q:"An attitude, as defined in the mental-process model, captures:", o:["only how a person feels about an object","only how a person is disposed to act toward an object","a person's basic built-in capacity for an activity","both how a person feels and how they are disposed to act toward an object"], a:3, w:3,
+   why:"An attitude refers to how a person feels about, and is disposed to act toward, some object (p.26) — both dimensions together."},
+  {q:"A person who says one thing about an object but behaves inconsistently with that stated attitude shows that:", o:["attitudes are linked to behavior but not the only influence on it","attitudes have no link to behavior at all","attitude is the ONLY factor influencing behavior","the person has no attitude toward the object"], a:0, w:2,
+   why:"Attitudes are linked to behavior but people sometimes act inconsistently with them; other factors also shape behavior (p.26)."},
+  {q:"Beliefs affect motivation in two ways: people must believe effective performance is possible for them, and they must believe:", o:["that the job requires no training","that the organization is profitable","that performing well leads to positive personal consequences","that their manager is likeable"], a:2, w:3,
+   why:"Beliefs shape motivation via (1) belief that performance is possible, and (2) belief that good performance brings positive personal outcomes (p.26–27)."},
+  {q:"If an employee INCORRECTLY believes they are incapable of performing a task, their motivation will be:", o:["automatically corrected by the organization","unaffected, since the belief is wrong","higher than average","still very low, because people act on their beliefs regardless of accuracy"], a:3, w:3,
+   why:"Even an incorrect belief still serves as the basis for the person's motivation and actions (p.27)."},
+  {q:"According to Fig. 2-3, which of the following influences a person's beliefs about effective performance?", o:["Self-esteem, communications from others, and past experience","Only company policy documents","Only the person's age","Only the size of the organization"], a:0, w:2,
+   why:"Fig. 2-3 (p.28) lists self-esteem, communications from others, past experience, personality, and the actual situation as influencing beliefs about performance."},
+  {q:"Values influence motivation by shaping:", o:["only a person's physical aptitude","the types of activities a person finds appealing, and motivation for specific outcomes like pay or promotion","only a person's memory ability","the organization's structure directly"], a:1, w:2,
+   why:"Values influence (1) which activities a person finds appealing, and (2) motivation to obtain specific outcomes such as money, promotion, prestige (p.28)."},
+  {q:"Value patterns among employees are likely to differ:", o:["not at all within a single organization","only between different countries","only for employees over 50","across departments (e.g., sales vs. research) and hierarchical levels within one organization"], a:3, w:2,
+   why:"The book notes value patterns can differ across departments and hierarchical levels even within a single organization (p.28)."},
+  {q:"A need for 'affiliation' (Table 2-1) is characterized by:", o:["enjoying being with friends, accepting people readily, maintaining friendships","enjoying combat and argument","trying to break away from restraints and obligations","wanting to be the center of attention"], a:0, w:2,
+   why:"Affiliation (Table 2-1, p.30) = enjoys being with friends/people, makes efforts to win and maintain friendships."},
+  {q:"A need for 'autonomy' (Table 2-1) is characterized by:", o:["a strong drive to be the center of attention","trying to break away from restraints, confinement or obligations","seeking sympathy and reassurance from others","willingness to work long hours without giving up"], a:1, w:2,
+   why:"Autonomy (Table 2-1, p.30) = tries to break away from restraints/confinement, enjoys being unattached and free, may be rebellious when restrained."},
+  {q:"In the framework of motivation, a 'motive' is best understood as:", o:["identical to a personality trait","a synonym for organizational structure","the internal drive generated by an unmet need that pushes a person toward satisfying behavior","unrelated to needs"], a:2, w:1,
+   why:"A motive is the impulse to act generated by a need; needs and motives are two sides of the same coin."},
+  {q:"For a goal to actually influence a person's motivation, research shows it must be:", o:["specific, sufficiently difficult, and accepted by the person","assigned without the person's input","vague and easy","identical across every employee"], a:0, w:3,
+   why:"Goals influence motivation only when specific, sufficiently difficult to be challenging, AND accepted by the person as their own (p.29–30)."},
+  {q:"If a manager tells an employee 'your goal is X' but the employee never accepts it as their own goal, motivation will be:", o:["very high regardless","weak, because unaccepted goals don't motivate","guaranteed to succeed","unaffected by acceptance"], a:1, w:2,
+   why:"A goal has to be accepted as the person's own goal to motivate them (p.30) — 'if my boss tells me my goal is X, that goal won't motivate me unless I accept it as my own.'"},
+  {q:"Goals influence motivation by providing a target to aim for, and also by:", o:["eliminating the need for perception","reducing the need for ability","providing a standard for assessing how well a person is doing","replacing the need for organizational resources"], a:2, w:2,
+   why:"Goals serve two functions: generating motivation toward a target, and providing a standard of comparison for judging progress (p.29)."},
+  {q:"Cognitive dissonance refers to the psychological discomfort that arises when a person receives information that is:", o:["identical to what they already believe","presented only in writing","irrelevant to their job","inconsistent (dissonant) with beliefs they already hold"], a:3, w:3,
+   why:"Cognitive dissonance is the discomfort from dissonant information — information inconsistent with existing beliefs (p.167)."},
+  {q:"Which is NOT one of the four typical reactions to dissonant information?", o:["Avoid exposure to it","Immediately and permanently accept it as true","Distort it in memory over time","Reject its validity"], a:1, w:2,
+   why:"The four reactions (p.167) are: avoid exposure, reject validity, forget it quickly, distort it in memory — NOT immediate full acceptance."},
+  {q:"Cognitive dissonance helps explain why employees often:", o:["forget positive feedback only","eagerly seek out negative feedback","discount or distort negative performance feedback from managers","never remember any feedback at all"], a:2, w:3,
+   why:"Because negative feedback is dissonant with a person's self-image, employees tend to block it out, question its source, or distort it in memory (p.167)."},
+  {q:"'Reject its validity' as a reaction to dissonant information typically involves:", o:["seeking out more of the same information","forgetting the information within minutes","accepting the source as fully credible","questioning the credibility of the source or the methodology behind the information"], a:3, w:2,
+   why:"Rejecting validity means the receiver questions the credibility of the source or research methodology behind dissonant information (p.167)."},
+  {q:"Over time, a person's memory of dissonant information tends to:", o:["distort to become less threatening","become more accurate","stay perfectly unchanged","transfer automatically to co-workers"], a:0, w:1,
+   why:"'Distort the information in memory' — over time recollection tends to drift to become less threatening (p.167)."},
+  {q:"Emotions, as distinguished from attitudes in this course's framing, are best described as:", o:["identical in meaning to personality traits","long-lasting evaluative judgments","short-term, intense affective states such as anger or frustration","irrelevant to how messages are received"], a:2, w:2,
+   why:"⚠ Original framing (not in the 1986 source book, which doesn't treat emotion as a separate topic): emotions are short-term intense affective states, distinct from the longer-lasting evaluative judgments captured by attitudes."},
+  {q:"An employee who is already angry is more likely to react to a message:", o:["with improved long-term memory of it","by immediately accepting it as true","with complete objectivity","defensively"], a:3, w:1,
+   why:"⚠ Emotional state affects how a message is received — an already-angry person is more prone to a defensive reaction."},
+  {q:"Which of the following is a genuine 'new challenge' facing managers of organizational behavior today?", o:["Managing workforce diversity, remote/hybrid work, and a multi-generational workforce","Managing a workforce that is entirely co-located and single-generation","The complete disappearance of organizational structure","The irrelevance of employee well-being to performance"], a:0, w:2,
+   why:"⚠ Original content (not in the 1986 book): real new challenges include diversity & inclusion, remote/hybrid and gig work, globalization, and managing multiple generations at once."},
+  {q:"The rise of contract, gig and flexible work arrangements is described in this course as a challenge because it:", o:["makes commitment and coordination easier for managers","changes how organizations build commitment and coordinate people who aren't full-time co-located employees","has no effect on organizational behavior","only affects government organizations"], a:1, w:1,
+   why:"⚠ Flexible/gig work changes how commitment and coordination are managed when people are not traditional full-time, co-located employees."},
+  {q:"Globalization is a relevant 'new challenge' for OB because it requires managers to:", o:["only hire employees from one country","ignore cultural differences entirely","eliminate cross-cultural teams","adapt leadership and communication style to different cultural expectations"], a:3, w:1,
+   why:"⚠ Cross-cultural management requires adapting style to different cultural expectations — background relevant to leadership (Unit 7)."},
+  {q:"Employee well-being and mental health are increasingly recognized as important managerial concerns because:", o:["stress and burnout directly affect performance and retention","only senior managers experience stress","they have no measurable effect on work outcomes","organizations cannot influence employee stress levels"], a:0, w:2,
+   why:"⚠ Recognition that stress/burnout affect performance and retention links forward to organizational stress (Unit 5)."}
+];
+
+/* ---------------------------------------------------------------------------
+   WRITTEN EXAM BANK — Unit 1 (12 brief / 8 short / 4 long; no real past-paper item
+   for this unit yet — the two real BBA papers focus on Units 2-9)
+--------------------------------------------------------------------------- */
+window.SUBJECT_EXAM["mgt232"] = window.SUBJECT_EXAM["mgt232"] || { units: {}, cases: [] };
+window.SUBJECT_EXAM["mgt232"].units["0"] = {
+  brief: [
+    {q:"Define organizational behavior in terms of its two basic issues.",
+     pts:["OB studies how organizations influence the thoughts, feelings and actions of their members","OB also studies how the behavior/performance of individual members influences the organization as a whole"]},
+    {q:"State the three characteristics shared by all organizations.",
+     pts:["Composed of individuals and groups","Oriented toward the achievement of goals","Employ specialization and coordination to accomplish their goals"]},
+    {q:"What are the four elements shown inside an organization's transformation process in the systems view?",
+     pts:["People","Technology","Tasks","Structure — all interdependent with one another"]},
+    {q:"Name the three levels of analysis used to study organizational behavior.",
+     pts:["The individual","The group","The organization (whole organization / macro level)"]},
+    {q:"Which discipline does each level of OB analysis draw most heavily upon?",
+     pts:["Individual level → psychology","Group level → social psychology","Organization level → sociology"]},
+    {q:"Distinguish between 'behavior', 'performance' and 'effectiveness' in the individual-behavior model.",
+     pts:["Behavior = what a person actually does","Performance = behavior judged against the organization's job requirements","Effectiveness = performance judged against a standard of comparison"]},
+    {q:"List the five determinants of individual behavior in Arnold & Feldman's model.",
+     pts:["Motivation","Ability","Perception","Personality","Organizational systems and resources"]},
+    {q:"What are the five components of individual motivation (the 'mental process')?",
+     pts:["Attitudes","Beliefs","Values","Needs","Goals"]},
+    {q:"State the two conditions a goal must meet, beyond being accepted, to influence motivation.",
+     pts:["It must be specific","It must be sufficiently difficult to be challenging"]},
+    {q:"Define cognitive dissonance.",
+     pts:["The psychological discomfort that arises when a person receives information inconsistent (dissonant) with beliefs they already hold"]},
+    {q:"List the four typical reactions people have to dissonant information.",
+     pts:["Avoid exposure to it","Reject its validity","Forget it quickly","Distort it in memory over time"]},
+    {q:"Give any two 'new challenges' facing managers of organizational behavior today.",
+     pts:["Any two of: workforce diversity & inclusion; technology/remote-hybrid work; globalization & cross-cultural management; gig/flexible work arrangements; employee well-being & mental health; multi-generational workforce"]}
+  ],
+  short: [
+    {q:"Explain the systems view of organizations, distinguishing inputs, transformation processes and outputs.",
+     pts:["Organizations are systems of interdependent parts (people, technology, tasks, structure) that also interact with the environment","Inputs: people, raw materials, money, ideas drawn from the environment","Transformation processes: the organization converts inputs into outputs","Outputs: products/services that the environment must be willing to accept — an organization whose outputs nobody wants will decline (e.g. Chrysler in the early 1980s)"]},
+    {q:"Explain why the three levels of analysis in OB (individual, group, organization) are described as complementary rather than conflicting.",
+     pts:["Each level generates unique insights not available from the other levels","Individual level explains why a single person behaves/performs a certain way (psychology)","Group level explains team/committee dynamics (social psychology)","Organization level explains structure/environment fit (sociology)","A full understanding of organizations requires blending knowledge from all three"]},
+    {q:"Using the model of individual behavior determinants, explain why two employees behaving almost identically may not both be judged as performing effectively.", dia:"mgt232-u1-model",
+     pts:["Behavior only becomes 'performance' once judged against the organization's job requirements for that specific job","Two people's jobs may demand different things even if their observed behavior looks similar","'Effectiveness' additionally requires comparison against a standard of performance","So identical behavior can be effective performance for one job and ineffective for another"]},
+    {q:"Explain how beliefs influence an employee's motivation, even when those beliefs are factually incorrect.",
+     pts:["Motivation requires believing effective performance is possible for oneself","Motivation also requires believing that performing well leads to positive personal consequences","People act on their beliefs, not on objective reality — an employee who wrongly believes they cannot perform a task will still show low motivation","Beliefs are shaped by self-esteem, communications from others, past experience, personality and the actual situation"]},
+    {q:"Distinguish between attitudes, beliefs, values, needs and goals as components of individual motivation.",
+     pts:["Attitude: how a person feels about, and is disposed to act toward, an object","Belief: conviction about whether performance is possible and whether it leads to positive outcomes","Value: what general activities/outcomes a person finds worthwhile (e.g. money, promotion)","Need: a state of deficiency or desire (e.g. achievement, affiliation, autonomy) that drives behavior toward its satisfaction","Goal: a specific target that must be accepted, specific and sufficiently difficult to motivate a person"]},
+    {q:"Explain the four ways people typically respond to information that is dissonant with their existing beliefs, with an example.",
+     pts:["Avoid exposure (e.g. stop reading/watching the source)","Reject its validity (question the source's credibility or methodology)","Forget it quickly (dissonant information is more easily forgotten soon after receipt)","Distort it in memory over time (recollection drifts to become less threatening)","Example: an employee receiving critical performance feedback may use any of these four responses to avoid accepting it"]},
+    {q:"Why is cognitive dissonance a practical problem for managers giving performance feedback?",
+     pts:["Negative feedback is dissonant with most employees' self-image","Employees may block out the bad news, question the manager's motives, or misremember the criticism afterward","As a result, most negative feedback ends up being discounted or distorted by the employee who received it","This makes it harder for feedback to actually change behavior unless managers understand and work around this tendency"]},
+    {q:"Describe any three 'new challenges' facing managers of organizational behavior today and explain why each matters.",
+     pts:["Workforce diversity & inclusion — managing a workforce that differs by gender, ethnicity, age, culture fairly and productively","Technology & remote/hybrid work — changes how managers coordinate, observe and motivate employees they may rarely see in person","Globalization — requires adapting leadership/communication style across cultures","Gig/flexible work — changes how commitment and coordination are managed for non-traditional employees","Employee well-being — stress and burnout directly affect performance and retention","(any three, each with its 'why it matters' reasoning)"]}
+  ],
+  long: [
+    {q:"Explain the concept of organizational behavior and describe, with a diagram, the systems view of organizations.", dia:"mgt232-u1-systems",
+     pts:["OB = study of two basic issues: how organizations influence members, and how members influence organizations","Three characteristics of all organizations: composed of individuals/groups; goal-oriented; use specialization and coordination","Systems view: organization as interdependent parts (people, technology, tasks, structure) that also interact with a broader environment","Inputs (people, raw materials, money, ideas) → transformation processes → outputs (products/services)","An organization that cannot attract needed inputs, or whose outputs the environment doesn't want, declines rapidly (Chrysler example)","Systems view's core lesson: managers must manage interdependencies both within the organization and between the organization and its environment"]},
+    {q:"Discuss the three levels of analysis used to study organizational behavior, explaining the contributing discipline and typical questions asked at each level.",
+     pts:["Individual level — draws on psychology; asks how attitudes, beliefs, perceptions and personality affect an individual's behavior and performance","Group level — draws on social psychology; asks how people work together in teams/committees, what makes groups cohesive and productive","Organization level (macro) — draws on sociology; asks how the organization as a whole relates to its environment, and how structure/design affect effectiveness","The three levels are complementary, not conflicting — a full understanding of organizations requires blending insights from psychology, social psychology and sociology together","Example applications: individual — why one employee is unmotivated; group — why one team outperforms another; organization — why one company adapts better to market change than another"]},
+    {q:"Explain, with reference to Arnold & Feldman's model, how individual behavior is determined and how it becomes 'performance' and then 'effectiveness'.", dia:"mgt232-u1-model",
+     pts:["Five determinants combine to produce individual behavior: motivation (attitudes/beliefs/values/needs/goals), ability (aptitude + learning opportunities), perception (how messages/expectations are received and interpreted), personality (traits/characteristics), and organizational systems & resources (leadership, rewards, facilities, structure)","Behavior becomes performance once judged against the organization's job requirements for that specific role","Performance becomes effectiveness once compared against a standard of performance","Two employees can behave almost identically yet be judged differently if their jobs demand different things, or if different standards apply","Practical implication for managers: to improve performance, a manager must address whichever of the five determinants is actually the constraint (e.g. training for low ability, clearer goals for low motivation)"]},
+    {q:"Explain cognitive dissonance and discuss its practical significance for managing communication and feedback in organizations.",
+     pts:["Cognitive dissonance = discomfort from receiving information inconsistent with existing beliefs","Four typical reactions: avoid exposure; reject validity; forget quickly; distort in memory over time","Managerial significance: negative performance feedback is often dissonant with an employee's self-image, so it tends to be blocked out, its source questioned, or its content misremembered afterward","This means one-time delivery of critical feedback is unlikely to be fully accepted — managers benefit from repetition, drawing explicit conclusions, and presenting feedback in a non-threatening manner","Link to 'new challenges': in a more diverse, remote and multi-generational workforce, understanding how different individuals process dissonant information becomes even more important for effective communication"]}
+  ]
+};
+
+</script>
+<script>
 /* ============ ICONOGRAPHY ============
    Small inline SVGs per subject, used as card decoration, banner watermark,
    and unit-tile pattern tint — no external images, so everything still
@@ -19104,6 +19540,11 @@ const ICONS = {
   eng2: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M50 24 C41 16 24 15 15 19 V77 C24 73 41 74 50 82 C59 74 76 73 85 77 V19 C76 15 59 16 50 24Z" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
     <path d="M50 24 V82" stroke="#fff" stroke-width="4"/></svg>`,
+  mgt232: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="26" r="13" stroke="#fff" stroke-width="6"/>
+    <path d="M22 86 Q22 56 50 56 Q78 56 78 86" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="18" cy="66" r="8" stroke="#fff" stroke-width="5"/><circle cx="82" cy="66" r="8" stroke="#fff" stroke-width="5"/>
+    <path d="M10 90 Q10 76 22 72 M90 90 Q90 76 78 72" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>`,
   notes: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 85 L20 20 Q20 15 25 15 H75 Q80 15 80 20 V85 L65 75 L50 85 L35 75 Z" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></svg>`
 };
