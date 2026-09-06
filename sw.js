@@ -16,7 +16,10 @@
  * install the new worker. Content updates do NOT need a bump; they flow through
  * the stale-while-revalidate path above.
  */
-const SW_REV = '2026-09-03.1';
+/* SW_REV is not read by any code — and does not need to be. A service worker is
+   reinstalled when its BYTES change, so editing this string is itself the
+   mechanism. Keep it as the deliberate way to force that. */
+const SW_REV = '2026-09-06.1';
 const SHELL_CACHE = 'studyhub-shell-v1';
 const PDF_CACHE   = 'studyhub-pdfjs-v1';
 const SHELL_KEY   = './';                       // canonical cache key for the app page
@@ -25,8 +28,14 @@ const PDFJS = [
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'
 ];
-const SHELL_ASSETS = [
-  SHELL_KEY,
+/* The page itself is the only thing offline genuinely depends on. */
+const SHELL_REQUIRED = [SHELL_KEY];
+/* Icons and the manifest are nice to have. They used to be in the same addAll()
+   as the page — and addAll() rejects as a unit, so ONE missing icon (a deploy
+   that forgot to copy a sidecar) failed the whole install and left the app with
+   no offline support at all, silently. That is the worst way to find out: in
+   class, with no wifi. Best-effort instead. */
+const SHELL_OPTIONAL = [
   './manifest.webmanifest',
   './icon-192.png',
   './icon-512.png',
@@ -36,9 +45,10 @@ const SHELL_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const shell = await caches.open(SHELL_CACHE);
-    await shell.addAll(SHELL_ASSETS);                 // same-origin, must succeed
+    await shell.addAll(SHELL_REQUIRED);                        // must succeed
+    await Promise.allSettled(SHELL_OPTIONAL.map((u) => shell.add(u)));
     const pdf = await caches.open(PDF_CACHE);
-    await Promise.allSettled(PDFJS.map((u) => pdf.add(u)));  // best-effort, non-fatal
+    await Promise.allSettled(PDFJS.map((u) => pdf.add(u)));    // best-effort, non-fatal
     await self.skipWaiting();
   })());
 });

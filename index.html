@@ -9,7 +9,57 @@
      native text-selection UI (handles / callout bar) that the notes highlighter
      relies on. The service worker works the same in a normal Safari view, so
      offline support is unaffected. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>
+/* Load-failure guard. Must sit ABOVE the data scripts to see their errors.
+
+   The worst recurring failure in this project's history is a data-*.js that
+   stops parsing (a stray "};" once broke one, and the app simply came up with a
+   subject missing — nobody noticed for a whole session, because a script that
+   fails to compile is silent). This turns that into something visible on the
+   very first load: any uncaught error, or any script that fails to fetch, shows
+   one small chip. Detail goes to the console; the chip just says look. */
+(function(){
+  var seen = [], shown = false;
+  function chip(){
+    if(shown || !document.body) return;
+    shown = true;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = '⚠ Something failed to load — tap for detail';
+    b.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);' +
+      'bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:12000;' +
+      'background:#e0574f;color:#fff;border:none;border-radius:22px;' +
+      'padding:11px 18px;font:700 .8rem/1 -apple-system,sans-serif;' +
+      'box-shadow:0 8px 28px rgba(0,0,0,.45);max-width:calc(100vw - 32px);';
+    b.onclick = function(){
+      alert('The app loaded with errors:\n\n' + seen.join('\n\n') +
+            '\n\nSome subjects or features may be missing. Reloading may help; ' +
+            'if not, the last deploy needs looking at.');
+    };
+    document.body.appendChild(b);
+  }
+  function note(msg){
+    if(seen.length < 5) seen.push(msg);
+    if(document.body) chip();
+    else document.addEventListener('DOMContentLoaded', chip);
+  }
+  window.addEventListener('error', function(e){
+    var t = e.target;
+    if(t && t !== window && t.tagName === 'SCRIPT'){     // a file that never arrived
+      note('Could not load script: ' + (t.src || '(inline)'));
+    } else if(e.message){                                 // a file that failed to parse/run
+      note(e.message + (e.filename ? '\n  in ' + e.filename.split('/').pop() +
+           ':' + e.lineno : ''));
+    }
+  }, true);   // capture — resource errors do not bubble
+})();
+</script>
+<!-- defer: pdf.js is ~1 MB from a CDN and is only ever touched from
+     openStoredPdf() / buildTextLayer(), both user-triggered. Blocking the parser
+     on it meant the whole app shell waited on that fetch — worst on the bad
+     connection where it matters most, and on a cold offline start it waits for
+     the request to fail before anything paints. -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
   :root{
     --bg:#14131b; --bg2:#1c1b26; --card:#1f1e2a;
@@ -324,21 +374,10 @@
   .ud-block p{margin:0;font-size:.93rem;line-height:1.6;color:#e8e6ef;}
   .topic-chips{display:flex;flex-wrap:wrap;gap:8px;}
   .topic-chip{background:var(--card);border:1px solid var(--line);padding:8px 12px;border-radius:10px;font-size:.82rem;color:var(--ink-dim);}
-  /* The book card takes half the width; the Reference button fills the rest. */
+  /* The notes button takes the width; the Reference button fills the rest.
+     (The old .src-card rules styled a class no element carries any more — the
+     textbook card was replaced by the Reference drawer — so they were removed.) */
   .src-row{display:flex;gap:10px;align-items:stretch;}
-  .src-card{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:12px;cursor:pointer;flex:1 1 0;min-width:0;}
-  .src-card:active{background:var(--card-hi,#262533);}
-  /* The SVG carries only a viewBox, so without an explicit size it renders at the
-     replaced-element default and spills out of its box. Pin it to the container. */
-  .src-card .src-icon{width:28px;height:28px;flex-shrink:0;overflow:hidden;}
-  .src-card .src-icon svg{display:block;width:100%;height:100%;}
-  .src-card .src-text{flex:1;min-width:0;}
-  .src-card .src-text b{display:block;font-size:.8rem;color:#fff;margin-bottom:3px;
-    line-height:1.28;overflow-wrap:anywhere;}
-  .src-card .src-text span{display:block;font-size:.73rem;color:var(--ink-dim);line-height:1.3;overflow-wrap:anywhere;}
-  .src-card .src-go{font-size:.75rem;font-weight:700;color:var(--accent);flex-shrink:0;
-    white-space:nowrap;padding-top:1px;}
 
   .ref-btn{flex:0 0 34%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
     background:rgba(240,180,60,.09);border:1px solid rgba(240,180,60,.35);border-radius:14px;
@@ -761,7 +800,10 @@
   .ui-btn-cancel{background:rgba(255,255,255,.1);color:var(--ink);}
   .ui-btn-ok{background:var(--accent);color:#1a1608;}
   .ui-btn-ok.danger{background:var(--micro);color:#fff;}
-  #sw-update{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));
+  /* env() needs its fallback: without one the whole calc() is invalid where the
+     variable is unsupported, `bottom` reverts to auto, and the chip lands
+     wherever static layout puts it. Every other env() in this file passes 0px. */
+  #sw-update{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));
     transform:translateX(-50%);z-index:12000;background:var(--accent);color:#1a1608;
     border:none;border-radius:22px;padding:11px 20px;font:700 .85rem/1 inherit;
     box-shadow:0 8px 28px rgba(0,0,0,.45);cursor:pointer;max-width:calc(100vw - 32px);}
@@ -828,9 +870,6 @@
         </button>
       </div>
       <div class="src-weak" id="ud-src-weak" style="display:none;"></div>
-      <div class="src-hidden" style="display:none;">
-        <div id="ud-src-card"><div id="ud-src-icon"></div><b id="ud-src-book"></b><span id="ud-src-pages"></span><span id="ud-src-go"></span></div>
-      </div>
     </div>
     <div class="ud-block ud-actions">
       <button class="ud-btn primary" id="ud-video-btn">📺 Watch video lessons</button>
@@ -21774,6 +21813,53 @@ function showView(id){
   ALL_VIEWS.forEach(v => document.getElementById(v).classList.toggle('active', v===id));
 }
 
+/* ---- Safe localStorage -----------------------------------------------
+   getItem can THROW, not merely return null (a sandboxed host blocks storage
+   outright — see the published-artifact case), and a value half-written when
+   the quota filled will not parse. Most call sites here already had try/catch;
+   the two that fed a render did not, and a throw there took the render with it.
+   Writes get a matching helper: losing a note silently is worse than a throw
+   nobody sees, so a failed write says so once per session rather than nagging. */
+function lsReadJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(raw === null || raw === '') return fallback;
+    const v = JSON.parse(raw);
+    return (v === null || v === undefined) ? fallback : v;
+  }catch(e){ return fallback; }
+}
+/* Plain-string read/write/remove (page numbers, active-file ids). Deliberately
+   NOT lsWriteJSON: these are read back with parseInt/getItem, and JSON-quoting
+   them would turn 12 into "12" and break every reader.
+
+   Every localStorage access in this file goes through one of these five
+   helpers — no exceptions, so `grep "localStorage\."` outside this block
+   should return nothing. That rule exists because the first version of this
+   guard only covered the sites that looked most important, and a test with
+   storage throwing on EVERY call showed the app still died: when storage fails
+   it fails globally, so one unguarded site is enough to take the whole
+   operation down. */
+function lsGetRaw(key){
+  try{ return localStorage.getItem(key); }catch(e){ return null; }
+}
+function lsSetRaw(key, str){
+  try{ localStorage.setItem(key, str); return true; }catch(e){ return false; }
+}
+function lsRemove(key){
+  try{ localStorage.removeItem(key); return true; }catch(e){ return false; }
+}
+let _lsWriteWarned = false;
+function lsWriteJSON(key, value, whatFailed){
+  try{ localStorage.setItem(key, JSON.stringify(value)); return true; }
+  catch(e){
+    if(whatFailed && !_lsWriteWarned){
+      _lsWriteWarned = true;
+      uiAlert(`Couldn't save ${whatFailed} — this phone's storage for the app is full. Removing a saved PDF you no longer need will free some up.`);
+    }
+    return false;
+  }
+}
+
 /* ============ SEMESTER STRIP ============ */
 function renderSemStrip(){
   const strip = document.getElementById('sem-strip');
@@ -21794,7 +21880,7 @@ function renderSemStrip(){
    becomes a real landing pad instead of just a menu. */
 function renderContinueCard(){
   const wrap = document.getElementById('continue-card-wrap');
-  const last = JSON.parse(localStorage.getItem('lastVisited') || 'null');
+  const last = lsReadJSON('lastVisited', null);
   if(!last || !SEMESTERS[last.semester] || !SEMESTERS[last.semester].subjects[last.subjectKey]){
     wrap.innerHTML = ''; return;
   }
@@ -21830,7 +21916,7 @@ function renderRecentNotesStrip(){
     const card = document.createElement('div');
     card.className = 'rn-card';
     card.innerHTML = `<span class="rn-tag" style="background:${subj?subj.hex:'#555'};">${subj?subj.title.split(' ')[0]:'General'}</span>
-      <div class="rn-snippet">${escapeHtml(n.text).slice(0,90) || '(empty note)'}</div>
+      <div class="rn-snippet">${escapeHtml(n.text.slice(0,90)) || '(empty note)'}</div>
       <div class="rn-date">${relativeDate(n.updatedAt)}</div>`;
     card.onclick = () => openNoteEditor(n.id);
     scroll.appendChild(card);
@@ -21985,17 +22071,16 @@ function openUnit(idx){
     chipsWrap.appendChild(chip);
   });
 
-  document.getElementById('ud-src-icon').innerHTML = ICONS[currentSubjectKey].replace(/#fff/g, data.hex);
-  document.getElementById('ud-src-book').textContent = (u.primaryBook || data.book) + (u.supplement ? ' + supplement' : '');
-  document.getElementById('ud-src-pages').textContent = u.pages;
-  document.getElementById('ud-src-go').textContent = (u.altBook ? 'Different file ›' : 'Open ›');
+  /* The old textbook card that used to live here was replaced by the Reference
+     drawer (which leads with the same primary book, keeping its page-lock).
+     Its five hidden elements were still being written on every unit open —
+     invisible work, and one of those writes, ICONS[key].replace(...), was the
+     only unguarded property access on ICONS in the file: a subject added to
+     SUBJECT_DATA without an ICONS entry would throw there and take the WHOLE
+     unit view down, for markup nobody can see. Removed. */
   const weak = document.getElementById('ud-src-weak');
   if(u.primaryWeak){ weak.textContent = '⚠ ' + u.primaryWeak; weak.style.display = ''; }
   else { weak.style.display = 'none'; }
-  document.getElementById('ud-src-card').onclick = () => {
-    const range = unitPageRange(u);
-    jumpToTextbookPage(currentSubjectKey, u.startPage, u.altBook, range.end, u.title.replace(/^Unit \d+:\s*/,''));
-  };
 
   const notesBtn = document.getElementById('ud-notes-btn');
   if(hasNotes(currentSubjectKey, idx)){
@@ -22031,9 +22116,9 @@ function openUnit(idx){
   document.getElementById('view-unit').scrollTop = 0;
   window.scrollTo(0,0);
 
-  localStorage.setItem('lastVisited', JSON.stringify({
+  lsWriteJSON("lastVisited", {
     semester: currentSemester, subjectKey: currentSubjectKey, unitIdx: idx, at: new Date().toISOString()
-  }));
+  });
 }
 
 /* ---------- Reference books + written notes ----------
@@ -22187,7 +22272,7 @@ let _examSaveT = null;
 function loadExamState(){
   const k = examKey();
   if(_examCache.key !== k){
-    let st; try{ st = JSON.parse(localStorage.getItem(k)) || {}; }catch(e){ st = {}; }
+    const st = lsReadJSON(k, {});
     _examCache = { key: k, st: st };
   }
   return _examCache.st;
@@ -22196,12 +22281,12 @@ function saveExamState(st){
   const k = examKey();
   _examCache = { key: k, st: st };
   clearTimeout(_examSaveT);
-  _examSaveT = setTimeout(() => { try{ localStorage.setItem(k, JSON.stringify(st)); }catch(e){} }, 350);
+  _examSaveT = setTimeout(() => { lsWriteJSON(k, st); }, 350);
 }
 function flushExamState(){
   if(!_examCache.key) return;
   clearTimeout(_examSaveT);
-  try{ localStorage.setItem(_examCache.key, JSON.stringify(_examCache.st)); }catch(e){}
+  lsWriteJSON(_examCache.key, _examCache.st);
 }
 /* The live answer box. There is deliberately NO `input` handler on it (that was
    the focus-loss bug on iOS). We copy its text into state on every action that
@@ -22259,9 +22344,17 @@ function renderExamTabs(){
   tabs.style.display = examState.mock ? 'none' : 'flex';
 }
 
+/* Marking points are PLAIN TEXT and must be escaped. They used to be dropped
+   straight into innerHTML, and a point written like "MC<AC → AC falls" was read
+   by the HTML parser as an opening <ac> tag: everything up to the next ">"
+   silently vanished from the screen. Two real 10-mark points were being shown
+   wrong ("AC-MC RELATION: MCAC → AC rises", and the shut-down condition
+   "(AVC<P<AC); shut down (P<AVC)" cut off mid-sentence) while the source data
+   was correct all along — which is exactly why no data-side audit ever caught
+   it. Rich content belongs in `sol`, which IS html and is rendered separately. */
 function examPtsHTML(obj, heading){
-  return '<h4>' + (heading || 'What the examiner is looking for') + '</h4><ol>'
-    + obj.pts.map(x => '<li>' + x + '</li>').join('') + '</ol>';
+  return '<h4>' + escapeHtml(heading || 'What the examiner is looking for') + '</h4><ol>'
+    + obj.pts.map(x => '<li>' + escapeHtml(String(x)) + '</li>').join('') + '</ol>';
 }
 function examSolHTML(obj){
   return obj.sol ? ('<h4 class="ex-sol-h">Worked solution</h4><div class="ex-sol">' + obj.sol + '</div>') : '';
@@ -22433,9 +22526,12 @@ function renderMockPaper(){
 
   const sec = (label, note) => { const h = document.createElement('div'); h.className='mk-sec';
     h.textContent = label + (note ? ' — ' + note : ''); body.appendChild(h); };
+  /* Question text is plain text — escape it. Unit practice already renders the
+     same string with textContent (see renderExamQ); the mock paper used raw
+     innerHTML, so the two views could disagree about what a question says. */
   const qrow = (n, text, unit, obj) => {
     const d = document.createElement('div'); d.className = 'mk-q';
-    d.innerHTML = `<div class="mk-n">${n}${unit?' · Unit '+unit:''}</div><p>${text}</p>`;
+    d.innerHTML = `<div class="mk-n">${escapeHtml(String(n))}${unit?' · Unit '+unit:''}</div><p>${escapeHtml(String(text))}</p>`;
     d.onclick = () => {
       let ex = d.querySelector('.ex-model');
       if(ex){ ex.classList.toggle('on'); return; }
@@ -22459,10 +22555,34 @@ function renderMockPaper(){
   if(m.D){
     sec(secWord + ' D', 'Case analysis. COMPULSORY. 20 marks');
     const c = document.createElement('div'); c.className = 'mk-case';
-    c.innerHTML = `<div class="mk-n">22 · ${m.D.title}</div><div class="sc">${m.D.scenario}</div>`;
+    c.innerHTML = `<div class="mk-n">22 · ${escapeHtml(String(m.D.title||''))}</div>`
+                + `<div class="sc">${escapeHtml(String(m.D.scenario||''))}</div>`;
     body.appendChild(c);
     m.D.qs.forEach((q,i) => qrow('22.' + String.fromCharCode(97+i) + ` (${q.m} marks)`, q.q, null, q));
   }
+  /* Say so when the paper cannot actually reach 100. The header always claims
+     "Full Marks 100", but pickN returns whatever the bank has: a subject short
+     of 10 brief / 7 short / 4 long, or with no Section-D case at all, silently
+     produces a shorter paper. That exact gap (no case → 80/100) went unnoticed
+     in SOC 203 until a hand audit found it. Now the paper says it itself. */
+  const attainable = m.A.length * 2
+                   + Math.min(6, m.B.length) * 5
+                   + Math.min(3, m.C.length) * 10
+                   + (m.D ? 20 : 0);
+  if(attainable < 100){
+    const short = [];
+    if(m.A.length < 10) short.push(`Section A has ${m.A.length} of 10`);
+    if(m.B.length < 7)  short.push(`Section B offers ${m.B.length} of 7`);
+    if(m.C.length < 4)  short.push(`Section C offers ${m.C.length} of 4`);
+    if(!m.D)            short.push('there is no Section D case');
+    const warn = document.createElement('div');
+    warn.className = 'ex-dia';
+    warn.style.marginTop = '18px';
+    warn.textContent = `⚠ This paper is worth ${attainable}, not 100 — ${short.join('; ')}. `
+                     + `The bank for this subject needs more items before it matches a real board paper.`;
+    body.appendChild(warn);
+  }
+
   const note = document.createElement('div'); note.className = 'ex-hint';
   note.style.marginTop = '18px';
   note.textContent = 'Tap any question to reveal its marking points. Press Mock paper again to return to unit practice, or to generate a fresh paper.';
@@ -22478,7 +22598,7 @@ function updateExamMeta(subjectKey, unitIdx){
   const total = (e.brief||[]).length + (e.short||[]).length + (e.long||[]).length;
   let done = 0;
   try{
-    const st = JSON.parse(localStorage.getItem(`exam_s${currentSemester}_${subjectKey}_u${unitIdx}`)) || {};
+    const st = lsReadJSON(`exam_s${currentSemester}_${subjectKey}_u${unitIdx}`, {});
     done = Object.values(st).filter(x => x && x.mark).length;
   }catch(err){}
   el.textContent = done ? `· ${done}/${total} reviewed` : `· ${total} questions`;
@@ -22491,8 +22611,8 @@ function updateExamMeta(subjectKey, unitIdx){
    is fixed, so offsets survive reloads. */
 let currentChapterIdx = null;
 function ntHlKey(){ return `nthl_s${currentSemester}_${currentSubjectKey}_u${currentUnitIdx}` + (currentChapterIdx!==null ? `_c${currentChapterIdx}` : ''); }
-function ntLoadHl(){ try{ return JSON.parse(localStorage.getItem(ntHlKey())) || []; }catch(e){ return []; } }
-function ntSaveHl(arr){ localStorage.setItem(ntHlKey(), JSON.stringify(arr)); ntUpdateHlCount(arr); }
+function ntLoadHl(){ const v = lsReadJSON(ntHlKey(), []); return Array.isArray(v) ? v : []; }
+function ntSaveHl(arr){ lsWriteJSON(ntHlKey(), arr, 'that highlight'); ntUpdateHlCount(arr); }
 function ntUpdateHlCount(arr){
   const el = document.getElementById('nt-hl-count');
   if(el) el.textContent = (arr && arr.length) ? `${arr.length} ✏️` : '';
@@ -22787,6 +22907,7 @@ function ntRenderBody(html){
   });
   ntApplyStoredHl();
   ntHidePill();
+  ntFitDiagrams__pending = true;
   /* Clear any lingering focus (e.g. the exam answer box) — otherwise the
      `selectionchange` handler below bails on a focused INPUT/TEXTAREA and the
      highlight pill never appears when you select text in the notes. */
@@ -22795,6 +22916,47 @@ function ntRenderBody(html){
   document.getElementById('view-notes-chapters').classList.remove('active');
   document.getElementById('view-notes-reader').classList.add('active');
   body.scrollTop = 0;
+  /* Only now is the reader actually laid out, and getBBox() needs that. */
+  if(ntFitDiagrams__pending){ ntFitDiagrams__pending = false; ntFitDiagrams(); }
+}
+
+/* ---- Stop diagram labels being cut off ---------------------------------
+   An <svg> clips anything outside its viewBox (overflow:hidden is the UA
+   default), so a label drawn even slightly past the edge is silently sliced —
+   a whole-app sweep found 40 of them, the worst reading "bargains a wage floor
+   a" instead of "...above W", on a diagram tagged CONFIRMED EXAM QUESTION.
+
+   Fixing this per-diagram would mean editing the viewBox of Semester-1 data
+   files, which are finished and off-limits. So it is fixed here instead: after
+   layout, ask each SVG for the real extent of everything it draws and, if that
+   spills out, widen the viewBox to include it. Nothing about the drawing
+   changes — it just gets ~8% smaller so all of it fits.
+
+   The growth is capped: a diagram with one stray far-off element must not be
+   shrunk into illegibility to accommodate it. Past the cap we leave it alone,
+   which is no worse than before. */
+let ntFitDiagrams__pending = false;
+function ntFitDiagrams(){
+  const body = document.getElementById('nt-body');
+  if(!body) return;
+  body.querySelectorAll('.nt-diagrams svg').forEach(sv => {
+    const vb = (sv.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+    if(!(vb.length === 4 && vb[2] > 0 && vb[3] > 0)) return;
+    let [x, y, w, h] = vb;
+    let b; try{ b = sv.getBBox(); }catch(e){ return; }
+    if(!b || (!b.width && !b.height)) return;          // not laid out yet
+    const pad = 2;
+    const nx = Math.min(x, b.x - pad), ny = Math.min(y, b.y - pad);
+    const nw = Math.max(x + w, b.x + b.width  + pad) - nx;
+    const nh = Math.max(y + h, b.y + b.height + pad) - ny;
+    const grew = nw > w + 0.5 || nh > h + 0.5;
+    const sane = nw <= w * 1.35 && nh <= h * 1.35;
+    if(grew && sane){
+      const r = n => Math.round(n * 100) / 100;
+      sv.setAttribute('viewBox', `${r(nx)} ${r(ny)} ${r(nw)} ${r(nh)}`);
+      sv.style.aspectRatio = r(nw) + ' / ' + r(nh);
+    }
+  });
 }
 function openUnitNotes(){
   if(!hasNotes(currentSubjectKey, currentUnitIdx)) return;
@@ -22869,11 +23031,13 @@ function pdfKey(subjectKey, id){
 }
 function pdfListKey(subjectKey){ return `pdflist_${pdfSubjectScope(subjectKey)}`; }
 function loadPdfList(subjectKey){
-  try { return JSON.parse(localStorage.getItem(pdfListKey(subjectKey)) || '[]'); }
-  catch(e){ return []; }
+  const v = lsReadJSON(pdfListKey(subjectKey), []);
+  return Array.isArray(v) ? v : [];
 }
 function savePdfList(subjectKey, list){
-  localStorage.setItem(pdfListKey(subjectKey), JSON.stringify(list));
+  /* If this throws the PDF is in IndexedDB but not in the list, so it becomes
+     invisible — and the rest of the add flow never runs. Fail loudly once. */
+  lsWriteJSON(pdfListKey(subjectKey), list, 'that PDF');
 }
 let pdfActiveId = null;
 
@@ -22935,22 +23099,22 @@ async function migrateLegacyPdf(subjectKey){
   if(!legacy) return list;
   const id = 'main';
   await pdfSave(pdfKey(subjectKey, id), legacy.data, legacy.name);
-  const oldPage = localStorage.getItem(`pdfpage_${pdfKey(subjectKey)}`);
-  if(oldPage) localStorage.setItem(`pdfpage_${pdfKey(subjectKey, id)}`, oldPage);
+  const oldPage = lsGetRaw(`pdfpage_${pdfKey(subjectKey)}`);
+  if(oldPage) lsSetRaw(`pdfpage_${pdfKey(subjectKey, id)}`, oldPage);
   const migrated = [{id, name: legacy.name}];
   savePdfList(subjectKey, migrated);
-  localStorage.setItem(`pdfactive_${pdfSubjectScope(subjectKey)}`, id);
+  lsSetRaw(`pdfactive_${pdfSubjectScope(subjectKey)}`, id);
   await pdfDelete(pdfKey(subjectKey));
   return migrated;
 }
 
 function getActiveId(subjectKey, list){
-  const stored = localStorage.getItem(`pdfactive_${pdfSubjectScope(subjectKey)}`);
+  const stored = lsGetRaw(`pdfactive_${pdfSubjectScope(subjectKey)}`);
   if(stored && list.some(f => f.id === stored)) return stored;
   return list.length ? list[0].id : null;
 }
 function setActiveId(subjectKey, id){
-  localStorage.setItem(`pdfactive_${pdfSubjectScope(subjectKey)}`, id);
+  lsSetRaw(`pdfactive_${pdfSubjectScope(subjectKey)}`, id);
   pdfActiveId = id;
 }
 
@@ -22967,7 +23131,7 @@ function loadLocalPDF(event){
     savePdfList(currentSubjectKey, list);
     setActiveId(currentSubjectKey, id);
     const startAt = pdfPendingJumpPage || 1;
-    localStorage.setItem(`pdfpage_${pdfKey(currentSubjectKey, id)}`, String(startAt));
+    lsSetRaw(`pdfpage_${pdfKey(currentSubjectKey, id)}`, String(startAt));
     pdfDoc = null;
     renderPdfSection(currentSubjectKey, true);
     pdfPendingJumpPage = null;
@@ -23021,7 +23185,7 @@ async function removePDF(){
   const file = list.find(f => f.id === id);
   if(!await uiConfirm(`Remove "${file ? file.name : 'this PDF'}" from this subject?`, {danger:true, okText:'Remove'})) return;
   await pdfDelete(pdfKey(currentSubjectKey, id));
-  localStorage.removeItem(`pdfpage_${pdfKey(currentSubjectKey, id)}`);
+  lsRemove(`pdfpage_${pdfKey(currentSubjectKey, id)}`);
   const rest = list.filter(f => f.id !== id);
   savePdfList(currentSubjectKey, rest);
   setActiveId(currentSubjectKey, rest.length ? rest[0].id : '');
@@ -23072,18 +23236,18 @@ async function renderPdfSection(subjectKey, forceOpen){
     return;
   }
 
-  const targetPage = pdfPendingJumpPage || parseInt(localStorage.getItem(`pdfpage_${pdfKey(subjectKey, pdfActiveId)}`)) || 1;
+  const targetPage = pdfPendingJumpPage || parseInt(lsGetRaw(`pdfpage_${pdfKey(subjectKey, pdfActiveId)}`)) || 1;
 
   // Book switcher — only shown when a subject actually has more than one file.
   const tabs = list.length > 1 ? `
     <div class="pdf-file-tabs">
       ${list.map(f => `<button class="pdf-file-tab${f.id===pdfActiveId?' active':''}"
-         onclick="event.stopPropagation(); switchPdfFile('${f.id}')">${f.name.replace(/\.pdf$/i,'').slice(0,22)}</button>`).join('')}
+         onclick="event.stopPropagation(); switchPdfFile('${f.id}')">${escapeHtml(f.name.replace(/\.pdf$/i,'').slice(0,22))}</button>`).join('')}
     </div>` : '';
 
   const rangeBanner = pdfRange ? `
     <div class="pdf-range-banner" id="pdf-range-banner">
-      📘 ${pdfRange.label ? pdfRange.label + ' · ' : ''}pages ${pdfRange.start}–${pdfRange.end}
+      📘 ${pdfRange.label ? escapeHtml(pdfRange.label) + ' · ' : ''}pages ${pdfRange.start}–${pdfRange.end}
       <span class="rb-hint">double-tap ‹ or › at the edge to read past this</span>
     </div>` : '';
 
@@ -23092,7 +23256,7 @@ async function renderPdfSection(subjectKey, forceOpen){
       <div class="pdf-row-left">
         <span>📄</span>
         <div>
-          <div class="pdf-name">${record.name}</div>
+          <div class="pdf-name">${escapeHtml(record.name)}</div>
           <div class="pdf-sub" id="pdf-row-sub">${list.length>1 ? list.length+' books saved · tap to open' : 'Saved on this phone · tap to open'}</div>
         </div>
       </div>
@@ -23353,7 +23517,11 @@ async function pdfRenderPageNow(pageNum, seq){
   pdfPageNum = pageNum;
   updateRangeUI();
   updateZoomLabel();
-  localStorage.setItem(`pdfpage_${pdfKey(currentSubjectKey, pdfActiveId)}`, String(pageNum));
+  /* Remembering the page must never be able to abort the rest of this: a throw
+     here (full quota, storage blocked) used to skip syncStageSize / highlights /
+     selection wiring, leaving a page that renders but can't be selected — a
+     silent partial failure that looks like "the reader is flaky". */
+  lsSetRaw(`pdfpage_${pdfKey(currentSubjectKey, pdfActiveId)}`, String(pageNum));
   syncStageSize();
   drawHighlights(pageNum);
   wireDoubleTapSelect();
@@ -23435,11 +23603,11 @@ function syncStageSize(){
 
 function hlKey(pageNum){ return `hl_${pdfKey(currentSubjectKey, pdfActiveId)}_p${pageNum}`; }
 function loadHighlights(pageNum){
-  try { return JSON.parse(localStorage.getItem(hlKey(pageNum)) || '[]'); }
-  catch(e){ return []; }
+  const v = lsReadJSON(hlKey(pageNum), []);
+  return Array.isArray(v) ? v : [];
 }
 function saveHighlights(pageNum, arr){
-  localStorage.setItem(hlKey(pageNum), JSON.stringify(arr));
+  lsWriteJSON(hlKey(pageNum), arr, 'that highlight');
 }
 
 /* Highlights are stored as fractions of the page, so they stay correct at
@@ -23695,8 +23863,12 @@ function wireZoomButtons(){
   updateZoomLabel();
 }
 
-/* Fullscreen reading mode. Keeps the current page; resets zoom to "whole page
-   fits", which is what going fullscreen is for. */
+/* Fullscreen reading mode. Keeps the current page and resets the zoom to 100%,
+   which — here as everywhere else — means "fit the WIDTH" (see pdfFitWidth).
+   It deliberately does NOT fit the whole page: that would make the size depend
+   on the available height, and on a phone the height changes constantly, which
+   is what used to make the page jump size mid-read. (This comment used to say
+   "whole page fits"; that was left behind when the behaviour changed.) */
 async function togglePdfFullscreen(force){
   pdfFullscreen = (force === undefined) ? !pdfFullscreen : force;
   const section = document.getElementById('pdf-section');
@@ -23956,8 +24128,11 @@ function updateRangeUI(){
    what you wrote, where, and when (the thing the old single-textarea-per-
    subject version could never do). */
 
-function loadNotes(){ return JSON.parse(localStorage.getItem('bbm_notes_v1') || '[]'); }
-function saveNotes(arr){ localStorage.setItem('bbm_notes_v1', JSON.stringify(arr)); }
+/* Your own written notes are the only thing in this app that cannot be
+   regenerated from the data files, so both ends are guarded: a corrupt value
+   must not permanently lock the Notes Hub, and a failed write must say so. */
+function loadNotes(){ const v = lsReadJSON('bbm_notes_v1', []); return Array.isArray(v) ? v : []; }
+function saveNotes(arr){ return lsWriteJSON('bbm_notes_v1', arr, 'your note'); }
 function subjectByKey(semester, key){
   const sem = SEMESTERS[semester];
   return sem ? sem.subjects[key] : null;
@@ -24047,28 +24222,56 @@ function renderNotesHubList(){
   list.innerHTML = html;
 }
 
-function closeNotesModal(){
+/* Write whatever is in the open editor to storage, WITHOUT closing it.
+   The placeholder promises the note is "auto-saved", but the only save used to
+   happen in closeNotesModal() — so a note typed during a lecture and then
+   interrupted (switching apps, a call, iOS reclaiming the tab) was simply lost.
+   Exam mode already flushed on pagehide/visibilitychange; the note editor did
+   not. Now it does.
+
+   `allowDelete` is false on the background path on purpose: clearing the text
+   and switching away must not destroy an existing note — only deliberately
+   closing an emptied note discards it.
+
+   Creating a note here also sets editingNoteId, so the later close UPDATES that
+   note instead of pushing a second copy of it. */
+function persistOpenNote(allowDelete){
+  const modal = document.getElementById('modal-notes');
+  if(!modal || !modal.classList.contains('active')) return;
   const ed = document.getElementById('note-editor');
+  if(!ed) return;
   const text = ed.value.trim();
-  const subjectKey = ed.dataset.subjectKey || null;
-  const semester = parseInt(ed.dataset.semester) || currentSemester;
-  const unitTitle = ed.dataset.unitTitle || null;
-  let notes = loadNotes();
+  const notes = loadNotes();
 
   if(editingNoteId){
-    const idx = notes.findIndex(n=>n.id===editingNoteId);
-    if(idx>-1){
+    const idx = notes.findIndex(n => n.id === editingNoteId);
+    if(idx > -1){
       if(text){ notes[idx].text = text; notes[idx].updatedAt = new Date().toISOString(); }
-      else { notes.splice(idx,1); } // emptied out -> discard
+      else if(allowDelete){ notes.splice(idx,1); }   // emptied out -> discard
+      else return;                                    // don't destroy it in the background
     }
   } else if(text){
+    const id = 'n_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
     notes.push({
-      id: 'n_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
-      subjectKey, semester, unitTitle,
+      id,
+      subjectKey: ed.dataset.subjectKey || null,
+      semester: parseInt(ed.dataset.semester) || currentSemester,
+      unitTitle: ed.dataset.unitTitle || null,
       text, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
     });
+    editingNoteId = id;
+  } else {
+    return;                                           // nothing typed yet
   }
   saveNotes(notes);
+}
+window.addEventListener('pagehide', () => persistOpenNote(false));
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'hidden') persistOpenNote(false);
+});
+
+function closeNotesModal(){
+  persistOpenNote(true);
   editingNoteId = null;
   document.getElementById('modal-notes').classList.remove('active');
 
@@ -24166,6 +24369,15 @@ fab.addEventListener('touchmove', e=>{
   if(isDragging){
     e.preventDefault();
     currentX = e.touches[0].clientX - initialX; currentY = e.touches[0].clientY - initialY;
+    /* Keep it on screen. The drag was unbounded, so the pencil could be flicked
+       clean off the edge and stay there — unreachable until a reload, with no
+       hint it was still there. Bound the offset by how far the button can move
+       from its anchored resting place before any part of it leaves the viewport. */
+    const r = fab.getBoundingClientRect();
+    const restLeft = r.left - xOffset, restTop = r.top - yOffset;   // untransformed position
+    const pad = 6;
+    currentX = Math.min(window.innerWidth  - r.width  - pad - restLeft, Math.max(pad - restLeft, currentX));
+    currentY = Math.min(window.innerHeight - r.height - pad - restTop,  Math.max(pad - restTop,  currentY));
     dragDistance += Math.abs(currentX-xOffset) + Math.abs(currentY-yOffset);
     xOffset = currentX; yOffset = currentY;
     fab.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
@@ -24247,11 +24459,11 @@ function videoKey(subjectKey, unitIdx){
   return `vids_s${currentSemester}_${subjectKey}_u${unitIdx}`;
 }
 function loadUnitVideos(subjectKey, unitIdx){
-  try { return JSON.parse(localStorage.getItem(videoKey(subjectKey, unitIdx)) || '[]'); }
-  catch(e){ return []; }
+  const v = lsReadJSON(videoKey(subjectKey, unitIdx), []);
+  return Array.isArray(v) ? v : [];
 }
 function saveUnitVideos(subjectKey, unitIdx, list){
-  localStorage.setItem(videoKey(subjectKey, unitIdx), JSON.stringify(list));
+  lsWriteJSON(videoKey(subjectKey, unitIdx), list);
 }
 
 /* Accepts watch URLs, share links, shorts, playlists, or a bare ID.
@@ -24317,7 +24529,8 @@ function renderVideoList(){
     <div class="vid-item" onclick="playVideo('${v.id}','${v.type||'video'}')">
       ${v.type === 'playlist'
         ? `<div class="vid-thumb vid-thumb-pl">▶︎</div>`
-        : `<img class="vid-thumb" src="https://i.ytimg.com/vi/${v.id}/default.jpg" alt="">`}
+        : `<img class="vid-thumb" src="https://i.ytimg.com/vi/${v.id}/default.jpg" alt="" loading="lazy"
+                onerror="this.outerHTML='&lt;div class=&quot;vid-thumb vid-thumb-pl&quot;&gt;▶︎&lt;/div&gt;'">`}
       <div class="vid-title">${escapeHtml(v.title || 'YouTube video')}
         ${v.type === 'playlist' ? '<span class="vid-badge">PLAYLIST</span>' : ''}</div>
       <button class="vid-del" onclick="event.stopPropagation(); openInYouTube('${v.id}','${v.type||'video'}')" title="Open in YouTube">↗</button>
@@ -24470,11 +24683,10 @@ function bankFor(subjectKey, unitIdx){
 /* ---- Spaced repetition state ---- */
 function srsKey(subjectKey, unitIdx){ return `srs_s${currentSemester}_${subjectKey}_u${unitIdx}`; }
 function loadSrs(subjectKey, unitIdx){
-  try { return JSON.parse(localStorage.getItem(srsKey(subjectKey, unitIdx)) || '{}'); }
-  catch(e){ return {}; }
+  return lsReadJSON(srsKey(subjectKey, unitIdx), {});
 }
 function saveSrs(subjectKey, unitIdx, data){
-  localStorage.setItem(srsKey(subjectKey, unitIdx), JSON.stringify(data));
+  lsWriteJSON(srsKey(subjectKey, unitIdx), data);
 }
 
 /* Mastery = share of the bank sitting in box 3 or higher. */
@@ -24589,6 +24801,48 @@ function startQuiz(subjectKey, unitIdx){
   window.scrollTo(0,0);
 }
 
+/* ---- Option order -------------------------------------------------------
+   The stored order is deliberately NOT used as-is any more.
+
+   Across the whole app 60.5% of the 3,277 questions had their answer on option
+   B, including a run of 50 consecutive B's in one unit. Nothing here ever
+   shuffled, so practising trained "pick B" rather than the content. Rebalancing
+   the banks would mean rewriting every data file, Semester 1 included — so the
+   order is randomised at display time instead. Same data, no learnable position.
+
+   It also fixes something the fixed order was quietly costing: the spaced
+   repetition deliberately shows a question again days later, and with a frozen
+   layout the second sighting can be answered from "it was the second one". Now
+   a repeat actually re-tests you.
+
+   Two things are held back from the shuffle:
+     · "All of these" / "none of the above" must keep their slot or the question
+       stops making sense (3 such options exist in the app, all already last);
+     · a set of four plain numbers reads better ascending than scrambled, and
+       once sorted the answer's position is set by its magnitude — which is not
+       a pattern anyone can learn. */
+function quizViewOrder(q){
+  const opts = q.o || [];
+  const POSITIONAL = /\b(all|none)\s+of\s+(the\s+)?(above|these)\b|\ball\s+the\s+above\b/i;
+  const pinned = new Set();
+  opts.forEach((o, i) => { if(POSITIONAL.test(String(o))) pinned.add(i); });
+
+  const free = opts.map((_, i) => i).filter(i => !pinned.has(i));
+  for(let i = free.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [free[i], free[j]] = [free[j], free[i]];
+  }
+  const order = [];
+  let f = 0;
+  for(let slot = 0; slot < opts.length; slot++) order.push(pinned.has(slot) ? slot : free[f++]);
+
+  const num = o => parseFloat(String(o).replace(/[,%\s]/g, ''));
+  const allNumeric = opts.length > 0 && opts.every(o => /^-?[\d.,]+%?$/.test(String(o).trim()));
+  if(allNumeric && pinned.size === 0) order.sort((x, y) => num(opts[x]) - num(opts[y]));
+
+  return { opts: order.map(i => opts[i]), a: order.indexOf(q.a) };
+}
+
 function renderQuizQuestion(){
   const s = quizState;
   const body = document.getElementById('quiz-body');
@@ -24602,15 +24856,19 @@ function renderQuizQuestion(){
 
   const srs = loadSrs(s.subjectKey, s.unitIdx);
   let tag = 'NEW', tagClass = 'qt-new';
-  if(q.generated){ tag = 'GENERATED'; tagClass = 'qt-new'; }
-  else if(srs[q._idx] && srs[q._idx].box === 0 && srs[q._idx].last){ tag = 'REVIEW'; tagClass = 'qt-review'; }
+  /* (The old `q.generated` branch is gone with the procedural generator it
+     belonged to — nothing has produced that flag since the MTH 201 rebuild.) */
+  if(srs[q._idx] && srs[q._idx].box === 0 && srs[q._idx].last){ tag = 'REVIEW'; tagClass = 'qt-review'; }
   else if(q.w >= 3){ tag = 'HIGH YIELD'; tagClass = 'qt-core'; }
+
+  /* Freshly shuffled per presentation; s.view.a is the correct index AS SHOWN. */
+  s.view = quizViewOrder(q);
 
   body.innerHTML = `
     <span class="quiz-tag ${tagClass}">${tag}</span>
     <p class="quiz-q">${escapeHtml(q.q)}</p>
     <div id="quiz-opts">
-      ${q.o.map((opt,i) => `<button class="quiz-opt" data-i="${i}">${escapeHtml(String(opt))}</button>`).join('')}
+      ${s.view.opts.map((opt,i) => `<button class="quiz-opt" data-i="${i}">${escapeHtml(String(opt))}</button>`).join('')}
     </div>
     <div id="quiz-after"></div>`;
 
@@ -24625,14 +24883,18 @@ function answerQuiz(choice){
   if(!s || s.answered) return;
   s.answered = true;
   const q = s.questions[s.pos];
-  const correct = choice === q.a;
+  /* Compare against the index AS DISPLAYED, not the stored one — the options
+     are shuffled at render time (see quizViewOrder). Falls back to q.a so a
+     question rendered before this existed can't mis-mark. */
+  const shownA = (s.view && s.view.a >= 0) ? s.view.a : q.a;
+  const correct = choice === shownA;
   if(correct) s.right++;
   else s.wrongList.push(q);
 
   recordAnswer(s.subjectKey, s.unitIdx, q._idx, correct);
 
   document.querySelectorAll('.quiz-opt').forEach((btn, i) => {
-    if(i === q.a) btn.classList.add('correct');
+    if(i === shownA) btn.classList.add('correct');
     else if(i === choice) btn.classList.add('wrong');
     else btn.classList.add('dim');
     btn.onclick = null;
