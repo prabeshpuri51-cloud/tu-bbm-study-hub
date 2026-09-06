@@ -74,6 +74,7 @@
     --bmath2:#4a5bd0; --bmath2-d:#2b3080;
     --eng2:#cf5a86; --eng2-d:#7c2b4c;
     --mgt232:#c9762f; --mgt232-d:#7a3f16;
+    --eco204:#4a9d5f; --eco204-d:#205c30;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -119,6 +120,7 @@
   .c-bmath2{background:linear-gradient(135deg,var(--bmath2),var(--bmath2-d));}
   .c-eng2{background:linear-gradient(135deg,var(--eng2),var(--eng2-d));}
   .c-mgt232{background:linear-gradient(135deg,var(--mgt232),var(--mgt232-d));}
+  .c-eco204{background:linear-gradient(135deg,var(--eco204),var(--eco204-d));}
   .c-notes{background:linear-gradient(135deg,#5a4a8a,#2c2050);grid-column:span 2;height:92px;}
 
   /* ---- Subject view ---- */
@@ -21745,6 +21747,952 @@ window.SUBJECT_EXAM["mgt232"].cases = [
 
 </script>
 <script>
+/* ECO 204 — Macroeconomics for Business (BBM Sem 2, 2 cr, 32 LH)
+   Course code confirmed against the FoM BBM 2021 curriculum table, the FOMECD
+   Aug-2022 syllabus and the code printed on the real 2023 board paper.
+   OLD CODE = ECO 212 "Introductory Macroeconomics" — its 2022 paper is excluded.
+   Primary book: Dwivedi, Macroeconomics: Theory and Policy, 3rd ed (2010).
+   PDF page = book page + 14 for Dwivedi, + 32 for Abel. startPage/endPage below
+   are PDF pages (what the reader jumps to); `pages` shows the printed pages. */
+window.SUBJECT_DATA_S2 = window.SUBJECT_DATA_S2 || {};
+window.SUBJECT_DATA_S2["eco204"] = {
+  title: "Macroeconomics for Business",
+  code: "ECO 204 • 2 Credits • Tribhuvan University",
+  examSectionLabel: "Section",
+  colorClass: "c-eco204",
+  hex: "#4a9d5f", hexD: "#205c30",
+  banner: "linear-gradient(135deg,#4a9d5f,#205c30)",
+  book: "Macroeconomics: Theory and Policy (Dwivedi, 3rd ed)",
+  bookMatch: "dwivedi|macroeconomics theory and policy",
+  units: [
+    {
+      title: "Unit 1: Introduction to Macroeconomics",
+      primaryBook: "Macroeconomics: Theory and Policy (Dwivedi, 3rd ed)",
+      primaryMatch: "dwivedi|macroeconomics theory and policy",
+      pages: "Ch 1–3 · p.3–48", startPage: 17, endPage: 62, lh: 3,
+      desc: "What macroeconomics is and how far its scope reaches, why it is both a theoretical and a policy science, how it differs from microeconomics, and how a business reads the economic environment through it. Then the circular flow of income and expenditure, built up from a two-sector closed economy to a four-sector open one. Three questions on the real 2023 paper came from this unit: the scope of macroeconomics, the difference between money flow and real flow, and how firms use macroeconomics to assess the economic environment.",
+      subtopics: "Concept and definitions of macroeconomics, Scope: theoretical and policy science, Microeconomics vs macroeconomics, Micro-macro paradoxes, Importance and limitations, Macroeconomics and the business environment, Real flow and money flow, Two-sector circular flow, Withdrawals and injections, Capital market and saving-investment, Three-sector flow with government, Four-sector open economy flow",
+      refs: [
+        {book:"Abel, Bernanke & Croushore — Macroeconomics (9th ed)", pages:"Ch 1 · p.1–21",
+         note:"A second treatment of what macroeconomics studies and what macroeconomists do — useful for the scope question.",
+         match:"abel|bernanke|croushore", start:33}
+      ]
+    },
+    {
+      title: "Unit 2: National Income Accounting",
+      primaryBook: "Macroeconomics: Theory and Policy (Dwivedi, 3rd ed)",
+      primaryMatch: "dwivedi|macroeconomics theory and policy",
+      pages: "Ch 4 · p.50–74", startPage: 64, endPage: 88, lh: 5,
+      primaryWeak: "Dwivedi covers every national account named in the syllabus except GNDI (Gross National Disposable Income), which appears in neither sourced book and is written from the national-accounts definition instead. Dwivedi's measurement section is also India-specific; Nepal's figures come from CBS.",
+      desc: "The concepts and measurement of national income: GDP and the three methods of measuring it, and the family of related accounts — NDP, GNP, NNP, NI, PI, GNDI, DI and per capita income. Then nominal versus real GDP, price indexes and the link to inflation.",
+      subtopics: "National income accounting concepts, GDP concepts and measurement, Product income and expenditure methods, NDP GNP NNP, National income and personal income, GNDI and disposable income, Per capita income, Nominal and real GDP, Price indexes, Inflation and the GDP deflator",
+      refs: [
+        {book:"Abel, Bernanke & Croushore — Macroeconomics (9th ed)", pages:"Ch 2 · p.22–60",
+         note:"The strongest treatment available of the three approaches to measuring national output, plus price indexes and the GDP deflator.",
+         match:"abel|bernanke|croushore", start:54}
+      ]
+    },
+    {
+      title: "Unit 3: Consumption, Saving, and Investment",
+      primaryBook: "Macroeconomics: Theory and Policy (Dwivedi, 3rd ed)",
+      primaryMatch: "dwivedi|macroeconomics theory and policy",
+      pages: "Ch 9–10 · p.145–190", startPage: 159, endPage: 204, lh: 4,
+      desc: "The consumption function and its technical attributes, the saving function derived alongside it, and their determinants. Then investment: its concept and types, the marginal efficiency of capital, the investment demand curve, and what determines how much firms invest.",
+      subtopics: "Consumption function concept, Technical attributes APC MPC, Determinants of consumption, Saving function, APS and MPS, Investment concept and types, Marginal efficiency of capital, Investment demand curve, Determinants of investment",
+      refs: [
+        {book:"Dwivedi — Macroeconomics: Theory and Policy (3rd ed)", pages:"§6.1 Concepts and functions · p.93–99",
+         note:"Where the consumption and saving functions are first set out, before the theories of consumption in Ch 9.",
+         match:"dwivedi|macroeconomics theory and policy", start:107},
+        {book:"Abel, Bernanke & Croushore — Macroeconomics (9th ed)", pages:"Ch 4 Consumption, Saving and Investment · p.108–170",
+         note:"A whole chapter on exactly this unit's three topics — the closest single match either book offers.",
+         match:"abel|bernanke|croushore", start:140}
+      ]
+    },
+    {
+      title: "Unit 4: Theories of Employment and Income Determination",
+      primaryBook: "Macroeconomics: Theory and Policy (Dwivedi, 3rd ed)",
+      primaryMatch: "dwivedi|macroeconomics theory and policy",
+      pages: "Ch 5–8 · p.79–140", startPage: 93, endPage: 154, lh: 10,
+      desc: "The largest unit in the course. The classical theory of employment and Say's Law, then the Keynesian model of income determination in closed and open economies. All four multipliers — investment, tax, government expenditure and foreign trade — followed by the paradox of thrift. Finally the IS-LM model: deriving both curves, finding equilibrium income, and tracing the effect of monetary and fiscal policy on it.",
+      subtopics: "Classical theory of employment, Say's Law, Keynesian income determination in a closed economy, Income determination in an open economy, Investment multiplier, Tax multiplier, Government expenditure multiplier, Foreign trade multiplier, Paradox of thrift, Derivation of the IS curve, Derivation of the LM curve, IS-LM equilibrium income, Effects of monetary and fiscal policy",
+      refs: [
+        {book:"Dwivedi — Macroeconomics: Theory and Policy (3rd ed)", pages:"Ch 16–19 IS-LM · p.265–355",
+         note:"The whole IS-LM half of this unit: two-sector, with government, open economy, and the Keynesian-classical synthesis.",
+         match:"dwivedi|macroeconomics theory and policy", start:279},
+        {book:"Abel, Bernanke & Croushore — Macroeconomics (9th ed)", pages:"Ch 9 The IS-LM/AD-AS Model · p.314–364",
+         note:"An alternative derivation of the same model, useful if Dwivedi's algebra is hard going.",
+         match:"abel|bernanke|croushore", start:346}
+      ]
+    },
+    {
+      title: "Unit 5: Macroeconomic Issues and Policies",
+      primaryBook: "Macroeconomics: Theory and Policy (Dwivedi, 3rd ed)",
+      primaryMatch: "dwivedi|macroeconomics theory and policy",
+      pages: "Ch 12, 21–31 · p.203–221, 381–624", startPage: 217, endPage: 638, lh: 10,
+      primaryWeak: "Dwivedi's policy chapters are written about India — RBI money-supply measures, India's monetary and fiscal policy. The syllabus and the real 2023 paper are about Nepal, so those sections are replaced with Nepal Rastra Bank, Ministry of Finance and CBS material, which is flagged in the notes where it appears.",
+      desc: "The issues macroeconomics exists to address, and the two policies used to act on them. Inflation: its computation, the demand-pull and cost-push explanations, and its effects; then deflation and stagflation. Unemployment and its costs, business cycles and their phases, money supply, the balance of payments and the exchange rate, and the distinction between economic growth and development. Finally monetary and fiscal policy — their types, instruments and goals.",
+      subtopics: "Inflation concept and computation, Demand-pull and cost-push inflation, Effects of inflation, Deflation and stagflation, Unemployment concept and types, Costs of unemployment, Business cycles and their phases, Money supply concepts, Balance of payments concepts and components, Exchange rate concept and types, Economic growth and development, Monetary policy types instruments and goals, Fiscal policy methods instruments and goals",
+      refs: [
+        {book:"Dwivedi — Macroeconomics: Theory and Policy (3rd ed)", pages:"Ch 12 The Supply of Money · p.203–221",
+         note:"The money-supply half of this unit, which sits far from the Ch 21–31 range above. §12.2 is India-specific — use NRB's aggregates instead.",
+         match:"dwivedi|macroeconomics theory and policy", start:217},
+        {book:"Dwivedi — Macroeconomics: Theory and Policy (3rd ed)", pages:"Ch 26–28 Exchange rate and BOP · p.513–561",
+         note:"Exchange rate, the balance of payments statement, and BOP disequilibrium and adjustment.",
+         match:"dwivedi|macroeconomics theory and policy", start:527},
+        {book:"Abel, Bernanke & Croushore — Macroeconomics (9th ed)", pages:"Ch 12 Unemployment and Inflation · p.447–479",
+         note:"A clearer treatment of unemployment types and their costs than the primary book gives.",
+         match:"abel|bernanke|croushore", start:479}
+      ]
+    }
+  ]
+};
+
+window.SUBJECT_NOTES = window.SUBJECT_NOTES || {};
+window.SUBJECT_NOTES["eco204"] = {
+  "0": `
+<p><strong>3 lecture hours.</strong> Syllabus wording, verbatim:</p>
+<blockquote><p>Macroeconomics: concept and scope, Relationship between macroeconomics and economic environment for business; Circular flow of income and expenditure in a closed and open economy.</p></blockquote>
+<p><strong>Primary source:</strong> Dwivedi, <em>Macroeconomics: Theory and Policy</em>, 3rd ed — Ch 1 (pp. 3–22), Ch 2 (pp. 23–39), Ch 3 (pp. 40–48). PDF page = book page + 14.</p>
+<p><strong>Confirmed real past-paper questions in this unit (2023 ECO 204 board paper):</strong></p>
+<table><thead><tr>
+<th> Q</th>
+<th>Section</th>
+<th>Marks</th>
+<th>Question </th>
+</tr></thead><tbody>
+<tr>
+<td> 1</td>
+<td>A</td>
+<td>2</td>
+<td>State the scope of macroeconomics. </td>
+</tr>
+<tr>
+<td> 2</td>
+<td>A</td>
+<td>2</td>
+<td>Differentiate money flow and real flow. </td>
+</tr>
+<tr>
+<td> 15</td>
+<td>B</td>
+<td>5</td>
+<td>How do business firms use macroeconomic concepts and theories to assess economic environment? Explain. </td>
+</tr>
+</tbody></table>
+<p>Three of the ten Section-A slots and one Section-B slot came out of this 3-hour unit in a single year. It is small but disproportionately examined — every section below is written with that in mind.</p>
+<hr>
+<h2>1.1 What macroeconomics is</h2>
+<p>Macroeconomics studies the behaviour and performance of <strong>the economy as a whole</strong>. Rather than asking what one household buys or what one firm charges, it asks what determines the total output of a country, how many of its people are employed, what happens to the general level of prices, and how it trades with the rest of the world.</p>
+<p>The discipline has never had one agreed definition, and the textbook is candid about this — Mankiw is quoted calling it "a young and imperfect science". Four definitions are worth knowing because each highlights a different face of the subject:</p>
+<table><thead><tr>
+<th> Economist</th>
+<th>Emphasis </th>
+</tr></thead><tbody>
+<tr>
+<td> <strong>Gardner Ackley</strong></td>
+<td>The <em>overall dimensions</em> of economic life — aggregate volume, employment of resources, national income, the general price level </td>
+</tr>
+<tr>
+<td> <strong>Kenneth Boulding</strong></td>
+<td><em>Aggregates</em>, not individual quantities — "not with individual incomes, but with the national income" </td>
+</tr>
+<tr>
+<td> <strong>J. M. Culbertson</strong></td>
+<td>Its four pillars: <em>income, employment, prices and money</em> </td>
+</tr>
+<tr>
+<td> <strong>Paul Samuelson</strong></td>
+<td>The <em>behaviour of the economy as a whole</em> — output, employment, prices and foreign trade </td>
+</tr>
+</tbody></table>
+<p>Boulding's is the most quotable in an exam because it states the method (aggregation) rather than just the topic list.</p>
+<p><strong>A working definition to memorise:</strong> macroeconomics is the study of the behaviour and performance of the economy as a whole, and in particular of the relationships and interaction between the forces that determine the level and growth of national output and employment, the general price level, and the balance of payments.</p>
+<h3>The questions macroeconomics exists to answer</h3>
+<p>A faster way to convey the subject matter than any definition — and a good opening for a long answer:</p>
+<ul>
+<li>What determines total output, the general price level and overall employment in a country?</li>
+<li>How is the <strong>equilibrium</strong> level of national income determined?</li>
+<li>What causes fluctuations in national output and employment?</li>
+<li>What determines the level of foreign trade and the trade balance?</li>
+<li>What causes disequilibrium in the balance of payments?</li>
+<li>How do monetary and fiscal policy affect the economy, and which policies put it on a growth path?</li>
+</ul>
+<hr>
+<h2>1.2 The scope of macroeconomics ★ <em>(real 2023, Section A, Q1)</em></h2>
+<p>"Scope" in a 2-mark question means: <strong>what does the subject cover, and in what capacity.</strong> A full answer has three layers. For 2 marks give layer 1 plus two or three items from layer 2; the rest is there for the 5- and 10-mark versions.</p>
+<h3>Layer 1 — Macroeconomics is both a theoretical and a policy science</h3>
+<p>This is the single most important sentence about its scope, and the book devotes a whole section to it (§1.3).</p>
+<ul>
+<li><strong>As a theoretical science</strong> it builds models that explain how macro variables behave and how they are related — the theory of national income determination, of consumption, saving and investment, of employment and growth, of the price level, of product- and money-market equilibrium, of the exchange rate and the balance of payments.</li>
+<li><strong>As a policy science</strong> it uses that framework to diagnose real problems — unemployment, inflation, recession, stagflation — and to design and evaluate the monetary and fiscal policies that treat them.</li>
+</ul>
+<p>Dwivedi's conclusion is the line to reproduce: in macroeconomics, <strong>theory and policy go together</strong>. Theory without policy is idle; policy without theory is guesswork, and "any random choice and application of policy measures … can do more harm than good".</p>
+<h3>Layer 2 — The issue areas it covers</h3>
+<p>The subject matter is conventionally grouped into six problem areas (Dwivedi §2.1):</p>
+<ol>
+<li><strong>Growth</strong> — what determines the growth rate of national output, and why some economies grow faster than others.</li>
+<li><strong>Business cycles</strong> — the recurring expansion and contraction of activity, and how to moderate it.</li>
+<li><strong>Inflation</strong> — its causes, measurement and effects.</li>
+<li><strong>Unemployment and poverty</strong> — their types, costs and remedies.</li>
+<li><strong>Budgetary deficits</strong> — government revenue, expenditure and the consequences of the gap.</li>
+<li><strong>International economic issues</strong> — trade, the balance of payments and the exchange rate.</li>
+</ol>
+<h3>Layer 3 — The analytical concepts it works with</h3>
+<p>Scope is also <em>method</em>. Four distinctions run through the whole course, so learn them here (§2.2):</p>
+<ul>
+<li><strong>Stock vs flow.</strong> A <strong>stock</strong> is measured <em>at a point in time</em> and has no time dimension — capital, money supply, wealth, unemployment on a given day. A <strong>flow</strong> is measured <em>over a period</em> — income, investment, consumption, exports. Wealth is a stock; income is a flow. Getting this wrong is a classic exam error.</li>
+<li><strong>Equilibrium vs disequilibrium.</strong> Equilibrium is a state in which opposing forces balance and there is no inherent tendency to change; disequilibrium is any departure from it.</li>
+<li><strong>Partial vs general equilibrium.</strong> Partial equilibrium studies one market in isolation, holding everything else constant; general equilibrium studies all markets simultaneously, allowing for the feedback between them. Macroeconomics is largely general-equilibrium in spirit.</li>
+<li><strong>Static, comparative-static and dynamic analysis.</strong></li>
+<li><em>Static</em> — equilibrium at a point in time, with no reference to the path taken.</li>
+<li><em>Comparative static</em> — compares two equilibrium positions before and after a change, without describing the journey between them.</li>
+<li><em>Dynamic</em> — traces the actual <strong>path</strong> of adjustment through time, i.e. how variables move period by period from one equilibrium to another.</li>
+</ul>
+<blockquote><p><strong>Worth knowing:</strong> the 2022 paper (under the old ECO 212 code) asked for a 3-mark explanation of <strong>macro dynamic analysis</strong>. The code is superseded so it is not a confirmed ECO 204 question, but the concept is squarely inside "scope" and costs one line to hold ready.</p></blockquote>
+<hr>
+<h2>1.3 Microeconomics compared with macroeconomics</h2>
+<p>Distinguishing the two is a standard short-answer question and also sharpens what "macro" means.</p>
+<table><thead><tr>
+<th></th>
+<th>Microeconomics</th>
+<th>Macroeconomics </th>
+</tr></thead><tbody>
+<tr>
+<td> <strong>Unit of study</strong></td>
+<td>Individual units — a consumer, a firm, a single product's price</td>
+<td>The economy as a whole — national income, total employment, the general price level </td>
+</tr>
+<tr>
+<td> <strong>What it holds constant</strong></td>
+<td>The macro variables (national income, general price level, aggregate employment)</td>
+<td>The micro decisions (individual household and firm choices, individual prices) </td>
+</tr>
+<tr>
+<td> <strong>Method</strong></td>
+<td>"Looking at the economy through a microscope" (Lerner)</td>
+<td>Aggregation — "not with individual prices, but with the price level" (Boulding) </td>
+</tr>
+<tr>
+<td> <strong>Typical question</strong></td>
+<td>Why did the price of rice rise?</td>
+<td>Why did the general price level rise? </td>
+</tr>
+</tbody></table>
+<p>Note the neat symmetry, which is the sentence examiners want: <strong>what microeconomics treats as constant, macroeconomics treats as variable, and vice versa.</strong></p>
+<h3>Machlup's caution</h3>
+<p>Fritz Machlup examined four criteria that had been proposed for separating the two branches — how one looks at the economy, whose actions are analysed, what is being aggregated, and what role is given to price relationships — and concluded there is <strong>no agreement</strong> on where the boundary lies. The line is genuinely blurred: a study of the IT industry is microeconomics, but extend it to that industry's effect on national employment, GDP and the balance of payments and it becomes macroeconomics.</p>
+<h3>The micro–macro paradoxes (Boulding)</h3>
+<p>Boulding justified macroeconomics as a <em>separate</em> branch precisely because some propositions that are true for an individual are false for the economy as a whole. Three examples:</p>
+<ol>
+<li><strong>Cash holding.</strong> If every individual decides to hold more cash, each one's holding rises — but the total stock of money in the economy is unchanged.</li>
+<li><strong>Saving and investment.</strong> If one person saves and invests more, their income rises. If <em>everyone</em> saves more out of a given income, consumption expenditure falls by the same amount, aggregate demand falls, investment prospects worsen, and aggregate income may actually <strong>fall</strong>. <em>(This is the seed of the paradox of thrift, developed fully in Unit 4 — flag it here and the Unit 4 answer writes itself.)</em></li>
+<li><strong>Wages and profits.</strong> At the individual level the split between wages and profits looks like a matter of bargaining power; for the economy it depends on investment decisions and society-wide liquidity preference.</li>
+</ol>
+<p>Boulding's own conclusion is the exam line: it is these paradoxes, more than anything else, that justify studying the system as a whole rather than as a list of its parts.</p>
+<hr>
+<h2>1.4 Why macroeconomics matters — and where it falls short</h2>
+<h3>Importance</h3>
+<ul>
+<li>It explains how the economy actually works at the aggregate level, which no amount of micro-level detail will reveal.</li>
+<li>It supplies the framework for <strong>diagnosing</strong> national problems — unemployment, inflation, recession, balance-of-payments crises.</li>
+<li>It provides the tools for <strong>designing</strong> monetary and fiscal policy, and for judging whether a policy is working.</li>
+<li>It underpins <strong>business decision-making</strong> — the subject of §1.5 below, and of a real exam question.</li>
+</ul>
+<h3>Limitations</h3>
+<p>An honest answer needs these; they are also a ready-made 5-mark question.</p>
+<ol>
+<li><strong>It hides structural change inside the aggregate.</strong> Output may grow while capital is being substituted for labour (raising unemployment) and income is shifting from poorer to richer groups. The headline number looks healthy; the composition is not. Likewise a stable price index can conceal falling agricultural prices offset by rising industrial ones.</li>
+<li><strong>Aggregates are approximations, not reality.</strong> As Boulding put it, an aggregate is "a picture or approximation of reality". The components are heterogeneous, and non-marketed goods and services have to be <em>imputed</em> rather than measured — so the totals can be over- or under-stated.</li>
+<li><strong>The measures themselves are error-prone.</strong> Hicks objected that the major macro magnitudes — GNP, fixed capital investment, the balance of payments, employment — are "subject to errors and (what is worse) to ambiguities".</li>
+</ol>
+<p>The balanced conclusion: these are reasons for care in interpretation, not reasons to dismiss the subject.</p>
+<hr>
+<h2>1.5 Macroeconomics and the business environment ★★ <em>(real 2023, Section B, Q15 — 5 marks)</em></h2>
+<p>This is the syllabus's second sub-topic and it has already been examined, so treat it as the most likely 5-mark item in the unit.</p>
+<p><strong>The argument in one paragraph.</strong> Business decisions with long-run consequences — building capacity, opening a plant, launching a brand, entering a new line of business — are bets on the future. What they are bets <em>on</em> is the <strong>business environment</strong>: the economic, political and social conditions the firm will operate in. Political and social conditions taken as given, it is the <strong>macroeconomic</strong> conditions that decide whether the bet pays. Macroeconomics is the discipline that lets a manager read those conditions instead of guessing at them.</p>
+<p><strong>The seven factors a manager reads</strong> — this is the body of the answer, and the seven headings are what earn the marks:</p>
+<table><thead><tr>
+<th> #</th>
+<th>Factor</th>
+<th>Why it matters to the firm </th>
+</tr></thead><tbody>
+<tr>
+<td> 1</td>
+<td><strong>Current and expected trend in GDP/GNP</strong></td>
+<td>High sustained growth widens the market for every kind of modern good and service; stagnation or contraction narrows it </td>
+</tr>
+<tr>
+<td> 2</td>
+<td><strong>Trend in aggregate demand</strong> for consumer and capital goods</td>
+<td>Rising demand signals expansion. Note the trap: demand can stagnate <em>even while GDP rises</em>, and then prospects are worse than the headline suggests </td>
+</tr>
+<tr>
+<td> 3</td>
+<td><strong>Rate of saving and investment</strong></td>
+<td>A high saving rate means investible funds are available and cheap; a low one means scarcity and a rising interest rate, which is a direct constraint on expansion </td>
+</tr>
+<tr>
+<td> 4</td>
+<td><strong>The general price level and its expected path</strong></td>
+<td>Both high inflation and deflation damage prospects. <strong>Moderate, stable inflation is the good case</strong> — not zero </td>
+</tr>
+<tr>
+<td> 5</td>
+<td><strong>The level and trend of employment</strong></td>
+<td>Rising employment raises wage incomes, and most wage income is spent on consumer goods, so demand rises. Rising unemployment cuts demand and worsens the social environment too </td>
+</tr>
+<tr>
+<td> 6</td>
+<td><strong>International aspects</strong></td>
+<td>Trade flows, capital inflows and outflows, and labour migration with its remittances. A firm need not trade abroad to be affected — a currency movement can undercut it at home </td>
+</tr>
+<tr>
+<td> 7</td>
+<td><strong>Government's monetary and fiscal policy</strong></td>
+<td>A liberal monetary policy (low interest rates, easy funds) supports business; a tight one restrains it. Fiscal policy — taxation and government spending — is used to steer the cycle </td>
+</tr>
+</tbody></table>
+<p><strong>How to close the answer:</strong> knowledge of macroeconomics lets a manager anticipate <em>mechanisms</em>, not just headlines — how a rise in the bank rate will feed through to consumption and saving and then to their own industry, and what safeguards to put in place before it does.</p>
+<blockquote><p>⚠ <strong>Nepal note (not in the book).</strong> Dwivedi's worked examples are Indian — RBI policy, Tata, Mahindra. In a Nepali answer the same seven factors apply, but the concrete examples that carry weight are <strong>NRB's monetary policy stance</strong>, the <strong>Government of Nepal budget</strong>, <strong>remittance inflows</strong> (which drive consumer demand across the economy), and the exchange-rate peg to the Indian rupee. Factor 6 is unusually powerful for Nepal precisely because remittances are so large a share of household income — see §1.9.</p></blockquote>
+<hr>
+<h2>1.6 The circular flow: real flow and money flow ★ <em>(real 2023, Section A, Q2 — 2 marks)</em></h2>
+<p>An economy can be pictured as a continuous circulation between two groups: <strong>households</strong>, who own the factors of production and consume, and <strong>firms</strong>, who hire factors and produce. Every transaction between them has <strong>two sides moving in opposite directions</strong>.</p>
+<table><thead><tr>
+<th></th>
+<th><strong>Real flow</strong> (product flow)</th>
+<th><strong>Money flow</strong> (income flow) </th>
+</tr></thead><tbody>
+<tr>
+<td> <strong>What moves</strong></td>
+<td>Physical factor services and goods</td>
+<td>Money payments </td>
+</tr>
+<tr>
+<td> <strong>In the factor market</strong></td>
+<td>Factor services (land, labour, capital, enterprise) from households → firms</td>
+<td>Factor incomes — rent, wages, interest, profit — from firms → households </td>
+</tr>
+<tr>
+<td> <strong>In the product market</strong></td>
+<td>Goods and services from firms → households</td>
+<td>Consumption expenditure from households → firms </td>
+</tr>
+<tr>
+<td> <strong>Measured in</strong></td>
+<td>Physical units</td>
+<td>Money units </td>
+</tr>
+<tr>
+<td> <strong>Direction</strong></td>
+<td>Opposite to the money flow</td>
+<td>Opposite to the real flow </td>
+</tr>
+</tbody></table>
+<p><strong>The two-mark answer:</strong> the real flow is the movement of factor services and of goods and services between households and firms; the money flow is the movement of the payments made for them — factor incomes one way and consumption expenditure the other. <strong>They are equal in value and opposite in direction</strong>, which is why the flow is circular and self-sustaining.</p>
+<hr>
+<h2>1.7 The two-sector model — a closed private economy</h2>
+<p>The simplest model: <strong>households and firms only</strong>. No government, no foreign trade. It is deliberately unrealistic; its purpose is to expose the circularity cleanly before complications are added.</p>
+<p><strong>Households are assumed to</strong> own all factors of production; earn their entire income as factor returns (wages, rent, interest, profit); consume all consumer goods; and spend their whole income on what firms produce.</p>
+<p><strong>Firms are assumed to</strong> own no resources of their own; hire all factors from households; produce and sell to households; and retain nothing (no corporate saving).</p>
+<p><strong>The model's assumptions:</strong> households spend their whole income and hoard nothing; firms produce exactly what is demanded and hold no inventory; firms pay out all earnings as rent, wages, interest and profit; and nothing enters or leaves from outside.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+<h3>The circular flow in a two-sector economy</h3>
+<p class="dgm-sub">Dwivedi Fig. 3.1 · real flow solid, money flow dashed</p>
+<svg viewBox="0 0 420 288" xmlns="http://www.w3.org/2000/svg">
+  <text class="tm" x="210" y="20" text-anchor="middle">FACTOR MARKET</text>
+  <path class="cd" d="M45 110 L45 55 L375 55 L375 104"/>
+  <path class="dot" d="M375 110 l-5 -11 l10 0 z"/>
+  <text class="td" x="210" y="47" text-anchor="middle">factor services</text>
+  <path class="cs" style="stroke-dasharray:5 4" d="M341 110 L341 85 L79 85 L79 104"/>
+  <path class="dot" d="M79 110 l-5 -11 l10 0 z"/>
+  <text class="tsu" x="210" y="100" text-anchor="middle">factor incomes (Y)</text>
+  <rect x="12" y="110" width="100" height="62" rx="7" class="ax"/>
+  <rect x="308" y="110" width="100" height="62" rx="7" class="ax"/>
+  <text class="tb" x="62" y="134" text-anchor="middle">Households</text>
+  <text class="ts" x="62" y="149" text-anchor="middle">factor owners</text>
+  <text class="ts" x="62" y="162" text-anchor="middle">and consumers</text>
+  <text class="tb" x="358" y="134" text-anchor="middle">Firms</text>
+  <text class="ts" x="358" y="149" text-anchor="middle">factor users</text>
+  <text class="ts" x="358" y="162" text-anchor="middle">and producers</text>
+  <path class="cs" style="stroke-dasharray:5 4" d="M45 172 L45 216 L375 216 L375 178"/>
+  <path class="dot" d="M375 172 l-5 11 l10 0 z"/>
+  <text class="tsu" x="210" y="208" text-anchor="middle">consumption spending (C)</text>
+  <path class="cd" d="M341 172 L341 248 L79 248 L79 178"/>
+  <path class="dot" d="M79 172 l-5 11 l10 0 z"/>
+  <text class="td" x="210" y="264" text-anchor="middle">goods and services</text>
+  <text class="tm" x="210" y="282" text-anchor="middle">PRODUCT MARKET</text>
+</svg>
+<figcaption><p>The upper half is the factor market, the lower half the product market. In each,
+the real flow and the money flow run in <em>opposite</em> directions; joined up, they form two
+continuous circles turning against each other.</p>
+<div class="dgm-marks"><b>Label to earn marks</b>Mark the two markets, and show real and money
+flows moving in opposite directions in each. State that the value of the flows is equal.</div>
+</figcaption></figure></div>
+<h3>The identities</h3>
+<p>The striking feature of the flow is that <strong>the values that flow are equal</strong>. Writing Y for household income, FP for factor payments, w, r, i, p for wages, rent, interest and profit, V for the value of output and M for the money flow at constant prices:</p>
+<ul>
+<li>Y ≡ FP</li>
+<li>FP ≡ w + r + i + p</li>
+<li>w + r + i + p ≡ V ≡ M</li>
+</ul>
+<p>and therefore</p>
+<blockquote><p><strong>Y ≡ FP ≡ V</strong> — household income ≡ factor payments ≡ the money value of output.</p></blockquote>
+<p>This identity is not a curiosity. It is the reason national income can be measured three different ways and give the same answer (Unit 2), and it is the foundation on which income determination is built (Unit 4). <strong>Learn it here.</strong></p>
+<h3>Withdrawals and injections</h3>
+<p>What decides how <em>big</em> the circle is? In reality income leaks out of the flow and is added back in.</p>
+<ul>
+<li>A <strong>withdrawal (leakage)</strong> is income received but <em>not</em> spent on domestically produced output — household saving set aside against old age or job loss, or a firm withholding receipts in anticipation of a downturn. Withdrawals <strong>shrink</strong> the flow. Withdrawal is comparable to hoarding.</li>
+<li>An <strong>injection</strong> is spending <em>over and above</em> current income or receipts — a household spending inherited savings, past hoardings or borrowed money; a firm spending past savings or borrowing from outside the model. Injections <strong>enlarge</strong> the flow.</li>
+</ul>
+<p>Saving is the key case, and its status is subtle: <strong>saving is a withdrawal, but once savings are actually spent as investment they become an injection.</strong> That distinction is the whole of §1.7's next diagram, and it returns in Unit 4 as the saving–investment equality.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+<h3>Withdrawals and injections</h3>
+<p class="dgm-sub">Dwivedi Fig. 3.2 · what makes the circle grow or shrink</p>
+<svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="115" cy="105" r="34" class="ax"/>
+  <circle cx="285" cy="105" r="34" class="ax"/>
+  <text class="tb" x="115" y="110" text-anchor="middle">H</text>
+  <text class="tb" x="285" y="110" text-anchor="middle">F</text>
+  <text class="ts" x="115" y="126" text-anchor="middle">households</text>
+  <text class="ts" x="285" y="126" text-anchor="middle">firms</text>
+  <path class="cd" d="M149 92 L251 92"/>
+  <path class="dot" d="M251 92 l-10 -4 l0 8 z"/>
+  <path class="cd" d="M251 118 L149 118"/>
+  <path class="dot" d="M149 118 l10 -4 l0 8 z"/>
+  <path class="cs" d="M285 60 L285 26"/>
+  <path class="dot" d="M285 26 l-4 10 l8 0 z"/>
+  <text class="tsu" x="285" y="18" text-anchor="middle">firms' withdrawals (−)</text>
+  <path class="cc" d="M115 26 L115 60"/>
+  <path class="dot" d="M115 60 l-4 -10 l8 0 z"/>
+  <text class="tc" x="115" y="18" text-anchor="middle">firms' injections (+)</text>
+  <path class="cs" d="M115 150 L115 184"/>
+  <path class="dot" d="M115 184 l-4 -10 l8 0 z"/>
+  <text class="tsu" x="115" y="199" text-anchor="middle">household withdrawals (−)</text>
+  <path class="cc" d="M285 184 L285 150"/>
+  <path class="dot" d="M285 150 l-4 10 l8 0 z"/>
+  <text class="tc" x="285" y="199" text-anchor="middle">household injections (+)</text>
+</svg>
+<figcaption><p>Withdrawals drain the circular flow and shrink national income; injections feed it
+and expand it. The size of the flow at any time is the net result of the two.</p>
+<div class="dgm-marks"><b>Label to earn marks</b>Name at least one withdrawal and one injection on
+each side, and say which direction each moves national income.</div>
+</figcaption></figure></div>
+<h3>Adding the capital market</h3>
+<p>The assumption that households hand their savings straight to firms is unrealistic. In practice savings pass through a <strong>financial (capital) market</strong> — banks and financial intermediaries such as insurance companies and finance corporations — which take deposits and channel them to firms as loans, shares and debentures.</p>
+<p>Household income now splits in two: <strong>Y = C + S</strong>. Consumption (C) flows directly to firms; saving (S) takes the longer route through the capital market and reaches firms as <strong>investment (I)</strong>.</p>
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+<h3>Two-sector model with a capital market</h3>
+<p class="dgm-sub">Dwivedi Fig. 3.3 · saving reaches firms as investment</p>
+<svg viewBox="0 0 400 212" xmlns="http://www.w3.org/2000/svg">
+  <rect x="14" y="80" width="88" height="46" rx="6" class="ax"/>
+  <rect x="152" y="80" width="96" height="46" rx="6" class="ax"/>
+  <rect x="298" y="80" width="88" height="46" rx="6" class="ax"/>
+  <text class="tb" x="58" y="108" text-anchor="middle">Households</text>
+  <text class="tb" x="200" y="101" text-anchor="middle">Capital</text>
+  <text class="tb" x="200" y="115" text-anchor="middle">Market</text>
+  <text class="tb" x="342" y="108" text-anchor="middle">Firms</text>
+  <path class="cs" style="stroke-dasharray:5 4" d="M102 95 L152 95"/>
+  <path class="dot" d="M152 95 l-10 -4 l0 8 z"/>
+  <text class="tsu" x="127" y="86" text-anchor="middle">S</text>
+  <path class="cs" style="stroke-dasharray:5 4" d="M248 95 L298 95"/>
+  <path class="dot" d="M248 95 l10 -4 l0 8 z" style="opacity:0"/>
+  <path class="dot" d="M298 95 l-10 -4 l0 8 z"/>
+  <text class="tsu" x="273" y="86" text-anchor="middle">I</text>
+  <path class="cd" d="M58 126 C58 170 342 170 342 126"/>
+  <path class="dot" d="M342 126 l-4 10 l8 0 z"/>
+  <text class="td" x="200" y="188" text-anchor="middle">consumption expenditure (C)</text>
+  <path class="cd" d="M342 80 C342 34 58 34 58 80"/>
+  <path class="dot" d="M58 80 l-4 10 l8 0 z"/>
+  <text class="td" x="200" y="26" text-anchor="middle">factor payments (Y = C + S)</text>
+</svg>
+<figcaption><p>Income splits into consumption and saving, and the two take different routes to the
+same destination. The whole of household income still returns to the firms — nothing is lost,
+provided saving is fully invested.</p>
+<div class="dgm-marks"><b>Label to earn marks</b>Show S leaving households and I entering firms,
+and state that Y = C + S. Note that the flow is undisturbed only if S is fully converted into I.</div>
+</figcaption></figure></div>
+<hr>
+<h2>1.8 The three-sector model — adding government</h2>
+<p>Adding the government makes the picture materially more realistic; government spending is a large share of GDP in every modern economy. Two fiscal operations are introduced:</p>
+<ul>
+<li><strong>Taxes (T)</strong> — direct and indirect. Taxes are a <strong>withdrawal</strong>: they reduce private disposable income and therefore both consumption and saving. Indirect taxes are collected by firms from households and passed to the government; corporate income tax comes directly from firms.</li>
+<li><strong>Government expenditure (G)</strong> — purchases of factor services from households and of goods and services from firms, plus <strong>transfer payments</strong> such as pensions, subsidies and unemployment allowances. All of these are <strong>injections</strong>. Transfers are worth noting separately: they add to household income without any good or service flowing back in return.</li>
+</ul>
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+<h3>The circular flow with a government sector</h3>
+<p class="dgm-sub">Dwivedi Fig. 3.4 · money flows only; every flow but transfers has a goods counterflow</p>
+<svg viewBox="0 0 440 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="170" y="8" width="100" height="40" rx="7" class="ax"/>
+  <text class="tb" x="220" y="33" text-anchor="middle">Government</text>
+  <rect x="16" y="120" width="100" height="54" rx="7" class="ax"/>
+  <rect x="170" y="120" width="100" height="54" rx="7" class="ax"/>
+  <rect x="324" y="120" width="100" height="54" rx="7" class="ax"/>
+  <text class="tb" x="66" y="152" text-anchor="middle">Households</text>
+  <text class="tb" x="220" y="145" text-anchor="middle">Capital</text>
+  <text class="tb" x="220" y="159" text-anchor="middle">Market</text>
+  <text class="tb" x="374" y="152" text-anchor="middle">Firms</text>
+  <path class="cs" d="M50 120 L50 80 L185 80 L185 54"/>
+  <path class="dot" d="M185 48 l-5 11 l10 0 z"/>
+  <text class="tsu" x="112" y="72" text-anchor="middle">taxes (T)</text>
+  <path class="cs" d="M390 120 L390 80 L255 80 L255 54"/>
+  <path class="dot" d="M255 48 l-5 11 l10 0 z"/>
+  <text class="tsu" x="328" y="72" text-anchor="middle">taxes (T)</text>
+  <path class="cc" d="M205 48 L205 100 L82 100 L82 114"/>
+  <path class="dot" d="M82 120 l-5 -11 l10 0 z"/>
+  <text class="tc" x="143" y="114" text-anchor="middle">G, transfers</text>
+  <path class="cc" d="M235 48 L235 100 L358 100 L358 114"/>
+  <path class="dot" d="M358 120 l-5 -11 l10 0 z"/>
+  <text class="tc" x="300" y="114" text-anchor="middle">G, subsidies</text>
+  <path class="cs" style="stroke-dasharray:5 4" d="M116 147 L164 147"/>
+  <path class="dot" d="M170 147 l-11 -5 l0 10 z"/>
+  <text class="tsu" x="140" y="140" text-anchor="middle">S</text>
+  <path class="cs" style="stroke-dasharray:5 4" d="M270 147 L318 147"/>
+  <path class="dot" d="M324 147 l-11 -5 l0 10 z"/>
+  <text class="tsu" x="294" y="140" text-anchor="middle">I</text>
+  <path class="cd" d="M50 174 L50 206 L390 206 L390 180"/>
+  <path class="dot" d="M390 174 l-5 11 l10 0 z"/>
+  <text class="td" x="220" y="222" text-anchor="middle">consumption expenditure (C)</text>
+</svg>
+<figcaption><p>Money taken out of the flow as taxes returns to it as government spending. The
+household–firm flow itself shrinks, because part of income is now routed through the state.</p>
+<div class="dgm-marks"><b>Label to earn marks</b>Show taxes flowing from <em>both</em> households
+and firms, and government expenditure flowing back to both. Mark transfer payments separately and
+say they have no goods counterflow.</div>
+</figcaption></figure></div>
+<h3>The budget position decides the direction</h3>
+<p>Whether the government expands or contracts the flow depends on its budget:</p>
+<table><thead><tr>
+<th> Budget</th>
+<th>Condition</th>
+<th>Effect on the circular flow </th>
+</tr></thead><tbody>
+<tr>
+<td> <strong>Balanced</strong></td>
+<td>G = T</td>
+<td>Neutral — what is withdrawn is exactly injected </td>
+</tr>
+<tr>
+<td> <strong>Deficit</strong></td>
+<td>G > T</td>
+<td><strong>Net injection</strong> → the flow expands </td>
+</tr>
+<tr>
+<td> <strong>Surplus</strong></td>
+<td>G < T</td>
+<td><strong>Net withdrawal</strong> → the flow contracts </td>
+</tr>
+</tbody></table>
+<p>This is the seed of fiscal policy (Unit 5) and of the government-expenditure and tax multipliers (Unit 4). A deficit budget being <em>expansionary</em> is counter-intuitive to many students and is frequently examined — fix it now.</p>
+<hr>
+<h2>1.9 The four-sector model — the open economy</h2>
+<p>Adding the <strong>foreign sector</strong> completes the picture and satisfies the syllabus's "closed <strong>and open</strong> economy". Two kinds of international transaction are included; for simplicity the model assumes the foreign sector consists only of exports and imports of goods and services, that firms conduct the trade in goods and non-labour services, and that <strong>households export labour</strong>.</p>
+<ul>
+<li><strong>Exports (X)</strong> send goods and services out and bring money (foreign exchange) in. Exports are an <strong>injection</strong>.</li>
+<li><strong>Imports (M)</strong> bring goods and services in and send money out. Imports are a <strong>withdrawal</strong>.</li>
+<li><strong>Export of manpower</strong> brings in <strong>foreign remittances</strong> — a further inflow of income to households, and one that has no goods counterflow.</li>
+</ul>
+<div class="nt-diagrams nt-inline"><figure class="dgm">
+<h3>The circular flow in an open (four-sector) economy</h3>
+<p class="dgm-sub">Dwivedi Fig. 3.5 · exports inject, imports withdraw, remittances inject</p>
+<svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+  <rect x="170" y="8" width="100" height="40" rx="7" class="ax"/>
+  <text class="tb" x="220" y="33" text-anchor="middle">Government</text>
+  <rect x="16" y="120" width="100" height="54" rx="7" class="ax"/>
+  <rect x="324" y="120" width="100" height="54" rx="7" class="ax"/>
+  <text class="tb" x="66" y="152" text-anchor="middle">Households</text>
+  <text class="tb" x="374" y="152" text-anchor="middle">Firms</text>
+  <rect x="170" y="232" width="100" height="44" rx="7" class="ax"/>
+  <text class="tb" x="220" y="253" text-anchor="middle">Foreign</text>
+  <text class="tb" x="220" y="267" text-anchor="middle">Sector</text>
+  <path class="cs" d="M50 120 L50 80 L185 80 L185 54"/>
+  <path class="dot" d="M185 48 l-5 11 l10 0 z"/>
+  <text class="tsu" x="112" y="72" text-anchor="middle">taxes (T)</text>
+  <path class="cs" d="M390 120 L390 80 L255 80 L255 54"/>
+  <path class="dot" d="M255 48 l-5 11 l10 0 z"/>
+  <text class="tsu" x="328" y="72" text-anchor="middle">taxes (T)</text>
+  <path class="cc" d="M205 48 L205 100 L82 100 L82 114"/>
+  <path class="dot" d="M82 120 l-5 -11 l10 0 z"/>
+  <text class="tc" x="143" y="114" text-anchor="middle">G</text>
+  <path class="cc" d="M235 48 L235 100 L358 100 L358 114"/>
+  <path class="dot" d="M358 120 l-5 -11 l10 0 z"/>
+  <text class="tc" x="300" y="114" text-anchor="middle">G</text>
+  <path class="cd" d="M122 147 L318 147"/>
+  <path class="dot" d="M324 147 l-11 -5 l0 10 z"/>
+  <path class="dot" d="M116 147 l11 -5 l0 10 z"/>
+  <text class="td" x="220" y="140" text-anchor="middle">domestic circular flow (Y, C)</text>
+  <path class="cc" d="M270 250 L400 250 L400 186"/>
+  <path class="dot" d="M400 180 l-5 11 l10 0 z"/>
+  <text class="tc" x="392" y="216" text-anchor="end">X (+)</text>
+  <path class="cs" d="M348 174 L348 212 L290 212 L290 226"/>
+  <path class="dot" d="M290 232 l-5 -11 l10 0 z"/>
+  <text class="tsu" x="322" y="226" text-anchor="middle">M (−)</text>
+  <path class="cc" d="M170 254 L60 254 L60 186"/>
+  <path class="dot" d="M60 180 l-5 11 l10 0 z"/>
+  <text class="tc" x="118" y="270" text-anchor="middle">remittances (+)</text>
+</svg>
+<figcaption><p>The foreign sector adds one injection (exports, plus remittances earned by labour
+sent abroad) and one withdrawal (imports). Whether it expands or contracts the domestic flow depends
+on the balance between them.</p>
+<div class="dgm-marks"><b>Label to earn marks</b>Mark X as an injection and M as a withdrawal, and
+show remittances entering the household box. State the net effect in terms of X − M.</div>
+</figcaption></figure></div>
+<h3>The net effect: it turns on the trade balance</h3>
+<p>Since exports inject and imports withdraw, the foreign sector's effect on the size of the circular flow is decided by <strong>X − M</strong>:</p>
+<table><thead><tr>
+<th> Condition</th>
+<th>Meaning</th>
+<th>Effect on the circular flow </th>
+</tr></thead><tbody>
+<tr>
+<td> <strong>X > M</strong></td>
+<td>Trade surplus — inflow exceeds outflow</td>
+<td>Net injection → flow <strong>expands</strong> </td>
+</tr>
+<tr>
+<td> <strong>X = M</strong></td>
+<td>Balanced trade</td>
+<td>No net effect </td>
+</tr>
+<tr>
+<td> <strong>X < M</strong></td>
+<td>Trade deficit — outflow exceeds inflow</td>
+<td>Net withdrawal → flow <strong>contracts</strong> </td>
+</tr>
+</tbody></table>
+<blockquote><p>⚠ <strong>Nepal note (not in the book, but directly relevant and likely to be rewarded).</strong> Nepal runs a large and persistent <strong>trade deficit</strong> — X is far smaller than M — which by the logic above is a continuous net withdrawal from the circular flow. What offsets it is the <em>other</em> inflow in this model: <strong>remittances from Nepalis working abroad</strong>, which enter the household box directly and sustain consumption demand. This is why the four-sector model is not an abstraction for Nepal but the only version that describes it: a country whose circular flow is held up by an income inflow that has no goods counterflow. Keep this in reserve — it converts a textbook answer into one about your own economy, and it connects forward to the balance of payments and to <strong>GNDI</strong> in Unit 2.</p></blockquote>
+<hr>
+<h2>1.10 Exam checklist for Unit 1</h2>
+<h3>Definitions to be able to state cold</h3>
+<ul>
+<li>Macroeconomics (working definition, plus Boulding's aggregation line)</li>
+<li>Real flow / money flow</li>
+<li>Stock vs flow variable</li>
+<li>Static, comparative-static and dynamic analysis</li>
+<li>Withdrawal (leakage) and injection</li>
+<li>Balanced / deficit / surplus budget, and which expands the flow</li>
+</ul>
+<h3>Confirmed real questions — rehearse these exactly</h3>
+<ol>
+<li><strong>State the scope of macroeconomics.</strong> <em>(2023, A, 2 marks)</em> → theoretical <strong>and</strong> policy science; then the six issue areas.</li>
+<li><strong>Differentiate money flow and real flow.</strong> <em>(2023, A, 2 marks)</em> → what moves, in which market, in which direction; equal in value, opposite in direction.</li>
+<li><strong>How do business firms use macroeconomic concepts and theories to assess economic environment?</strong> <em>(2023, B, 5 marks)</em> → the seven factors, with a closing line on anticipating mechanisms.</li>
+</ol>
+<h3>Likely but not yet confirmed</h3>
+<ul>
+<li>Distinguish microeconomics and macroeconomics / Machlup's view / micro–macro paradoxes</li>
+<li>Limitations of macroeconomics</li>
+<li>Describe the economy as a circular flow and explain what determines its magnitude <em>(this is Dwivedi's own review question 2 for Ch 3 — a natural 5- or 10-marker)</em></li>
+<li>Explain macro dynamic analysis <em>(asked 2022 under the superseded ECO 212 code)</em></li>
+</ul>
+<h3>Diagrams that must be reproducible from memory</h3>
+<ol>
+<li>Two-sector circular flow with factor and product markets, real and money flows</li>
+<li>Withdrawals and injections</li>
+<li>Two-sector with the capital market (S → I)</li>
+<li>Three-sector with government (T out, G back)</li>
+<li>Four-sector with the foreign sector (X, M, remittances)</li>
+</ol>
+<p><strong>Every one of Dwivedi's five figures in Ch 3 (Figs 3.1–3.5) has been drawn above.</strong> None was left as prose only.</p>
+<h3>Source map</h3>
+<table><thead><tr>
+<th> Section here</th>
+<th>Dwivedi 3e</th>
+<th>Book pages</th>
+<th>PDF pages </th>
+</tr></thead><tbody>
+<tr>
+<td> 1.1 What macroeconomics is</td>
+<td>§1.2</td>
+<td>7–8</td>
+<td>21–22 </td>
+</tr>
+<tr>
+<td> 1.2 Scope</td>
+<td>§1.3, §2.1, §2.2</td>
+<td>9–10, 24–33</td>
+<td>23–24, 38–47 </td>
+</tr>
+<tr>
+<td> 1.3 Micro vs macro</td>
+<td>§1.4</td>
+<td>10–12</td>
+<td>24–26 </td>
+</tr>
+<tr>
+<td> 1.4 Importance / limitations</td>
+<td>§1.6, §1.7</td>
+<td>16–22</td>
+<td>30–36 </td>
+</tr>
+<tr>
+<td> 1.5 Business environment</td>
+<td>§1.6(5)</td>
+<td>18–21</td>
+<td>32–35 </td>
+</tr>
+<tr>
+<td> 1.6–1.9 Circular flows</td>
+<td>§3.1–3.3</td>
+<td>41–48</td>
+<td>55–62 </td>
+</tr>
+</tbody></table>
+<p>⚠ <strong>Written from scratch, not book-backed:</strong> the two Nepal notes in §1.5 and §1.9 (remittances, trade deficit, NRB/GoN examples). Dwivedi's examples are Indian throughout.</p>
+
+`
+};
+
+window.SUBJECT_QUIZ = window.SUBJECT_QUIZ || {};
+window.SUBJECT_QUIZ["eco204"] = {
+  "0": [
+  {q:"Macroeconomics is best described as the study of:", o:["the price of a single commodity in one market","the behaviour and performance of the economy as a whole","how one firm maximises its profit","how a household allocates its budget"], a:1, w:3,
+   why:"Macroeconomics studies aggregates — national output, total employment, the general price level and the balance of payments — rather than individual units."},
+  {q:"Which economist defined macroeconomics as dealing 'not with individual incomes, but with the national income'?", o:["Gardner Ackley","Kenneth Boulding","J. M. Culbertson","Paul Samuelson"], a:1, w:2,
+   why:"Boulding's definition is built on aggregation, contrasting individual quantities with aggregates of those quantities."},
+  {q:"Culbertson defined macroeconomic theory as the theory of:", o:["income, employment, prices and money","supply, demand, cost and revenue","land, labour, capital and enterprise","saving, investment, exports and imports"], a:0, w:1,
+   why:"Culbertson's four pillars — income, employment, prices and money — summarise the field compactly."},
+  {q:"Saying macroeconomics is both a theoretical and a policy science means that it:", o:["is purely abstract with no real application","builds models AND uses them to diagnose and treat real problems","only describes past data","replaces the need for microeconomics"], a:1, w:3,
+   why:"As theory it explains how macro variables relate; as policy science it diagnoses unemployment, inflation and recession and guides monetary and fiscal remedies. Theory and policy go together."},
+  {q:"Which of these is NOT one of the six issue areas that define the scope of macroeconomics?", o:["Business cycles","Inflation","Pricing of an individual firm's output","Balance of payments and the exchange rate"], a:2, w:3,
+   why:"Pricing by an individual firm is microeconomics. The six macro issue areas are growth, business cycles, inflation, unemployment and poverty, budgetary deficits, and international issues."},
+  {q:"A stock variable is one that is:", o:["measured over a period of time","measured at a point in time","always larger than a flow variable","expressed only in physical units"], a:1, w:3,
+   why:"A stock has no time dimension — it is measured at an instant (capital, money supply, wealth). A flow is measured over a period (income, investment, exports)."},
+  {q:"Which pair correctly classifies the variables?", o:["Wealth is a flow; income is a stock","Wealth is a stock; income is a flow","Both wealth and income are stocks","Both wealth and income are flows"], a:1, w:3,
+   why:"Wealth exists at a point in time (stock); income accrues over a period (flow). Confusing the two is a common exam error."},
+  {q:"Which of the following is a flow variable?", o:["The money supply on 1 Shrawan","The capital stock of a firm","Annual investment expenditure","Total wealth of a household"], a:2, w:2,
+   why:"Investment expenditure is measured per period, so it is a flow. The other three are measured at a point in time."},
+  {q:"Comparative static analysis:", o:["traces the path of adjustment period by period","compares two equilibrium positions before and after a change","studies only a single market in isolation","assumes the economy is never in equilibrium"], a:1, w:2,
+   why:"Comparative statics compares the old and new equilibria without describing the journey between them. Tracing the actual path is dynamic analysis."},
+  {q:"Dynamic analysis is distinguished by the fact that it:", o:["ignores time altogether","traces the actual path of adjustment through time","assumes all variables are constant","applies only to individual firms"], a:1, w:2,
+   why:"Dynamic analysis follows how variables move period by period from one equilibrium to another — the path itself is the object of study."},
+  {q:"Partial equilibrium analysis differs from general equilibrium analysis because it:", o:["studies one market in isolation, holding other things constant","studies all markets simultaneously","applies only to the government sector","ignores prices entirely"], a:0, w:2,
+   why:"Partial equilibrium isolates one market; general equilibrium allows for feedback between all markets, which is closer to the spirit of macroeconomics."},
+  {q:"The basic assumption difference between micro and macroeconomics is that:", o:["both treat the same variables as constant","what micro treats as constant, macro treats as variable, and vice versa","macro assumes individual prices vary and aggregates are fixed","neither makes any assumptions"], a:1, w:3,
+   why:"Microeconomics holds the macro variables constant and lets individual choices vary; macroeconomics does the reverse. This symmetry is the sentence examiners look for."},
+  {q:"Lerner's description of microeconomics as 'looking at the economy through a microscope' emphasises its:", o:["focus on individual units within the economy","concern with national aggregates","policy orientation","reliance on statistics"], a:0, w:1,
+   why:"The microscope image captures micro's focus on the individual cells of the economic body — households as consumers and firms as producers."},
+  {q:"Machlup's view on the micro–macro distinction was that:", o:["the boundary between them is precise and universally agreed","there is no agreement on the meaning and scope of the two concepts","macroeconomics should replace microeconomics","the distinction applies only to developing countries"], a:1, w:2,
+   why:"Machlup examined four proposed criteria and concluded there is no agreement on where the line falls. A study of one industry becomes macro once its effects on GDP and employment are included."},
+  {q:"According to Boulding's micro–macro paradox on cash holding, if every individual decides to hold more cash:", o:["the total stock of money in the economy rises","the total stock of money for the economy as a whole is unchanged","the money supply falls to zero","prices must fall proportionately"], a:1, w:2,
+   why:"Each person's holding can rise, but the economy's total money stock is fixed by the monetary authority — true for the individual, false for the whole."},
+  {q:"Boulding's saving paradox states that if everyone with a given income decides to save more:", o:["aggregate income necessarily rises","consumption falls, aggregate demand falls, and income may actually fall","investment automatically rises by the same amount","the price level rises"], a:1, w:3,
+   why:"Higher saving out of a given income means lower consumption, lower aggregate demand and weaker investment prospects — the seed of the paradox of thrift developed in Unit 4."},
+  {q:"Boulding argued that the micro–macro paradoxes:", o:["prove macroeconomics is unnecessary","justify studying the economic system as a whole rather than as a list of parts","apply only to closed economies","were disproved by Keynes"], a:1, w:2,
+   why:"It is precisely because some propositions true of an individual are false for the whole that the system must be studied as a system."},
+  {q:"A stated limitation of macroeconomics is that it:", o:["cannot be used for policy at all","hides structural changes inside the aggregate","applies only to developed countries","ignores the price level"], a:1, w:2,
+   why:"Growth may be accompanied by capital replacing labour and by income shifting toward richer groups; a healthy headline can conceal an unhealthy composition."},
+  {q:"Boulding's warning that an aggregate is 'a picture or approximation of reality' points to the problem that:", o:["aggregates are always deliberately falsified","heterogeneous components must be combined, and non-marketed items only imputed","aggregates cannot be measured at all","only stocks can be aggregated"], a:1, w:1,
+   why:"Adding up heterogeneous quantities, and imputing values for goods and services with no market price, can leave the totals over- or under-stated."},
+  {q:"Hicks objected that the major macroeconomic magnitudes are subject to:", o:["errors and ambiguities","excessive precision","government secrecy","seasonal variation only"], a:0, w:1,
+   why:"Hicks held that GNP, fixed capital investment, the balance of payments and employment figures suffer from errors and, worse, ambiguities."},
+  {q:"In assessing the business environment, a rising rate of saving in the economy generally means:", o:["investible funds are scarce and interest rates rise","investible funds are available, easing the cost of finance","aggregate demand must fall to zero","the government must run a surplus"], a:1, w:3,
+   why:"A high saving rate makes finance available and cheaper; a low saving rate creates scarcity and pushes the interest rate up, which directly constrains business expansion."},
+  {q:"For business prospects, the most favourable price situation is:", o:["rapid inflation","rapid deflation","moderate and stable inflation","a zero price level"], a:2, w:3,
+   why:"Both high inflation and deflation damage business prospects. Moderate, stable inflation — not zero — provides the best environment."},
+  {q:"Why does rising employment improve business prospects?", o:["It reduces the wage bill of firms","It raises wage incomes, most of which are spent on consumer goods","It forces the government to cut taxes","It automatically raises exports"], a:1, w:2,
+   why:"A large part of wage income is spent on consumer goods and services, so rising employment feeds directly into consumer demand — and rising unemployment cuts it."},
+  {q:"A liberal monetary policy, indicated by lower interest rates and easier availability of funds, generally:", o:["restrains business expansion","promotes a favourable business environment","has no effect on business decisions","only affects the government sector"], a:1, w:2,
+   why:"Cheaper and more available finance supports investment and expansion; a tight policy does the reverse."},
+  {q:"Aggregate demand can stagnate even while GDP is rising. For a business manager this means:", o:["the headline growth figure alone is not a reliable guide to prospects","GDP must be falling in reality","the price level must be constant","exports must exceed imports"], a:0, w:2,
+   why:"The trend in aggregate demand for consumer and capital goods is a separate signal from GDP growth, and can point the other way."},
+  {q:"The real flow in the circular flow model consists of:", o:["money payments between households and firms","factor services and goods and services","only taxes and subsidies","only exports and imports"], a:1, w:3,
+   why:"The real (product) flow is the movement of factor services from households to firms and of goods and services from firms to households."},
+  {q:"Real flow and money flow in the circular flow are:", o:["equal in value and in the same direction","equal in value and in opposite directions","unequal and in the same direction","unrelated to each other"], a:1, w:3,
+   why:"Every transaction has two sides: the good or service moves one way and the payment for it the other. Their values are equal, which is why the flow is self-sustaining."},
+  {q:"In the factor market of a two-sector economy, the money flow consists of:", o:["consumption expenditure by households","rent, wages, interest and profit paid by firms","goods and services supplied by firms","imports purchased from abroad"], a:1, w:2,
+   why:"Factor services flow from households to firms; the factor incomes paid for them — rent, wages, interest and profit — flow back as the money flow."},
+  {q:"In the product market of a two-sector economy, the money flow is:", o:["factor payments from firms to households","consumption expenditure from households to firms","tax revenue from households to government","saving deposited in banks"], a:1, w:2,
+   why:"Goods and services move from firms to households; consumption expenditure moves the other way as the money flow."},
+  {q:"Which is NOT an assumption of the simple two-sector model?", o:["Households spend their entire income and hoard nothing","Firms hold no inventory","Firms retain a part of profit as corporate saving","There is no inflow or outflow from outside the economy"], a:2, w:2,
+   why:"The simple model assumes firms do not save — all earnings are paid out as rent, wages, interest and profit."},
+  {q:"The identity Y ≡ FP ≡ V states that:", o:["household income equals factor payments equals the money value of output","saving always equals investment","exports always equal imports","taxes always equal government spending"], a:0, w:3,
+   why:"This identity is why national income can be measured by the income, expenditure and product methods and give the same answer — the foundation for Unit 2 and Unit 4."},
+  {q:"A withdrawal (leakage) from the circular flow is:", o:["spending over and above current income","income received but not spent on domestically produced output","any payment made by firms to households","any government purchase of goods"], a:1, w:3,
+   why:"A withdrawal is income that is received but not returned to the flow as spending on domestic output. It shrinks the flow."},
+  {q:"An injection into the circular flow:", o:["reduces the size of the flow","enlarges the size of the flow","leaves the flow unchanged by definition","can only come from the government"], a:1, w:3,
+   why:"An injection is spending over and above current income or receipts — it adds to the flow and expands national income."},
+  {q:"Saving occupies a special position in the circular flow because it is:", o:["always an injection","a withdrawal, which becomes an injection once it is actually invested","neither a withdrawal nor an injection","identical to consumption"], a:1, w:3,
+   why:"Saving withdraws income from the flow, but when savings are spent as investment they re-enter it as an injection. This distinction returns as the saving–investment relation in Unit 4."},
+  {q:"When the capital market is added to the two-sector model, household income is divided into:", o:["taxes and transfers","consumption and saving","exports and imports","wages and profits"], a:1, w:2,
+   why:"Y = C + S. Consumption flows directly to firms; saving is routed through banks and financial intermediaries and reaches firms as investment."},
+  {q:"In the two-sector model with a capital market, savings reach the firms in the form of:", o:["transfer payments","investment","subsidies","import payments"], a:1, w:2,
+   why:"Banks and financial intermediaries collect deposits and pass them to the business sector as loans, shares and debentures — that is, as investment."},
+  {q:"In the three-sector model, taxes are treated as:", o:["an injection, because government spends them","a withdrawal, because they reduce private disposable income","neutral, because they return automatically","a real flow rather than a money flow"], a:1, w:3,
+   why:"Taxes remove income from the private circular flow, reducing both consumption and saving. Government expenditure is the corresponding injection."},
+  {q:"Transfer payments such as pensions and unemployment allowances are distinctive because they:", o:["have no goods or services flowing back in return","are collected from firms only","reduce household income","are a form of taxation"], a:0, w:2,
+   why:"Transfers add to household income without any counterflow of goods or services — unlike government purchases, which do have one."},
+  {q:"A deficit budget, where G is greater than T, has what effect on the circular flow?", o:["A net withdrawal, contracting the flow","A net injection, expanding the flow","No effect, since the budget always balances","It converts the flow into a stock"], a:1, w:3,
+   why:"Spending more than is taken in taxes injects more than it withdraws, so the flow expands. A surplus budget (G less than T) is a net withdrawal and contracts it."},
+  {q:"In the four-sector model, exports and imports are respectively:", o:["a withdrawal and an injection","an injection and a withdrawal","both injections","both withdrawals"], a:1, w:3,
+   why:"Exports send goods out and bring money in, so they inject. Imports bring goods in and send money out, so they withdraw."},
+  {q:"The net effect of the foreign sector on the size of the circular flow depends on:", o:["the level of exports alone","the trade balance, X minus M","the size of the government budget","the rate of interest only"], a:1, w:3,
+   why:"If X is greater than M there is a net injection and the flow expands; if X is less than M there is a net withdrawal and it contracts; if X equals M the flow is unaffected."},
+  {q:"In an economy running a persistent trade deficit, large inflows of workers' remittances:", o:["add to the withdrawal already caused by the deficit","offset part of that withdrawal by injecting income directly into households","have no effect on the circular flow","are counted as exports of goods"], a:1, w:3,
+   why:"Remittances earned by labour working abroad are an income inflow with no goods counterflow. They enter the household sector directly and help sustain demand where imports exceed exports — the situation Nepal is in."}
+]
+};
+
+window.SUBJECT_EXAM = window.SUBJECT_EXAM || {};
+window.SUBJECT_EXAM["eco204"] = { units: {
+  "0": {
+  brief: [
+    {q:"State the scope of macroeconomics.", real:"2023", pts:[
+      "It is both a THEORETICAL science (builds models of how macro variables behave and relate) and a POLICY science (diagnoses problems and designs monetary and fiscal remedies).",
+      "Its subject matter covers six issue areas: growth; business cycles; inflation; unemployment and poverty; budgetary deficits; international issues (trade, BOP, exchange rate).",
+      "It studies aggregates — national output, total employment, the general price level, the balance of payments — not individual units.",
+      "Closing line: in macroeconomics theory and policy go together."]},
+    {q:"Differentiate money flow and real flow.", real:"2023", pts:[
+      "REAL (product) flow = movement of factor services and of goods and services; measured in physical units.",
+      "MONEY (income) flow = movement of the payments made for them; measured in money units.",
+      "Factor market: factor services go households to firms; factor incomes (rent, wages, interest, profit) go firms to households.",
+      "Product market: goods and services go firms to households; consumption expenditure goes households to firms.",
+      "Key point for the mark: the two are EQUAL IN VALUE and OPPOSITE IN DIRECTION."]},
+    {q:"Define macroeconomics.", pts:[
+      "The study of the behaviour and performance of the economy as a whole.",
+      "It studies the interaction of the forces determining national output and employment, the general price level and the balance of payments.",
+      "Support with one authority: Boulding — it deals with aggregates, not individual quantities; or Samuelson — the behaviour of the economy as a whole."]},
+    {q:"Distinguish between a stock and a flow variable, with one example of each.", pts:[
+      "STOCK: measured at a point in time, no time dimension. Example: capital, money supply, wealth.",
+      "FLOW: measured over a period of time. Example: income, investment, consumption, exports.",
+      "The standard pairing to quote: wealth is a stock, income is a flow."]},
+    {q:"What is meant by a withdrawal from the circular flow? Give one example.", pts:[
+      "Income that is received but NOT spent on domestically produced goods and services in the period.",
+      "It reduces the size of the circular flow.",
+      "Examples: household saving; taxes; imports; a firm withholding receipts.",
+      "Note that saving is a withdrawal only until it is actually invested."]},
+    {q:"What is an injection into the circular flow? Give one example.", pts:[
+      "Spending over and above current income or receipts, added into the flow.",
+      "It increases the size of the circular flow.",
+      "Examples: investment; government expenditure and transfer payments; exports; remittances from abroad."]},
+    {q:"State any two limitations of macroeconomics.", pts:[
+      "It conceals structural change inside the aggregate — growth can hide rising unemployment or widening income disparity.",
+      "Aggregates are approximations: heterogeneous items are combined and non-marketed output has to be imputed.",
+      "The magnitudes themselves carry errors and ambiguities (Hicks)."]},
+    {q:"Distinguish between microeconomics and macroeconomics on the basis of the unit of study.", pts:[
+      "Micro: the individual unit — a consumer, a firm, the price of one product.",
+      "Macro: the economy as a whole — national income, total employment, the general price level.",
+      "The symmetry worth stating: what micro holds constant, macro treats as variable, and vice versa."]},
+    {q:"What is comparative static analysis?", pts:[
+      "It compares two equilibrium positions, before and after a change in the data.",
+      "It does NOT describe the path of adjustment between them.",
+      "Contrast: dynamic analysis traces that path period by period; static analysis looks at one equilibrium at a point in time."]},
+    {q:"Write the identity linking household income, factor payments and the value of output, and state what it means.", pts:[
+      "Y = FP = V, i.e. household income = factor payments = money value of output.",
+      "Reason: firms pay out their entire receipts as rent, wages, interest and profit, so what is produced, what is earned and what is spent are the same total.",
+      "Significance: it is why national income can be measured by the product, income and expenditure methods and give the same answer."]},
+    {q:"How does a deficit budget affect the circular flow of income?", pts:[
+      "A deficit budget means G is greater than T — government spends more than it withdraws in taxes.",
+      "It is therefore a NET INJECTION into the circular flow.",
+      "Effect: the circular flow expands and national income rises.",
+      "Contrast: a surplus budget (T greater than G) is a net withdrawal and contracts the flow; a balanced budget is neutral."]},
+    {q:"State the effect of a trade deficit on the circular flow of income.", pts:[
+      "A trade deficit means imports exceed exports, i.e. M is greater than X.",
+      "Exports are an injection, imports a withdrawal; so a deficit is a NET WITHDRAWAL.",
+      "Effect: it reduces the magnitude of the circular flow.",
+      "Relevant qualification for Nepal: the withdrawal is partly offset by remittance inflows, which enter households directly."]}
+  ],
+  short: [
+    {q:"How do business firms use macroeconomic concepts and theories to assess economic environment? Explain.", real:"2023", pts:[
+      "Frame: long-horizon business decisions — new capacity, a new plant, a new brand, diversification — are bets on the future business environment, and its economic component is macroeconomic.",
+      "1. Current and expected GDP/GNP growth — high sustained growth widens the market; contraction narrows it.",
+      "2. Trend in aggregate demand for consumer and capital goods — note demand can stagnate even while GDP rises.",
+      "3. Rate of saving and investment — determines whether investible funds are available and what they cost.",
+      "4. The general price level and its expected path — both high inflation and deflation hurt; moderate stable inflation is the good case.",
+      "5. Level and trend of employment — rising employment raises wage incomes, most of which are spent on consumer goods.",
+      "6. International aspects — trade, capital flows, labour migration and remittances; a currency movement can hit a purely domestic firm.",
+      "7. Government monetary and fiscal policy — a liberal monetary stance supports business, a tight one restrains it.",
+      "Close: macroeconomics lets a manager anticipate the MECHANISM (how a rise in the bank rate feeds through to consumption and then to their industry), not just read the headline."]},
+    {q:"Describe the circular flow of income and expenditure in a two-sector economy.", dia:"Two-sector circular flow: factor market above, product market below, real flow and money flow in opposite directions", pts:[
+      "Two sectors only — households and firms; a private closed economy with no government and no foreign trade.",
+      "Households own all factors, earn all factor incomes, and spend their whole income; firms own no resources, hire factors, produce and retain nothing.",
+      "Factor market: factor services flow households to firms; factor incomes flow firms to households.",
+      "Product market: goods and services flow firms to households; consumption expenditure flows households to firms.",
+      "Real and money flows are equal in value and opposite in direction, so the flow is circular and self-sustaining.",
+      "State the identity Y = FP = V.",
+      "A labelled diagram is expected."]},
+    {q:"Explain the circular flow of income and expenditure in a four-sector (open) economy.", dia:"Four-sector flow: government above with T and G; foreign sector below with X, M and remittances", pts:[
+      "Four sectors: households, firms, government, and the foreign sector.",
+      "Government: taxes are a withdrawal, government expenditure and transfer payments are injections. Transfers have no goods counterflow.",
+      "Foreign sector assumptions: it consists of exports and imports; firms trade goods and non-labour services; households export labour.",
+      "Exports (X) send goods out and bring money in — an INJECTION.",
+      "Imports (M) bring goods in and send money out — a WITHDRAWAL.",
+      "Export of manpower brings in remittances — a further income inflow to households.",
+      "Net effect on the flow depends on X minus M: surplus expands it, deficit contracts it, balanced trade leaves it unchanged.",
+      "A labelled diagram is expected."]},
+    {q:"Distinguish between microeconomics and macroeconomics, and state Machlup's view on the distinction.", pts:[
+      "Unit of study: individual units vs the economy as a whole.",
+      "Variables: micro holds macro aggregates constant; macro holds individual decisions and prices constant.",
+      "Method: micro looks through a microscope (Lerner); macro aggregates (Boulding).",
+      "Typical question: why did the price of rice rise, vs why did the general price level rise.",
+      "Add Machlup's caution — the boundary is not sharp; a study of one industry becomes macro once its effect on GDP and employment is included."]},
+    {q:"Explain withdrawals and injections, and how they determine the size of the circular flow.", dia:"Withdrawals and injections acting on the household-firm flow", pts:[
+      "Withdrawal: income received but not spent on domestic output — saving, taxes, imports. It shrinks the flow.",
+      "Injection: spending over and above current income — investment, government expenditure, exports, remittances. It enlarges the flow.",
+      "The size of the flow at any time is the NET result of the two.",
+      "Saving is the key case: a withdrawal that becomes an injection once it is actually invested.",
+      "Extend to the sectors: T withdraws and G injects; M withdraws and X injects."]},
+    {q:"Explain the micro-macro paradoxes pointed out by Boulding.", pts:[
+      "A micro-macro paradox is a proposition true for an individual unit but false for the economy as a whole.",
+      "Cash holding: if everyone holds more cash each individual's holding rises, but the economy's total money stock is unchanged.",
+      "Saving and investment: one person saving more raises their income; everyone saving more out of given incomes cuts consumption, aggregate demand and investment, so income may fall.",
+      "Wages and profits: at the individual level the split looks like bargaining power; for the economy it depends on investment decisions and society-wide liquidity preference.",
+      "Boulding's conclusion: these paradoxes justify studying the system as a whole rather than as a list of parts."]},
+    {q:"Explain the importance of macroeconomics.", pts:[
+      "It explains how the economy works at the aggregate level, which micro detail cannot reveal.",
+      "It provides the framework for diagnosing national problems — unemployment, inflation, recession, BOP crises.",
+      "It supplies the tools for designing and evaluating monetary and fiscal policy.",
+      "It underpins business decision-making by allowing the business environment to be assessed.",
+      "It is essential for understanding growth and for policies aimed at raising it."]},
+    {q:"Explain the limitations of macroeconomics.", pts:[
+      "It conceals structural change: growth may come with capital replacing labour and income shifting to richer groups; a stable price index may hide offsetting sectoral price movements.",
+      "Aggregates are approximations, not reality (Boulding) — heterogeneous components, and imputed values for non-marketed output.",
+      "The magnitudes carry errors and ambiguities (Hicks) — GNP, investment, BOP, employment.",
+      "Balanced conclusion: these call for care in interpretation, not for rejecting the subject."]}
+  ],
+  long: [
+    {q:"Describe an economy as circular flows of income and expenditure. What determines the magnitude of the circular flows?", dia:"Build up from two-sector to four-sector, marking withdrawals and injections at each stage", pts:[
+      "Definition: an economy can be pictured as a continuous circulation between households and firms, in which every transaction has a real side and a money side moving in opposite directions.",
+      "TWO-SECTOR: assumptions; factor market and product market; real and money flows; the identity Y = FP = V.",
+      "Add the capital market: Y = C + S, with saving routed through banks and reaching firms as investment.",
+      "THREE-SECTOR: taxes withdraw, government expenditure and transfers inject; budget position decides the net effect (deficit expands, surplus contracts, balanced is neutral).",
+      "FOUR-SECTOR: exports inject, imports withdraw, remittances inject; net effect depends on X minus M.",
+      "MAGNITUDE — the actual question: the size of the flow is determined by the balance of total withdrawals (S + T + M) against total injections (I + G + X).",
+      "If injections exceed withdrawals the flow expands; if withdrawals exceed injections it contracts; equality leaves it unchanged.",
+      "Diagrams for at least the two-sector and four-sector cases are expected."]},
+    {q:"\"Macroeconomics is both a theoretical and a policy science.\" Explain this statement and discuss the scope of macroeconomics.", pts:[
+      "AS THEORY: it builds models explaining how macro variables behave and relate — income determination, consumption, saving and investment, employment, growth, the price level, product- and money-market equilibrium, exchange rate and BOP.",
+      "Its value is that it supplies the analytical framework and tools for analysing macroeconomic phenomena.",
+      "AS POLICY SCIENCE: it investigates the causes and effects of unemployment, inflation, recession and stagflation, and provides guidelines for policy; it also evaluates how well monetary and fiscal policy work.",
+      "Why both are needed: policy without a framework is a random choice of measures that 'can do more harm than good'; theory without application is idle. In macroeconomics theory and policy go together.",
+      "SCOPE — the six issue areas: growth; business cycles; inflation; unemployment and poverty; budgetary deficits; international issues.",
+      "SCOPE — the analytical apparatus: stock and flow, equilibrium and disequilibrium, partial and general equilibrium, static, comparative static and dynamic analysis.",
+      "Origin note that strengthens the answer: macroeconomics arose from the search for a remedy to the Great Depression and mass unemployment, which is itself evidence of the theory-policy link.",
+      "Close with the limitations, briefly, to show balance."]},
+    {q:"Explain how a business manager uses macroeconomic analysis to assess the business environment of a country. Illustrate your answer with reference to Nepal.", pts:[
+      "Frame: business environment is the economic, political and social conditions a firm will operate in; given the political and social, the economic component is macroeconomic.",
+      "Why it matters: decisions with long horizons — capacity, new plants, new brands, diversification — depend on conditions that will hold in future, not today.",
+      "Then take the seven factors in turn: GDP/GNP growth; aggregate demand; saving and investment; the price level; employment; international aspects; government monetary and fiscal policy.",
+      "For each, state the mechanism, not just the direction — e.g. a low saving rate raises the interest rate, which raises the cost of finance, which shrinks the set of viable projects.",
+      "NEPAL ILLUSTRATION: NRB's monetary policy stance and interest rates; the Government of Nepal budget and tax measures; remittance inflows sustaining consumer demand; a persistent trade deficit and dependence on imports; the exchange-rate peg with the Indian rupee.",
+      "Note the asymmetry worth marks: for Nepal the international factor works mainly through remittances and imports rather than through exports.",
+      "Close: macroeconomics converts a set of headlines into an anticipated mechanism, and lets the manager build in safeguards.",
+      "(Nepal material is not in the textbook — it comes from NRB and Ministry of Finance sources.)"]},
+    {q:"Explain the circular flow of income and expenditure in a three-sector and a four-sector economy, showing clearly the role of withdrawals and injections.", dia:"Three-sector flow with T and G; four-sector flow adding X, M and remittances", pts:[
+      "Start from the two-sector base: households and firms, real and money flows in opposite directions, Y = FP = V.",
+      "THREE-SECTOR — add government. Taxes (direct and indirect, plus corporate tax on firms) are withdrawals because they cut private disposable income and hence both consumption and saving.",
+      "Government expenditure — purchases of factor services from households and goods from firms — is an injection. Transfer payments (pensions, subsidies, unemployment allowance) are injections with NO goods counterflow.",
+      "Budget position: G = T neutral; G greater than T is a net injection and expands the flow; T greater than G is a net withdrawal and contracts it.",
+      "FOUR-SECTOR — add the foreign sector. Assumptions: exports and imports of goods and services; firms trade goods and non-labour services; households export labour.",
+      "Exports inject (goods out, money in). Imports withdraw (goods in, money out). Remittances from exported manpower are an additional injection to households.",
+      "Net effect: X greater than M expands the flow; X less than M contracts it; X = M leaves it unchanged.",
+      "General conclusion: in every version the size of the flow is set by total injections against total withdrawals — I + G + X against S + T + M.",
+      "Labelled diagrams for both models are expected."]}
+  ]
+}
+}, cases: [] };
+
+</script>
+<script>
 /* ============ ICONOGRAPHY ============
    Small inline SVGs per subject, used as card decoration, banner watermark,
    and unit-tile pattern tint — no external images, so everything still
@@ -21782,6 +22730,11 @@ const ICONS = {
     <path d="M22 86 Q22 56 50 56 Q78 56 78 86" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
     <circle cx="18" cy="66" r="8" stroke="#fff" stroke-width="5"/><circle cx="82" cy="66" r="8" stroke="#fff" stroke-width="5"/>
     <path d="M10 90 Q10 76 22 72 M90 90 Q90 76 78 72" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>`,
+  eco204: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 52 C22 22 78 22 78 46" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    <path d="M78 56 l-7 -13 l14 0 z" fill="#fff"/>
+    <path d="M78 58 C78 88 22 88 22 64" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    <path d="M22 54 l-7 13 l14 0 z" fill="#fff"/></svg>`,
   notes: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 85 L20 20 Q20 15 25 15 H75 Q80 15 80 20 V85 L65 75 L50 85 L35 75 Z" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></svg>`
 };
