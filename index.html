@@ -740,6 +740,35 @@
   .vid-err{font-size:.74rem;color:#ff8a80;display:none;}
   .vid-err.show{display:block;}
 
+  /* ---- Past-paper questions (real TU questions, pulled from every unit's exam bank) ---- */
+  .pp-open-btn{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 4px;
+    background:rgba(127,214,168,.09);border:1px solid rgba(127,214,168,.32);border-radius:14px;
+    padding:13px 14px;cursor:pointer;color:#9be3bd;font-family:inherit;text-align:left;}
+  .pp-open-btn:active{background:rgba(127,214,168,.18);}
+  .pp-open-ico{font-size:1.15rem;line-height:1;flex-shrink:0;}
+  .pp-open-lab{font-weight:700;font-size:.9rem;flex:1;}
+  .pp-open-count{font-size:.72rem;font-weight:800;background:rgba(127,214,168,.2);
+    color:#9be3bd;padding:2px 8px;border-radius:20px;}
+  .pp-intro{font-size:.8rem;color:var(--ink-dim);line-height:1.5;margin:2px 2px 14px;}
+  .pp-empty{font-size:.82rem;color:var(--ink-dim);line-height:1.55;padding:12px 12px;
+    background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;}
+  .pp-sec-label{font-size:.72rem;font-weight:800;color:var(--accent);text-transform:uppercase;
+    letter-spacing:.06em;margin:18px 2px 10px;}
+  .pp-q{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-bottom:9px;}
+  .pp-q-top{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .pp-year{font-size:.64rem;font-weight:800;letter-spacing:.04em;color:#7fd6a8;
+    background:rgba(127,214,168,.13);border:1px solid rgba(127,214,168,.3);padding:3px 8px;border-radius:20px;}
+  .pp-unit{font-size:.7rem;color:var(--ink-dim);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pp-q-text{font-size:.92rem;line-height:1.5;color:#fff;margin:0;font-weight:600;}
+  .pp-q-dia{font-size:.74rem;color:var(--accent);margin-top:7px;line-height:1.4;}
+  .pp-q-model{margin-top:9px;}
+  .pp-q-model summary{font-size:.78rem;font-weight:700;color:#9be3bd;cursor:pointer;padding:4px 0;list-style:revert;}
+  .pp-q-model[open] summary{margin-bottom:6px;}
+  .pp-q-model h4{margin:8px 0 6px;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+  .pp-q-model ol{margin:0;padding-left:20px;}
+  .pp-q-model li{font-size:.83rem;line-height:1.5;color:var(--ink);margin-bottom:4px;}
+  .pp-case-scenario{font-size:.83rem;line-height:1.55;color:var(--ink-dim);margin:6px 0 10px;white-space:pre-wrap;}
+  .pp-q-model .ex-sol{overflow-x:auto;}
 
   .tile-mastery{height:4px;border-radius:99px;background:rgba(0,0,0,.35);overflow:hidden;margin-top:7px;}
   .tile-mastery-fill{height:100%;background:#fff;opacity:.85;transition:width .4s ease;}
@@ -831,6 +860,12 @@
     <p id="subject-code">Code</p>
   </div>
 
+  <button id="pp-open-btn" class="pp-open-btn" onclick="openPastPapers()" style="display:none;">
+    <span class="pp-open-ico">📄</span>
+    <span class="pp-open-lab">Past-paper questions</span>
+    <span class="pp-open-count" id="pp-open-count"></span>
+  </button>
+
   <div class="section-label"><h3 id="unit-count-label">Units</h3><div class="rule"></div></div>
   <div class="unit-grid" id="unit-grid"></div>
 
@@ -896,6 +931,14 @@
     <div class="ref-hint" id="ud-refs-hint"></div>
     <div id="ud-refs-toast"></div>
   </div>
+</div>
+
+<div id="pp-drawer" class="video-drawer">
+  <div class="video-header">
+    <h4 id="pp-drawer-title">Past-paper questions</h4>
+    <button class="video-btn-action close" onclick="closePastPapers()">✕ Close</button>
+  </div>
+  <div class="video-body" id="pp-body"></div>
 </div>
 
 <div id="view-notes-chapters" class="view">
@@ -27167,6 +27210,14 @@ function openSubject(subjectKey){
   pdfRange = null; pdfRangeUnlocked = false;
   renderUnitGrid(data.units);
   renderPdfSection(subjectKey);
+
+  closePastPapers();
+  const ppBtn = document.getElementById('pp-open-btn');
+  if(ppBtn){
+    const ppTotal = collectRealQuestions(subjectKey).total;
+    ppBtn.style.display = '';
+    document.getElementById('pp-open-count').textContent = ppTotal ? String(ppTotal) : 'none yet';
+  }
 }
 
 function showDashboard(){
@@ -27178,6 +27229,7 @@ function showDashboard(){
   document.getElementById('header-title').innerText = 'BBM Study Hub';
   renderDashboard();
   closeVideoDrawer();
+  closePastPapers();
 }
 
 /* ============ UNIT DETAIL VIEW ============ */
@@ -27396,6 +27448,91 @@ function openReferenceBook(ref, hit){
     toast.innerHTML = `<div class="ref-toast"><b>${ref.book}</b> isn't saved for this subject yet. Add the PDF in the reader on the subject page, then come back — this row will jump you to ${ref.pages}.</div>`;
   }
 }
+
+/* ================= PAST-PAPER QUESTIONS =================
+   Every written-exam item and Section-D case in the app that carries a `real`
+   tag is a question confirmed to have appeared on an actual TU paper under the
+   current course code (the tagging rule is strict — see CLAUDE.md §3). They are
+   spread across the units' exam banks; this pulls them into one per-subject
+   list, grouped by section, so the highest-signal revision is in one place.
+   Read-only: it renders existing data, writes nothing. */
+function collectRealQuestions(subjectKey){
+  const E = (window.SUBJECT_EXAM || {})[subjectKey];
+  const data = SEMESTERS[currentSemester] && SEMESTERS[currentSemester].subjects[subjectKey];
+  if(!E || !data) return {secs:[], total:0};
+  const unitName = ui => {
+    const u = data.units[Number(ui)];
+    return u ? u.title.replace(/^Unit \d+:\s*/,'') : ('Unit ' + (Number(ui)+1));
+  };
+  const SEC_LABEL = {
+    brief:'Section A · Brief answer · 2 marks each',
+    short:'Section B · Short answer · 5 marks each',
+    long: 'Section C · Long answer · 10 marks each'
+  };
+  const byYearDesc = (a,b) => String(b.real).localeCompare(String(a.real));
+  const secs = [];
+  let total = 0;
+  ['brief','short','long'].forEach(sec => {
+    const items = [];
+    const units = E.units || {};
+    Object.keys(units).forEach(ui => {
+      (units[ui] && units[ui][sec] || []).forEach(x => {
+        if(x && x.real) items.push(Object.assign({}, x, {unit: unitName(ui)}));
+      });
+    });
+    if(items.length){
+      items.sort(byYearDesc);
+      secs.push({label: SEC_LABEL[sec], items});
+      total += items.length;
+    }
+  });
+  const cases = (E.cases || []).filter(c => c && c.real);
+  if(cases.length){
+    cases.sort(byYearDesc);
+    secs.push({label:'Section D · Case / situation analysis · 4 × 5 marks', cases});
+    total += cases.length;
+  }
+  return {secs, total};
+}
+
+function openPastPapers(){
+  const {secs, total} = collectRealQuestions(currentSubjectKey);
+  const data = SEMESTERS[currentSemester].subjects[currentSubjectKey];
+  const codeShort = (data.code || '').split('•')[0].trim();
+  let html = `<p class="pp-intro">Questions confirmed to have appeared on a real TU ${escapeHtml(codeShort)} paper, newest first, grouped by the section they belong in. If you can answer every one of these, you have covered what the examiner actually asks.</p>`;
+  if(total === 0){
+    html += `<div class="pp-empty">No confirmed TU past paper has been found for this subject yet, so nothing is tagged here. The questions in each unit's <b>Written exam practice</b> are built from the official syllabus (and, where they exist, parallel papers) — practise those instead.</div>`;
+  } else {
+    const esc = v => escapeHtml(v == null ? '' : String(v));
+    secs.forEach(s => {
+      html += `<div class="pp-sec-label">${esc(s.label)}</div>`;
+      (s.items || []).forEach(q => {
+        const diaStr = (typeof q.dia === 'string' && q.dia.trim()) ? q.dia.trim() : '';
+        html += `<div class="pp-q">
+          <div class="pp-q-top"><span class="pp-year">${esc(q.real)}</span><span class="pp-unit">${esc(q.unit)}</span></div>
+          <p class="pp-q-text">${esc(q.q)}</p>
+          ${diaStr ? `<div class="pp-q-dia">✎ Diagram expected: ${esc(diaStr)}</div>` : ''}
+          <details class="pp-q-model"><summary>Show marking points</summary>${(q.pts && q.pts.length) ? examModelHTML(q) : (examSolHTML(q) || '<p class="pp-case-scenario">Practise this in the unit\'s Written exam practice for the full marking guide.</p>')}</details>
+        </div>`;
+      });
+      (s.cases || []).forEach(c => {
+        html += `<div class="pp-q">
+          <div class="pp-q-top"><span class="pp-year">${esc(c.real)}</span><span class="pp-unit">Compulsory case</span></div>
+          <p class="pp-q-text">${esc(c.title || 'Case study')}</p>
+          <details class="pp-q-model"><summary>Show scenario &amp; sub-questions</summary>
+            ${c.scenario ? `<div class="pp-case-scenario">${esc(c.scenario)}</div>` : ''}
+            <ol>${(c.qs || []).map(x => `<li>${esc(x.q)} <em>(${esc(x.m)} marks)</em>${(x.pts && x.pts.length) ? examPtsHTML(x, 'Points') : ''}</li>`).join('')}</ol>
+          </details>
+        </div>`;
+      });
+    });
+  }
+  const body = document.getElementById('pp-body');
+  body.innerHTML = html;
+  body.scrollTop = 0;
+  document.getElementById('pp-drawer').classList.add('active');
+}
+function closePastPapers(){ document.getElementById('pp-drawer').classList.remove('active'); }
 
 /* ---------- Written notes reader ----------
    The notes are the primary study material; the books are backup. Each unit's
