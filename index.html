@@ -24441,6 +24441,203 @@ window.SUBJECT_EXAM["eco204"] = { units: {
       "Add the conceptual problems from Unit 1's limitations: aggregates conceal structural change, and heterogeneous items must be combined.",
       "Conclusion: the published figure is a carefully constructed estimate rather than a measurement, so it should be read with those qualifications in mind."]}
   ]
+},
+  "2": {
+  brief: [
+    {q:"Prove that the sum of MPC and MPS is equal to unity.", real:"2023", pts:[
+      "Start from the identity that disposable income is either consumed or saved: Y = C + S.",
+      "Any change in income must be either consumed or saved: ΔY = ΔC + ΔS.",
+      "Divide every term by ΔY: ΔY/ΔY = ΔC/ΔY + ΔS/ΔY.",
+      "This gives 1 = MPC + MPS.",
+      "One line of meaning earns the last mark: every additional rupee of income has exactly two destinations, so whatever is not spent is saved. Do NOT 'prove' it by putting in numbers like 0.8 + 0.2 — that is an illustration, not a proof."]},
+    {q:"Define the consumption function.", pts:[
+      "The consumption function is the relationship between aggregate consumption expenditure and the disposable income out of which it is spent.",
+      "Written C = f(Y), with ΔC/ΔY > 0 — consumption rises as income rises.",
+      "It is a behavioural relationship estimated from data, not an accounting identity.",
+      "Income is its primary determinant; other factors (wealth, interest rate, expectations) shift the whole function."]},
+    {q:"State Keynes's fundamental psychological law of consumption.", pts:[
+      "As a rule and on average, people increase their consumption as their income increases, but not by as much as the increase in their income.",
+      "So the marginal propensity to consume is positive but less than one: 0 < ΔC/ΔY < 1.",
+      "The remainder of any increase in income is saved.",
+      "Keynes said the law can be relied on both from knowledge of human nature and from the facts of experience."]},
+    {q:"Distinguish between the average and the marginal propensity to consume.", pts:[
+      "APC = C/Y — the proportion of TOTAL income that is consumed.",
+      "MPC = ΔC/ΔY — the proportion of an ADDITIONAL rupee of income that is consumed.",
+      "In C = a + bY, MPC = b (the slope) and APC = b + a/Y.",
+      "So APC exceeds MPC as long as autonomous consumption a is positive, and APC falls as income rises while MPC stays constant."]},
+    {q:"What is autonomous consumption?", pts:[
+      "The level of consumption when income is zero — the intercept 'a' in C = a + bY.",
+      "It is positive: people consume even at zero income, financing it out of past savings or borrowing.",
+      "It does not depend on current income, so it shifts the whole consumption function up or down rather than moving along it."]},
+    {q:"Define the saving function and state its relationship to the consumption function.", pts:[
+      "The saving function is the relationship between saving and disposable income: S = f(Y).",
+      "It is the exact counterpart of the consumption function, from the identity Y = C + S, so S = Y − C.",
+      "If C = a + bY then S = −a + (1 − b)Y: the intercept is minus the consumption intercept and the slope is 1 − b = MPS.",
+      "Knowing either function gives the other."]},
+    {q:"For the consumption function C = 200 + 0.75Y, find the break-even level of income.", pts:[
+      "The break-even income is where consumption equals income, so saving is zero.",
+      "Set a + bY = Y, giving Y = a/(1 − b).",
+      "Y = 200/(1 − 0.75) = 200/0.25 = Rs 800.",
+      "Below Rs 800 the household dissaves; above it, it saves."]},
+    {q:"Distinguish between the average and the marginal propensity to save.", pts:[
+      "APS = S/Y — the proportion of total income saved.",
+      "MPS = ΔS/ΔY — the proportion of additional income saved.",
+      "MPS = 1 − MPC; in S = −a + (1 − b)Y it is the slope 1 − b.",
+      "APS is negative below the break-even income, zero at it, and rises towards MPS above it."]},
+    {q:"If the consumption function is C = 100 + 0.8Y, derive the saving function.", pts:[
+      "S = Y − C = Y − (100 + 0.8Y).",
+      "S = Y − 100 − 0.8Y = −100 + 0.2Y.",
+      "So the saving function is S = −100 + 0.2Y, with MPS = 0.2 and a break-even income of 100/0.2 = Rs 500."]},
+    {q:"Distinguish between capital and investment.", pts:[
+      "Capital is a STOCK — the productive assets (plant, machinery, buildings, inventories) accumulated up to a point in time.",
+      "Investment is a FLOW — the addition to that stock, measured per period, usually a year.",
+      "In symbols, if capital = K then investment = ΔK = I.",
+      "Buying an existing asset is not investment in this sense; only new physical capital counts."]},
+    {q:"Distinguish between gross investment and net investment.", pts:[
+      "Gross investment is total spending on capital goods in a year — plant and machinery, buildings, and inventories.",
+      "Net investment is gross investment minus depreciation.",
+      "Net investment = Gross investment − Depreciation.",
+      "If gross investment only equals depreciation, the capital stock is maintained but not enlarged and net investment is zero."]},
+    {q:"Distinguish between autonomous and induced investment.", pts:[
+      "From I = f(Y, i): induced investment is investment caused by a change in income or in the interest rate — it responds to conditions inside the model.",
+      "Autonomous investment is caused by factors outside income and the interest rate — new technology, new products, new markets, population growth, expectations, public expenditure.",
+      "In the short run income is taken as constant, so the short-run investment function is I = f(i) and the rest is autonomous."]},
+    {q:"Define the marginal efficiency of capital (MEC).", pts:[
+      "MEC is that rate of discount which makes the present value of the expected returns from a capital asset over its life just equal to its supply price (cost).",
+      "Equivalently, it is the discount rate at which the project's net present value would be exactly zero.",
+      "It is also called the internal rate of return (IRR) — the project's own expected rate of return, computed from its own figures.",
+      "For a one-year project: MEC = (R/C) − 1."]},
+    {q:"State the decision rule for investment under the marginal efficiency of capital method.", pts:[
+      "Compare the project's MEC with the market rate of interest i.",
+      "If MEC > i, accept the project.",
+      "If MEC = i, the project is exactly marginal — acceptable only on non-profit grounds.",
+      "If MEC < i, reject the project.",
+      "The equivalent NPV rule is: accept if NPV > 0."]}
+  ],
+  short: [
+    {q:"The consumption schedule of an economy is given: at disposable incomes of 0, 10,000, 20,000, 30,000, 40,000 and 50,000, consumption is 4,000, 12,000, 20,000, 28,000, 36,000 and 44,000 respectively. (a) Derive saving, APC, MPC, APS and MPS. (b) Derive the linear consumption and saving function.", real:"2023", pts:[
+      "SAVING is S = Y − C at each row: −4,000; −2,000; 0; 2,000; 4,000; 6,000.",
+      "APC = C/Y: undefined at Y = 0 (write a dash), then 1.20, 1.00, 0.93, 0.90, 0.88.",
+      "APS = S/Y: undefined at Y = 0, then −0.20, 0.00, 0.07, 0.10, 0.12. Check APC + APS = 1 in every row.",
+      "MPC = ΔC/ΔY between successive rows: consumption rises by 8,000 for every 10,000 of income, so MPC = 0.8 throughout.",
+      "MPS = ΔS/ΔY = 0.2 throughout. Check MPC + MPS = 1.",
+      "CONSUMPTION FUNCTION: C = a + bY. b = MPC = 0.8 (constant). a = consumption at zero income = 4,000. So C = 4,000 + 0.8Y.",
+      "SAVING FUNCTION: S = Y − (4,000 + 0.8Y) = −4,000 + 0.2Y.",
+      "Break-even income = 4,000/0.2 = Rs 20,000, where C = Y and S = 0 — consistent with the table.",
+      "Marks are lost for computing MPC/MPS at a single row instead of between rows, and for putting a number where APC/APS are undefined."],
+     sol:"<p><b>The full schedule</b></p><table><thead><tr><th>Y</th><th class='n'>C</th><th class='n'>S = Y−C</th><th class='n'>APC = C/Y</th><th class='n'>APS = S/Y</th><th class='n'>MPC</th><th class='n'>MPS</th></tr></thead><tbody><tr><td>0</td><td class='n'>4,000</td><td class='n'>−4,000</td><td class='n'>—</td><td class='n'>—</td><td class='n'>—</td><td class='n'>—</td></tr><tr><td>10,000</td><td class='n'>12,000</td><td class='n'>−2,000</td><td class='n'>1.20</td><td class='n'>−0.20</td><td class='n'>0.8</td><td class='n'>0.2</td></tr><tr><td>20,000</td><td class='n'>20,000</td><td class='n'>0</td><td class='n'>1.00</td><td class='n'>0.00</td><td class='n'>0.8</td><td class='n'>0.2</td></tr><tr><td>30,000</td><td class='n'>28,000</td><td class='n'>2,000</td><td class='n'>0.93</td><td class='n'>0.07</td><td class='n'>0.8</td><td class='n'>0.2</td></tr><tr><td>40,000</td><td class='n'>36,000</td><td class='n'>4,000</td><td class='n'>0.90</td><td class='n'>0.10</td><td class='n'>0.8</td><td class='n'>0.2</td></tr><tr><td>50,000</td><td class='n'>44,000</td><td class='n'>6,000</td><td class='n'>0.88</td><td class='n'>0.12</td><td class='n'>0.8</td><td class='n'>0.2</td></tr></tbody></table><p><b>Consumption function</b><br>b = MPC = 0.8 (constant across the table). a = C at Y = 0 = 4,000.<br><b>C = 4,000 + 0.8Y</b>. Check at Y = 40,000: 4,000 + 32,000 = 36,000 ✓</p><p><b>Saving function</b><br>S = Y − (4,000 + 0.8Y) = <b>−4,000 + 0.2Y</b>. Check at Y = 50,000: −4,000 + 10,000 = 6,000 ✓</p><p><b>Break-even income</b> = a/(1−b) = 4,000/0.2 = <b>Rs 20,000</b>, where C = Y and S = 0.</p>"},
+    {q:"Explain the technical attributes (properties) of the Keynesian consumption function.", pts:[
+      "1. Real consumption is a positive function of real current disposable income: C = f(Y), ΔC/ΔY > 0. Because it deals with the short run it is a short-run theory.",
+      "2. The marginal propensity to consume lies between zero and one: 0 < MPC < 1. Some of any extra income is spent, some saved.",
+      "3. MPC is less than APC: ΔC/ΔY < C/Y.",
+      "4. MPC declines as income increases — the proportion of extra income consumed falls as people get richer.",
+      "Properties 1 and 2 are essential to the theory. Properties 3 and 4 failed the empirical test — Kuznets found MPC constant over 1869-1929 and MPC = APC — so later Keynesians dropped them and work with a constant-MPC straight-line function.",
+      "Add: the linear form C = a + bY captures properties 1 and 2, with a > 0 (autonomous consumption) and 0 < b < 1 (the constant MPC)."]},
+    {q:"Explain the main determinants of consumption other than current income.", pts:[
+      "Income is the primary determinant; the following shift the function at a given income.",
+      "THE RATE OF INTEREST: classicals said a higher rate raises saving and cuts consumption. Abel's view is that the effect is ambiguous — a substitution effect (future consumption cheaper, so save more) against an income effect (targets reached with less saving, so consume more).",
+      "THE PRICE LEVEL: if money income and prices rise together, real consumption is unchanged; a faster rise in prices cuts real consumption. Under MONEY ILLUSION people feel richer when money income rises even though real income fell, and so spend more.",
+      "PRICE EXPECTATIONS: expecting prices to rise brings consumption forward, especially of durables; expecting a fall postpones it.",
+      "WEALTH: a household with accumulated wealth spends a larger share of current income than one with the same income and no wealth, because it needs to save less for security.",
+      "EXPECTED FUTURE INCOME: someone expecting a promotion consumes more now; a tax cut believed to be temporary changes consumption much less than a permanent one.",
+      "Also: the distribution of income (poorer households have a higher MPC), the availability and cost of consumer credit, the age structure of the population, and demonstration effects."]},
+    {q:"Explain the determinants of the saving function.", pts:[
+      "Because S = Y − C, every determinant of consumption is a determinant of saving with the sign reversed — say this first, then run the list.",
+      "INCOME: the primary determinant, positively — saving rises with income, and rises more than proportionately because APS increases with income.",
+      "THE RATE OF INTEREST: on the classical view a higher rate raises saving; the modern view is that the substitution and income effects pull opposite ways, so the net effect is an empirical question.",
+      "WEALTH: negatively — the wealthier need to save less out of current income.",
+      "EXPECTED FUTURE INCOME: negatively — expecting more later, people save less now.",
+      "AVAILABILITY OF CREDIT: negatively — easy credit reduces precautionary saving.",
+      "THE TAX SYSTEM: most countries deliberately favour some forms of saving; and taxes set disposable income directly.",
+      "For a developing economy add two: the depth and reach of the financial system (a safe, accessible place to save raises saving), and the level of income relative to subsistence (a household at subsistence cannot save whatever its intentions)."]},
+    {q:"Explain the net present value (NPV) method of investment decision, including the decision rule.", pts:[
+      "The method rests on the time value of money: a rupee today is worth more than a rupee next year, because a rupee today can be lent at interest.",
+      "Future returns are therefore discounted: PV of R receivable in year n = R/(1 + i)ⁿ, where i is the market rate of interest.",
+      "The present value of the whole income stream is the sum of the discounted yearly returns.",
+      "NPV = present value of the expected income stream − cost of the investment (C).",
+      "DECISION RULE: accept the project if NPV > 0 (discounted returns exceed the cost); NPV = 0 is the optimum stopping point; reject if NPV < 0.",
+      "A short worked line helps: Rs 110 receivable in one year at 10% has PV = 110/1.10 = Rs 100, so a project costing Rs 95 to obtain it has NPV = +5."]},
+    {q:"What is the marginal efficiency of capital, and how is the MEC schedule (investment demand curve) derived?", pts:[
+      "MEC is the discount rate that makes the present value of a project's expected returns equal to its cost — the internal rate of return. For a one-year project MEC = (R/C) − 1; for two years, C = R/(1 + r)².",
+      "The single-project rule is: undertake it if MEC > i.",
+      "For a firm with several projects: compute each project's MEC, rank the projects in descending order of MEC, and plot MEC against CUMULATIVE investment cost.",
+      "Joining the tops of the project bars gives a staircase; with many projects the steps become small and the staircase smooths into a continuous downward-sloping curve.",
+      "That curve is the MEC schedule, and it is the firm's investment demand curve: at a high interest rate only the highest-MEC projects clear the MEC > i test, so investment is small; as the rate falls, lower-MEC projects become worthwhile and investment rises.",
+      "Given the MEC schedule, the market rate of interest alone fixes the desired stock of capital, at the point where MEC = i.",
+      "A ranked-bar diagram plus the smoothed curve is expected."]},
+    {q:"Distinguish between the marginal efficiency of capital (MEC) and the marginal efficiency of investment (MEI).", pts:[
+      "MEC is the investment demand of an INDIVIDUAL FIRM; it relates the interest rate to the firm's desired stock of capital, holding the supply price of capital goods constant.",
+      "It is tempting but wrong to add up all firms' MEC curves to get the economy's investment demand.",
+      "When the interest rate falls, every firm wants more capital goods at once. The capital-goods industry's short-run capacity is limited (roughly to replacement demand), so demand outruns supply and the supply price of capital goods rises.",
+      "A higher supply price lowers MEC for every firm and every project, so actual investment rises by LESS than the MEC curve promised.",
+      "The curve traced by the ACTUAL amounts invested at each interest rate is the MEI schedule — the investment demand of the whole economy.",
+      "MEI is STEEPER than MEC (investment responds less), the two meet where net investment is zero, and MEI is the schedule behind the investment function I = f(i).",
+      "Dwivedi's numbers: at 14% firms want 30 but invest 15; at 10% they want 50 but invest 25."]},
+    {q:"Explain the concept and types of investment.", pts:[
+      "CONCEPT: in macroeconomics investment means business spending, per period, that adds to the economy's physical stock of capital — not buying existing shares or bonds, which only transfers ownership.",
+      "Capital is a stock (K); investment is the flow that changes it (I = ΔK).",
+      "GROSS AND NET: gross investment is all spending on capital goods in a year; net investment is gross minus depreciation. Depreciation includes obsolescence, not just wear and tear.",
+      "AUTONOMOUS AND INDUCED: from I = f(Y, i), induced investment responds to income or the interest rate; autonomous investment is driven by exogenous factors — new technology, new products, new markets, population growth, expectations.",
+      "BY ASSET TYPE: business fixed investment (plant, machinery, buildings), residential investment, and inventory investment.",
+      "REAL AND FINANCIAL: only real investment (new physical capital) enters the macroeconomic investment function; financial investment buys claims.",
+      "PUBLIC AND PRIVATE, by who does the spending — relevant in Nepal, where budget-financed public investment is a large share."]},
+    {q:"Discuss the main determinants of investment.", pts:[
+      "Split them into factors inside the model and exogenous factors.",
+      "THE RATE OF INTEREST: the cost of the funds used to buy capital; a lower rate lets lower-MEC projects pass the MEC > i test, so investment rises. This is what the MEI curve draws.",
+      "THE MARGINAL EFFICIENCY OF CAPITAL (expected returns): depends on the expected income stream and the supply price of the asset; anything raising expected revenue or lowering the machine's price shifts the whole curve right.",
+      "THE SUPPLY PRICE OF CAPITAL GOODS: higher machine prices lower MEC directly — the mechanism separating MEI from MEC.",
+      "THE LEVEL AND GROWTH OF INCOME: rising demand for output raises the desired capital stock (induced investment); formalised, this is the accelerator principle.",
+      "TECHNOLOGY AND INNOVATION: new techniques and products make existing capital obsolete and create new expected returns.",
+      "BUSINESS EXPECTATIONS AND CONFIDENCE: investment commits money for years, so confidence matters more here than anywhere else — Keynes's animal spirits.",
+      "GOVERNMENT POLICY: public investment directly; and corporate tax, investment allowances and depreciation rules, which change the after-tax return (Abel's user cost of capital).",
+      "Also: population growth and market size, the availability of finance, and political and legal stability."]}
+  ],
+  long: [
+    {q:"Explain the Keynesian consumption function: its concept, the psychological law it rests on, its technical properties, and its determinants. Illustrate with diagrams.", dia:"The consumption function against the 45° line, with the break-even point", pts:[
+      "CONCEPT: the relationship between aggregate consumption and disposable income, C = f(Y) with ΔC/ΔY > 0; income is the primary determinant.",
+      "THE PSYCHOLOGICAL LAW: people increase consumption as income rises but by less than the rise, so 0 < MPC < 1 and the rest is saved. State the three propositions — consumption rises with income; it rises by less than income; the proportion consumed tends to fall as income rises.",
+      "THE LINEAR FORM: C = a + bY, where a > 0 is autonomous consumption (the intercept) and b is the constant MPC (the slope, 0 < b < 1). Prove b = ΔC/ΔY.",
+      "PROPERTIES: (1) C = f(Y), ΔC/ΔY > 0; (2) 0 < MPC < 1; (3) MPC < APC; (4) MPC falls as income rises. Note that (3) and (4) were dropped by later Keynesians after Kuznets found MPC constant and equal to APC.",
+      "APC AND MPC: APC = C/Y = b + a/Y, which falls as income rises; MPC = b, constant. APC > MPC while a > 0.",
+      "DETERMINANTS: the interest rate (classical vs the substitution/income split), the price level and money illusion, price expectations, wealth, expected future income, the distribution of income, credit availability, and the age structure.",
+      "DIAGRAM: the consumption function with the 45° line, the positive intercept, the break-even point B where C = Y, and the dissaving and saving regions on either side. State that the function is flatter than the 45° line because MPC < 1.",
+      "A Nepal line: with gross domestic saving only about 6% of GDP, Nepali households consume almost all of domestic income; the extra saving comes largely from remittances, which are outside domestic income (⚠ figure from World Bank data)."]},
+    {q:"What is the consumption function? Derive the saving function from it, and explain the relationship between APC, MPC, APS and MPS using a schedule.", dia:"The consumption and saving functions drawn together, sharing a break-even income", pts:[
+      "CONSUMPTION FUNCTION: C = a + bY, with a = autonomous consumption and b = MPC.",
+      "DERIVING SAVING: from Y = C + S, S = Y − C = Y − (a + bY) = −a + (1 − b)Y. The saving intercept is −a and the slope is 1 − b = MPS.",
+      "So if C = 200 + 0.75Y then S = −200 + 0.25Y.",
+      "THE FOUR TECHNICAL ATTRIBUTES: APC = C/Y; MPC = ΔC/ΔY; APS = S/Y; MPS = ΔS/ΔY.",
+      "THE RELATIONSHIPS: APC + APS = 1 and MPC + MPS = 1 (both from Y = C + S). APC falls as income rises; APS rises. APC > MPC and, correspondingly, APS < MPS, as long as a > 0.",
+      "A SCHEDULE showing Y, C, S, APC, MPC, APS, MPS across several incomes, with the checks APC + APS = 1 and MPC + MPS = 1 in every row, and the break-even income marked where S = 0.",
+      "MPC and MPS are computed between rows; APC and APS at a row — state this.",
+      "DIAGRAM: the consumption function with the 45° line above, the saving function below, both cutting their reference line at the same break-even income."]},
+    {q:"Explain the theory of investment: the concept and types of investment, the marginal efficiency of capital, the derivation of the investment demand curve, and the distinction between MEC and MEI.", dia:"The MEC schedule derived from ranked investment projects, and the MEC-MEI distinction", pts:[
+      "CONCEPT: investment is business spending that adds to the physical stock of capital, per period; capital is the stock, investment the flow (I = ΔK). Buying existing financial assets is not investment.",
+      "TYPES: gross vs net (net = gross − depreciation, depreciation including obsolescence); autonomous vs induced (from I = f(Y, i)); by asset type; real vs financial.",
+      "THE INVESTMENT DECISION — two methods. NPV: NPV = PV of the return stream − cost; accept if NPV > 0. MEC: the discount rate making PV of returns equal to cost, i.e. the internal rate of return; for one year MEC = (R/C) − 1; accept if MEC > i.",
+      "THE MEC SCHEDULE: rank a firm's projects by MEC, plot MEC against cumulative investment, smooth the staircase into a downward-sloping curve. This is the firm's investment demand curve — a lower interest rate lets lower-MEC projects clear the MEC > i hurdle. The desired capital stock is read where MEC = i.",
+      "MEC vs MEI: adding up firms' MEC curves overstates the economy's investment demand. When all firms invest at once the capital-goods industry cannot keep up, its supply price rises, MEC falls for all, and actual investment rises by less than expected. The curve of actual investment is the MEI schedule — steeper than MEC, meeting it where net investment is zero, and the basis of I = f(i).",
+      "Dwivedi's illustration: at 14% desired capital rises by 30 but actual investment by 15; at 10%, desired 50 vs actual 25.",
+      "DIAGRAMS: the ranked-bar MEC derivation, and MEC against MEI with the desired and actual investment marked at one interest rate."]},
+    {q:"Discuss the determinants of investment, and explain why investment is described as the volatile component of GDP.", pts:[
+      "DETERMINANTS — inside the model: the rate of interest (a lower rate lets lower-MEC projects pass MEC > i); the marginal efficiency of capital, i.e. expected returns, which depend on expected revenue and the supply price of the asset; and the level and growth of income (induced investment, formalised as the accelerator).",
+      "DETERMINANTS — exogenous: technology and innovation (new techniques, products, markets); business expectations and confidence; government policy (public investment directly, and tax/allowance rules that change the after-tax return — Abel's user cost of capital); the supply price of capital goods; population growth and market size; the availability of finance; and political and legal stability.",
+      "Structure the answer by these two groups and tie it back to I = f(Y, i).",
+      "WHY VOLATILE: investment commits money for many years on the strength of EXPECTED future returns, and those expectations — Keynes's 'animal spirits' — shift sharply with confidence.",
+      "The MEC half of the investment decision is governed by expectations, which are far less stable than the current income that drives consumption.",
+      "Capital goods are durable, so investment can be postponed entirely in a downturn and bunched in a boom.",
+      "CONSEQUENCE: fluctuations in investment are the single most important cause of business cycles — swings in output, employment, prices and trade. This is why macroeconomic policy pays it such close attention.",
+      "A contrast with consumption strengthens the answer: consumption is the largest but most stable component of GDP because it tracks current income; investment is far smaller but the main source of instability."]},
+    {q:"An economy has a marginal propensity to consume of 0.8 and autonomous consumption of Rs 5,000 million. (a) Write the consumption and saving functions and find the break-even income. (b) Complete a schedule of C, S, APC, MPC, APS and MPS for incomes of Rs 0, 20,000, 40,000 and 60,000 million. (c) State and explain the three propositions of Keynes's psychological law that the schedule illustrates.", pts:[
+      "(a) C = 5,000 + 0.8Y. S = Y − C = −5,000 + 0.2Y. Break-even income = 5,000/0.2 = Rs 25,000 million.",
+      "(b) At Y = 0: C = 5,000, S = −5,000, APC and APS undefined. At Y = 20,000: C = 21,000, S = −1,000, APC = 1.05, APS = −0.05. At Y = 40,000: C = 37,000, S = 3,000, APC = 0.925, APS = 0.075. At Y = 60,000: C = 53,000, S = 7,000, APC ≈ 0.883, APS ≈ 0.117.",
+      "MPC = 0.8 and MPS = 0.2 between every pair of rows. Check APC + APS = 1 and MPC + MPS = 1 in each row.",
+      "(c) PROPOSITION 1 — consumption rises when income rises: C goes from 5,000 to 53,000 as Y goes from 0 to 60,000. The relationship is positive.",
+      "PROPOSITION 2 — consumption rises by LESS than the rise in income: each Rs 20,000 of extra income raises consumption by only Rs 16,000, so MPC = 0.8 < 1 and the other Rs 4,000 is saved.",
+      "PROPOSITION 3 — the proportion of income consumed falls as income rises: APC falls from 1.05 to 0.883 across the schedule, so richer households consume a smaller share and save a larger one.",
+      "Note the modern qualification: Keynes also held MPC itself falls as income rises, but empirical work (Kuznets) found MPC roughly constant, so the schedule here uses a constant MPC of 0.8."],
+     sol:"<p><b>(a) Functions</b><br>C = 5,000 + 0.8Y &nbsp;·&nbsp; S = Y − C = −5,000 + 0.2Y<br>Break-even: S = 0 → 0.2Y = 5,000 → <b>Y = Rs 25,000 million</b></p><p><b>(b) Schedule (Rs million)</b></p><table><thead><tr><th>Y</th><th class='n'>C = 5,000 + 0.8Y</th><th class='n'>S = Y−C</th><th class='n'>APC</th><th class='n'>APS</th><th class='n'>MPC</th><th class='n'>MPS</th></tr></thead><tbody><tr><td>0</td><td class='n'>5,000</td><td class='n'>−5,000</td><td class='n'>—</td><td class='n'>—</td><td class='n'>—</td><td class='n'>—</td></tr><tr><td>20,000</td><td class='n'>21,000</td><td class='n'>−1,000</td><td class='n'>1.050</td><td class='n'>−0.050</td><td class='n'>0.8</td><td class='n'>0.2</td></tr><tr><td>40,000</td><td class='n'>37,000</td><td class='n'>3,000</td><td class='n'>0.925</td><td class='n'>0.075</td><td class='n'>0.8</td><td class='n'>0.2</td></tr><tr><td>60,000</td><td class='n'>53,000</td><td class='n'>7,000</td><td class='n'>0.883</td><td class='n'>0.117</td><td class='n'>0.8</td><td class='n'>0.2</td></tr></tbody></table><p>Checks: APC + APS = 1 and MPC + MPS = 1 in every row. Break-even income Rs 25,000 million sits between the Rs 20,000 (dissaving) and Rs 40,000 (saving) rows.</p><p><b>(c) The three propositions</b><br>1. Consumption rises with income (5,000 → 53,000).<br>2. It rises by less than income — each +20,000 of Y adds only +16,000 to C, so MPC = 0.8.<br>3. The share consumed falls as income rises — APC falls 1.050 → 0.883.</p>"}
+  ]
 }
 }, cases: [] };
 
