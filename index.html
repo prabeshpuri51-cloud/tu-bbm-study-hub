@@ -29376,7 +29376,107 @@ function renderNotesHubList(){
       </div>`;
     });
   }
+  html += `
+    <div class="section-label" style="margin-top:26px;"><h3>Backup this phone</h3><div class="rule"></div></div>
+    <p style="color:var(--ink-dim);font-size:.82rem;line-height:1.45;margin:2px 2px 12px;">
+      Your highlights, quiz progress, exam answers and notes are saved <b>only on this phone</b> — nothing syncs.
+      Save a backup file now and then, and always before switching phones or clearing Safari data.
+      (Uploaded textbook PDFs aren't included — re-add those per subject.)</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="ud-btn ghost" onclick="exportBackup()">⬇ Save backup file</button>
+      <button class="ud-btn ghost" onclick="document.getElementById('backup-file-input').click()">⬆ Restore from backup</button>
+    </div>
+    <input type="file" id="backup-file-input" accept="application/json,.json" style="display:none;" onchange="importBackupFile(event)">`;
   list.innerHTML = html;
+}
+
+/* ============ BACKUP / RESTORE ============
+   Everything the app remembers for you — notes-reader and PDF highlights, quiz
+   mastery, written-exam answers, saved video links, the last-opened unit, and
+   every note in the Notes Hub — is browser localStorage on THIS phone only.
+   Nothing syncs anywhere. Clearing Safari website data, or moving to a new
+   phone, loses all of it, and these two buttons are the only recovery path.
+   The uploaded PDF *binaries* live in IndexedDB and are deliberately NOT in the
+   backup: they are large and Prabesh still has the source files.
+
+   This block is the ONE sanctioned exception to "no raw localStorage. outside
+   the ls* helpers" — it needs to enumerate and rewrite the whole store, which
+   the key-scoped helpers can't do. Every access here is still inside try/catch,
+   so a global storage throw degrades gracefully rather than breaking a render. */
+const BACKUP_MARKER = 'bbmStudyHubBackup';
+
+function collectBackup(){
+  const data = {};
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(k!=null) data[k] = localStorage.getItem(k);
+    }
+  }catch(e){}
+  return { __marker:BACKUP_MARKER, version:1, exportedAt:new Date().toISOString(),
+           origin:location.origin, keyCount:Object.keys(data).length, data };
+}
+
+async function exportBackup(){
+  const payload = collectBackup();
+  if(payload.keyCount === 0){ uiAlert("Nothing to back up yet — do some highlighting or quizzes first."); return; }
+  const json  = JSON.stringify(payload, null, 2);
+  const fname = `bbm-study-hub-backup-${new Date().toISOString().slice(0,10)}.json`;
+  const blob  = new Blob([json], {type:'application/json'});
+
+  // iOS Safari: the Share sheet is the reliable way to get a file into Files / Mail.
+  try{
+    if(navigator.canShare){
+      const file = new File([blob], fname, {type:'application/json'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file], title:'BBM Study Hub backup'});
+        return;
+      }
+    }
+  }catch(e){ if(e && e.name === 'AbortError') return; }   // user dismissed the share sheet
+
+  // Fallback: a download link.
+  try{
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = fname;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    return;
+  }catch(e){}
+
+  // Last resort: show the text so it can be copied out.
+  const w = window.open('', '_blank');
+  if(w){ w.document.title = fname; w.document.body.innerHTML = '<pre style="white-space:pre-wrap;word-break:break-all;font:12px monospace;padding:12px;">' + escapeHtml(json) + '</pre>'; }
+  else uiAlert("Couldn't create the file automatically. Open the app in Safari (not the Home-Screen icon) and try again.");
+}
+
+async function importBackupFile(event){
+  const input = event.target;
+  const file = input.files && input.files[0];
+  input.value = '';
+  if(!file) return;
+  let payload;
+  try{ payload = JSON.parse(await file.text()); }
+  catch(e){ uiAlert("That file couldn't be read as a backup (it didn't parse)."); return; }
+  if(!payload || payload.__marker !== BACKUP_MARKER || typeof payload.data !== 'object' || !payload.data){
+    uiAlert("That doesn't look like a BBM Study Hub backup file."); return;
+  }
+  const keys = Object.keys(payload.data);
+  const when = (payload.exportedAt || '').slice(0,10) || 'an unknown date';
+  const ok = await uiConfirm(
+    `Restore the backup from ${when}? It holds ${keys.length} saved item${keys.length===1?'':'s'}.\n\n` +
+    `This REPLACES what is on this phone now — highlights, quiz progress, notes and exam answers are all overwritten with the backup's. The app reloads afterwards.`,
+    {danger:true, okText:'Restore'});
+  if(!ok) return;
+  try{
+    localStorage.clear();
+    for(const k of keys){
+      const v = payload.data[k];
+      if(typeof v === 'string') localStorage.setItem(k, v);
+    }
+  }catch(e){ uiAlert("Restore failed while writing — this phone's storage may be blocked (private browsing) or full. Nothing was changed if the app still shows your data after reload."); return; }
+  location.reload();
 }
 
 /* Write whatever is in the open editor to storage, WITHOUT closing it.
