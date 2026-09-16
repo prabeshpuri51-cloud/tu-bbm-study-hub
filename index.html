@@ -771,6 +771,15 @@
   .pp-q-model li{font-size:.83rem;line-height:1.5;color:var(--ink);margin-bottom:4px;}
   .pp-case-scenario{font-size:.83rem;line-height:1.55;color:var(--ink-dim);margin:6px 0 10px;white-space:pre-wrap;}
   .pp-q-model .ex-sol{overflow-x:auto;}
+  .pp-year-card{display:flex;align-items:center;gap:10px;width:100%;background:var(--card);
+    border:1px solid var(--line);border-radius:13px;padding:14px 15px;margin-bottom:9px;
+    cursor:pointer;text-align:left;font-family:inherit;color:inherit;}
+  .pp-year-card:active{background:rgba(127,214,168,.12);}
+  .pp-year-card-label{font-size:1rem;font-weight:800;color:#fff;}
+  .pp-year-card-count{font-size:.76rem;color:var(--ink-dim);flex:1;}
+  .pp-year-card-arrow{font-size:1.1rem;color:var(--accent);flex-shrink:0;}
+  .pp-back-btn{display:inline-flex;align-items:center;gap:4px;background:none;border:none;
+    color:var(--accent);font-size:.82rem;font-weight:700;cursor:pointer;padding:4px 0 14px;font-family:inherit;}
 
   .tile-mastery{height:4px;border-radius:99px;background:rgba(0,0,0,.35);overflow:hidden;margin-top:7px;}
   .tile-mastery-fill{height:100%;background:#fff;opacity:.85;transition:width .4s ease;}
@@ -28313,42 +28322,78 @@ function collectRealQuestions(subjectKey){
   return {secs, total};
 }
 
+function pastPapersYearCounts(secs){
+  const counts = {};
+  secs.forEach(s => {
+    (s.items || []).forEach(q => { counts[q.real] = (counts[q.real] || 0) + 1; });
+    (s.cases || []).forEach(c => { counts[c.real] = (counts[c.real] || 0) + 1; });
+  });
+  return counts;
+}
 function openPastPapers(){
   const {secs, total} = collectRealQuestions(currentSubjectKey);
   const data = SEMESTERS[currentSemester].subjects[currentSubjectKey];
   const codeShort = (data.code || '').split('•')[0].trim();
-  let html = `<p class="pp-intro">Questions confirmed to have appeared on a real TU ${escapeHtml(codeShort)} paper, newest first, grouped by the section they belong in. If you can answer every one of these, you have covered what the examiner actually asks.</p>`;
+  const esc = v => escapeHtml(v == null ? '' : String(v));
+  document.getElementById('pp-drawer-title').textContent = 'Past-paper questions';
+  let html = `<p class="pp-intro">Questions confirmed to have appeared on a real TU ${esc(codeShort)} paper. Pick a year to see everything confirmed for that paper.</p>`;
   if(total === 0){
     html += `<div class="pp-empty">No confirmed TU past paper has been found for this subject yet, so nothing is tagged here. The questions in each unit's <b>Written exam practice</b> are built from the official syllabus (and, where they exist, parallel papers) — practise those instead.</div>`;
   } else {
-    const esc = v => escapeHtml(v == null ? '' : String(v));
-    secs.forEach(s => {
-      html += `<div class="pp-sec-label">${esc(s.label)}</div>`;
-      (s.items || []).forEach(q => {
-        const diaStr = (typeof q.dia === 'string' && q.dia.trim()) ? q.dia.trim() : '';
-        html += `<div class="pp-q">
-          <div class="pp-q-top"><span class="pp-year">${esc(q.real)}</span><span class="pp-unit">${esc(q.unit)}</span></div>
-          <p class="pp-q-text">${esc(q.q)}</p>
-          ${diaStr ? `<div class="pp-q-dia">✎ Diagram expected: ${esc(diaStr)}</div>` : ''}
-          <details class="pp-q-model"><summary>Show marking points</summary>${(q.pts && q.pts.length) ? examModelHTML(q) : (examSolHTML(q) || '<p class="pp-case-scenario">Practise this in the unit\'s Written exam practice for the full marking guide.</p>')}</details>
-        </div>`;
-      });
-      (s.cases || []).forEach(c => {
-        html += `<div class="pp-q">
-          <div class="pp-q-top"><span class="pp-year">${esc(c.real)}</span><span class="pp-unit">Compulsory case</span></div>
-          <p class="pp-q-text">${esc(c.title || 'Case study')}</p>
-          <details class="pp-q-model"><summary>Show scenario &amp; sub-questions</summary>
-            ${c.scenario ? `<div class="pp-case-scenario">${esc(c.scenario)}</div>` : ''}
-            <ol>${(c.qs || []).map(x => `<li>${esc(x.q)} <em>(${esc(x.m)} marks)</em>${(x.pts && x.pts.length) ? examPtsHTML(x, 'Points') : ''}</li>`).join('')}</ol>
-          </details>
-        </div>`;
-      });
+    const counts = pastPapersYearCounts(secs);
+    const years = Object.keys(counts).sort((a,b) => String(b).localeCompare(String(a)));
+    years.forEach(y => {
+      const n = counts[y];
+      html += `<button class="pp-year-card" onclick="openPastPapersYear('${y}')">
+        <span class="pp-year-card-label">${esc(y)}</span>
+        <span class="pp-year-card-count">${n} question${n===1?'':'s'}</span>
+        <span class="pp-year-card-arrow">›</span>
+      </button>`;
     });
   }
   const body = document.getElementById('pp-body');
   body.innerHTML = html;
   body.scrollTop = 0;
   document.getElementById('pp-drawer').classList.add('active');
+}
+function openPastPapersYear(year){
+  const {secs} = collectRealQuestions(currentSubjectKey);
+  const data = SEMESTERS[currentSemester].subjects[currentSubjectKey];
+  const codeShort = (data.code || '').split('•')[0].trim();
+  const esc = v => escapeHtml(v == null ? '' : String(v));
+  document.getElementById('pp-drawer-title').textContent = `${codeShort} — ${year}`;
+  let html = `<button class="pp-back-btn" onclick="openPastPapers()">‹ All years</button>`;
+  let any = false;
+  secs.forEach(s => {
+    const items = (s.items || []).filter(q => q.real === year);
+    const cases = (s.cases || []).filter(c => c.real === year);
+    if(!items.length && !cases.length) return;
+    any = true;
+    html += `<div class="pp-sec-label">${esc(s.label)}</div>`;
+    items.forEach(q => {
+      const diaStr = (typeof q.dia === 'string' && q.dia.trim()) ? q.dia.trim() : '';
+      html += `<div class="pp-q">
+        <div class="pp-q-top"><span class="pp-year">${esc(q.real)}</span><span class="pp-unit">${esc(q.unit)}</span></div>
+        <p class="pp-q-text">${esc(q.q)}</p>
+        ${diaStr ? `<div class="pp-q-dia">✎ Diagram expected: ${esc(diaStr)}</div>` : ''}
+        <details class="pp-q-model"><summary>Show marking points</summary>${(q.pts && q.pts.length) ? examModelHTML(q) : (examSolHTML(q) || '<p class="pp-case-scenario">Practise this in the unit\'s Written exam practice for the full marking guide.</p>')}</details>
+      </div>`;
+    });
+    cases.forEach(c => {
+      html += `<div class="pp-q">
+        <div class="pp-q-top"><span class="pp-year">${esc(c.real)}</span><span class="pp-unit">Compulsory case</span></div>
+        <p class="pp-q-text">${esc(c.title || 'Case study')}</p>
+        <details class="pp-q-model"><summary>Show scenario &amp; sub-questions</summary>
+          ${c.scenario ? `<div class="pp-case-scenario">${esc(c.scenario)}</div>` : ''}
+          <ol>${(c.qs || []).map(x => `<li>${esc(x.q)} <em>(${esc(x.m)} marks)</em>${(x.pts && x.pts.length) ? examPtsHTML(x, 'Points') : ''}</li>`).join('')}</ol>
+        </details>
+      </div>`;
+    });
+  });
+  if(!any) html += `<div class="pp-empty">No questions found for ${esc(year)}.</div>`;
+  const body = document.getElementById('pp-body');
+  body.innerHTML = html;
+  body.scrollTop = 0;
 }
 function closePastPapers(){ document.getElementById('pp-drawer').classList.remove('active'); }
 
