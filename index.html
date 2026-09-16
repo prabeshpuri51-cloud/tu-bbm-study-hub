@@ -3944,7 +3944,11 @@ brief: [
  {q:"Define price elasticity of demand and state the formula.",
   pts:["Measures responsiveness of quantity demanded to a change in price","Ed = (P/Q) x (dQ/dP), or percentage change in Qd over percentage change in P","Always negative for normal downward-sloping demand; magnitude conventionally used","|Ed|>1 elastic, =1 unit elastic, <1 inelastic"]},
  {q:"State the equation of a linear demand function and explain what each parameter means.",
-  pts:["P = a − bQ","a is the price intercept (choke price, where Q=0)","a/b is the quantity intercept (where P=0)","b is the slope, showing how much price must fall to sell one more unit"]}
+  pts:["P = a − bQ","a is the price intercept (choke price, where Q=0)","a/b is the quantity intercept (where P=0)","b is the slope, showing how much price must fall to sell one more unit"]},
+ {q:"Find the equation of the straight line passing through (2, 3) and (−4, 1).", real:"2022",
+  pts:["Slope b = (1−3)/(−4−2) = (−2)/(−6) = 1/3","Use point-slope form: y−3 = (1/3)(x−2)","Simplify to y = (1/3)x + 7/3, or x−3y+7=0"]},
+ {q:"A consumer has an income of Rs 5,000 to spend on two goods X and Y whose prices are Rs 50 and Rs 80 per unit respectively. What is the slope of the budget constraint?", real:"2022",
+  pts:["Budget line: 50X + 80Y = 5000","Rearranged: Y = 62.5 − 0.625X","Slope = −Px/Py = −50/80 = −0.625"]}
 ],
 short: [
  {q:"The supply function is P = 30 + 0.5Q. Calculate the arc price elasticity of supply when price increases from Rs 80 to Rs 90.", real:"2022 model paper",
@@ -3954,11 +3958,15 @@ short: [
  {q:"Advertising expenditure (x, Rs lakh) and profit (y, Rs lakh) for six periods give: Σx=38, Σy=49, Σxy=331, Σx²=264, n=6. Find the line of best fit and estimate profit when expenditure is Rs 15 lakh.", real:"2022 model paper",
   pts:["b = (nΣxy−ΣxΣy)/(nΣx²−(Σx)²) = (6×331−38×49)/(6×264−38²) = 124/140 ≈ 0.886","a = mean(y) − b×mean(x) = 49/6 − 0.886×38/6 ≈ 2.557","Line: ŷ = 2.557 + 0.886x","At x=15: ŷ ≈ 2.557+0.886(15) ≈ 15.84 (Rs lakh)"]},
  {q:"A firm's total cost is TC = 200 + 15Q and it sells at a fixed price giving TR = 35Q. Find the break-even quantity and the revenue/cost at that point.",
-  pts:["Set TR=TC: 35Q=200+15Q","20Q=200 → Q*=10","TR=TC=35(10)=Rs 350 at break-even"]}
+  pts:["Set TR=TC: 35Q=200+15Q","20Q=200 → Q*=10","TR=TC=35(10)=Rs 350 at break-even"]},
+ {q:"The supply function is P = 90 + 0.5Q. Calculate the arc price elasticity of supply when price increases from Rs 120 to Rs 190. Also calculate the percentage change in quantity supplied in response to a price increase of 10% when P = Rs 190.", real:"2022",
+  pts:["At P=120: Q1=(120−90)/0.5=60. At P=190: Q2=(190−90)/0.5=200","Arc elasticity = [(Q2−Q1)/(P2−P1)] × [(P1+P2)/(Q1+Q2)] = (140/70)×(310/260) = 2×1.192 ≈ 2.385 (elastic)","Point elasticity at P=190: dQ/dP=2 (from Q=2P−180), Es=(P/Q)(dQ/dP)=(190/200)(2)=1.9","%ΔQs ≈ Es × %ΔP = 1.9 × 10% = 19% increase in quantity supplied"]}
 ],
 long: [
  {q:"(a) A demand function is Q = 200−4P. Derive the point elasticity formula in terms of P and Q, and evaluate it at P=30 and P=40. (b) State, with reasons, at which of these two prices a price cut would raise total revenue.",
-  pts:["(a) dQ/dP=−4; Ed=(P/Q)(−4)","At P=30: Q=80, Ed=(30/80)(−4)=−1.5 (elastic)","At P=40: Q=40, Ed=(40/40)(−4)=−4 (elastic, more so)","(b) Revenue rises from a price CUT only where demand is elastic (|Ed|>1)","Both points are elastic here, so a price cut raises revenue at both, more strongly at P=40","(General rule to state: cutting price when inelastic LOWERS revenue — never cut price there)"]}
+  pts:["(a) dQ/dP=−4; Ed=(P/Q)(−4)","At P=30: Q=80, Ed=(30/80)(−4)=−1.5 (elastic)","At P=40: Q=40, Ed=(40/40)(−4)=−4 (elastic, more so)","(b) Revenue rises from a price CUT only where demand is elastic (|Ed|>1)","Both points are elastic here, so a price cut raises revenue at both, more strongly at P=40","(General rule to state: cutting price when inelastic LOWERS revenue — never cut price there)"]},
+ {q:"The following table shows the annual advertising expenditure and volume of sales of a company:\nAnnual advertisement expenditure (Rs lakh): 5, 7, 8, 9, 10, 10\nAnnual sales (Rs lakh): 7, 8, 9, 10, 11, 12\n(a) Find the equation of the straight line of sales on expenditure using the least squares method. (b) Estimate the annual sales when the annual advertising expenditure is Rs 13 lakh and Rs 15 lakh.", real:"2022",
+  pts:["n=6, ΣX=49, ΣY=57, ΣXY=483, ΣX²=419","(a) b=(nΣXY−ΣXΣY)/(nΣX²−(ΣX)²)=(6×483−49×57)/(6×419−49²)=105/113≈0.929","a=(ΣY−bΣX)/n=(57−0.929×49)/6≈1.912","Line: Ŷ=1.912+0.929X","(b) At X=13: Ŷ≈1.912+0.929(13)≈13.99 (Rs lakh). At X=15: Ŷ≈1.912+0.929(15)≈15.85 (Rs lakh)"]}
 ]},
 
 1: { // Unit 2: Simultaneous Equations
@@ -3974,11 +3982,17 @@ short: [
  {q:"The demand and supply functions for a commodity are Pd=70−0.0001Q and Ps=16+0.0001Q. Find the consumer's and producer's surplus.", real:"2022 model paper",
   pts:["Equilibrium: 70−0.0001Q=16+0.0001Q → 54=0.0002Q → Q*=270,000","P*=70−0.0001(270000)=43 (check: 16+27=43 ✓)","CS=½×270,000×(70−43)=3,645,000","PS=½×270,000×(43−16)=3,645,000"]},
  {q:"A firm has TC=200+15Q and TR=35Q. Find the break-even point, and state the profit or loss at Q=15.",
-  pts:["Break-even: 35Q=200+15Q → Q*=10","At Q=15: TR=35(15)=525, TC=200+15(15)=425","Profit = 525−425 = Rs 100 (a profit, since Q=15 is beyond break-even)"]}
+  pts:["Break-even: 35Q=200+15Q → Q*=10","At Q=15: TR=35(15)=525, TC=200+15(15)=425","Profit = 525−425 = Rs 100 (a profit, since Q=15 is beyond break-even)"]},
+ {q:"The demand and supply functions for a commodity are Pd=80−0.3Q and Ps=30+0.2Q respectively. Find the consumer's surplus and producer's surplus. Also find the total surplus.", real:"2022",
+  pts:["Equilibrium: 80−0.3Q=30+0.2Q → 50=0.5Q → Q*=100, P*=80−0.3(100)=50","Consumer's surplus = ½×(demand intercept−P*)×Q* = ½×(80−50)×100 = Rs 1,500","Producer's surplus = ½×(P*−supply intercept)×Q* = ½×(50−30)×100 = Rs 1,000","Total surplus = 1,500+1,000 = Rs 2,500"]},
+ {q:"Solve the following system of linear equations: 2x−y+z=−2, x+y−2z=−9, x+2y+z=9.", real:"2022",
+  pts:["Adding eqn(1) and eqn(2): 3x−z=−11 → z=3x+11","Subtracting eqn(2) from eqn(3): y+3z=18 → y=18−3z","Substituting into eqn(2) and solving simultaneously gives x=−2","Then z=3(−2)+11=5, and y=18−3(5)=3","Solution: x=−2, y=3, z=5 (check in eqn(3): −2+6+5=9 ✓)"]}
 ],
 long: [
  {q:"In a Keynesian model of a closed economy, Y=E, E=C+I+G, C=0.7Yd, Yd=(1−t)Y, where I=Rs 500m, G=Rs 700m, t=0.25. Find (a) the equilibrium level of national income, (b) the equilibrium level of consumption, (c) the tax revenue.",
-  pts:["Yd=(1−0.25)Y=0.75Y","C=0.7(0.75Y)=0.525Y","E=0.525Y+500+700=0.525Y+1200","Set Y=E: Y=0.525Y+1200 → 0.475Y=1200 → Y*≈2526.3","C*=0.525(2526.3)≈1326.3","Tax revenue T=0.25(2526.3)≈631.6 (all Rs million)"]}
+  pts:["Yd=(1−0.25)Y=0.75Y","C=0.7(0.75Y)=0.525Y","E=0.525Y+500+700=0.525Y+1200","Set Y=E: Y=0.525Y+1200 → 0.475Y=1200 → Y*≈2526.3","C*=0.525(2526.3)≈1326.3","Tax revenue T=0.25(2526.3)≈631.6 (all Rs million)"]},
+ {q:"In a Keynesian macroeconomic model of an economy with no foreign trade, it is assumed that Y=E, E=C+I₀+G₀, C=60+0.7Yd, Yd=Y−T, where I₀=Rs 90m, G₀=Rs 140m, and T=0.4Y. Determine the value of (i) the equilibrium level of national income algebraically and graphically, (ii) the equilibrium level of consumption, (iii) the tax revenue.", real:"2022",
+  pts:["Yd=Y−0.4Y=0.6Y","C=60+0.7(0.6Y)=60+0.42Y","E=C+I₀+G₀=60+0.42Y+90+140=290+0.42Y","Set Y=E: Y=290+0.42Y → 0.58Y=290 → Y*=500 (graphically: the intersection of the 45° line and the E line)","Yd=0.6(500)=300; C*=60+0.7(300)=Rs 270m","Tax revenue T=0.4(500)=Rs 200m"]}
 ]},
 
 2: { // Unit 3: Quadratic Equations
@@ -3988,13 +4002,19 @@ brief: [
  {q:"Solve 2x² + 3x − 5 = 0 using the quadratic formula.",
   pts:["a=2, b=3, c=−5","Discriminant = 9−4(2)(−5) = 49, √49=7","x=(−3±7)/4 → x=1 or x=−2.5"]},
  {q:"State the three cases of the discriminant b²−4ac and what each tells you about the roots.",
-  pts:["b²−4ac>0: two distinct real roots","b²−4ac=0: one repeated real root","b²−4ac<0: no real roots (parabola doesn't cross the x-axis)"]}
+  pts:["b²−4ac>0: two distinct real roots","b²−4ac=0: one repeated real root","b²−4ac<0: no real roots (parabola doesn't cross the x-axis)"]},
+ {q:"Form the quadratic equation whose roots are 4 and 3.", real:"2022",
+  pts:["Sum of roots = 4+3 = 7","Product of roots = 4×3 = 12","Equation: x² − (sum)x + (product) = 0 → x²−7x+12=0"]},
+ {q:"Solve the quadratic equation: x² + x − 6 = 0.", real:"2022",
+  pts:["Factorize: (x+3)(x−2)=0","x=−3 or x=2"]}
 ],
 short: [
  {q:"Sketch the graph of y = −x² + 2x − 8. Find the maximum value of y.", real:"2022 model paper",
   pts:["a=−1<0, so the parabola opens downward — a maximum exists","Vertex x=−2/(2×−1)=1, y=−1+2−8=−7 — the maximum value","Discriminant=4−32=−28<0, so no real x-intercepts","Graph: downward parabola entirely below the x-axis, peak at (1,−7)"]},
  {q:"A firm's total cost is TC=50+2Q and it sells output at a fixed price giving TR=10Q. Find the profit function and the break-even quantity, and explain why this profit function is linear rather than quadratic.",
-  pts:["π=TR−TC=10Q−(50+2Q)=8Q−50 — linear in Q, since both TR and TC are linear here (no Q² term appears)","Break-even: 8Q=50 → Q=6.25","A quadratic profit function needs TR or TC to be non-linear — e.g. TR from a linear demand curve, which introduces a Q² term — otherwise, as here, break-even is a simple linear solve"]}
+  pts:["π=TR−TC=10Q−(50+2Q)=8Q−50 — linear in Q, since both TR and TC are linear here (no Q² term appears)","Break-even: 8Q=50 → Q=6.25","A quadratic profit function needs TR or TC to be non-linear — e.g. TR from a linear demand curve, which introduces a Q² term — otherwise, as here, break-even is a simple linear solve"]},
+ {q:"Sketch the graph of y = x² − 2x − 8. Also find the vertex, intercepts, domain and range.", real:"2022",
+  pts:["a=1>0, so the parabola opens upward — a minimum exists","Vertex: x=−(−2)/(2×1)=1, y=1−2−8=−9 → vertex (1,−9)","x-intercepts: x²−2x−8=(x−4)(x+2)=0 → x=4 or x=−2. y-intercept: x=0 → y=−8","Domain: all real numbers. Range: y≥−9 (since the parabola opens upward with minimum −9)"]}
 ],
 long: [
  {q:"A firm faces demand P=80−2Q and total cost TC=20Q+50. (a) Form the profit function and state why it is quadratic. (b) Find the break-even quantities. (c) Find the output that maximizes profit and the maximum profit, using the vertex formula (no calculus).",
@@ -4008,13 +4028,19 @@ brief: [
  {q:"Solve for x: 3ˣ = 81.",
   pts:["81 = 3⁴","3ˣ = 3⁴ → x = 4"]},
  {q:"State the vertical and horizontal asymptotes of y = 12/(2x+1).",
-  pts:["Vertical asymptote where denominator=0: 2x+1=0 → x=−0.5","Horizontal asymptote: y=0 (as x→±∞, y→0)"]}
+  pts:["Vertical asymptote where denominator=0: 2x+1=0 → x=−0.5","Horizontal asymptote: y=0 (as x→±∞, y→0)"]},
+ {q:"Solve for x: 2^(9−x) × 4^x = 2^(2x−1).", real:"2022",
+  pts:["Rewrite 4^x as 2^(2x): LHS = 2^(9−x) × 2^(2x) = 2^(9+x)","Equate exponents: 9+x = 2x−1","Solving: x = 10"]},
+ {q:"If f(x) = x² − 3 and x₀=1, find x₁ using Newton-Raphson's method.", real:"2022",
+  pts:["f′(x)=2x","x₁ = x₀ − f(x₀)/f′(x₀) = 1 − (1−3)/2 = 1 − (−1) = 2"]}
 ],
 short: [
  {q:"A consumption function is modeled by C=900(1−e^(−0.3y)), where y is income level. Estimate C when y=10, 15, 20.", real:"2022 model paper",
   pts:["C(10)=900(1−e^−3)≈855.19","C(15)=900(1−e^−4.5)≈890.00","C(20)=900(1−e^−6)≈897.77","Values approach the saturation level of 900 as y grows"]},
  {q:"Given f(x)=x³−x−2, show a root lies between 1 and 2, then perform one bisection iteration.",
-  pts:["f(1)=1−1−2=−2, f(2)=8−2−2=4 — opposite signs, so a root lies in [1,2]","Midpoint c=1.5, f(1.5)=3.375−1.5−2=−0.125","Since f(1.5) has the same sign as f(1), the new interval is [1.5,2]"]}
+  pts:["f(1)=1−1−2=−2, f(2)=8−2−2=4 — opposite signs, so a root lies in [1,2]","Midpoint c=1.5, f(1.5)=3.375−1.5−2=−0.125","Since f(1.5) has the same sign as f(1), the new interval is [1.5,2]"]},
+ {q:"Sales for a new product are expected to grow according to the equation S=200000(1−e^(−0.05t)), where t represents weeks. Estimate the values of S when t=0, 10, 15, 20, 25. Sketch the estimated sales on graph paper.", real:"2022",
+  pts:["t=0: S=200000(1−1)=0","t=10: S=200000(1−e^−0.5)≈200000(0.3935)≈78,694","t=15: S=200000(1−e^−0.75)≈200000(0.5276)≈105,527","t=20: S=200000(1−e^−1)≈200000(0.6321)≈126,424","t=25: S=200000(1−e^−1.25)≈200000(0.7135)≈142,699","Graph: an increasing curve that rises quickly then flattens, approaching the saturation level S=200,000 as t grows (exponential-growth-to-a-ceiling shape)"]}
 ],
 long: [
  {q:"(a) Using Newton-Raphson, find x1 given f(x)=x²−5 and x0=2. (b) Perform a second iteration to find x2. (c) Compare x2 to the true value of √5.",
@@ -4028,7 +4054,11 @@ brief: [
  {q:"Find the 10th term of the geometric series 2+4+8+...", real:"2022 model paper",
   pts:["a=2, r=2","T10=ar⁹=2×2⁹=2×512=1024"]},
  {q:"Find the compound interest on Rs 9,000 at 5% for 2 years.", real:"2022 model paper",
-  pts:["CI=P[(1+r)ⁿ−1]=9000[(1.05)²−1]","=9000(0.1025)=Rs 922.50"]}
+  pts:["CI=P[(1+r)ⁿ−1]=9000[(1.05)²−1]","=9000(0.1025)=Rs 922.50"]},
+ {q:"Find the sum of the arithmetic series: 8+12+16+... to 10 terms.", real:"2022",
+  pts:["a=8, d=4, n=10","Sn=(n/2)[2a+(n−1)d]=(10/2)[16+9(4)]=5(52)=260"]},
+ {q:"Find the compound interest of Rs 10,000 at 3% for 2 years.", real:"2022",
+  pts:["A=P(1+r)ⁿ=10000(1.03)²=10000(1.0609)=Rs 10,609","CI=A−P=10,609−10,000=Rs 609"]}
 ],
 short: [
  {q:"The difference between compound interest and simple interest on Rs 18,000 for 2 years is Rs 45. Find the rate of interest.", real:"2022 model paper",
@@ -4036,11 +4066,17 @@ short: [
  {q:"How much should be paid now for an annuity of Rs 5,000 p.a., payable half-yearly for 15 years, at 5% p.a. compound interest?", real:"2022 model paper",
   pts:["Half-yearly payment A=5000/2=2500","Half-yearly rate r=5%/2=2.5%, number of payments n=15×2=30","PV=A×[1−(1+r)^−n]/r=2500×[1−(1.025)^−30]/0.025","PV ≈ Rs 52,325.73"]},
  {q:"Compare the simple and compound interest on Rs 12,000 at 6% p.a. for 3 years.",
-  pts:["SI=Prt=12000×0.06×3=Rs 2,160","CI=P[(1+r)ⁿ−1]=12000[(1.06)³−1]≈Rs 2,292.19","Compound interest exceeds simple interest by about Rs 132.19 over 3 years"]}
+  pts:["SI=Prt=12000×0.06×3=Rs 2,160","CI=P[(1+r)ⁿ−1]=12000[(1.06)³−1]≈Rs 2,292.19","Compound interest exceeds simple interest by about Rs 132.19 over 3 years"]},
+ {q:"The difference between the compound interest and simple interest on a certain sum for two years at 4% per annum is Rs 32. What is the sum?", real:"2022",
+  pts:["For 2 years, CI−SI=P×r² (r as a decimal)","P×(0.04)²=32 → P×0.0016=32 → P=Rs 20,000"]},
+ {q:"Find the amount of an annuity due of Rs 600 a year for 25 years at compound interest 5% per annum.", real:"2022",
+  pts:["FV of an ordinary annuity = PMT×[(1+r)ⁿ−1]/r = 600×[(1.05)²⁵−1]/0.05 ≈ Rs 28,636.26","An annuity DUE pays at the start of each period, one period ahead of ordinary — multiply by (1+r): FV(due)=28,636.26×1.05≈Rs 30,068.07"]}
 ],
 long: [
  {q:"Calculate the IRR and NPV for the investment of each of the following projects, and rank them in order of profitability if the market rate of interest is 7%: Project A — outlay Rs 15,000, return after 1 year Rs 15,700. Project B — outlay Rs 14,000, return Rs 14,300. Project C — outlay Rs 18,000, return Rs 18,500. Project D — outlay Rs 20,000, return Rs 20,800.", real:"2022 model paper",
-  pts:["For a single-period project: IRR=(Return/Outlay)−1; NPV=−Outlay+Return/(1.07)","Project A: IRR=4.67%, NPV≈−Rs 327.10","Project B: IRR=2.14%, NPV≈−Rs 635.51","Project C: IRR=2.78%, NPV≈−Rs 710.28","Project D: IRR=4.00%, NPV≈−Rs 560.75","All four IRRs are below the 7% market rate, so all four NPVs are negative — none are viable at 7%","By IRR: A > D > C > B. By NPV: A > D > B > C. The methods agree A is best and D second but disagree on B vs C (a scale-driven IRR–NPV conflict)","When they conflict, prefer NPV: final order A > D > B > C"]}
+  pts:["For a single-period project: IRR=(Return/Outlay)−1; NPV=−Outlay+Return/(1.07)","Project A: IRR=4.67%, NPV≈−Rs 327.10","Project B: IRR=2.14%, NPV≈−Rs 635.51","Project C: IRR=2.78%, NPV≈−Rs 710.28","Project D: IRR=4.00%, NPV≈−Rs 560.75","All four IRRs are below the 7% market rate, so all four NPVs are negative — none are viable at 7%","By IRR: A > D > C > B. By NPV: A > D > B > C. The methods agree A is best and D second but disagree on B vs C (a scale-driven IRR–NPV conflict)","When they conflict, prefer NPV: final order A > D > B > C"]},
+ {q:"Calculate the IRR and NPV for the investment of each of the following projects. Decide which of the projects are viable and rank them in order of their profitability if the market rate of interest is 7%: Project A — outlay Rs 9,000, return after 1 year Rs 9,700. Project B — outlay Rs 8,000, return Rs 8,400. Project C — outlay Rs 11,000, return Rs 11,600. Project D — outlay Rs 12,000, return Rs 12,900.", real:"2022",
+  pts:["For a single-period project: IRR=(Return/Outlay)−1; NPV=−Outlay+Return/(1.07)","Project A: IRR=7.78%, NPV≈Rs 65.42 (viable — IRR>7%, NPV>0)","Project B: IRR=5.00%, NPV≈−Rs 149.53 (not viable)","Project C: IRR=5.45%, NPV≈−Rs 158.88 (not viable)","Project D: IRR=7.50%, NPV≈Rs 56.07 (viable — IRR>7%, NPV>0)","Only A and D clear the 7% hurdle rate; B and C should be rejected","Rank by both IRR and NPV: A > D (A is best, D second — the two methods agree here)"]}
 ]},
 
 5: { // Unit 6: Limit and Differentiation
@@ -4050,7 +4086,9 @@ brief: [
  {q:"Differentiate y = 3x⁴ − 2x² + 5x using the standard rules.",
   pts:["Power rule term by term: dy/dx=12x³−4x+5"]},
  {q:"State the formal (first-principles) definition of the derivative.",
-  pts:["f′(x) = lim(h→0) [f(x+h)−f(x)]/h","This is the limit of the slope of a secant line as the two points merge into one — the slope of the tangent"]}
+  pts:["f′(x) = lim(h→0) [f(x+h)−f(x)]/h","This is the limit of the slope of a secant line as the two points merge into one — the slope of the tangent"]},
+ {q:"Evaluate: lim(x→∞) (12x²+7x−9)/(15x²+9x−6).", real:"2022",
+  pts:["For a limit of a rational function at infinity where numerator and denominator have the same degree, divide every term by the highest power (x²)","As x→∞, all lower-order terms (7x, −9, 9x, −6) vanish relative to x²","The limit is the ratio of the leading coefficients: 12/15 = 4/5 = 0.8"]}
 ],
 short: [
  {q:"A firm's total cost is TC=Q³−6Q²+15Q+10. Find the marginal cost function and evaluate it at Q=5.",
@@ -4060,7 +4098,9 @@ short: [
 ],
 long: [
  {q:"(a) Differentiate x²+y²=25 implicitly to find dy/dx. (b) Find the slope of the tangent to this curve at the point (3,4). (c) Explain, using the tangent-line idea, why the slope is undefined at (5,0) and (−5,0).",
-  pts:["(a) 2x+2y(dy/dx)=0 → dy/dx=−x/y","(b) At (3,4): dy/dx=−3/4","(c) At (5,0) and (−5,0), y=0, making −x/y undefined — the tangent there is vertical, which has no finite slope"]}
+  pts:["(a) 2x+2y(dy/dx)=0 → dy/dx=−x/y","(b) At (3,4): dy/dx=−3/4","(c) At (5,0) and (−5,0), y=0, making −x/y undefined — the tangent there is vertical, which has no finite slope"]},
+ {q:"The supply and demand equations of a good are Ps=Qs+10 and Pd=94−5Qd respectively. The government decides to impose a tax of Rs 't' per unit of goods. Find the value of t that maximizes the government's total tax revenue, on the assumption that equilibrium conditions prevail in the market.", real:"2022",
+  pts:["At the new equilibrium, Qd=Qs=Q and Pd=Ps+t: 94−5Q=(Q+10)+t → 84−t=6Q → Q=14−t/6","Total tax revenue R(t)=t×Q=t(14−t/6)=14t−t²/6","dR/dt=14−t/3=0 → t=42","d²R/dt²=−1/3<0, confirms a maximum","R(42)=14(42)−42²/6=588−294=Rs 294"]}
 ]}
 
 },
@@ -4098,6 +4138,18 @@ cases: [
     pts:["|Ed|=1.5>1, so demand is elastic at this price","When demand is elastic, a price INCREASE lowers total revenue (quantity falls proportionally more than price rises)","Advise against raising price; a price CUT would instead raise revenue here"]},
    {q:"Find the price that maximizes total revenue, using TR=PQ and the demand function.", m:8,
     pts:["Q=500−10P → TR=PQ=P(500−10P)=500P−10P²","dTR/dP=500−20P=0 → P=25","At P=25, Q=250, TR=Rs 6,250 — the revenue-maximising price"]}
+  ]},
+ {title:"Marginal and average cost minimization for a steel company", real:"2022",
+  scenario:"A steel company produces x quintals of steel per week and its total cost (Rs) is expressed as: C(x) = 11000x − 100x² + (1/3)x³.",
+  qs:[
+   {q:"Find the minimum value of the marginal cost function.", m:6,
+    pts:["MC=dC/dx=11000−200x+x²","d(MC)/dx=−200+2x=0 → x=100","d²(MC)/dx²=2>0, confirms a minimum","MC(100)=11000−200(100)+100²=11000−20000+10000=Rs 1,000"]},
+   {q:"Find the minimum value of the average cost function.", m:6,
+    pts:["AC=C(x)/x=11000−100x+(1/3)x²","d(AC)/dx=−100+(2/3)x=0 → x=150","d²(AC)/dx²=2/3>0, confirms a minimum","AC(150)=11000−100(150)+(1/3)(150²)=11000−15000+7500=Rs 3,500"]},
+   {q:"Find the output at which marginal cost is equal to average cost.", m:6,
+    pts:["Set MC=AC: 11000−200x+x²=11000−100x+(1/3)x²","(2/3)x²−100x=0 → x[(2/3)x−100]=0","x=0 (trivial) or x=150 (the meaningful solution)"]},
+   {q:"Show that the marginal cost and average cost are equal at the minimum average cost.", m:2,
+    pts:["From above, AC is minimized at x=150 (part b), and MC=AC at x=150 (part c) — the same output","This confirms the general principle: marginal cost equals average cost exactly where average cost is at its minimum"]}
   ]}
 ]
 };
@@ -5912,6 +5964,34 @@ cases: [
      'The sociologist notices what the price-only model misses: that finance flows along kinship and community lines, that a handshake replaces a contract, that an identical newcomer faces systematically different costs purely because of social position, that a savings institution runs on trust not law',
      'The sociologist also attends to the link between the economy and non-economic institutions — family, community, ethnicity — and to questions of power and exclusion, not only efficiency',
      'Neither view is complete alone: the economic model captures the incentives and the sociological model captures why the "same" transaction has different costs for different people — Coleman\'s point that economics\' "representative agent" cannot handle trust, real (non-unitary) actors, or socially structured markets']}
+  ]},
+ {title:'The professionalization of medicine in America (Paul Starr)',
+  real:'2022',
+  scenario:'Starr begins with a look at the shift from domestic medicine in early America, when the family wanted the locus of care of the sick, to the shift towards the professionalization of medicine in the late 1700s. Not all were accepting, however, as lay healers in the early 1800s saw the medical profession as nothing but privilege and took a hostile stance to it. But then medical schools began to emerge and proliferate during the mid-1800s, and medicine was quickly becoming a profession with licensures, codes of conduct, and professional fees. The rise of hospitals and the introduction of telephones and better modes of transportation made physicians accessible and acceptable. Starr also discusses the consolidation of professional authority and the changing social structure of physicians in the nineteenth century. For instance, before the 1900s, the role of the doctor did not have a clear class position, as there was a lot of inequality — doctors did not earn much, and a physician\'s status depended largely on their family\'s status. In 1864, however, the first meeting of the American Medical Association was held, in which they raised and standardized requirements for medical degrees as well as enacted a code of ethics, giving the medical profession a higher social status. Reform of medical education began around 1870 and continued through the 1800s. Starr also examines the transformation of American hospitals throughout history and how they became central institutions in medical care. This happened in a series of three phases: first was the formation of voluntary hospitals operated by charitable lay boards and public hospitals operated by municipalities, counties, and the federal government; then, beginning in the 1850s, a variety of more "particularistic" hospitals formed that were primarily religious or ethnic institutions specializing in certain diseases or categories of patients; third was the advent and spread of profit-making hospitals, operated by physicians and corporations. As the hospital system evolved and changed, so did the role of the nurse, physician, surgeon, staff, and patient. Finally, Starr examines dispensaries and their evolution over time, the three phases of public health and the rise of new specialty clinics, and the resistance to the corporatization of medicine by doctors. He concludes with five major structural changes in the distribution of power that played a major role in the social transformation of American medicine: (1) the emergence of an informal control system in medical practice resulting from the growth of specialization and hospitals; (2) stronger collective organization and authority, and control of labor markets in medical care; (3) the profession secured a special dispensation from the burdens of hierarchy of the capitalist enterprise — no "commercialism" in medicine was tolerated, and much of the capital investment required for medical practice was socialized; (4) the elimination of countervailing power in medical care; (5) the establishment of specific spheres of professional authority.',
+  qs:[
+   {q:'What made the medical profession a higher social status in America?',
+    m:5,
+    pts:['The 1864 founding meeting of the American Medical Association, which raised and standardized requirements for medical degrees and enacted a code of ethics',
+     'The proliferation of medical schools in the mid-1800s, turning medicine into a licensed profession with codes of conduct and professional fees',
+     'The rise of hospitals plus the telephone and better transportation, which made physicians more accessible and socially acceptable',
+     'Reform of medical education beginning around 1870, continuing through the century',
+     'The five structural power changes overall: informal control from specialization/hospital growth, stronger collective organization and control of labor markets, exemption from capitalist commercial hierarchy (socialized capital investment, no tolerated "commercialism"), elimination of countervailing power, and established spheres of professional authority']},
+   {q:'"The status of doctors was not good before the 1900s American society." Explain, based on the case.',
+    m:5,
+    pts:['Before the 1900s, the role of the doctor had no clear, fixed class position, because a lot of inequality existed within the profession',
+     'Doctors did not earn much, and a physician\'s social status depended largely on their family\'s pre-existing status rather than on being a doctor itself',
+     'This changed once the profession organized itself: the 1864 AMA meeting standardized medical-degree requirements and enacted a code of ethics, which gave the medical profession a higher, independent social status',
+     'Reform of medical education from around 1870 onward continued to raise the profession\'s standing through the rest of the 1800s']},
+   {q:'What were the major factors for the social transformation of American medicine?',
+    m:5,
+    pts:['Starr\'s five structural changes in the distribution of power: (1) an informal control system emerging from growing specialization and hospitals','(2) stronger collective organization and authority, including control of labor markets in medical care','(3) a special dispensation from the burdens of capitalist-enterprise hierarchy — no "commercialism" tolerated, capital investment socialized','(4) elimination of countervailing power in medical care','(5) establishment of specific spheres of professional authority',
+     'Together with the earlier organizational changes — AMA standard-setting, licensure, medical-school proliferation, and improved hospital access — these shifted medicine from a low-status, family-status-dependent occupation to an organized, self-regulating profession']},
+   {q:'How did American hospitals become the central institution in medical care?',
+    m:5,
+    pts:['Phase 1: formation of voluntary hospitals run by charitable lay boards, and public hospitals run by municipalities, counties, and the federal government',
+     'Phase 2: from the 1850s, "particularistic" hospitals emerged — primarily religious or ethnic institutions specializing in certain diseases or patient categories',
+     'Phase 3: the advent and spread of profit-making hospitals operated by physicians and corporations',
+     'As this hospital system evolved through the three phases, the roles of the nurse, physician, surgeon, staff, and patient all evolved and changed alongside it, cementing the hospital as medicine\'s central institution']}
   ]}
 ]
 };
