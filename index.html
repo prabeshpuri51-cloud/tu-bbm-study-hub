@@ -771,6 +771,11 @@
   .pp-q-model ol{margin:0;padding-left:20px;}
   .pp-q-model li{font-size:.83rem;line-height:1.5;color:var(--ink);margin-bottom:4px;}
   .pp-case-scenario{font-size:.83rem;line-height:1.55;color:var(--ink-dim);margin:6px 0 10px;white-space:pre-wrap;}
+  .pp-q>ol{margin:4px 0 0;padding-left:0;list-style:none;}
+  .pp-q>ol>li{padding-top:12px;margin-top:12px;border-top:1px solid var(--line);}
+  .pp-q>ol>li:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .pp-q .ex-ta{margin-top:8px;}
+  .pp-q .ex-self{margin-top:8px;margin-bottom:2px;}
   .pp-q-model .ex-sol{overflow-x:auto;}
   .pp-year-card{display:flex;align-items:center;gap:10px;width:100%;background:var(--card);
     border:1px solid var(--line);border-radius:13px;padding:14px 15px;margin-bottom:9px;
@@ -2529,8 +2534,7 @@ window.SUBJECT_EXAM["mgmt"] = {units: {
 0: {
 brief: [
  {q:"Define management.", real:"2024", pts:["Process of getting things done effectively and efficiently through and with other people", "Effectiveness = doing the right things (achieving goals)", "Efficiency = doing things right (least input for most output)", "Good management requires both together"]},
- {q:"What is meant by managerial skills?", real:"2024", pts:["The abilities a manager needs to perform the job", "Katz's three: technical, human and conceptual", "Technical = job-specific knowledge; human = working with people; conceptual = seeing the whole", "Mix shifts by level: technical for first-line, conceptual for top"]},
- {q:"Mention the skills required of a manager.", real:"2023", pts:["Technical skills — job-specific knowledge and techniques", "Human/interpersonal skills — motivating and working with people", "Conceptual skills — seeing the organisation as a whole", "Human skill is important at every level"]},
+ {q:"What is meant by managerial skills? Mention the skills required of a manager.", real:["2023","2024"], pts:["The abilities a manager needs to perform the job", "Katz's three: technical, human and conceptual", "Technical = job-specific knowledge; human = working with people; conceptual = seeing the whole", "Human/interpersonal skill is important at every level", "Mix shifts by level: technical for first-line, conceptual for top"]},
  {q:"What is meant by a line manager?", real:"2023", pts:["Manager responsible for activities contributing directly to the organisation's primary output", "Commands and is accountable for results in the main revenue-generating activity", "Typically production and sales in a manufacturing firm", "Contrast: staff roles (HR, legal) advise rather than command"]},
  {q:"Distinguish between a general manager and a functional manager.", pts:["General manager runs a whole self-contained unit containing several functions", "Functional manager is responsible for one functional area across the organisation", "Example GM: branch or subsidiary head", "Example FM: Marketing Manager, HR Manager"]},
  {q:"Distinguish between effectiveness and efficiency.", pts:["Effectiveness = doing the right things, achieving stated goals", "Efficiency = doing things right, maximum output from least input", "A firm can be one without the other", "Management needs both simultaneously"]},
@@ -3948,9 +3952,9 @@ brief: [
  {q:"State the equation of a linear demand function and explain what each parameter means.",
   pts:["P = a − bQ","a is the price intercept (choke price, where Q=0)","a/b is the quantity intercept (where P=0)","b is the slope, showing how much price must fall to sell one more unit"]},
  {q:"Find the equation of the straight line passing through (2, 3) and (−4, 1).", real:"2022",
-  pts:["Slope b = (1−3)/(−4−2) = (−2)/(−6) = 1/3","Use point-slope form: y−3 = (1/3)(x−2)","Simplify to y = (1/3)x + 7/3, or x−3y+7=0"]},
+  pts:["Note: same method as the 2022 model paper's straight-line-through-two-points question — the points differ","Slope b = (1−3)/(−4−2) = (−2)/(−6) = 1/3","Use point-slope form: y−3 = (1/3)(x−2)","Simplify to y = (1/3)x + 7/3, or x−3y+7=0"]},
  {q:"A consumer has an income of Rs 5,000 to spend on two goods X and Y whose prices are Rs 50 and Rs 80 per unit respectively. What is the slope of the budget constraint?", real:"2022",
-  pts:["Budget line: 50X + 80Y = 5000","Rearranged: Y = 62.5 − 0.625X","Slope = −Px/Py = −50/80 = −0.625"]}
+  pts:["Note: same method as the 2022 model paper's budget-constraint-slope question — the figures differ","Budget line: 50X + 80Y = 5000","Rearranged: Y = 62.5 − 0.625X","Slope = −Px/Py = −50/80 = −0.625"]}
 ],
 short: [
  {q:"The supply function is P = 30 + 0.5Q. Calculate the arc price elasticity of supply when price increases from Rs 80 to Rs 90.", real:"2022 model paper",
@@ -3962,13 +3966,13 @@ short: [
  {q:"A firm's total cost is TC = 200 + 15Q and it sells at a fixed price giving TR = 35Q. Find the break-even quantity and the revenue/cost at that point.",
   pts:["Set TR=TC: 35Q=200+15Q","20Q=200 → Q*=10","TR=TC=35(10)=Rs 350 at break-even"]},
  {q:"The supply function is P = 90 + 0.5Q. Calculate the arc price elasticity of supply when price increases from Rs 120 to Rs 190. Also calculate the percentage change in quantity supplied in response to a price increase of 10% when P = Rs 190.", real:"2022",
-  pts:["At P=120: Q1=(120−90)/0.5=60. At P=190: Q2=(190−90)/0.5=200","Arc elasticity = [(Q2−Q1)/(P2−P1)] × [(P1+P2)/(Q1+Q2)] = (140/70)×(310/260) = 2×1.192 ≈ 2.385 (elastic)","Point elasticity at P=190: dQ/dP=2 (from Q=2P−180), Es=(P/Q)(dQ/dP)=(190/200)(2)=1.9","%ΔQs ≈ Es × %ΔP = 1.9 × 10% = 19% increase in quantity supplied"]}
+  pts:["Note: same method (arc elasticity of supply) as the 2022 model paper's elasticity question — the figures differ","At P=120: Q1=(120−90)/0.5=60. At P=190: Q2=(190−90)/0.5=200","Arc elasticity = [(Q2−Q1)/(P2−P1)] × [(P1+P2)/(Q1+Q2)] = (140/70)×(310/260) = 2×1.192 ≈ 2.385 (elastic)","Point elasticity at P=190: dQ/dP=2 (from Q=2P−180), Es=(P/Q)(dQ/dP)=(190/200)(2)=1.9","%ΔQs ≈ Es × %ΔP = 1.9 × 10% = 19% increase in quantity supplied"]}
 ],
 long: [
  {q:"(a) A demand function is Q = 200−4P. Derive the point elasticity formula in terms of P and Q, and evaluate it at P=30 and P=40. (b) State, with reasons, at which of these two prices a price cut would raise total revenue.",
   pts:["(a) dQ/dP=−4; Ed=(P/Q)(−4)","At P=30: Q=80, Ed=(30/80)(−4)=−1.5 (elastic)","At P=40: Q=40, Ed=(40/40)(−4)=−4 (elastic, more so)","(b) Revenue rises from a price CUT only where demand is elastic (|Ed|>1)","Both points are elastic here, so a price cut raises revenue at both, more strongly at P=40","(General rule to state: cutting price when inelastic LOWERS revenue — never cut price there)"]},
  {q:"The following table shows the annual advertising expenditure and volume of sales of a company:\nAnnual advertisement expenditure (Rs lakh): 5, 7, 8, 9, 10, 10\nAnnual sales (Rs lakh): 7, 8, 9, 10, 11, 12\n(a) Find the equation of the straight line of sales on expenditure using the least squares method. (b) Estimate the annual sales when the annual advertising expenditure is Rs 13 lakh and Rs 15 lakh.", real:"2022",
-  pts:["n=6, ΣX=49, ΣY=57, ΣXY=483, ΣX²=419","(a) b=(nΣXY−ΣXΣY)/(nΣX²−(ΣX)²)=(6×483−49×57)/(6×419−49²)=105/113≈0.929","a=(ΣY−bΣX)/n=(57−0.929×49)/6≈1.912","Line: Ŷ=1.912+0.929X","(b) At X=13: Ŷ≈1.912+0.929(13)≈13.99 (Rs lakh). At X=15: Ŷ≈1.912+0.929(15)≈15.85 (Rs lakh)"]}
+  pts:["Note: same method (least squares line of best fit) as the 2022 model paper's advertising-expenditure question — the figures differ","n=6, ΣX=49, ΣY=57, ΣXY=483, ΣX²=419","(a) b=(nΣXY−ΣXΣY)/(nΣX²−(ΣX)²)=(6×483−49×57)/(6×419−49²)=105/113≈0.929","a=(ΣY−bΣX)/n=(57−0.929×49)/6≈1.912","Line: Ŷ=1.912+0.929X","(b) At X=13: Ŷ≈1.912+0.929(13)≈13.99 (Rs lakh). At X=15: Ŷ≈1.912+0.929(15)≈15.85 (Rs lakh)"]}
 ]},
 
 1: { // Unit 2: Simultaneous Equations
@@ -3986,7 +3990,7 @@ short: [
  {q:"A firm has TC=200+15Q and TR=35Q. Find the break-even point, and state the profit or loss at Q=15.",
   pts:["Break-even: 35Q=200+15Q → Q*=10","At Q=15: TR=35(15)=525, TC=200+15(15)=425","Profit = 525−425 = Rs 100 (a profit, since Q=15 is beyond break-even)"]},
  {q:"The demand and supply functions for a commodity are Pd=80−0.3Q and Ps=30+0.2Q respectively. Find the consumer's surplus and producer's surplus. Also find the total surplus.", real:"2022",
-  pts:["Equilibrium: 80−0.3Q=30+0.2Q → 50=0.5Q → Q*=100, P*=80−0.3(100)=50","Consumer's surplus = ½×(demand intercept−P*)×Q* = ½×(80−50)×100 = Rs 1,500","Producer's surplus = ½×(P*−supply intercept)×Q* = ½×(50−30)×100 = Rs 1,000","Total surplus = 1,500+1,000 = Rs 2,500"]},
+  pts:["Note: same method (consumer's/producer's surplus) as the 2022 model paper's surplus question — the figures differ","Equilibrium: 80−0.3Q=30+0.2Q → 50=0.5Q → Q*=100, P*=80−0.3(100)=50","Consumer's surplus = ½×(demand intercept−P*)×Q* = ½×(80−50)×100 = Rs 1,500","Producer's surplus = ½×(P*−supply intercept)×Q* = ½×(50−30)×100 = Rs 1,000","Total surplus = 1,500+1,000 = Rs 2,500"]},
  {q:"Solve the following system of linear equations: 2x−y+z=−2, x+y−2z=−9, x+2y+z=9.", real:"2022",
   pts:["Adding eqn(1) and eqn(2): 3x−z=−11 → z=3x+11","Subtracting eqn(2) from eqn(3): y+3z=18 → y=18−3z","Substituting into eqn(2) and solving simultaneously gives x=−2","Then z=3(−2)+11=5, and y=18−3(5)=3","Solution: x=−2, y=3, z=5 (check in eqn(3): −2+6+5=9 ✓)"]}
 ],
@@ -4006,7 +4010,7 @@ brief: [
  {q:"State the three cases of the discriminant b²−4ac and what each tells you about the roots.",
   pts:["b²−4ac>0: two distinct real roots","b²−4ac=0: one repeated real root","b²−4ac<0: no real roots (parabola doesn't cross the x-axis)"]},
  {q:"Form the quadratic equation whose roots are 4 and 3.", real:"2022",
-  pts:["Sum of roots = 4+3 = 7","Product of roots = 4×3 = 12","Equation: x² − (sum)x + (product) = 0 → x²−7x+12=0"]},
+  pts:["Note: same method as the 2022 model paper's quadratic-from-roots question — the roots differ","Sum of roots = 4+3 = 7","Product of roots = 4×3 = 12","Equation: x² − (sum)x + (product) = 0 → x²−7x+12=0"]},
  {q:"Solve the quadratic equation: x² + x − 6 = 0.", real:"2022",
   pts:["Factorize: (x+3)(x−2)=0","x=−3 or x=2"]}
 ],
@@ -4016,7 +4020,7 @@ short: [
  {q:"A firm's total cost is TC=50+2Q and it sells output at a fixed price giving TR=10Q. Find the profit function and the break-even quantity, and explain why this profit function is linear rather than quadratic.",
   pts:["π=TR−TC=10Q−(50+2Q)=8Q−50 — linear in Q, since both TR and TC are linear here (no Q² term appears)","Break-even: 8Q=50 → Q=6.25","A quadratic profit function needs TR or TC to be non-linear — e.g. TR from a linear demand curve, which introduces a Q² term — otherwise, as here, break-even is a simple linear solve"]},
  {q:"Sketch the graph of y = x² − 2x − 8. Also find the vertex, intercepts, domain and range.", real:"2022",
-  pts:["a=1>0, so the parabola opens upward — a minimum exists","Vertex: x=−(−2)/(2×1)=1, y=1−2−8=−9 → vertex (1,−9)","x-intercepts: x²−2x−8=(x−4)(x+2)=0 → x=4 or x=−2. y-intercept: x=0 → y=−8","Domain: all real numbers. Range: y≥−9 (since the parabola opens upward with minimum −9)"]}
+  pts:["Note: same method as the 2022 model paper's parabola-sketching question — the coefficients differ","a=1>0, so the parabola opens upward — a minimum exists","Vertex: x=−(−2)/(2×1)=1, y=1−2−8=−9 → vertex (1,−9)","x-intercepts: x²−2x−8=(x−4)(x+2)=0 → x=4 or x=−2. y-intercept: x=0 → y=−8","Domain: all real numbers. Range: y≥−9 (since the parabola opens upward with minimum −9)"]}
 ],
 long: [
  {q:"A firm faces demand P=80−2Q and total cost TC=20Q+50. (a) Form the profit function and state why it is quadratic. (b) Find the break-even quantities. (c) Find the output that maximizes profit and the maximum profit, using the vertex formula (no calculus).",
@@ -4032,7 +4036,7 @@ brief: [
  {q:"State the vertical and horizontal asymptotes of y = 12/(2x+1).",
   pts:["Vertical asymptote where denominator=0: 2x+1=0 → x=−0.5","Horizontal asymptote: y=0 (as x→±∞, y→0)"]},
  {q:"Solve for x: 2^(9−x) × 4^x = 2^(2x−1).", real:"2022",
-  pts:["Rewrite 4^x as 2^(2x): LHS = 2^(9−x) × 2^(2x) = 2^(9+x)","Equate exponents: 9+x = 2x−1","Solving: x = 10"]},
+  pts:["Note: same method (solving an exponential equation) as the 2022 model paper's 5ˣ=25 question — the equation differs","Rewrite 4^x as 2^(2x): LHS = 2^(9−x) × 2^(2x) = 2^(9+x)","Equate exponents: 9+x = 2x−1","Solving: x = 10"]},
  {q:"If f(x) = x² − 3 and x₀=1, find x₁ using Newton-Raphson's method.", real:"2022",
   pts:["f′(x)=2x","x₁ = x₀ − f(x₀)/f′(x₀) = 1 − (1−3)/2 = 1 − (−1) = 2"]}
 ],
@@ -4042,7 +4046,7 @@ short: [
  {q:"Given f(x)=x³−x−2, show a root lies between 1 and 2, then perform one bisection iteration.",
   pts:["f(1)=1−1−2=−2, f(2)=8−2−2=4 — opposite signs, so a root lies in [1,2]","Midpoint c=1.5, f(1.5)=3.375−1.5−2=−0.125","Since f(1.5) has the same sign as f(1), the new interval is [1.5,2]"]},
  {q:"Sales for a new product are expected to grow according to the equation S=200000(1−e^(−0.05t)), where t represents weeks. Estimate the values of S when t=0, 10, 15, 20, 25. Sketch the estimated sales on graph paper.", real:"2022",
-  pts:["t=0: S=200000(1−1)=0","t=10: S=200000(1−e^−0.5)≈200000(0.3935)≈78,694","t=15: S=200000(1−e^−0.75)≈200000(0.5276)≈105,527","t=20: S=200000(1−e^−1)≈200000(0.6321)≈126,424","t=25: S=200000(1−e^−1.25)≈200000(0.7135)≈142,699","Graph: an increasing curve that rises quickly then flattens, approaching the saturation level S=200,000 as t grows (exponential-growth-to-a-ceiling shape)"]}
+  pts:["Note: same method (exponential growth toward a ceiling) as the 2022 model paper's consumption-function question — the equation differs","t=0: S=200000(1−1)=0","t=10: S=200000(1−e^−0.5)≈200000(0.3935)≈78,694","t=15: S=200000(1−e^−0.75)≈200000(0.5276)≈105,527","t=20: S=200000(1−e^−1)≈200000(0.6321)≈126,424","t=25: S=200000(1−e^−1.25)≈200000(0.7135)≈142,699","Graph: an increasing curve that rises quickly then flattens, approaching the saturation level S=200,000 as t grows (exponential-growth-to-a-ceiling shape)"]}
 ],
 long: [
  {q:"(a) Using Newton-Raphson, find x1 given f(x)=x²−5 and x0=2. (b) Perform a second iteration to find x2. (c) Compare x2 to the true value of √5.",
@@ -4058,9 +4062,9 @@ brief: [
  {q:"Find the compound interest on Rs 9,000 at 5% for 2 years.", real:"2022 model paper",
   pts:["CI=P[(1+r)ⁿ−1]=9000[(1.05)²−1]","=9000(0.1025)=Rs 922.50"]},
  {q:"Find the sum of the arithmetic series: 8+12+16+... to 10 terms.", real:"2022",
-  pts:["a=8, d=4, n=10","Sn=(n/2)[2a+(n−1)d]=(10/2)[16+9(4)]=5(52)=260"]},
+  pts:["Note: same method as the 2022 model paper's AP-series-sum question — the series differs","a=8, d=4, n=10","Sn=(n/2)[2a+(n−1)d]=(10/2)[16+9(4)]=5(52)=260"]},
  {q:"Find the compound interest of Rs 10,000 at 3% for 2 years.", real:"2022",
-  pts:["A=P(1+r)ⁿ=10000(1.03)²=10000(1.0609)=Rs 10,609","CI=A−P=10,609−10,000=Rs 609"]}
+  pts:["Note: same method as the 2022 model paper's compound-interest question — the figures differ","A=P(1+r)ⁿ=10000(1.03)²=10000(1.0609)=Rs 10,609","CI=A−P=10,609−10,000=Rs 609"]}
 ],
 short: [
  {q:"The difference between compound interest and simple interest on Rs 18,000 for 2 years is Rs 45. Find the rate of interest.", real:"2022 model paper",
@@ -4070,15 +4074,15 @@ short: [
  {q:"Compare the simple and compound interest on Rs 12,000 at 6% p.a. for 3 years.",
   pts:["SI=Prt=12000×0.06×3=Rs 2,160","CI=P[(1+r)ⁿ−1]=12000[(1.06)³−1]≈Rs 2,292.19","Compound interest exceeds simple interest by about Rs 132.19 over 3 years"]},
  {q:"The difference between the compound interest and simple interest on a certain sum for two years at 4% per annum is Rs 32. What is the sum?", real:"2022",
-  pts:["For 2 years, CI−SI=P×r² (r as a decimal)","P×(0.04)²=32 → P×0.0016=32 → P=Rs 20,000"]},
+  pts:["Note: same method (CI−SI=Pr²) as the 2022 model paper's CI-SI-difference question — the figures differ","For 2 years, CI−SI=P×r² (r as a decimal)","P×(0.04)²=32 → P×0.0016=32 → P=Rs 20,000"]},
  {q:"Find the amount of an annuity due of Rs 600 a year for 25 years at compound interest 5% per annum.", real:"2022",
-  pts:["FV of an ordinary annuity = PMT×[(1+r)ⁿ−1]/r = 600×[(1.05)²⁵−1]/0.05 ≈ Rs 28,636.26","An annuity DUE pays at the start of each period, one period ahead of ordinary — multiply by (1+r): FV(due)=28,636.26×1.05≈Rs 30,068.07"]}
+  pts:["Note: same underlying annuity-value method as the 2022 model paper's annuity question — that one is an ordinary annuity paid half-yearly; this one is an annuity DUE","FV of an ordinary annuity = PMT×[(1+r)ⁿ−1]/r = 600×[(1.05)²⁵−1]/0.05 ≈ Rs 28,636.26","An annuity DUE pays at the start of each period, one period ahead of ordinary — multiply by (1+r): FV(due)=28,636.26×1.05≈Rs 30,068.07"]}
 ],
 long: [
  {q:"Calculate the IRR and NPV for the investment of each of the following projects, and rank them in order of profitability if the market rate of interest is 7%: Project A — outlay Rs 15,000, return after 1 year Rs 15,700. Project B — outlay Rs 14,000, return Rs 14,300. Project C — outlay Rs 18,000, return Rs 18,500. Project D — outlay Rs 20,000, return Rs 20,800.", real:"2022 model paper",
   pts:["For a single-period project: IRR=(Return/Outlay)−1; NPV=−Outlay+Return/(1.07)","Project A: IRR=4.67%, NPV≈−Rs 327.10","Project B: IRR=2.14%, NPV≈−Rs 635.51","Project C: IRR=2.78%, NPV≈−Rs 710.28","Project D: IRR=4.00%, NPV≈−Rs 560.75","All four IRRs are below the 7% market rate, so all four NPVs are negative — none are viable at 7%","By IRR: A > D > C > B. By NPV: A > D > B > C. The methods agree A is best and D second but disagree on B vs C (a scale-driven IRR–NPV conflict)","When they conflict, prefer NPV: final order A > D > B > C"]},
  {q:"Calculate the IRR and NPV for the investment of each of the following projects. Decide which of the projects are viable and rank them in order of their profitability if the market rate of interest is 7%: Project A — outlay Rs 9,000, return after 1 year Rs 9,700. Project B — outlay Rs 8,000, return Rs 8,400. Project C — outlay Rs 11,000, return Rs 11,600. Project D — outlay Rs 12,000, return Rs 12,900.", real:"2022",
-  pts:["For a single-period project: IRR=(Return/Outlay)−1; NPV=−Outlay+Return/(1.07)","Project A: IRR=7.78%, NPV≈Rs 65.42 (viable — IRR>7%, NPV>0)","Project B: IRR=5.00%, NPV≈−Rs 149.53 (not viable)","Project C: IRR=5.45%, NPV≈−Rs 158.88 (not viable)","Project D: IRR=7.50%, NPV≈Rs 56.07 (viable — IRR>7%, NPV>0)","Only A and D clear the 7% hurdle rate; B and C should be rejected","Rank by both IRR and NPV: A > D (A is best, D second — the two methods agree here)"]}
+  pts:["Note: same method (IRR/NPV) as the 2022 model paper's IRR/NPV question — the projects and figures differ","For a single-period project: IRR=(Return/Outlay)−1; NPV=−Outlay+Return/(1.07)","Project A: IRR=7.78%, NPV≈Rs 65.42 (viable — IRR>7%, NPV>0)","Project B: IRR=5.00%, NPV≈−Rs 149.53 (not viable)","Project C: IRR=5.45%, NPV≈−Rs 158.88 (not viable)","Project D: IRR=7.50%, NPV≈Rs 56.07 (viable — IRR>7%, NPV>0)","Only A and D clear the 7% hurdle rate; B and C should be rejected","Rank by both IRR and NPV: A > D (A is best, D second — the two methods agree here)"]}
 ]},
 
 5: { // Unit 6: Limit and Differentiation
@@ -4102,7 +4106,7 @@ long: [
  {q:"(a) Differentiate x²+y²=25 implicitly to find dy/dx. (b) Find the slope of the tangent to this curve at the point (3,4). (c) Explain, using the tangent-line idea, why the slope is undefined at (5,0) and (−5,0).",
   pts:["(a) 2x+2y(dy/dx)=0 → dy/dx=−x/y","(b) At (3,4): dy/dx=−3/4","(c) At (5,0) and (−5,0), y=0, making −x/y undefined — the tangent there is vertical, which has no finite slope"]},
  {q:"The supply and demand equations of a good are Ps=Qs+10 and Pd=94−5Qd respectively. The government decides to impose a tax of Rs 't' per unit of goods. Find the value of t that maximizes the government's total tax revenue, on the assumption that equilibrium conditions prevail in the market.", real:"2022",
-  pts:["At the new equilibrium, Qd=Qs=Q and Pd=Ps+t: 94−5Q=(Q+10)+t → 84−t=6Q → Q=14−t/6","Total tax revenue R(t)=t×Q=t(14−t/6)=14t−t²/6","dR/dt=14−t/3=0 → t=42","d²R/dt²=−1/3<0, confirms a maximum","R(42)=14(42)−42²/6=588−294=Rs 294"]}
+  pts:["Note: same method (optimal per-unit tax via calculus) as the 2022 model paper's tax-revenue Section-D case — the figures differ","At the new equilibrium, Qd=Qs=Q and Pd=Ps+t: 94−5Q=(Q+10)+t → 84−t=6Q → Q=14−t/6","Total tax revenue R(t)=t×Q=t(14−t/6)=14t−t²/6","dR/dt=14−t/3=0 → t=42","d²R/dt²=−1/3<0, confirms a maximum","R(42)=14(42)−42²/6=588−294=Rs 294"]}
 ]}
 
 },
@@ -10204,10 +10208,8 @@ window.SUBJECT_EXAM["facc"].units["0"] = {
      pts:["Statement of Financial Position","Statement of Profit or Loss and Other Comprehensive Income","Statement of Changes in Equity","Statement of Cash Flows","Notes (significant accounting policies + explanatory information); plus comparative information"]}
   ],
   short: [
-    {q:"Explain about the users of accounting information.", real:"2023",
+    {q:"Explain about the users of accounting information (also asked in 2022 as 'Explain in brief about the different parties interested to use accounting information' — the 2022 paper's reduced COVID format weighted this item at 3 marks instead of 5).", real:["2022","2023"],
      pts:["Two groups: internal (run the business) and external (deal with it from outside)","Internal - owners: safety and return on capital; management: planning, control, performance evaluation, pricing, expansion decisions; employees/unions: job security, ability to pay wages and benefits","External - investors: buy/hold/sell, dividend and risk prospects; lenders & banks: ability to pay interest and repay principal; suppliers: whether to grant credit and be paid on time; customers: continuity of supply and warranty support; government & tax authorities: regulation, tax assessment, statistics; public: contribution to the economy, employment, social/environmental record","Internal users get detailed, frequent, tailored reports; external users get only the published general-purpose statements - hence the need for standards and audit"]},
-    {q:"Explain in brief about the different parties interested to use accounting information.", real:"2022",
-     pts:["(same content as 'users of accounting information', kept briefer for 3 marks)","Owners/management - internal decisions and control","Investors, lenders, suppliers, customers - economic decisions about dealing with the entity","Government / tax authorities - regulation and tax","Employees and the public - job security and social impact","State one specific use for each party named"]},
     {q:"Explain the objectives of financial accounting.",
      pts:["Systematic and permanent record of transactions","Ascertainment of profit or loss (Statement of Profit or Loss)","Ascertainment of financial position (Statement of Financial Position)","Ascertainment of cash position / liquidity (Statement of Cash Flows)","Providing information to users for decision-making; assisting management in planning and control","Meeting legal and statutory requirements (Companies Act, Income Tax Act, VAT); safeguarding assets and helping detect fraud/error"]},
     {q:"Distinguish between book-keeping, accounting and accountancy.",
@@ -28393,6 +28395,63 @@ function openReferenceBook(ref, hit){
    realYearsLabel() so both forms render and filter identically. */
 function realYearsArr(v){ return Array.isArray(v) ? v : (v ? [v] : []); }
 function realYearsLabel(v){ return realYearsArr(v).join(' & '); }
+
+/* ---------- Past-paper self-assessed practice ----------
+   A write-your-own-answer box + reveal-then-self-rate flow for every real
+   question, mirroring the unit exam-practice pattern (renderExamQ) but for
+   the past-paper list, which renders many items into one scrollable block at
+   once rather than one question at a time — so state is keyed by a stable
+   hash of the question text (same idea as data-acc-solutions.js matching by
+   text substring) instead of a unit/section/index path, and each item wires
+   its own <textarea>/<details>/self-rate row via inline handlers instead of
+   a single re-rendered dock. Read/write is scoped to the current subject. */
+function ppHash(s){
+  let h = 0;
+  for(let i=0;i<s.length;i++){ h = (Math.imul(31,h) + s.charCodeAt(i))|0; }
+  return 'q' + (h>>>0).toString(36);
+}
+function ppPracticeKey(){ return `pp_practice_s${currentSemester}_${currentSubjectKey}`; }
+function loadPPState(){ return lsReadJSON(ppPracticeKey(), {}); }
+function savePPState(st){ lsWriteJSON(ppPracticeKey(), st); }
+function ppSyncTA(key){
+  const ta = document.getElementById('pp-ta-' + key);
+  if(!ta) return;
+  const st = loadPPState();
+  st[key] = Object.assign(st[key] || {}, { ans: ta.value });
+  savePPState(st);
+}
+function ppRevealSelf(details, key){
+  if(!details.open) return;
+  const self = document.getElementById('pp-self-' + key);
+  if(self) self.style.display = 'flex';
+}
+function ppMark(key, mark){
+  const st = loadPPState();
+  st[key] = Object.assign(st[key] || {}, { mark });
+  savePPState(st);
+  const self = document.getElementById('pp-self-' + key);
+  if(self){ Array.from(self.children).forEach(b => b.classList.toggle('sel', b.dataset.mark === mark)); }
+}
+/* The write-box + reveal + self-rate block, shared by a plain item and a
+   case sub-question. `key` must be stable across re-renders (a text hash,
+   not an array index) so saved answers survive the bank being re-ordered. */
+function ppWriteBlockHTML(key, ptsHtml, esc){
+  const st = loadPPState();
+  const saved = st[key] || {};
+  const ta = esc(saved.ans || '');
+  return `<textarea class="ex-ta" id="pp-ta-${key}" rows="3"
+      placeholder="Write your answer here, then reveal the marking points and compare."
+      onblur="ppSyncTA('${key}')">${ta}</textarea>
+    <div class="ex-hint">Auto-saved. Aim for roughly one solid point per mark.</div>
+    <details class="pp-q-model"${saved.mark ? ' open' : ''} ontoggle="ppRevealSelf(this,'${key}')">
+      <summary>Show marking points</summary>${ptsHtml}
+    </details>
+    <div class="ex-self" id="pp-self-${key}" style="display:${saved.mark ? 'flex' : 'none'}">
+      <button class="got${saved.mark==='got'?' sel':''}" data-mark="got" onclick="ppMark('${key}','got')">✓ Got it</button>
+      <button class="part${saved.mark==='part'?' sel':''}" data-mark="part" onclick="ppMark('${key}','part')">~ Partly</button>
+      <button class="miss${saved.mark==='miss'?' sel':''}" data-mark="miss" onclick="ppMark('${key}','miss')">✗ Missed</button>
+    </div>`;
+}
 function collectRealQuestions(subjectKey){
   const E = (window.SUBJECT_EXAM || {})[subjectKey];
   const data = SEMESTERS[currentSemester] && SEMESTERS[currentSemester].subjects[subjectKey];
@@ -28482,21 +28541,25 @@ function ppYearBadgeHTML(realVal, esc, noun){
 }
 function ppQuestionHTML(q, esc){
   const diaStr = (typeof q.dia === 'string' && q.dia.trim()) ? q.dia.trim() : '';
+  const ptsHtml = (q.pts && q.pts.length) ? examModelHTML(q) : (examSolHTML(q) || '<p class="pp-case-scenario">Practise this in the unit\'s Written exam practice for the full marking guide.</p>');
   return `<div class="pp-q">
         <div class="pp-q-top">${ppYearBadgeHTML(q.real, esc, 'question')}<span class="pp-unit">${esc(q.unit)}</span></div>
         <p class="pp-q-text">${esc(q.q)}</p>
         ${diaStr ? `<div class="pp-q-dia">✎ Diagram expected: ${esc(diaStr)}</div>` : ''}
-        <details class="pp-q-model"><summary>Show marking points</summary>${(q.pts && q.pts.length) ? examModelHTML(q) : (examSolHTML(q) || '<p class="pp-case-scenario">Practise this in the unit\'s Written exam practice for the full marking guide.</p>')}</details>
+        ${ppWriteBlockHTML(ppHash(q.q), ptsHtml, esc)}
       </div>`;
 }
 function ppCaseHTML(c, esc){
+  const caseKey = ppHash(c.title || 'case');
   return `<div class="pp-q">
         <div class="pp-q-top">${ppYearBadgeHTML(c.real, esc, 'case')}<span class="pp-unit">Compulsory case</span></div>
         <p class="pp-q-text">${esc(c.title || 'Case study')}</p>
-        <details class="pp-q-model"><summary>Show scenario &amp; sub-questions</summary>
-          ${c.scenario ? `<div class="pp-case-scenario">${esc(c.scenario)}</div>` : ''}
-          <ol>${(c.qs || []).map(x => `<li>${esc(x.q)} <em>(${esc(x.m)} marks)</em>${(x.pts && x.pts.length) ? examPtsHTML(x, 'Points') : ''}</li>`).join('')}</ol>
-        </details>
+        ${c.scenario ? `<div class="pp-case-scenario">${esc(c.scenario)}</div>` : ''}
+        <ol>${(c.qs || []).map((x,i) => {
+          const subKey = caseKey + '_' + i;
+          const ptsHtml = (x.pts && x.pts.length) ? examPtsHTML(x, 'Points') : '<p class="pp-case-scenario">Practise this in the unit\'s Written exam practice for the full marking guide.</p>';
+          return `<li><p class="pp-q-text">${esc(x.q)} <em>(${esc(x.m)} marks)</em></p>${ppWriteBlockHTML(subKey, ptsHtml, esc)}</li>`;
+        }).join('')}</ol>
       </div>`;
 }
 function openPastPapersYear(year){
